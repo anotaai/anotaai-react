@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router'
+import { Link } from 'react-router'
 
 export default class Header extends Component {
 
@@ -7,17 +7,20 @@ export default class Header extends Component {
     render() {
         return (
 
-            <header className="mdc-toolbar mdc-toolbar--fixed">
-                <div className="mdc-toolbar__row">
-                    <section className="mdc-toolbar__section mdc-toolbar__section--align-start">
-                       <Link to="/home"> <span className="mdc-toolbar__title">Anotaai</span></Link>
-                    </section>
-                    <section className="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
-                       <Link to="/home" className="material-icons">file_download</Link>
-                       <Link to="/home"  className="material-icons">print</Link>
-                       <Link to="/home" className="material-icons">bookmark</Link>
-                    </section>
-                </div>
+            <header>
+                <nav className="indigo" role="navigation">
+                    <div className="nav-wrapper container"><Link id="logo-container"  to="/home" className="brand-logo">Anotaai</Link>
+                        <ul className="right hide-on-med-and-down">
+                            <li> <Link to="/login">Login</Link></li>
+                            <li> <Link to="/cadastro">Cadastro</Link></li>
+                        </ul>
+
+                        <ul id="nav-mobile" className="side-nav">
+                            <li><a href="#">Navbar Link</a></li>
+                        </ul>
+                        <a href="#" data-activates="nav-mobile" className="button-collapse"><i className="material-icons">menu</i></a>
+                    </div>
+                </nav>
             </header>);
     }
 }

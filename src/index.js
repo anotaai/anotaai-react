@@ -1,13 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Layout from './components/public/Layout';
+window.jQuery = require('jquery');
+require('materialize-css/js/initial');
+require('materialize-css/js/jquery.easing.1.3');
+require('materialize-css/js/animation');
+window.Vel = require('materialize-css/js/velocity.min');
+require('materialize-css/js/hammer.min');
+require('materialize-css/js/jquery.hammer');
+require('materialize-css/js/global');
+require('materialize-css/js/toasts');
+import 'materialize-css/dist/css/materialize.min.css';
+//https://github.com/Dogfalo/materialize/issues/1229
+import React from 'react'
+import ReactDOM from 'react-dom'
 import {Router,Route, browserHistory} from 'react-router'
 import {createStore,combineReducers,applyMiddleware} from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import {app} from './reducers/app'
 import Home from './components/public/Home'
-import 'material-components-web/dist/material-components-web.css';
+import Login from './components/public/login/Login'
+import Cadastro from './components/public/cadastro/Cadastro'
+
 import './styles/css/Layout.css'
+import Layout from './components/public/Layout'
+
 
 const reducers = combineReducers({app:app});
 const store = createStore(reducers,applyMiddleware(thunkMiddleware))
@@ -15,7 +29,9 @@ const store = createStore(reducers,applyMiddleware(thunkMiddleware))
 ReactDOM.render(
   <Router history={browserHistory}>
       <Route store={store}  path="/" component={Layout} >
-         <Route exact path="/home" component={Home} />
+         <Route  path="/home" component={Home} />
+         <Route  path="/login" component={Login} />
+         <Route  path="/cadastro" component={Cadastro} />
       </Route>
   </Router>,
   document.getElementById('root')
