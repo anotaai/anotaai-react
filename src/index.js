@@ -6,7 +6,9 @@ window.Vel = require('materialize-css/js/velocity.min');
 require('materialize-css/js/hammer.min');
 require('materialize-css/js/jquery.hammer');
 require('materialize-css/js/global');
+
 require('materialize-css/js/toasts');
+ 
 import 'materialize-css/dist/css/materialize.min.css';
 //https://github.com/Dogfalo/materialize/issues/1229
 import React from 'react'

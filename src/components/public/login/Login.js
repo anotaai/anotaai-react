@@ -18,7 +18,6 @@ export default class Login extends Component {
 
       <main>
         <center>
-          <div className="chips chips-autocomplete"></div>
           <div className="section"></div>
 
           <h5 className="indigo-text">Login</h5>
