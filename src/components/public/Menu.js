@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import {urlHome,urlLogin,urlRegistrar} from '../../helpers/constants'
 
-export default class Header extends Component {
+export default class Menu extends Component {
 
 
     render() {
@@ -9,10 +10,10 @@ export default class Header extends Component {
 
             <header>
                 <nav className="indigo" role="navigation">
-                    <div className="nav-wrapper container"><Link id="logo-container"  to="/home" className="brand-logo">Anotaai</Link>
+                    <div className="nav-wrapper container"><Link id="logo-container"  to={urlHome} className="brand-logo">Anotaai</Link>
                         <ul className="right hide-on-med-and-down">
-                            <li> <Link to="/login">Login</Link></li>
-                            <li> <Link to="/cadastro">Cadastro</Link></li>
+                            <li> <Link to={urlLogin}>Acessar</Link></li>
+                            <li> <Link to={urlRegistrar}>Registrar</Link></li>
                         </ul>
 
                         <ul id="nav-mobile" className="side-nav">

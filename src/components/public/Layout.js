@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
-import Header from './Header'
+import Menu from './Menu'
 import Footer from './Footer'
 
 export default class Layout extends Component {
@@ -10,7 +9,7 @@ export default class Layout extends Component {
 
     return (
       <div>  
-        <Header />  
+        <Menu />  
         <main>
            {this.props.children}
         </main>
