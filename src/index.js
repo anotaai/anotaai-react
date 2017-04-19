@@ -1,10 +1,6 @@
 window.jQuery = require('jquery');
-window.Vel = require('materialize-css/js/velocity.min');
 require('materialize-css');
-require('materialize-css/js/toasts');
- 
 import 'materialize-css/dist/css/materialize.min.css';
-//https://github.com/Dogfalo/materialize/issues/1229
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Router,Route, browserHistory} from 'react-router'
