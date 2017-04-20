@@ -101,7 +101,7 @@ constructor() {
                 <br />
                 <center>
                   <div className='row'>
-                    <button type='submit' className='col s12 btn btn-large waves-effect indigo'>Login</button>
+                    <button type='submit' className='col s12 btn btn-large indigo'>Login</button>
                   </div>
                 </center>
               </form>

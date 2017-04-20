@@ -27,10 +27,6 @@ footer {
 .openModal {
   z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;
 }
-
-.waves-effect {
-  position: static !important;
-}
  
 
  
