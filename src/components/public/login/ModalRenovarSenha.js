@@ -42,7 +42,7 @@ export default class ModalRenovarSenha extends Component {
         <h4>Modal Header</h4>
          <form className="col s12" method="post">
         
-         <RadioUsuario  callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
+         <RadioUsuario  idEmail="idEmailModal"  idTelefone="idTelefoneModal" nomeRadio="radioModal"   callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
 
          <button onClick={this.closeModal.bind(this)} className="btn btn-large waves-effect indigo">Close</button>
         

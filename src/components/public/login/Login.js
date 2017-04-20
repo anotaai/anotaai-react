@@ -9,12 +9,13 @@ export class RadioUsuario extends Component {
 
   constructor() {
     super();
+     this.state = { tipoContato: 'telefone' };
   }
 
   changeRadio(e) {
-    this.props.callbackTipoContato(e.target.value);
+      this.setState({ tipoContato: e.target.value })
   }
-
+  
   changeEmail(e) {
     this.props.callbackEmail(e.target.value);
   }
@@ -24,8 +25,8 @@ export class RadioUsuario extends Component {
   }
 
   render() {
-
-    const tipoContato = this.props.tipoContato;
+  console.log('render radio');
+    const tipoContato = this.state.tipoContato;
     let field = null;
 
     if (tipoContato === 'telefone') {
@@ -37,10 +38,10 @@ export class RadioUsuario extends Component {
     return (
       <div>
         <div className="row">
-          <input type="radio" name="contato" id="telefone" value="telefone" defaultChecked onChange={this.changeRadio.bind(this)} />
-          <label htmlFor="telefone" style={{ paddingRight: '20px' }}>Telefone</label>
-          <input type="radio" name="contato" id="email" value="email" onChange={this.changeRadio.bind(this)} />
-          <label htmlFor="email">Email</label>
+          <input type="radio" id={this.props.idTelefone} name={this.props.nomeRadio} value="telefone"  defaultChecked onChange={this.changeRadio.bind(this)} />
+          <label htmlFor={this.props.idTelefone} style={{ paddingRight: '20px' }}>Telefone</label>
+          <input type="radio" id={this.props.idEmail} name={this.props.nomeRadio}  value="email" onChange={this.changeRadio.bind(this)} />
+          <label htmlFor={this.props.idEmail}>Email</label>
         </div>
         <div className='row'>
           <div className='input-field col s12'>
@@ -57,7 +58,7 @@ export default class Login extends Component {
 
 constructor() {
   super();
-  this.state = { tipoContato: 'telefone' };
+ 
 }
 
   changeEmail(email) {
@@ -69,9 +70,7 @@ constructor() {
     this.telefone = telefone;
   }
 
-   changeRadio(valor) {
-      this.setState({ tipoContato: valor })
-  }
+ 
 
   login(e) {
     e.preventDefault();
@@ -80,10 +79,9 @@ constructor() {
     console.log(this.senha.value);
   }
   render() {
-
+    console.log('render login');
     return (
       <main>
-          <ModalRenovarSenha />
         <center>
           <div className="section"></div>
           <h5 className="indigo-text">Login</h5>
@@ -91,7 +89,7 @@ constructor() {
           <div className="container">
             <div className="z-depth-1 grey lighten-4 row panel">
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
-                <RadioUsuario callbackTipoContato={this.changeRadio.bind(this)} tipoContato={this.state.tipContato} callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
+                <RadioUsuario  idEmail="idEmailLogin"  idTelefone="idTelefoneLogin" nomeRadio="radioLogin" callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
                 <div className='row'>
                   <div className='input-field col s12'>
                     <input className='validate' type='password' name='password' id='password' placeholder="Senha" required ref={(input) => this.senha = input} />
@@ -113,7 +111,7 @@ constructor() {
         </center>
         <div className="section"></div>
         <div className="section"></div>
-      
+        <ModalRenovarSenha />
       </main>
 
     );
