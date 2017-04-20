@@ -25,7 +25,7 @@ export class RadioUsuario extends Component {
   }
 
   render() {
-  console.log('render radio');
+
     const tipoContato = this.state.tipoContato;
     let field = null;
 
