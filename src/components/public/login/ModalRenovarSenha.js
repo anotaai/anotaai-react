@@ -4,13 +4,8 @@ import Modal from 'react-modal';
 
 export default class ModalRenovarSenha extends Component {
  
-   
-   componentWillMount() {
-    this.state = { showModal: true };
-   }
-
-  closeModal() {
-    this.setState({ showModal: false });
+  hideModal() {
+    this.props.callbackHideModal();
   }
 
   changeEmail(email) {
@@ -21,33 +16,42 @@ export default class ModalRenovarSenha extends Component {
     this.telefone = telefone;
   }
 
+  gerarNovaSenha(e) {
+    e.preventDefault();
+  }
+
 
   render() {
 
     const customStyles = {
       content: {
-        top: '50%',
+        top: '30%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
         marginRight: '-50%',
+        padding: '30px',
         transform: 'translate(-50%, -50%)',
 
       }
     };
 
     return (
-      <Modal isOpen={this.state.showModal} style={customStyles} contentLabel="Example Modal">
+      <Modal isOpen={this.props.showModal} style={customStyles} contentLabel="Esqueci a senha">
 
-        <h4>Modal Header</h4>
-         <form className="col s12" method="post">
+         <h4 className="center-align">Esqueci a senha</h4>
+
+         <div className="section"></div>
         
-         <RadioUsuario  idEmail="idEmailModal"  idTelefone="idTelefoneModal" nomeRadio="radioModal"   callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
-
-         <button onClick={this.closeModal.bind(this)} className="btn btn-large waves-effect indigo">Close</button>
+         <form className="col s12" method="post" onSubmit={this.gerarNovaSenha.bind(this)}>
         
-        </form>
+          <RadioUsuario  idEmail="idEmailModal"  idTelefone="idTelefoneModal" callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
 
+          <input type="submit"  className="btn btn-small waves-effect indigo" value="Gerar Senha" style={{marginTop:'10px'}} ></input>
+          
+          <button onClick={this.hideModal.bind(this)} className="btn btn-small waves-effect orange lighten-1" style={{marginLeft:'5px',marginTop:'10px'}}>Fechar</button>
+      
+         </form>
       </Modal>
     );
 
