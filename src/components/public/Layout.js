@@ -9,11 +9,10 @@ export default class Layout extends Component {
   render() {
 
     return (
-      <div>  
-        <Menu/>
-        <div className="progress">
-          <div className="indeterminate"></div>
-        </div>  
+      <div> 
+        <header> 
+          <Menu/>
+        </header>
         <main>
            {this.props.children}
         </main>

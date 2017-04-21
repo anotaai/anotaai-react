@@ -1,41 +1,32 @@
 import React, { Component } from 'react';
-import $ from 'jquery'
 import vendedor from "../../../img/vendedor.png"
 import comprador from "../../../img/comprador.png"
-import {Link} from 'react-router'
+import { browserHistory } from 'react-router'
+
 
 export default class Registrar extends Component {
 
+  redireciona(login) {
+    browserHistory.push(login);
+  }
+
   render() {
 
-    
     return (
       <div className="container">
+         <div className="section" />
+         <div className="section" />
         <div className="row">
-          <div className="col s12 m9 l2">
-            <div className="section"></div>
-            <div className="section"></div>
-            <div className="slider">
-              <ul className="slides">
-                <li>
-                  <img src={vendedor} />
-                  <div className="caption center-align">
-                    <Link to="/login">Login</Link>
-                  </div>
-                </li>
-                <li>
-                  <img src={comprador} />
-                  <div className="caption center-align">
-                    <h3 className="indigo-text">Comprador</h3>
-                  </div>
-                </li>
-              </ul>
+           <div className="offset-s1 col s5 center-align">
+               <img src={vendedor} href="#" style={{cursor: 'pointer'}} alt="Cadastrar Vendedor" title="Cadastrar Vendedor" onClick={this.redireciona.bind(this,'/login')} className="circle responsive-img indigo lighten-4" />  
+               <h5 className="indigo-text">Vendedor</h5>
             </div>
+            <div className="col s5 center-align">
+               <img src={comprador} href="#"  style={{cursor: 'pointer'}}   alt="Cadastrar Comprador" title="Cadastrar Comprador" onClick={this.redireciona.bind(this,'/login')}   className="circle responsive-img indigo lighten-4" />  
+               <h5 className="indigo-text">Comprador</h5>
+            </div>
+           </div>
           </div>
-        </div>
-      </div>
-
-
     );
 
   }

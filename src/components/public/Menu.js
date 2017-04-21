@@ -35,7 +35,7 @@ export default class Menu extends Component {
 
     render() {
         return (
-            <header>
+           
                 <nav className="indigo" role="navigation">
                     <div className="nav-wrapper container"><Link id="logo-container" to={urlHome} className="brand-logo">Anota ai</Link>
                         <LinksMenu className="right hide-on-med-and-down" />
@@ -43,6 +43,6 @@ export default class Menu extends Component {
                         <a href="#" onClick={this.openResponsiveMenu.bind(this)} data-activates="nav-mobile" className="button-collapse"><i className="material-icons">menu</i></a>
                     </div>
                 </nav>
-            </header>);
+         );
     }
 }
