@@ -47,7 +47,7 @@ export default class ModalRenovarSenha extends Component {
         
           <RadioUsuario  idEmail="idEmailModal"  idTelefone="idTelefoneModal" callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
 
-          <input type="submit"  className="btn btn-small waves-effect success" value="Gerar Senha" style={{marginTop:'10px'}} ></input>
+          <button type="submit"  className="btn btn-small waves-effect success"   style={{marginTop:'10px'}} >Gerar Senha</button>
           
           <button onClick={this.hideModal.bind(this)} className="btn btn-small waves-effect warning" style={{marginLeft:'5px',marginTop:'10px'}}>Fechar</button>
       
