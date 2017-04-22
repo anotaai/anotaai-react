@@ -1,48 +1,72 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import {urlHome,urlLogin,urlRegistrar} from '../../helpers/constants'
+import { urlHome, urlLogin, urlRegistrar } from '../../helpers/constants'
+import caderneta from "../../img/128x128.png"
+import $ from 'jquery'
 
-export class LinksMenu extends Component  {
-     
-     render() {
 
-       const styleLinkMenu = this.props.styleLinkMenu;
+class Links extends Component {
 
-       return (
-        <ul  className={this.props.className} style={{transform:styleLinkMenu}}>
-            <li className="hide-on-large-only"> <Link onClick={this.props.callbackHideResponsiveMenu}><span className="right indigo-text">X</span></Link> </li>
-            <li> <Link to={urlLogin} onClick={this.props.callbackHideResponsiveMenu} >Acessar</Link> </li>
-            <li> <Link to={urlRegistrar} onClick={this.props.callbackHideResponsiveMenu}>Registrar</Link> </li>
-        </ul>)
+    hideResponsiveMenu() {
+       $('.button-collapse').sideNav('hide');
+    }
+
+    render() {
+        return (
+            <div> 
+                <li className="hide-on-large-only"> <a href="#" onClick={this.hideResponsiveMenu}><span className="right red-text">Fechar</span></a> </li>
+                <li className="hide-on-large-only"> <div className="divider"></div> </li>
+                <li> <Link to={urlLogin} onClick={this.hideResponsiveMenu} >Acessar</Link> </li>
+                <li className="hide-on-large-only"> <div className="divider"></div> </li>
+                <li> <Link to={urlRegistrar} onClick={this.hideResponsiveMenu} >Registrar</Link></li>
+            </div>
+        )
+
+    }
+}
+
+ class MenuResponsivo extends Component {
+
+    componentDidMount() {
+        $(".button-collapse").sideNav();
+    }
+
+    render() {
+
+        return (
+            <div>
+                <ul id="slide-out" className="side-nav">
+                    <li>
+                       <div className="userView">
+                         <div className="background indigo" />
+                         <img className="circle white" alt="Anota ai" title="Anota ai" src={caderneta} />
+                         <span className="white-text name">Anota ai</span>
+                       </div>
+                    </li>
+                    <Links />
+                </ul>
+            </div>
+        )
     }
 }
 
 
 export default class Menu extends Component {
-  
-   constructor() {
-       super();
-       this.state = {styleLinkMenu: ''};
-   }
- 
-    openResponsiveMenu(){
-       this.setState({styleLinkMenu: 'translateX(0px)'});
-    }
-
-    hideResponsiveMenu(){
-      this.setState({styleLinkMenu: ''});
-    }
 
     render() {
         return (
-           
-                <nav className="indigo" role="navigation">
+            <div>
+               <nav className="indigo" role="navigation">
                     <div className="nav-wrapper container"><Link id="logo-container" to={urlHome} className="brand-logo">Anota ai</Link>
-                        <LinksMenu className="right hide-on-med-and-down" />
-                        <LinksMenu className="side-nav" styleLinkMenu={this.state.styleLinkMenu} callbackHideResponsiveMenu={this.hideResponsiveMenu.bind(this)} />
-                        <a href="#" onClick={this.openResponsiveMenu.bind(this)} data-activates="nav-mobile" className="button-collapse"><i className="material-icons">menu</i></a>
+                        <ul className="right hide-on-med-and-down">
+                         <Links />
+                        </ul>
+                      <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
                     </div>
                 </nav>
-         );
+                <MenuResponsivo/>
+             </div>   
+            
+        );
     }
 }

@@ -96,7 +96,7 @@ export default class Login extends Component {
         <center>
           <div className="section"></div>
           <h5 className="indigo-text">Login</h5>
-          <div className="section"></div>
+         
           <div className="container">
             <div className="z-depth-1 grey lighten-4 row panel">
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
@@ -105,21 +105,27 @@ export default class Login extends Component {
                   <div className='input-field col s12'>
                     <input id="senha"  type='password' name='password'  placeholder="Senha" required ref={(input) => this.senha = input} />
                   </div>
-                  <label style={{ float: 'right' }}>
-                    <a href="#" onClick={this.showModal.bind(this)} className="pink-text" > Esqueci a senha </a>
+                </div>
+                <div className='row'> 
+                  <div className='col s7 left-align'>  
+                     <input type="checkbox" id="manterConectado" ref={(input) => this.materConectado = input} />
+                     <label  htmlFor="manterConectado">Manter conectado</label>
+                  </div>
+                  <label className='col s5 right-align' style={{marginTop:'3px'}}>
+                    <a href="#" onClick={this.showModal.bind(this)} className="pink-text" >Esqueceu a senha?</a>
                   </label>
+                  <div className='col s12' />  
                 </div>
                 <br/>
                 <center>
                   <div className='row'>
-                    <button type='submit' className='col s12 btn btn-large indigo'>Login</button>
+                    <button type='submit' className='col s12 btn btn-large info'>Login</button>
                   </div>
                 </center>
               </form>
             </div>
           </div>
-          <Link to={urlRegistrar}>Registrar</Link>
-        </center>
+        </center> 
         <div className="section"></div>
         <div className="section"></div>
         <ModalRenovarSenha showModal={this.state.showModal} callbackHideModal={this.hideModal.bind(this)} />

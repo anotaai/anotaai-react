@@ -25,7 +25,7 @@ export default class ModalRenovarSenha extends Component {
 
     const customStyles = {
       content: {
-        top: '30%',
+        top: '40%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
@@ -47,9 +47,9 @@ export default class ModalRenovarSenha extends Component {
         
           <RadioUsuario  idEmail="idEmailModal"  idTelefone="idTelefoneModal" callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
 
-          <input type="submit"  className="btn btn-small waves-effect indigo" value="Gerar Senha" style={{marginTop:'10px'}} ></input>
+          <input type="submit"  className="btn btn-small waves-effect success" value="Gerar Senha" style={{marginTop:'10px'}} ></input>
           
-          <button onClick={this.hideModal.bind(this)} className="btn btn-small waves-effect orange lighten-1" style={{marginLeft:'5px',marginTop:'10px'}}>Fechar</button>
+          <button onClick={this.hideModal.bind(this)} className="btn btn-small waves-effect warning" style={{marginLeft:'5px',marginTop:'10px'}}>Fechar</button>
       
          </form>
       </Modal>
