@@ -98,7 +98,7 @@ export default class Login extends Component {
           <h5 className="indigo-text">Login</h5>
          
           <div className="container">
-            <div className="z-depth-1 grey lighten-4 row panel">
+            <div className="z-depth-1 row panel">
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
                 <RadioUsuario idEmail="idEmailLogin" idTelefone="idTelefoneLogin"  callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
                 <div className='row'>
