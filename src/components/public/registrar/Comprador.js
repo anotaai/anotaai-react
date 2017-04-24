@@ -95,7 +95,7 @@ export default class Comprador extends Component {
                         
                         <select id="estados" >
                           <option value=""></option>
-                          {this.state.estadoList.map(estado => (<option  value={estado.type}>{estado.descricao}</option>))}
+                          {this.state.estadoList.map(estado => (<option key={estado.type}  value={estado.type}>{estado.descricao}</option>))}
                          </select>
                          <label htmlFor="estado">Estado</label>
 
