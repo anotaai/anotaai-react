@@ -4,8 +4,6 @@ import MaskedInput from 'react-maskedinput'
 import ModalRenovarSenha from './ModalRenovarSenha'
 import { urlRegistrar} from '../../../helpers/constants'
  
-
-
 export class RadioUsuario extends Component {
 
   constructor() {
@@ -17,23 +15,19 @@ export class RadioUsuario extends Component {
     this.setState({ tipoContato: e.target.value })
   }
 
-  changeEmail(e) {
-    this.props.callbackEmail(e.target.value);
-  }
-
-  changeTelefone(e) {
-    this.props.callbackTelefone(e.target.value);
+  handleInputChange(e) {
+    this.props.handleInputChange(e.target.value,e.target.name);
   }
 
   render() {
     let field = null;
 
     if (this.state.tipoContato === 'telefone') {
-      field = <MaskedInput id='telefone'   onChange={this.changeTelefone.bind(this)} mask="(11) 11111-1111" required placeholder="Telefone" />
+      field = <MaskedInput id='telefone'   onChange={this.handleInputChange.bind(this)} mask="(11) 11111-1111" name="telefone" required placeholder="Telefone" />
     } else {
       field = 
       <div> 
-         <input id="email" className='validate' type='email' onChange={this.changeEmail.bind(this)}  required placeholder="Email" /> 
+         <input id="email" className='validate' type='email' onChange={this.handleInputChange.bind(this)}  name="email" required placeholder="Email" /> 
          <label for="email" data-error="Email inválido" />
       </div>
     }
@@ -61,7 +55,7 @@ export default class Login extends Component {
 
   constructor() {
     super();
-    this.state = { showModal: false };
+    this.state = { showModal: false , email:'',telefone:'' };
   }
 
   showModal(e) {
@@ -73,20 +67,16 @@ export default class Login extends Component {
     this.setState({ showModal: false });
   }
 
-  changeEmail(email) {
-    this.email = email;
-
-  }
-
-  changeTelefone(telefone) {
-    this.telefone = telefone;
+  handleInputChange(value,name) {
+      this.setState({ [name]: value });
   }
 
   login(e) {
     e.preventDefault();
-    console.log(this.telefone);
-    console.log(this.email);
+    console.log(this.state.telefone);
+    console.log(this.state.email);
     console.log(this.senha.value);
+    console.log(this.materConectado.checked);
     
   }
   render() {
@@ -98,9 +88,9 @@ export default class Login extends Component {
           <h5 className="indigo-text">Login</h5>
          
           <div className="container">
-            <div className="z-depth-1 row panel">
+            <div className="z-depth-1 row panel" style={{ display:'inline-block'}}>
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
-                <RadioUsuario idEmail="idEmailLogin" idTelefone="idTelefoneLogin"  callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
+                <RadioUsuario idEmail="idEmailLogin" idTelefone="idTelefoneLogin"  handleInputChange={this.handleInputChange.bind(this)} />
                 <div className='row'>
                   <div className='input-field col s12'>
                     <input id="senha"  type='password' name='password'  placeholder="Senha" required ref={(input) => this.senha = input} />

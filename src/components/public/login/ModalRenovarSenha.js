@@ -3,23 +3,26 @@ import {RadioUsuario} from './Login'
 import Modal from 'react-modal';
 
 export default class ModalRenovarSenha extends Component {
+
+  constructor() {
+    super();
+    this.state = { email:'',telefone:'' };
+  }
  
   hideModal() {
     this.props.callbackHideModal();
   }
 
-  changeEmail(email) {
-    this.email = email;
+  handleInputChange(value,name) {
+      this.setState({ [name]: value });
   }
 
-  changeTelefone(telefone) {
-    this.telefone = telefone;
-  }
 
   gerarNovaSenha(e) {
     e.preventDefault();
+    console.log(this.state.telefone);
+    console.log(this.state.email);
   }
-
 
   render() {
 
@@ -45,9 +48,9 @@ export default class ModalRenovarSenha extends Component {
         
          <form className="col s12" method="post" onSubmit={this.gerarNovaSenha.bind(this)}>
         
-          <RadioUsuario  idEmail="idEmailModal"  idTelefone="idTelefoneModal" callbackEmail={this.changeEmail.bind(this)} callbackTelefone={this.changeTelefone.bind(this)} />
+          <RadioUsuario  idEmail="idEmailModal"  idTelefone="idTelefoneModal" handleInputChange={this.handleInputChange.bind(this)}  />
 
-          <button type="submit"  className="btn btn-small waves-effect success"   style={{marginTop:'10px'}} >Gerar Senha</button>
+          <button type="submit"  className="btn btn-small waves-effect success"    style={{marginTop:'10px'}} >Gerar Senha</button>
           
           <button onClick={this.hideModal.bind(this)} className="btn btn-small waves-effect warning" style={{marginLeft:'5px',marginTop:'10px'}}>Fechar</button>
       

@@ -23,10 +23,11 @@ body {
 }
 
 .panel {
-  display: inline-block;
   padding: 28px 30px 0px 30px;
   background-color: #f5f5f5;
   border: 1px solid #EEE;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }
 
 .panel-footer {
@@ -38,7 +39,7 @@ footer {
   height: 80px;
   width: 100%;
 	text-align: center;
-	position:relative;
+	position:absolute;
 	bottom:0;
 }
 
