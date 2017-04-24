@@ -8,6 +8,7 @@ body {
   background-color: #e6e6fa;  
   overflow-y: scroll;
 	overflow-x: hidden;
+  position:relative;
 }
 
  .title-header {
@@ -38,7 +39,7 @@ footer {
   height: 80px;
   width: 100%;
 	text-align: center;
-	position:absolute;
+	position:relative;
 	bottom:0;
 }
 

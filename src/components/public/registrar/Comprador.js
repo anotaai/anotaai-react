@@ -1,14 +1,30 @@
 import React, { Component } from 'react'
 import MaskedInput from 'react-maskedinput'
+import EnumService from '../../../services/util/EnumService'
+import $ from 'jquery'
 
 export default class Comprador extends Component {
- 
-   
 
+    constructor() {
+      super();
+      this.state = {estadoList:[]};
+    }
     
-   
+    componentWillMount() {
+       
+       EnumService.load('estados').then(json => {
+         this.setState({estadoList:json});
+         $('select').material_select();
+       });
+      
+    }
+ 
     render() {
+
+
+
         return (
+          <div>
             <div className="container">
               <div className="section"></div>
                 
@@ -43,11 +59,67 @@ export default class Comprador extends Component {
                     <div className="col s12 panel-footer">
                          <button className="btn waves-effect default" formNoValidate>Limpar
                          </button>
-                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} type="submit" name="action">Gravar
+                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} type="submit" name="action">Enviar
                            <i className="material-icons right">send</i>
                          </button>
                     </div> 
                 </form>
-            </div>)
+            </div>
+
+             <div className="container">
+              <div className="section"></div>
+                
+               <div className="z-depth-1 panel-header" >
+                    <span className="title-header" >Dados Endereço</span>
+                </div>
+
+                <form className="z-depth-1 panel row" style={{marginLeft: '0',marginRight:'0'}} method="post">
+               
+                    <div className="input-field col s6">
+                         <MaskedInput id='cep'  mask="11.111-111" required placeholder="Cep" />
+                    </div>
+                    <div className="input-field col s6">
+                          <input id="logradouro" type="text" />
+                          <label htmlFor="logradouro">Logradouro</label>  
+                    </div>
+                     <div className="input-field col s6">
+                         <input id="numero" type="number" />
+                         <label htmlFor="numero">Número</label>
+                    </div>
+                    <div className="input-field col s6">
+                         <input id="complemento" type="text"  />
+                         <label htmlFor="complemento">Complemento</label>
+                    </div>
+
+                    <div className="input-field col s6">
+                        
+                        <select id="estados" >
+                          <option value=""></option>
+                          {this.state.estadoList.map(estado => (<option  value={estado.type}>{estado.descricao}</option>))}
+                         </select>
+                         <label htmlFor="estado">Estado</label>
+
+                    </div>
+
+                    <div className="input-field col s6">
+                         <input id="cidade" type="text" required />
+                         <label htmlFor="cidade">Cidade</label>
+                    </div>
+
+                    <div className="input-field col s6">
+                         <input id="bairro" type="text" required />
+                         <label htmlFor="bairro">Bairro</label>
+                    </div>                  
+    
+                    <div className="col s12 panel-footer">
+                         <button className="btn waves-effect default" formNoValidate>Limpar
+                         </button>
+                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} type="submit" name="action">Enviar
+                           <i className="material-icons right">send</i>
+                         </button>
+                    </div> 
+                </form>
+            </div>
+          </div>)
     }
 }

@@ -126,8 +126,6 @@ export default class Login extends Component {
             </div>
           </div>
         </center> 
-        <div className="section"></div>
-        <div className="section"></div>
         <ModalRenovarSenha showModal={this.state.showModal} callbackHideModal={this.hideModal.bind(this)} />
       </main>
 
