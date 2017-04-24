@@ -14,7 +14,7 @@ export default class Comprador extends Component {
        
        EnumService.load('estados').then(json => {
          this.setState({estadoList:json});
-         $('select').material_select();
+         $('#estados').material_select();
        });
       
     }
