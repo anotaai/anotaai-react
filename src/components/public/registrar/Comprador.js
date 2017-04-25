@@ -56,7 +56,7 @@ export default class Comprador extends Component {
     }
 
 
-    
+
 
     render() {
 
