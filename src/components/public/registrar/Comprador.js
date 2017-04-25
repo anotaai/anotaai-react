@@ -6,9 +6,6 @@ import $ from 'jquery'
 
 export default class Comprador extends Component {
 
-    
-    
-
     constructor() {
       super();
       this.state = {
@@ -19,7 +16,7 @@ export default class Comprador extends Component {
         telefone:''};
     }
     
-    componentDidMount() {   
+    componentWillMount() {   
        EnumService.load('estados').then(json => {
          this.setState({estadoList:json});
          $('#estados').material_select();
