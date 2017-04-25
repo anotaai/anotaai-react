@@ -10,7 +10,7 @@ body {
 	overflow-x: hidden;
 }
 
- .title-header {
+.title-header {
    color: #EEE;
    margin-left: 35px;
 }
@@ -20,6 +20,11 @@ body {
   border: 1px solid #ee6e73;
   height: 40px;
   font-size: 1.6rem;
+}
+
+.active-label {
+  font-size: .8rem;
+  -webkit-transform: translateY(-140%);
 }
 
 .panel {
@@ -52,7 +57,7 @@ footer {
 } 
 
 .warning {
-  background-color: #fbc02d !important;
+  background-color: #ff6f00 !important;
 } 
 
 .success {

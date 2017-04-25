@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
 import MaskedInput from 'react-maskedinput'
 import ModalRenovarSenha from './ModalRenovarSenha'
-import { urlRegistrar} from '../../../helpers/constants'
  
 export class RadioUsuario extends Component {
 
@@ -25,11 +23,10 @@ export class RadioUsuario extends Component {
     if (this.state.tipoContato === 'telefone') {
       field = <MaskedInput id='telefone'   onChange={this.handleInputChange.bind(this)} mask="(11) 11111-1111" name="telefone" required placeholder="Telefone" />
     } else {
-      field = 
-      <div> 
-         <input id="email" className='validate' type='email' onChange={this.handleInputChange.bind(this)}  name="email" required placeholder="Email" /> 
-         <label for="email" data-error="Email inválido" />
-      </div>
+      field = <div> 
+               <input id="email" className='validate' type='email' onChange={this.handleInputChange.bind(this)}  name="email" required placeholder="Email" /> 
+               <label for="email" data-error="Email inválido" />
+             </div>
     }
 
     return (
@@ -68,7 +65,7 @@ export default class Login extends Component {
   }
 
   handleInputChange(value,name) {
-      this.setState({ [name]: value });
+      this.setState({[name]:value });
   }
 
   login(e) {
