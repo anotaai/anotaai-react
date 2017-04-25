@@ -6,6 +6,8 @@ import $ from 'jquery'
 
 export default class Comprador extends Component {
 
+    
+
     constructor() {
       super();
       this.state = {
