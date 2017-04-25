@@ -18,7 +18,7 @@ export default class Comprador extends Component {
         telefone:''};
     }
     
-    componentWillMount() {   
+    componentDidMount() {   
        EnumService.load('estados').then(json => {
          this.setState({estadoList:json});
          $('#estados').material_select();
