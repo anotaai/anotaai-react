@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {RadioUsuario} from './Login'
+import {RadioUser} from './Login'
 import Modal from 'react-modal';
 
-export default class ModalRenovarSenha extends Component {
+export default class ModalRenewPassword extends Component {
 
   constructor() {
     super();
@@ -18,7 +18,7 @@ export default class ModalRenovarSenha extends Component {
   }
 
 
-  gerarNovaSenha(e) {
+  renewPassword(e) {
     e.preventDefault();
     console.log(this.state.telefone);
     console.log(this.state.email);
@@ -46,9 +46,9 @@ export default class ModalRenovarSenha extends Component {
 
          <div className="section"></div>
         
-         <form className="col s12" method="post" onSubmit={this.gerarNovaSenha.bind(this)}>
+         <form className="col s12" method="post" onSubmit={this.renewPassword.bind(this)}>
         
-          <RadioUsuario  idEmail="idEmailModal"  idTelefone="idTelefoneModal" handleInputChange={this.handleInputChange.bind(this)}  />
+          <RadioUser  idEmail="idEmailModal"  idTelefone="idTelefoneModal" handleInputChange={this.handleInputChange.bind(this)}  />
 
           <button type="submit"  className="btn btn-small waves-effect success"    style={{marginTop:'10px'}} >Gerar Senha</button>
           

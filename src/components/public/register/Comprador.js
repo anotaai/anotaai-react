@@ -4,7 +4,8 @@ import MaskedInput from 'react-maskedinput'
 import EnumService from '../../../services/util/EnumService'
 import EnderecoService from '../../../services/registrar/EnderecoService'
 import ShowMessage from '../../../helpers/ShowMessage'
-import {toastWarning,toastDefaultTime} from '../../../helpers/constants'
+import UsuarioService from '../../../services/UsuarioService'
+import {toastWarning} from '../../../helpers/constants'
 import $ from 'jquery'
 
 export default class Comprador extends Component {
@@ -29,7 +30,6 @@ export default class Comprador extends Component {
        });      
     }
 
-   
     handleInputChange(e) {
       this.setState({[e.target.name] : e.target.value});
     }
@@ -51,16 +51,28 @@ export default class Comprador extends Component {
          this.setState({[firstName]:obj});
     }
 
-    limparContato(e) {
+    clearUser(e) {
       e.preventDefault();
       this.setState({usuario:{nome:'',email:'',senha:''},confirmarSenha:'',telefone:''});
     }
 
-    limparEndereco(e) {
+    clearAddress(e) {
        e.preventDefault();
        this.cepRetornado = '';
        this.setState({cliente:{endereco:{cep:'',logradouro:'',numero:'',complemento:'',bairro:'',cidade:'',estado:''}}});
        $('#estadosDiv input[type=text]').val('').removeAttr('disabled');
+    }
+
+    sendUser(e) {
+       e.preventDefault();
+
+       if(this.state.usuario.senha === this.state.usuario.confirmarSenha) {
+          UsuarioService.save(e.state.usuario); 
+       } else {
+           ShowMessage.show("A senha não confere com a confirmação de senha. Informe novamente.",toastWarning);
+           ReactDOM.findDOMNode(this.refs.confirmarSenha).focus();
+       }
+      
     }
  
     handleCepChange(e) {
@@ -75,7 +87,7 @@ export default class Comprador extends Component {
             EnderecoService.findCep(cepReplace).then(enderecoRecuperado => {
                  
                 if(enderecoRecuperado.logradouro == null) {
-                      ShowMessage.show(`Não foi encontrado um endereço para o cep ${cepReplace}`,toastDefaultTime,toastWarning);
+                      ShowMessage.show(`Não foi encontrado um endereço para o cep ${cepReplace}`,toastWarning);
                       return;
                 }         
                 const endereco = {endereco:{cep:cep,logradouro:enderecoRecuperado.logradouro,numero:enderecoRecuperado.numero,complemento:enderecoRecuperado.complemento,bairro:enderecoRecuperado.bairro,cidade:enderecoRecuperado.localidade,estado:enderecoRecuperado.uf}};
@@ -85,7 +97,7 @@ export default class Comprador extends Component {
              });
 
         } else {
-            this.limparEndereco(e);
+            this.clearAddress(e);
         }
     
     }
@@ -122,12 +134,12 @@ export default class Comprador extends Component {
                          <label htmlFor="senha">Senha</label>
                     </div>
                     <div className="input-field col s6">
-                         <input id="confirmarSenha" type="password" required value={this.state.confirmarSenha} name="confirmarSenha" onChange={this.handleInputChange.bind(this)} />
+                         <input id="confirmarSenha" ref="confirmarSenha" type="password" required value={this.state.confirmarSenha} name="confirmarSenha" onChange={this.handleInputChange.bind(this)} />
                          <label htmlFor="confirmarSenha">Confirmar Senha</label>
                     </div>
 
                     <div className="col s12 panel-footer">
-                         <button className="btn waves-effect default" formNoValidate onClick={this.limparContato.bind(this)}>Limpar
+                         <button className="btn waves-effect default" formNoValidate onClick={this.clearUser.bind(this)}>Limpar
                          </button>
                          <button className="btn waves-effect success" style={{marginLeft:'5px'}} type="submit" name="action">Enviar
                            <i className="material-icons right">send</i>
@@ -182,9 +194,9 @@ export default class Comprador extends Component {
                     </div>                  
     
                     <div className="col s12 panel-footer">
-                         <button className="btn waves-effect default" formNoValidate onClick={this.limparEndereco.bind(this)}>Limpar
+                         <button className="btn waves-effect default" formNoValidate onClick={this.clearAddress.bind(this)}>Limpar
                          </button>
-                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} type="submit" name="action">Enviar
+                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} onClick={this.sendUser.bind(this)}  type="submit" name="action">Enviar
                            <i className="material-icons right">send</i>
                          </button>
                     </div> 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import MaskedInput from 'react-maskedinput'
-import ModalRenovarSenha from './ModalRenovarSenha'
+import ModalRenewPassword from './ModalRenewPassword'
  
-export class RadioUsuario extends Component {
+export class RadioUser extends Component {
 
   constructor() {
     super();
@@ -87,7 +87,7 @@ export default class Login extends Component {
           <div className="container">
             <div className="z-depth-1 row panel" style={{ display:'inline-block'}}>
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
-                <RadioUsuario idEmail="idEmailLogin" idTelefone="idTelefoneLogin"  handleInputChange={this.handleInputChange.bind(this)} />
+                <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin"  handleInputChange={this.handleInputChange.bind(this)} />
                 <div className='row'>
                   <div className='input-field col s12'>
                     <input id="senha"  type='password' name='password'  placeholder="Senha" required ref={(input) => this.senha = input} />
@@ -113,7 +113,7 @@ export default class Login extends Component {
             </div>
           </div>
         </center> 
-        <ModalRenovarSenha showModal={this.state.showModal} callbackHideModal={this.hideModal.bind(this)} />
+        <ModalRenewPassword showModal={this.state.showModal} callbackHideModal={this.hideModal.bind(this)} />
       </main>
 
     );

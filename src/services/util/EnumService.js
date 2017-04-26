@@ -8,7 +8,7 @@ export default class EnumService  {
         .then(response => response.json())
         .catch(error => {
           console.log(error);
-          ShowMessage.show(`Ocorreu um erro ao recuperar o serviço de ${enumName}`,toastDefaultTime,toastError)
+          ShowMessage.show(`Ocorreu um erro ao recuperar o serviço de ${enumName}`,toastError)
       }); 
       
      }

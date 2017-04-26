@@ -1,4 +1,4 @@
-import {urlBackend,toastError,toastDefaultTime} from '../../helpers/constants'
+import {urlBackend,toastError} from '../../helpers/constants'
 import ShowMessage from '../../helpers/ShowMessage' 
 
 export default class EnderecoService  {
@@ -8,7 +8,7 @@ export default class EnderecoService  {
                      .then(response => response.json())
                      .catch(error => {
                         console.log(error);
-                        ShowMessage.show(`Ocorreu um erro ao recuperar o cep ${cep}`,toastDefaultTime,toastError)
+                        ShowMessage.show(`Ocorreu um erro ao recuperar o cep ${cep}`,toastError)
                       }); 
         }
          
