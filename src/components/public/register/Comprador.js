@@ -5,10 +5,14 @@ import EnumService from '../../../services/util/EnumService'
 import EnderecoService from '../../../services/registrar/EnderecoService'
 import ShowMessage from '../../../helpers/ShowMessage'
 import UsuarioService from '../../../services/UsuarioService'
-import {toastWarning} from '../../../helpers/constants'
+import {toastWarning,toastInfo} from '../../../helpers/constants'
 import $ from 'jquery'
 
 export default class Comprador extends Component {
+
+
+//http://stackoverflow.com/questions/42331416/how-to-call-setstate-in-react-with-nested-objects-and-unknown-key
+//http://stackoverflow.com/questions/2061325/javascript-object-key-value-coding-dynamically-setting-a-nested-value
 
     constructor() {
       super();
@@ -38,8 +42,8 @@ export default class Comprador extends Component {
        const names =  e.target.name.split('.');
        const firstName = names[0];
        const secondName = names[1];
-       const obj = {[secondName]:e.target.value}; 
-       this.setState({[firstName] : obj });
+       
+       this.setState({[firstName] : {[secondName]:e.target.value} });
     }
 
      handleTripleInputChange(e) {
@@ -66,11 +70,14 @@ export default class Comprador extends Component {
     sendUser(e) {
        e.preventDefault();
 
-       if(this.state.usuario.senha === this.state.usuario.confirmarSenha) {
-          UsuarioService.save(e.state.usuario); 
+       if(this.state.usuario.senha === this.state.confirmarSenha) {
+          UsuarioService.save(this.state.usuario).then(response => {
+              ShowMessage.show('Sucesso',toastInfo);
+          }); 
        } else {
            ShowMessage.show("A senha não confere com a confirmação de senha. Informe novamente.",toastWarning);
-           ReactDOM.findDOMNode(this.refs.confirmarSenha).focus();
+           this.setState({confirmarSenha:'',usuario:{senha:''}});
+           ReactDOM.findDOMNode(this.refs.senha).focus();
        }
       
     }
@@ -130,18 +137,18 @@ export default class Comprador extends Component {
                          <label htmlFor="email"  data-error="Email inválido">Email</label>
                     </div>
                     <div className="input-field col s6">
-                         <input id="senha" type="password" required value={this.state.usuario.senha} name="usuario.senha" onChange={this.handleDoubleInputChange.bind(this)} />
-                         <label htmlFor="senha">Senha</label>
+                         <input id="senha" ref="senha" type="password" className="validate" minLength="6" required value={this.state.usuario.senha} name="usuario.senha" onChange={this.handleDoubleInputChange.bind(this)} />
+                         <label htmlFor="senha" data-error="A senha deve conter no mínimo 6 caracteres">Senha</label>
                     </div>
                     <div className="input-field col s6">
-                         <input id="confirmarSenha" ref="confirmarSenha" type="password" required value={this.state.confirmarSenha} name="confirmarSenha" onChange={this.handleInputChange.bind(this)} />
-                         <label htmlFor="confirmarSenha">Confirmar Senha</label>
+                         <input id="confirmarSenha"  className="validate"  type="password" minLength="6" required value={this.state.confirmarSenha} name="confirmarSenha" onChange={this.handleInputChange.bind(this)} />
+                         <label htmlFor="confirmarSenha" data-error="A senha deve conter no mínimo 6 caracteres">Confirmar Senha</label>
                     </div>
 
                     <div className="col s12 panel-footer">
                          <button className="btn waves-effect default" formNoValidate onClick={this.clearUser.bind(this)}>Limpar
                          </button>
-                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} type="submit" name="action">Enviar
+                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} type="submit" name="action" onClick={this.sendUser.bind(this)}>Enviar
                            <i className="material-icons right">send</i>
                          </button>
                     </div> 
