@@ -1,23 +1,29 @@
-import ShowMessage from '../helpers/ShowMessage'
-import { toastError, toastDefaultTime, urlBackend } from '../helpers/constants'
+import { urlBackend} from '../helpers/constants'
+import { buildTelefone } from '../helpers/stringHelper'
 
 
 export default class UsuarioService {
 
-    static save(usuario) {
-        const requestInfo = {
+    static save(usuario, telefoneStr) {
+
+        usuario.telefone = buildTelefone(telefoneStr);
+
+  
+        return fetch(`${urlBackend}/rest/usuarios`, {
             method: 'POST',
-            body: JSON.stringify({ usuario: usuario }),
+            body: JSON.stringify({ nome: usuario.nome, email: usuario.email , senha: usuario.senha , telefone: usuario.telefone }),
             headers: new Headers({
-                'Content-type': 'application/json'
+                'Content-type': 'application/json'})
             })
-        };
-        return fetch(`${urlBackend}/rest/usuarios/`, requestInfo)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                   return response.json();
+                }
+                throw Error(response);
+            })
             .catch(error => {
-                console.log(error);
-                ShowMessage.show('Ocorreu um erro ao incluir o usuário', toastError);
-            })
+              throw Error(error);
+            });
 
     }
 

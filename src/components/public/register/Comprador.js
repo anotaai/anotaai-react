@@ -2,23 +2,21 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import MaskedInput from 'react-maskedinput'
 import EnumService from '../../../services/util/EnumService'
-import EnderecoService from '../../../services/registrar/EnderecoService'
+import AddressService from '../../../services/register/AddressService'
+import ClienteConsumidorService from '../../../services/client/ClienteConsumidorService'
 import ShowMessage from '../../../helpers/ShowMessage'
 import UsuarioService from '../../../services/UsuarioService'
-import {toastWarning,toastInfo} from '../../../helpers/constants'
+import {toastWarning,toastInfo,toastError} from '../../../helpers/constants'
+import {getObjectNewState,createInstance} from '../../../helpers/jsonHelper'
+import ClientService from '../../../services/ClientService'
 import $ from 'jquery'
 
 export default class Comprador extends Component {
-
-
-//http://stackoverflow.com/questions/42331416/how-to-call-setstate-in-react-with-nested-objects-and-unknown-key
-//http://stackoverflow.com/questions/2061325/javascript-object-key-value-coding-dynamically-setting-a-nested-value
 
     constructor() {
       super();
       this.cepRetornado = '';
       this.state = {
-        cepPesquisa:'',
         usuario:{nome:'',email:'',senha:''},
         cliente:{nomeComercial:'',cpf:'', endereco:{cep:'',logradouro:'',numero:'',complemento:'',bairro:'',cidade:'',estado:''}}, 
         estadoList:[],
@@ -30,56 +28,92 @@ export default class Comprador extends Component {
        EnumService.load('estados').then(json => {
           this.setState({estadoList:json});   
            $('#estados').material_select();
-           $(ReactDOM.findDOMNode(this.refs.selectEstado)).on('change',this.handleTripleInputChange.bind(this));
+           $(ReactDOM.findDOMNode(this.refs.selectEstado)).on('change',this.handleInputChange.bind(this));
+       }).catch(error => {
+            console.log(error);
+            ShowMessage.show(`Ocorreu um erro ao recuperar o serviço de estados`,toastError)
        });      
     }
 
     handleInputChange(e) {
-      this.setState({[e.target.name] : e.target.value});
-    }
-    
-    handleDoubleInputChange(e) {
-       const names =  e.target.name.split('.');
-       const firstName = names[0];
-       const secondName = names[1];
-       
-       this.setState({[firstName] : {[secondName]:e.target.value} });
-    }
-
-     handleTripleInputChange(e) {
-         const names =  e.target.name.split('.');
-         const firstName = names[0];
-         const secondName = names[1];
-         const thirdName = names[2];
-         const obj = {[secondName]:{[thirdName]:e.target.value}};
-         this.setState({[firstName]:obj});
+      const newState =  getObjectNewState(e.target.name,e.target.value,this.state);
+      this.setState(newState);
     }
 
     clearUser(e) {
       e.preventDefault();
-      this.setState({usuario:{nome:'',email:'',senha:''},confirmarSenha:'',telefone:''});
+      const newState = createInstance(this.state);
+      newState.usuario.nome = '';
+      newState.usuario.email = '';
+      newState.usuario.senha = '';
+      newState.confirmarSenha = '';
+      newState.telefone = '';
+      this.setState(newState);
+      ReactDOM.findDOMNode(this.refs.nome).focus();
     }
 
     clearAddress(e) {
        e.preventDefault();
        this.cepRetornado = '';
-       this.setState({cliente:{endereco:{cep:'',logradouro:'',numero:'',complemento:'',bairro:'',cidade:'',estado:''}}});
+       const newState = createInstance(this.state);
+       newState.cliente.endereco.cep = '';
+       newState.cliente.endereco.logradouro = '';
+       newState.cliente.endereco.numero = '';
+       newState.cliente.endereco.complemento = '';
+       newState.cliente.endereco.bairro = '';
+       newState.cliente.endereco.cidade = '';
+       newState.cliente.endereco.estado = '';
+       this.setState(newState);
        $('#estadosDiv input[type=text]').val('').removeAttr('disabled');
+       ReactDOM.findDOMNode(this.refs.cep).focus();
+
     }
 
     sendUser(e) {
        e.preventDefault();
 
        if(this.state.usuario.senha === this.state.confirmarSenha) {
-          UsuarioService.save(this.state.usuario).then(response => {
-              ShowMessage.show('Sucesso',toastInfo);
+          UsuarioService.save(this.state.usuario,this.state.telefone).then(response => {
+              ShowMessage.show("Sucesso",toastInfo);
+          }).catch(error => {
+             ShowMessage.show('Ocorreu um erro ao incluir o usuário', toastError);
           }); 
        } else {
            ShowMessage.show("A senha não confere com a confirmação de senha. Informe novamente.",toastWarning);
-           this.setState({confirmarSenha:'',usuario:{senha:''}});
+           const newState = createInstance(this.state);
+           newState.usuario.senha = '';
+           newState.confirmarSenha = '';
+           this.setState(newState);
            ReactDOM.findDOMNode(this.refs.senha).focus();
        }
       
+    }
+
+    sendClient(e) {
+      e.preventDefault();
+      
+      ClientService.save(this.state.cliente,this.state.usuario,this.state.telefone).then(response => {
+         ShowMessage.show("Registro incluído com sucesso",toastInfo);
+      }).catch(error => {
+          ShowMessage("Ocorreu um erro ao incluir o comprador",toastError);
+      });
+    }
+
+    handlePhoneChange(e) {
+       const telefone = e.target.value;
+       const telefoneReplace = telefone.replace('(','').replace(')','').replace('-','');
+       const finalizouTelefone = telefoneReplace.indexOf('_');
+       this.handleInputChange(e); 
+      
+       if(finalizouTelefone === -1 && telefoneReplace !== '')  {
+           ClienteConsumidorService.findUsuarioByPhone(telefoneReplace)
+            .then(response => {
+                  
+            })
+            .catch(error => {
+
+            })
+       }
     }
  
     handleCepChange(e) {
@@ -91,16 +125,25 @@ export default class Comprador extends Component {
   
        if(finalizouCep === -1 && cepReplace !== '')  {
 
-            EnderecoService.findCep(cepReplace).then(enderecoRecuperado => {
+            AddressService.findCep(cepReplace).then(enderecoRecuperado => {
                  
                 if(enderecoRecuperado.logradouro == null) {
                       ShowMessage.show(`Não foi encontrado um endereço para o cep ${cepReplace}`,toastWarning);
                       return;
-                }         
-                const endereco = {endereco:{cep:cep,logradouro:enderecoRecuperado.logradouro,numero:enderecoRecuperado.numero,complemento:enderecoRecuperado.complemento,bairro:enderecoRecuperado.bairro,cidade:enderecoRecuperado.localidade,estado:enderecoRecuperado.uf}};
+                }
+                const newState = createInstance(this.state);
+                newState.cliente.endereco.logradouro =   enderecoRecuperado.logradouro;
+                newState.cliente.endereco.numero =   enderecoRecuperado.numero;
+                newState.cliente.endereco.complemento = enderecoRecuperado.numero;
+                newState.cliente.endereco.bairro = enderecoRecuperado.bairro;
+                newState.cliente.endereco.cidade = enderecoRecuperado.localidade;
+                newState.cliente.endereco.estado = enderecoRecuperado.uf;
                 this.cepRetornado = 'S';
-                this.setState({cliente:endereco});
+                this.setState(newState);
                 $('#estadosDiv input[type=text]').val(enderecoRecuperado.uf).attr('disabled','disabled');
+             }).catch(error => {
+                console.error(error);
+                ShowMessage.show(`Ocorreu um erro ao recuperar o cep ${cep}`,toastError)
              });
 
         } else {
@@ -126,18 +169,25 @@ export default class Comprador extends Component {
                 </div>
                 <form className="z-depth-1 panel row"  method="post">
                     <div className="input-field col s6">
-                         <input id="nome" type="text" value={this.state.usuario.nome} name="usuario.nome" onChange={this.handleDoubleInputChange.bind(this)}  required />
+                         <input id="nome" ref="nome"  type="text" value={this.state.usuario.nome} name="usuario.nome" onChange={this.handleInputChange.bind(this)}  required />
                          <label htmlFor="nome">Nome</label>
+                    </div>
+                    <div className="input-field col s6">
+                         <input id="nomeComercial"   type="text" value={this.state.cliente.nomeComercial} name="cliente.nomeComercial" onChange={this.handleInputChange.bind(this)}  required />
+                         <label htmlFor="nomeComercial">Nome Comercial</label>
+                    </div>
+                     <div className="input-field col s6">
+                        <MaskedInput id='cpf' value={this.state.cliente.cpf} name="cliente.cpf" onChange={this.handleInputChange.bind(this)}   mask="111.111.111-11" required placeholder="Cpf" />
                     </div>
                     <div className="input-field col s6">
                          <MaskedInput id='telefone' value={this.state.telefone} name="telefone" onChange={this.handleInputChange.bind(this)}   mask="(11) 11111-1111" required placeholder="Telefone" />
                     </div>
                      <div className="input-field col s6">
-                         <input id="email" value={this.state.usuario.email} name="usuario.email" className="validate" onChange={this.handleDoubleInputChange.bind(this)} type="email" />
+                         <input id="email" value={this.state.usuario.email} name="usuario.email" className="validate" onChange={this.handleInputChange.bind(this)} type="email" />
                          <label htmlFor="email"  data-error="Email inválido">Email</label>
                     </div>
                     <div className="input-field col s6">
-                         <input id="senha" ref="senha" type="password" className="validate" minLength="6" required value={this.state.usuario.senha} name="usuario.senha" onChange={this.handleDoubleInputChange.bind(this)} />
+                         <input id="senha" ref="senha" type="password" className="validate" minLength="6" required value={this.state.usuario.senha} name="usuario.senha" onChange={this.handleInputChange.bind(this)} />
                          <label htmlFor="senha" data-error="A senha deve conter no mínimo 6 caracteres">Senha</label>
                     </div>
                     <div className="input-field col s6">
@@ -165,18 +215,18 @@ export default class Comprador extends Component {
                 <form className="z-depth-1 panel row"  method="post">
                
                     <div className="input-field col s6">
-                         <MaskedInput id='cep' value={this.state.cepPesquisa}  mask="11.111-111" required placeholder="Cep" name="cepPesquisa"  onChange={this.handleCepChange.bind(this)}   />
+                         <MaskedInput id='cep' ref="cep" value={this.state.cliente.endereco.cep}  mask="11.111-111" required placeholder="Cep" name="cliente.endereco.cep"  onChange={this.handleCepChange.bind(this)}   />
                     </div>
                     <div className="input-field col s6">
-                          <input id="logradouro" value={this.state.cliente.endereco.logradouro} disabled={disabled}  type="text" name="cliente.endereco.logradouro"  onChange={this.handleTripleInputChange.bind(this)}  /> 
+                          <input id="logradouro" value={this.state.cliente.endereco.logradouro} disabled={disabled}  type="text" name="cliente.endereco.logradouro"  onChange={this.handleInputChange.bind(this)}  /> 
                           <label htmlFor="logradouro"  className={active}>Logradouro</label>  
                     </div>
                      <div className="input-field col s6">
-                         <input id="numero" type="number" value={this.state.cliente.endereco.numero}  name="cliente.endereco.numero" onChange={this.handleTripleInputChange.bind(this)}  />
+                         <input id="numero" type="number" value={this.state.cliente.endereco.numero}  name="cliente.endereco.numero" onChange={this.handleInputChange.bind(this)}  />
                          <label htmlFor="numero">Número</label>
                     </div>
                     <div className="input-field col s6">
-                         <input id="complemento" type="text" value={this.state.cliente.endereco.complemento}  name="cliente.endereco.complemento" onChange={this.handleTripleInputChange.bind(this)}    />
+                         <input id="complemento" type="text" value={this.state.cliente.endereco.complemento}  name="cliente.endereco.complemento" onChange={this.handleInputChange.bind(this)}    />
                          <label htmlFor="complemento">Complemento</label>
                     </div>
 
@@ -191,19 +241,19 @@ export default class Comprador extends Component {
                     </div>
 
                     <div className="input-field col s6">
-                         <input id="cidade" type="text" required disabled={disabled} value={this.state.cliente.endereco.cidade} onChange={this.handleTripleInputChange.bind(this)} />
+                         <input id="cidade" type="text" required disabled={disabled} value={this.state.cliente.endereco.cidade} onChange={this.handleInputChange.bind(this)} />
                          <label htmlFor="cidade"  className={active}>Cidade</label>
                     </div>
 
                     <div className="input-field col s6">
                         <input id="bairro" type="text"  disabled={disabled} required value={this.state.cliente.endereco.bairro}  />  
-                        <label htmlFor="bairro"  className={active} disabled  onChange={this.handleTripleInputChange.bind(this)} >Bairro</label>
+                        <label htmlFor="bairro"  className={active} disabled  onChange={this.handleInputChange.bind(this)} >Bairro</label>
                     </div>                  
     
                     <div className="col s12 panel-footer">
                          <button className="btn waves-effect default" formNoValidate onClick={this.clearAddress.bind(this)}>Limpar
                          </button>
-                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} onClick={this.sendUser.bind(this)}  type="submit" name="action">Enviar
+                         <button className="btn waves-effect success" style={{marginLeft:'5px'}} onClick={this.sendClient.bind(this)}  type="submit" name="action">Enviar
                            <i className="material-icons right">send</i>
                          </button>
                     </div> 
