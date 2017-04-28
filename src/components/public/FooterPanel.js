@@ -7,7 +7,7 @@ export default class FooterPanel extends Component {
         return (
            <div>
             <div className="container">
-                <div className="z-depth-1 panel row">
+                <div className="row">
                     <div className="col s12 panel-footer">
                         <button className="btn waves-effect default" formNoValidate onClick={this.props.clearForm.bind(this)}>
                             Limpar

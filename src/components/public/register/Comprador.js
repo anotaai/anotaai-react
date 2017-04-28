@@ -1,33 +1,24 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import MaskedInput from 'react-maskedinput'
 import ClienteConsumidorService from '../../../services/client/ClienteConsumidorService'
 import ShowMessage from '../../../helpers/ShowMessage'
 import UserService from '../../../services/UserService'
 import {toastWarning, toastInfo, toastError} from '../../../helpers/constants'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
+import {replaceMask} from '../../../helpers/stringHelper'
 import FooterPanel from '../FooterPanel'
 
 
 export function checkInvalidPassword(state) {
     
-    if(state.senha !== state.confirmarSenha) {
+    if(state.usuario.senha !== state.confirmarSenha) {
+        const newState = createInstance(state);
+        newState.usuario.senha = '';
+        newState.confirmarSenha = '';
         ShowMessage.show("A senha não confere com a confirmação de senha. Informe novamente.", toastWarning);
-        const newState = createInstance(this.state);
-        state.usuario.senha = '';
-        state.confirmarSenha = '';
         return newState;
     }
 }
-
-export function clearUser(state) {
-        state.usuario.nome = '';
-        state.usuario.email = '';
-        state.usuario.senha = '';
-        state.confirmarSenha = '';
-        state.telefone = '';
-}
-
 
 export class FormUser extends Component {
 
@@ -37,11 +28,11 @@ export class FormUser extends Component {
      
     handlePhoneChange(e) {
         const telefone = e.target.value;
-        const telefoneReplace = telefone.replace('(', '').replace(')', '').replace('-', '');
+        const telefoneReplace = replaceMask(telefone);
         const finalizouTelefone = telefoneReplace.indexOf('_');
         this.props.handleInputChange(e);
 
-        /*if (finalizouTelefone === -1 && telefoneReplace !== '') {
+        if (finalizouTelefone === -1 && telefoneReplace !== '') {
             ClienteConsumidorService.findUsuarioByPhone(telefoneReplace)
                 .then(response => {
                     alert(response);
@@ -49,13 +40,10 @@ export class FormUser extends Component {
                 .catch(error => {
                     ShowMessage.show('Ocorreu um erro ao recuperar o telefone do usuário', toastError);
                 })
-        } */
+        } 
     }
 
     render() {
-
-         
-
         return (
            <div>
             <div className="section"></div>
@@ -98,6 +86,7 @@ export class FormUser extends Component {
                     </div>
                 </div>
             </div>
+             <div className="section"></div>
            </div>   
         )
     }
@@ -107,7 +96,7 @@ export class FormUser extends Component {
 
 export default class Comprador extends Component {
 
-     constructor() {
+   constructor() {
         super();
         this.state = {
             usuario: { nome: '', email: '', senha: '' },
@@ -124,20 +113,24 @@ export default class Comprador extends Component {
     clearForm(e) {
         e.preventDefault();
         const newState = createInstance(this.state.usuario);
-        clearUser(newState);
+        newState.usuario.nome = '';
+        newState.usuario.email = '';
+        newState.usuario.senha = '';
+        newState.confirmarSenha = '';
+        newState.telefone = '';
         this.setState(newState);
-       // ReactDOM.findDOMNode(this.refs.nome).focus();
+        //ReactDOM.findDOMNode(this.refs.nome).focus();
     }
 
 
     send(e) {
-         e.preventDefault();
+        e.preventDefault();
          
-         const state = checkInvalidPassword(this.state);
+      const state = checkInvalidPassword(this.state);
 
-         if(state !== undefined) {           
+      if(state !== undefined) {           
             this.setState(state);
-            ReactDOM.findDOMNode(this.refs.senha).focus();
+            //ReactDOM.findDOMNode(this.refs.senha).focus();
          } else {
             UserService.save(this.state.usuario, this.state.telefone).then(response => {
                 ShowMessage.show("Sucesso", toastInfo);

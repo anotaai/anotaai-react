@@ -6,11 +6,10 @@ import AddressService from '../../../services/register/AddressService'
 import ShowMessage from '../../../helpers/ShowMessage'
 import {toastWarning, toastInfo, toastError} from '../../../helpers/constants'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
+import {replaceMask} from '../../../helpers/stringHelper'
 import ClientService from '../../../services/ClientService'
-import {FormUser,footerPanel,checkInvalidPassword,clearUser} from './Comprador'
+import {FormUser,checkInvalidPassword} from './Comprador'
 import FooterPanel from '../FooterPanel'
-
-
 
 export default class Vendedor extends Component {
  
@@ -54,7 +53,11 @@ export default class Vendedor extends Component {
         newState.cliente.endereco.estado = '';
         newState.cliente.cpf = '';
         newState.cliente.nomeComercial = '';
-        clearUser(newState);
+        newState.usuario.nome = '';
+        newState.usuario.email = '';
+        newState.usuario.senha = '';
+        newState.confirmarSenha = '';
+        newState.telefone = '';
         this.setState(newState);
         //ReactDOM.findDOMNode(this.refs.formUser.nome).focus();
 
@@ -83,7 +86,7 @@ export default class Vendedor extends Component {
     handleCepChange(e) {
 
         const cep = e.target.value;
-        const cepReplace = cep.replace('.', '').replace('-', '');
+        const cepReplace = replaceMask(cep);
         const finalizouCep = cepReplace.indexOf('_');
         this.handleInputChange(e);
 

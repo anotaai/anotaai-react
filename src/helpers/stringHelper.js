@@ -1,4 +1,4 @@
-export function buildTelefone(telefoneParameter) {
+export function buildPhone(telefoneParameter) {
     let telefoneStr = telefoneParameter.replace('(','').replace(')','').replace('-','');
     let ddi = '';
     let ddd = '';
@@ -15,3 +15,12 @@ export function buildTelefone(telefoneParameter) {
 
     return telefone;
 }
+
+ export function getNumbers(stringParameter) {
+    return stringParameter.replace(/[^\d]+/g,'')
+}
+
+export function replaceMask(stringParameter) {
+     return stringParameter.replace('(', '').replace(')', '').replace('-', '').replace('.', '');
+}
+
