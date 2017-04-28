@@ -2,13 +2,12 @@ import { urlBackend} from '../helpers/constants'
 import { buildTelefone } from '../helpers/stringHelper'
 
 
-export default class UsuarioService {
+export default class UserService {
 
     static save(usuario, telefoneStr) {
-
+        
         usuario.telefone = buildTelefone(telefoneStr);
 
-  
         return fetch(`${urlBackend}/rest/usuarios`, {
             method: 'POST',
             body: JSON.stringify({ nome: usuario.nome, email: usuario.email , senha: usuario.senha , telefone: usuario.telefone }),

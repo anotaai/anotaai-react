@@ -5,8 +5,9 @@ export function getObjectNewState(name, value, currentState) {
 }
 
 export function createInstance(currentState) {
- return Object.assign({}, currentState);
+  return Object.assign({}, currentState);
 }
+
 
 function setData(key, val, obj) {
 
@@ -21,3 +22,4 @@ function setData(key, val, obj) {
 
     obj[last] = val;
 }
+
