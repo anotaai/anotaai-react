@@ -9,7 +9,21 @@ import UsuarioService from '../../../services/UsuarioService'
 import {toastWarning,toastInfo,toastError} from '../../../helpers/constants'
 import {getObjectNewState,createInstance} from '../../../helpers/jsonHelper'
 import ClientService from '../../../services/ClientService'
-import $ from 'jquery'
+
+
+export class FormUsuario extends Component {
+ 
+    render() {
+
+        return(
+
+            <div>
+
+            </div>
+        )
+    }
+
+}
 
 export default class Comprador extends Component {
 
@@ -26,9 +40,7 @@ export default class Comprador extends Component {
     
     componentDidMount() {          
        EnumService.load('estados').then(json => {
-          this.setState({estadoList:json});   
-           $('#estados').material_select();
-           $(ReactDOM.findDOMNode(this.refs.selectEstado)).on('change',this.handleInputChange.bind(this));
+          this.setState({estadoList:json});
        }).catch(error => {
             console.log(error);
             ShowMessage.show(`Ocorreu um erro ao recuperar o serviço de estados`,toastError)
@@ -64,7 +76,6 @@ export default class Comprador extends Component {
        newState.cliente.endereco.cidade = '';
        newState.cliente.endereco.estado = '';
        this.setState(newState);
-       $('#estadosDiv input[type=text]').val('').removeAttr('disabled');
        ReactDOM.findDOMNode(this.refs.cep).focus();
 
     }
@@ -132,7 +143,7 @@ export default class Comprador extends Component {
                       return;
                 }
                 const newState = createInstance(this.state);
-                newState.cliente.endereco.logradouro =   enderecoRecuperado.logradouro;
+                newState.cliente.endereco.logradouro =  enderecoRecuperado.logradouro;
                 newState.cliente.endereco.numero =   enderecoRecuperado.numero;
                 newState.cliente.endereco.complemento = enderecoRecuperado.numero;
                 newState.cliente.endereco.bairro = enderecoRecuperado.bairro;
@@ -140,7 +151,6 @@ export default class Comprador extends Component {
                 newState.cliente.endereco.estado = enderecoRecuperado.uf;
                 this.cepRetornado = 'S';
                 this.setState(newState);
-                $('#estadosDiv input[type=text]').val(enderecoRecuperado.uf).attr('disabled','disabled');
              }).catch(error => {
                 console.error(error);
                 ShowMessage.show(`Ocorreu um erro ao recuperar o cep ${cep}`,toastError)
@@ -226,18 +236,15 @@ export default class Comprador extends Component {
                          <label htmlFor="numero">Número</label>
                     </div>
                     <div className="input-field col s6">
-                         <input id="complemento" type="text" value={this.state.cliente.endereco.complemento}  name="cliente.endereco.complemento" onChange={this.handleInputChange.bind(this)}    />
+                         <input id="complemento" type="text" value={this.state.cliente.endereco.complemento}  name="cliente.endereco.complemento" onChange={this.handleInputChange.bind(this)}   />
                          <label htmlFor="complemento">Complemento</label>
                     </div>
 
                     <div id="estadosDiv" className="input-field col s6">
-                        
-                        <select id="estados" ref="selectEstado"  /* className="browser-default" */  disabled={disabled}  value={this.state.cliente.endereco.estado}   name="cliente.endereco.estado"   >
-                          <option value=""></option>
+                        <select  className="browser-default"   disabled={disabled} onChange={this.handleInputChange.bind(this)}  value={this.state.cliente.endereco.estado}   name="cliente.endereco.estado"   >
+                          <option value="">Selecione o estado</option>
                             {this.state.estadoList.map(estado => (<option key={estado.type}  value={estado.type}>{estado.descricao}</option>))}
                          </select>
-                         <label htmlFor="estados">Estado</label>
-
                     </div>
 
                     <div className="input-field col s6">
