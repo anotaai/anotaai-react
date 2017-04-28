@@ -1,13 +1,15 @@
 import {urlBackend} from '../../helpers/constants'
+import { buildTelefone } from '../../helpers/stringHelper'
 
-class ClienteConsumidorService {
+export default class ClienteConsumidorService {
   
-    static findUsuarioByPhone(telefone) {
+    static findUsuarioByPhone(telefoneStr) {
 
-        return 
-         fetch(`${urlBackend}/rest/clienteconsumidor/findby/telefone`,{
+        const telefone = buildTelefone(telefoneStr);
+
+        return   fetch(`${urlBackend}/rest/clienteconsumidor/findby/telefone`,{
             method: 'POST',
-            body: JSON.stringify({telefone}),
+            body: JSON.stringify({ddd:telefone.ddd,ddi:telefone.ddi,numero:telefone.numero}),
             headers: new Headers({
                 'Content-type': 'application/json'})
            }) 

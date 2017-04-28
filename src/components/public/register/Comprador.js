@@ -108,10 +108,10 @@ export default class Comprador extends Component {
        if(finalizouTelefone === -1 && telefoneReplace !== '')  {
            ClienteConsumidorService.findUsuarioByPhone(telefoneReplace)
             .then(response => {
-                  
+                   alert(response);
             })
             .catch(error => {
-
+                ShowMessage.show('Ocorreu um erro ao recuperar o telefone do usuário',toastError);
             })
        }
     }
@@ -180,7 +180,7 @@ export default class Comprador extends Component {
                         <MaskedInput id='cpf' value={this.state.cliente.cpf} name="cliente.cpf" onChange={this.handleInputChange.bind(this)}   mask="111.111.111-11" required placeholder="Cpf" />
                     </div>
                     <div className="input-field col s6">
-                         <MaskedInput id='telefone' value={this.state.telefone} name="telefone" onChange={this.handleInputChange.bind(this)}   mask="(11) 11111-1111" required placeholder="Telefone" />
+                         <MaskedInput id='telefone' value={this.state.telefone} name="telefone" onChange={this.handlePhoneChange.bind(this)}   mask="(11) 11111-1111" required placeholder="Telefone" />
                     </div>
                      <div className="input-field col s6">
                          <input id="email" value={this.state.usuario.email} name="usuario.email" className="validate" onChange={this.handleInputChange.bind(this)} type="email" />
