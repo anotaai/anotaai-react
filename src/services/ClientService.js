@@ -10,7 +10,7 @@ export default class ClientService {
         cliente.cpf =   getNumbers(cliente.cpf);  
         cliente.endereco.cep = getNumbers(cliente.endereco.cep);  
 
-        fetch(`${urlBackend}/rest/clientes/`,{
+      return  fetch(`${urlBackend}/rest/clientes/`,{
             method: 'POST',
             body: JSON.stringify({type:'cliente', nomeComercial:cliente.nomeComercial,cpf:cliente.cpf,endereco:cliente.endereco,usuario: usuario}),
             headers: new Headers({

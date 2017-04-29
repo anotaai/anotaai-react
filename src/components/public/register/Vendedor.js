@@ -42,15 +42,8 @@ export default class Vendedor extends Component {
 
     clearForm(e) {
         e.preventDefault();
-        this.cepRetornado = '';
         const newState = createInstance(this.state);
-        newState.cliente.endereco.cep = '';
-        newState.cliente.endereco.logradouro = '';
-        newState.cliente.endereco.numero = '';
-        newState.cliente.endereco.complemento = '';
-        newState.cliente.endereco.bairro = '';
-        newState.cliente.endereco.cidade = '';
-        newState.cliente.endereco.estado = '';
+        this.clearAddress(newState);
         newState.cliente.cpf = '';
         newState.cliente.nomeComercial = '';
         newState.usuario.nome = '';
@@ -61,6 +54,17 @@ export default class Vendedor extends Component {
         this.setState(newState);
         //ReactDOM.findDOMNode(this.refs.formUser.nome).focus();
 
+    }
+
+    clearAddress(newState) {
+        this.cepRetornado = '';
+        newState.cliente.endereco.cep = '';
+        newState.cliente.endereco.logradouro = '';
+        newState.cliente.endereco.numero = '';
+        newState.cliente.endereco.complemento = '';
+        newState.cliente.endereco.bairro = '';
+        newState.cliente.endereco.cidade = '';
+        newState.cliente.endereco.estado = '';
     }
 
     send(e) {
@@ -113,7 +117,9 @@ export default class Vendedor extends Component {
             });
 
         } else {
-            this.clearForm(e);
+            const newState = createInstance(this.state);
+            this.clearAddress(newState);
+            this.setState(newState);
         }
 
     }
@@ -143,11 +149,11 @@ export default class Vendedor extends Component {
                     </div>
                     <div className="input-field col s6">
                         <input id="numero" type="number" value={this.state.cliente.endereco.numero} name="cliente.endereco.numero" onChange={this.handleInputChange.bind(this)} />
-                        <label htmlFor="numero">Número</label>
+                        <label htmlFor="numero" className={active} >Número</label>
                     </div>
                     <div className="input-field col s6">
                         <input id="complemento" type="text" value={this.state.cliente.endereco.complemento} name="cliente.endereco.complemento" onChange={this.handleInputChange.bind(this)} />
-                        <label htmlFor="complemento">Complemento</label>
+                        <label htmlFor="complemento" className={active}>Complemento</label>
                     </div>
 
                     <div id="estadosDiv" className="input-field col s6">
@@ -158,13 +164,13 @@ export default class Vendedor extends Component {
                     </div>
 
                     <div className="input-field col s6">
-                        <input id="cidade" type="text" required disabled={disabled} value={this.state.cliente.endereco.cidade} onChange={this.handleInputChange.bind(this)} />
+                        <input id="cidade" type="text" name="cliente.endereco.cidade" required disabled={disabled} value={this.state.cliente.endereco.cidade} onChange={this.handleInputChange.bind(this)} />
                         <label htmlFor="cidade" className={active}>Cidade</label>
                     </div>
 
                     <div className="input-field col s6">
-                        <input id="bairro" type="text" disabled={disabled} required value={this.state.cliente.endereco.bairro} />
-                        <label htmlFor="bairro" className={active} disabled onChange={this.handleInputChange.bind(this)} >Bairro</label>
+                        <input id="bairro" type="text" name="cliente.endereco.bairro" onChange={this.handleInputChange.bind(this)}   disabled={disabled} required value={this.state.cliente.endereco.bairro} />
+                        <label htmlFor="bairro" className={active} disabled>Bairro</label>
                     </div>
                    </div>       
                 </div>

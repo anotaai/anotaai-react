@@ -86,7 +86,6 @@ export class FormUser extends Component {
                     </div>
                 </div>
             </div>
-             <div className="section"></div>
            </div>   
         )
     }

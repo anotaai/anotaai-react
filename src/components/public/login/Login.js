@@ -25,7 +25,7 @@ export class RadioUser extends Component {
     } else {
       field = <div> 
                <input id="email" className='validate' type='email' onChange={this.handleInputChange.bind(this)}  name="email" required placeholder="Email" /> 
-               <label for="email" data-error="Email inválido" />
+               <label htmlFor="email" data-error="Email inválido" />
              </div>
     }
 
