@@ -9,7 +9,7 @@ export default class ClienteConsumidorService {
 
         return   fetch(`${urlBackend}/rest/clienteconsumidor/findby/telefone`,{
             method: 'POST',
-            body: JSON.stringify({ddd:telefone.ddd,ddi:telefone.ddi,numero:telefone.numero}),
+            body: JSON.stringify(telefone),
             headers: new Headers({
                 'Content-type': 'application/json'})
            }) 

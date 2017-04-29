@@ -9,10 +9,11 @@ export default class ClientService {
         usuario.telefone = buildPhone(telefoneStr);
         cliente.cpf =   getNumbers(cliente.cpf);  
         cliente.endereco.cep = getNumbers(cliente.endereco.cep);  
+        cliente.type = 'cliente';
 
       return  fetch(`${urlBackend}/rest/clientes/`,{
             method: 'POST',
-            body: JSON.stringify({type:'cliente', nomeComercial:cliente.nomeComercial,cpf:cliente.cpf,endereco:cliente.endereco,usuario: usuario}),
+            body: JSON.stringify(cliente),
             headers: new Headers({
                 'Content-type': 'application/json'
             })
