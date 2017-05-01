@@ -7,6 +7,7 @@ import {toastWarning, toastInfo, toastError} from '../../../helpers/constants'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
 import {replaceMask} from '../../../helpers/stringHelper'
 import T from 'i18n-react';
+import { MDText } from 'i18n-react';
 import FooterPanel from '../../FooterPanel'
 
 export function checkInvalidPassword(state) {
@@ -21,6 +22,11 @@ export function checkInvalidPassword(state) {
 }
 
 export class FormUser extends Component {
+    componentDidMount() {
+        let T = new MDText();
+        let x = T.translate("nome");
+        console.log(x);
+    }
 
     handleInputChange(e) {
         this.props.handleInputChange(e);
@@ -57,7 +63,7 @@ export class FormUser extends Component {
                     <div className="input-field col s6">
                         <input id="nome" ref="nome" type="text" value={this.props.usuario.nome} name="usuario.nome" onChange={this.handleInputChange.bind(this)} required />
                         <label htmlFor="nome">
-                            <T.span text={{ key: "nome", myName: "i18n-react" }}/>
+                            <T.span text={{ key: "nome"}}/>
                         </label>
                     </div>
                     {this.props.cliente !== undefined &&

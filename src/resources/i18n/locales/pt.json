@@ -1,16 +1,19 @@
 {
-    "pt": {
-        "welcome": {
-            "hello": "Olá, {name}",
-            "intro": "Isto é um exemplo de aplicação.",
-            "locales": {
-                "0": "{context} locais",
-                "1": "{context} locais",
-                "2..20": "{context} locais",
-                "_": "Um traço baixo"
-            },
-            "registeredText": "Houve {{welcome.locales}} registrado até hoje."
-        }
+
+    "welcome": {
+        "hello": "Olá, {name}",
+        "intro": "Isto é um exemplo de aplicação.",
+        "locales": {
+            "0": "{context} locais",
+            "1": "{context} locais",
+            "2..20": "{context} locais",
+            "_": "Um traço baixo"
+        },
+        "registeredText": "Houve {{welcome.locales}} registrado até hoje."
+    },
+    "label": {
+        "comprador": "Comprador",
+        "vendedor": "Vendedor"
     },
     "nome": "Nome Translate"
 }

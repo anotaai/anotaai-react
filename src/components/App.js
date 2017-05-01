@@ -5,7 +5,10 @@ import { Translator } from 'i18n-react-loader'
 
 export default class App extends Component {
 
-  componentDidMount() {
+  constructor() {
+    var t = {};
+    console.log(t);
+    super();
     this.renderTranslate();
   }
 
@@ -22,6 +25,8 @@ export default class App extends Component {
     }).then(() => {
       // Render your app -- React.render(...);
     });
+    var T = require('i18n-react');
+    console.log(T);
   }
 
   changeLocale(localeKey) {
