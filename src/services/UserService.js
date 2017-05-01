@@ -8,7 +8,7 @@ export default class UserService {
         
         usuario.telefone = buildPhone(telefoneStr);
 
-        return fetch(`http://localhost:8080/rest/usuarios`, {
+        return fetch(`${urlBackend}/rest/usuarios`, {
             method: 'POST',
             body: JSON.stringify(usuario),
             headers: new Headers({

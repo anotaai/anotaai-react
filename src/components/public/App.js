@@ -2,20 +2,20 @@ import React, { Component } from 'react'
 import Menu from './Menu'
 import Footer from './Footer'
 
-export default class Layout extends Component {
+export default class App extends Component {
 
- 
+
   render() {
 
     return (
-      <div> 
-        <header> 
-          <Menu/>
+      <div>
+        <header>
+          <Menu />
         </header>
         <main>
-           {this.props.children}
+          {this.props.children}
         </main>
-        <Footer/>
+        <Footer />
       </div>
     )
   }

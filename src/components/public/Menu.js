@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { urlHome, urlLogin, urlRegister } from '../../helpers/constants'
 import caderneta from "../../img/128x128.png"
 import $ from 'jquery'
+import { connect } from 'react-redux';
 
 
 class Links extends Component {
@@ -24,6 +25,7 @@ class Links extends Component {
 
     }
 }
+
 
  class MenuResponsivo extends Component {
 
@@ -51,7 +53,14 @@ class Links extends Component {
 }
 
 
-export default class Menu extends Component {
+ class Menu extends Component {
+
+
+  
+
+    componentWillUpdate(nextProps) {
+       console.log(nextProps.authenticated);    
+    }
 
     render() {
         return (
@@ -70,3 +79,11 @@ export default class Menu extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+  return {authenticated : state.auth.authenticated}
+};
+
+const MenuContainer = connect(mapStateToProps)(Menu);
+
+export default MenuContainer
