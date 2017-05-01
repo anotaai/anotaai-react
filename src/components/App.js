@@ -25,8 +25,6 @@ export default class App extends Component {
     }).then(() => {
       // Render your app -- React.render(...);
     });
-    var T = require('i18n-react');
-    console.log(T);
   }
 
   changeLocale(localeKey) {
