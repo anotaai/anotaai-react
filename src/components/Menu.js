@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { urlHome, urlLogin, urlRegister } from '../../helpers/constants'
-import caderneta from "../../img/128x128.png"
+import { urlHome, urlLogin, urlRegister } from '../helpers/constants'
+import caderneta from "../img/128x128.png"
 import $ from 'jquery'
 import { connect } from 'react-redux';
 

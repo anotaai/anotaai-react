@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { RadioUser } from './Login'
-import { Modal } from 'react-modal';
+import  Modal  from 'react-modal';
 
 export default class ModalRenewPassword extends Component {
 

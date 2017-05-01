@@ -9,7 +9,7 @@ import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
 import {replaceMask} from '../../../helpers/stringHelper'
 import ClientService from '../../../services/ClientService'
 import {FormUser,checkInvalidPassword} from './Comprador'
-import FooterPanel from '../FooterPanel'
+import FooterPanel from '../../FooterPanel'
 
 export default class Vendedor extends Component {
  
