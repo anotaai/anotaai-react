@@ -5,7 +5,6 @@ import caderneta from "../img/128x128.png"
 import $ from 'jquery'
 import { connect } from 'react-redux';
 
-
 class Links extends Component {
 
     hideResponsiveMenu() {
@@ -52,11 +51,7 @@ class Links extends Component {
     }
 }
 
-
  class Menu extends Component {
-
-
-  
 
     componentWillUpdate(nextProps) {
        console.log(nextProps.authenticated);    
