@@ -3,7 +3,7 @@ import Menu from './Menu'
 import Footer from './Footer'
 import { Translator } from 'i18n-react-loader'
 
-export default class Layout extends Component {
+export default class App extends Component {
 
   componentDidMount() {
     this.renderTranslate();

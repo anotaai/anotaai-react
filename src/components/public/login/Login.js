@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import MaskedInput from 'react-maskedinput'
 import ModalRenewPassword from './ModalRenewPassword'
- 
+import LoginService from '../../../services/login/LoginService'
+
 export class RadioUser extends Component {
 
   constructor() {
@@ -50,6 +51,8 @@ export class RadioUser extends Component {
 
 export default class Login extends Component {
 
+
+
   constructor() {
     super();
     this.state = { showModal: false , email:'',telefone:'' };
@@ -74,8 +77,10 @@ export default class Login extends Component {
     console.log(this.state.email);
     console.log(this.senha.value);
     console.log(this.materConectado.checked);
-    
+    this.context.store.dispatch(LoginService.login());
   }
+
+  
   render() {
 
     return (
@@ -113,10 +118,14 @@ export default class Login extends Component {
             </div>
           </div>
         </center> 
-        <ModalRenewPassword showModal={this.state.showModal} callbackHideModal={this.hideModal.bind(this)} />
+         <ModalRenewPassword showModal={this.state.showModal} callbackHideModal={this.hideModal.bind(this)} />
       </main>
 
     );
 
   }
+}
+
+Login.contextTypes = {
+  store : React.PropTypes.object.isRequired
 }
