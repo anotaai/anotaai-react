@@ -14,10 +14,10 @@ export default class App extends Component {
     i18nReactLoader.default.init({
       useExternalAPI: false,
       defaultLocale: 'pt', // key for default locale
-      localSupportedLocales: require('../../resources/i18n/localeSuported.json'),
+      localSupportedLocales: require('../resources/i18n/localeSuported.json'),
       localLocaleMap: {
-        en: require('../../resources/i18n/locales/en.json'),
-        pt: require('../../resources/i18n/locales/pt.json'),
+        en: require('../resources/i18n/locales/en.json'),
+        pt: require('../resources/i18n/locales/pt.json'),
       },
     }).then(() => {
       // Render your app -- React.render(...);

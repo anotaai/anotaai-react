@@ -6,7 +6,6 @@ import UserService from '../../../services/UserService'
 import {toastWarning, toastInfo, toastError} from '../../../helpers/constants'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
 import {replaceMask} from '../../../helpers/stringHelper'
-import FooterPanel from '../FooterPanel'
 import T from 'i18n-react';
 import FooterPanel from '../../FooterPanel'
 
