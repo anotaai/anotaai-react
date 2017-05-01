@@ -7,7 +7,7 @@ import {toastWarning, toastInfo, toastError} from '../../../helpers/constants'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
 import {replaceMask} from '../../../helpers/stringHelper'
 import FooterPanel from '../FooterPanel'
-
+import T from 'i18n-react';
 
 export function checkInvalidPassword(state) {
     
@@ -56,7 +56,9 @@ export class FormUser extends Component {
 
                     <div className="input-field col s6">
                         <input id="nome" ref="nome" type="text" value={this.props.usuario.nome} name="usuario.nome" onChange={this.handleInputChange.bind(this)} required />
-                        <label htmlFor="nome">Nome</label>
+                        <label htmlFor="nome">
+                            <T.span text={{ key: "nome", myName: "i18n-react" }}/>
+                        </label>
                     </div>
                     {this.props.cliente !== undefined &&
                         <div className="input-field col s6">

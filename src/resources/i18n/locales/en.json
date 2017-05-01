@@ -1,0 +1,16 @@
+{
+    "en": {
+        "welcome": {
+            "hello": "Hello, {name}",
+            "intro": "This is an example application.",
+            "locales": {
+                "0": "{context} locales",
+                "1": "{context} locale",
+                "2..20": "{context} locales",
+                "_": "A LOT of locales"
+            },
+            "registeredText": "There has been {{welcome.locales}} registered to this day."
+        }
+    },
+    "nome": "Nome Translate"
+}
