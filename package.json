@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "i18n-react": "^0.3.0-ts1",
+    "i18n-react-loader": "^0.1.0",
     "immutable": "^3.8.1",
     "jquery": "^2.1.1",
     "materialize-css": "^0.98.2",
