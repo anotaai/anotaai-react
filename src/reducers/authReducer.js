@@ -8,7 +8,7 @@ export default function (state = INITIAL_STATE, action) {
     case AUTH_USER:
       return { ...state, authenticated: true };
     case UNAUTH_USER:
-      return { ...state, authenticated: false };
+      return { ...state, authenticated: false , errorMsg: action.msg};
     default:
       return state;
   }

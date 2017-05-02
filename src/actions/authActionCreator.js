@@ -6,6 +6,6 @@ export function authUser(){
     return {type:AUTH_USER};
 }
 
-export function unauthUser(){
-    return {type:UNAUTH_USER}    
+export function unauthUser(msg){
+    return {type:UNAUTH_USER,msg}    
 }
