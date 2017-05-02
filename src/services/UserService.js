@@ -1,5 +1,6 @@
 import { urlBackend} from '../helpers/constants'
 import { buildPhone } from '../helpers/stringHelper'
+import { createInstance } from '../helpers/jsonHelper'
 import { authUser , unauthUser } from '../actions/authActionCreator'
 import { browserHistory } from 'react-router'
 import { urlHome } from '../helpers/constants'
@@ -9,11 +10,12 @@ export default class UserService {
 
     static save(usuario, telefoneStr) {
         
-        usuario.telefone = buildPhone(telefoneStr);
+        const newUserInstance = createInstance(usuario);
+        newUserInstance.telefone = buildPhone(telefoneStr);
 
         return fetch(`${urlBackend}/rest/usuarios`, {
             method: 'POST',
-            body: JSON.stringify(usuario),
+            body: JSON.stringify(newUserInstance),
             headers: new Headers({
                 'Content-type': 'application/json'})
             })
@@ -32,34 +34,34 @@ export default class UserService {
     static login(usuarioLogin, keepAlive) {
         return function (dispatch) {
             
-            let tipoAcesso = 'EMAIL';
+            const newUserLoginInstance = createInstance(usuarioLogin);
+            const newUserInstance = createInstance(usuarioLogin.usuario);
+          
+            const tipoAcesso = usuarioLogin.usuario.email !== '' ? 'EMAIL'  : 'TELEFONE';
+            const telefone = usuarioLogin.usuario.telefone;
+            
+            newUserLoginInstance.tipoAcesso = tipoAcesso;
+            newUserInstance.telefone = buildPhone(telefone);
+            newUserLoginInstance.usuario = newUserInstance;
 
-            if(usuarioLogin.usuario.telefone !== ''){
-                usuarioLogin.usuario.telefone = buildPhone(usuarioLogin.usuario.telefone);
-                tipoAcesso = 'TELEFONE';
-            } 
-           
-           usuarioLogin.tipoAcesso = tipoAcesso; 
-        
 
-            fetch(`${urlBackend}/rest/usuarios/login`, {
+            return fetch(`${urlBackend}/rest/usuarios/login`, {
                 method: 'POST',
-                body: JSON.stringify(usuarioLogin),
+                body: JSON.stringify(newUserLoginInstance),
                 headers: new Headers({
                     'Content-type': 'application/json'
                 })
             }).then(response => {
-                
-                if (response.ok) {
+                return response.json();
+            }).then(json => {
+                if (json.anotaaiExceptionMessages) {
+                     dispatch(unauthUser(json));
+                } else {
                     dispatch(authUser());
                     browserHistory.push(urlHome);
                 }
-
-               return response.json();
-            }).then(response => {
-                dispatch(unauthUser(response));
             }).catch(error => {
-               dispatch(unauthUser('Ocorreu um erro ao logar'));
+                dispatch(unauthUser('Ocorreu um erro ao logar'));
             })
 
         }

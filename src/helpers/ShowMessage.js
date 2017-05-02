@@ -3,15 +3,12 @@ import { toastInfo, toastError, toastWarning, toastSuccess, defaultTime } from '
 export default class ShowMessage {
 
 
-
     static show(message, type) {
 
         if (message.anotaaiExceptionMessages) {
-
             message.anotaaiExceptionMessages.forEach(message => {
                 ShowMessage.setMessage(message)
             });
-
         } else {
             window.Materialize.toast(message, defaultTime, type);
         }

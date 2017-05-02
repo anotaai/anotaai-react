@@ -7,7 +7,7 @@ export default class ClienteConsumidorService {
 
         const telefone = buildTelefone(telefoneStr);
 
-        return   fetch(`${urlBackend}/rest/clienteconsumidor/findby/telefone`,{
+        return   fetch(`${urlBackend}/rest/clienteconsumidor/findby/telefone`, {
             method: 'POST',
             body: JSON.stringify(telefone),
             headers: new Headers({

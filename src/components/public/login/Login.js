@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MaskedInput from 'react-maskedinput'
 import ModalRenewPassword from './ModalRenewPassword'
 import UsuarioService from '../../../services/UserService'
-import { getObjectNewState } from '../../../helpers/jsonHelper'
+import { getObjectNewState , createInstance } from '../../../helpers/jsonHelper'
 import { toastError }  from '../../../helpers/constants'
 import ShowMessage  from '../../../helpers/ShowMessage'
 
@@ -28,7 +28,7 @@ export class RadioUser extends Component {
       field = <MaskedInput id='telefone'   onChange={this.handleInputChange.bind(this)} mask="(11) 11111-1111"   name="userLogin.usuario.telefone" required placeholder="Telefone" />
     } else {
       field = <div> 
-               <input id="email" className='validate' type='email' onChange={this.handleInputChange.bind(this)}  name="userLogin.usuario.email" required placeholder="Email" /> 
+               <input id="email" className='validate' type='email' onChange={this.handleInputChange.bind(this)}   name="userLogin.usuario.email" required placeholder="Email" /> 
                <label htmlFor="email" data-error="Email inválido" />
              </div>
     }
@@ -78,10 +78,15 @@ export default class Login extends Component {
     this.context.store.dispatch(UsuarioService.login(this.state.userLogin,this.keepAlive.checked));
   }
 
-   componentWillMount(){
+   componentDidMount(){
       this.context.store.subscribe(() => {
         const errorMsg =  this.context.store.getState().auth.errorMsg;
-        ShowMessage.show(errorMsg,toastError);
+        if(errorMsg !== '') {
+           ShowMessage.show(errorMsg,toastError);
+           const newState = createInstance(this.state);
+           newState.userLogin.usuario.senha = '';
+           this.setState(newState);
+        }
       })
   }
 
@@ -97,10 +102,10 @@ export default class Login extends Component {
           <div className="container">
             <div className="z-depth-1 row panel" style={{ display:'inline-block'}}>
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
-                <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin"  handleInputChange={this.handleInputChange.bind(this)} />
+                <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin"   handleInputChange={this.handleInputChange.bind(this)} />
                 <div className='row'>
                   <div className='input-field col s12'>
-                    <input id="senha"  type='password' name='userLogin.usuario.senha'  placeholder="Senha" required onChange={this.handleInputChange.bind(this)} />
+                    <input id="senha"  type='password' name='userLogin.usuario.senha' value={this.state.userLogin.usuario.senha}  placeholder="Senha"   required onChange={this.handleInputChange.bind(this)} />
                   </div>
                 </div>
                 <div className='row'> 

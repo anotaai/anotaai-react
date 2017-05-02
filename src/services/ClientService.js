@@ -1,19 +1,24 @@
 import {urlBackend } from '../helpers/constants'
 import { buildPhone,getNumbers} from '../helpers/stringHelper'
+import {  createInstance  } from '../helpers/jsonHelper'
 
 export default class ClientService {
   
-    static save(cliente,usuario,telefoneStr) {
+    static save(client,usuario,telefoneStr) {
        
-       
-        usuario.telefone = buildPhone(telefoneStr);
-        cliente.cpf =   getNumbers(cliente.cpf);  
-        cliente.endereco.cep = getNumbers(cliente.endereco.cep);  
-        cliente.type = 'cliente';
+        const newUserInstance = createInstance(usuario);
+        const newClientInstance = createInstance(client);
+        const newAddressInstance = createInstance(client.endereco);
+        newUserInstance.telefone = buildPhone(telefoneStr);
+        newClientInstance.cpf =   getNumbers(client.cpf);  
+        newAddressInstance.cep = getNumbers(client.endereco.cep);  
+        newClientInstance.usuario = newUserInstance;
+        newClientInstance.address = newAddressInstance;
+        newClientInstance.type = 'cliente';
 
       return  fetch(`${urlBackend}/rest/clientes/`,{
             method: 'POST',
-            body: JSON.stringify(cliente),
+            body: JSON.stringify(newClientInstance),
             headers: new Headers({
                 'Content-type': 'application/json'
             })
