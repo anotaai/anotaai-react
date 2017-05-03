@@ -10,7 +10,8 @@ export default class ShowMessage {
                 ShowMessage.setMessage(message)
             });
         } else {
-            window.Materialize.toast(message, defaultTime, type);
+            const typeImage = 'error'; //TODO - pegar ícone de acordo com o tipo da mensagem
+            window.Materialize.toast(`<i class=\"material-icons left\">${typeImage}</i>${message}`, defaultTime, type);
         }
 
     }
