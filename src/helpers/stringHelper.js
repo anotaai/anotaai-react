@@ -17,14 +17,17 @@ export function buildPhone(telefoneParameter) {
     telefone.ddd = ddd;
     telefone.numero = numero;
 
-
-
     return telefone;
 
 }
 
 export function getNumbers(stringParameter) {
     return stringParameter.replace(/[^\d]+/g, '')
+}
+
+export function getPhoneMask(telefoneParameter) {
+     const telefoneStr = telefoneParameter.replace(/^(\d{2})(\d)/g, "($1) $2");
+     return telefoneStr.replace(/(\d)(\d{4})$/, "$1-$2");
 }
 
 export function replaceMask(stringParameter) {

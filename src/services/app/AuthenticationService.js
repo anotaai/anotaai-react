@@ -1,6 +1,7 @@
 import Base64Service from './Base64Service'
- 
+import {COOKIE_USER} from '../../helpers/constants'
 import Cookies from 'universal-cookie';
+import {getPhoneMask} from '../../helpers/stringHelper'
 
 
 
@@ -14,8 +15,7 @@ export default class AuthenticationService {
         var index = login.usuario.nome.indexOf(' ');
         var primeiroNome = index !== -1 ? login.usuario.nome.substring(0, index) : login.usuario.nome;
 
-        telefoneStr = telefoneStr.replace(/^(\d{2})(\d)/g, "($1) $2");
-        telefoneStr = telefoneStr.replace(/(\d)(\d{4})$/, "$1-$2");
+        telefoneStr = getPhoneMask(telefoneStr);
         
          const globals = {};
          globals.login = login;
@@ -32,7 +32,7 @@ export default class AuthenticationService {
 
         //$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
          const cookies = new Cookies();
-         cookies.set(login.cookieSessionName, JSON.stringify(globals), { 'expires': expireDate });
+         cookies.set(COOKIE_USER, JSON.stringify(globals), { 'expires': expireDate });
 
     }
 
