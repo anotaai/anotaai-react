@@ -52,7 +52,7 @@ export default class UserService {
                     'Content-type': 'application/json'
                 })
             }).then(response => {
-                return response.json();
+               response.json();
             }).then(json => {
                 if (json.anotaaiExceptionMessages) {
                      dispatch(unauthUser(json));
