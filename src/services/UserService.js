@@ -45,7 +45,7 @@ export default class UserService {
             
             newUserLoginInstance.tipoAcesso = tipoAcesso;
             newUserInstance.telefone = buildPhone(telefone);
-            newUserInstance.senha = Base64Service.enconde(senha);
+            newUserInstance.senha = Base64Service.encode(senha);
             newUserLoginInstance.usuario = newUserInstance;
 
 
@@ -66,6 +66,7 @@ export default class UserService {
                     browserHistory.push(URL.HOME);
                 }
             }).catch(error => {
+                console.log(error);
                 dispatch(unauthUser('Ocorreu um erro ao logar'));
             })
 

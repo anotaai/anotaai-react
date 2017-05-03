@@ -1,5 +1,8 @@
 import Base64Service from './Base64Service'
-import { cookies } from 'react-cookie'
+ 
+import Cookies from 'universal-cookie';
+
+
 
 export default class AuthenticationService {
 
@@ -28,7 +31,8 @@ export default class AuthenticationService {
         }
 
         //$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-        cookies.set(login.cookieSessionName, JSON.stringify(globals), { 'expires': expireDate });
+         const cookies = new Cookies();
+         cookies.set(login.cookieSessionName, JSON.stringify(globals), { 'expires': expireDate });
 
     }
 

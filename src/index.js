@@ -8,33 +8,19 @@ import { Router, Route, browserHistory } from 'react-router'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
-import Home from './components/private/Home'
-import Login from './components/public/login/Login'
-import Register from './components/public/register/Register'
-import App from './components/App'
-import Vendedor from './components/public/register/Vendedor'
-import Comprador from './components/public/register/Comprador'
-import { URL } from './helpers/constants'
 import authReducer from './reducers/authReducer';
-import Authentication from './components/Authentication'
+import Cookies from 'universal-cookie'
+import {authUser} from './actions/authActionCreator'
+import {routes} from './routes/routes'
 
 const reducers = combineReducers({auth:authReducer});
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+const cookies = new Cookies();
 
-const privateRoutes = (
-    <Route component={Authentication}>
-      <Route path={URL.HOME} component={Home} />
-    </Route> 
-);
-const routes = (
-  <Route path="/" component={App} >
-    <Route path={URL.LOGIN} component={Login} />
-    <Route path={URL.REGISTER} component={Register} />
-    <Route path={URL.VENDEDOR} component={Vendedor} />
-    <Route path={URL.COMPRADOR} component={Comprador} />
-    {privateRoutes}
-  </Route>
-);
+if (cookies.get('globals')) {
+   store.dispatch(authUser());
+   browserHistory.push('/home');
+} 
 
 ReactDOM.render(
   <Provider store={store}>

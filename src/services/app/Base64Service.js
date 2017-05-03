@@ -4,7 +4,7 @@ export default class Base64Service {
         return 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     }
 
-    static enconde(input) {
+    static encode(input) {
         var output = "";
         var chr1, chr2, chr3 = "";
         var enc1, enc2, enc3, enc4 = "";
