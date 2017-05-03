@@ -1,13 +1,13 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import {browserHistory} from 'react-router'
-import {URL_LOGIN} from '../helpers/constants'
+import {URL} from '../helpers/constants'
 
 class Authentication extends Component {
  
   componentDidMount() {
     if (!this.props.authenticated) {
-      browserHistory.push(URL_LOGIN);
+      browserHistory.push(URL.LOGIN);
     }
   }
 

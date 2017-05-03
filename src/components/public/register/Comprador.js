@@ -3,7 +3,7 @@ import MaskedInput from 'react-maskedinput'
 import ClienteConsumidorService from '../../../services/client/ClienteConsumidorService'
 import ShowMessage from '../../../helpers/ShowMessage'
 import UserService from '../../../services/UserService'
-import {TYPE_MESSAGE_WARNING, TYPE_MESSAGE_INFO, TYPE_MESSAGE_ERROR} from '../../../helpers/constants'
+import {TYPE_MESSAGE} from '../../../helpers/constants'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
 import {replaceMask} from '../../../helpers/stringHelper'
 import T from 'i18n-react';
@@ -16,7 +16,7 @@ export function checkInvalidPassword(state) {
         const newState = createInstance(state);
         newState.usuario.senha = '';
         newState.confirmarSenha = '';
-        ShowMessage.show("A senha não confere com a confirmação de senha. Informe novamente.", TYPE_MESSAGE_WARNING);
+        ShowMessage.show("A senha não confere com a confirmação de senha. Informe novamente.", TYPE_MESSAGE.WARNING);
         return newState;
     }
 }
@@ -44,7 +44,7 @@ export class FormUser extends Component {
                     alert(response);
                 })
                 .catch(error => {
-                    ShowMessage.show('Ocorreu um erro ao recuperar o telefone do usuário', TYPE_MESSAGE_ERROR);
+                    ShowMessage.show('Ocorreu um erro ao recuperar o telefone do usuário', TYPE_MESSAGE.ERROR);
                 })
         } 
     }
@@ -140,9 +140,9 @@ export default class Comprador extends Component {
             //ReactDOM.findDOMNode(this.refs.senha).focus();
          } else {
             UserService.save(this.state.usuario, this.state.telefone).then(response => {
-                ShowMessage.show("Sucesso", TYPE_MESSAGE_INFO);
+                ShowMessage.show("Sucesso", TYPE_MESSAGE.INFO);
             }).catch(error => {
-                ShowMessage.show('Ocorreu um erro ao incluir o usuário', TYPE_MESSAGE_ERROR);
+                ShowMessage.show('Ocorreu um erro ao incluir o usuário', TYPE_MESSAGE.ERROR);
             });
          }
 

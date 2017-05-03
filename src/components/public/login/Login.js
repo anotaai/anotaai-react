@@ -3,7 +3,7 @@ import MaskedInput from 'react-maskedinput'
 import ModalRenewPassword from './ModalRenewPassword'
 import UsuarioService from '../../../services/UserService'
 import { getObjectNewState , createInstance } from '../../../helpers/jsonHelper'
-import { TYPE_MESSAGE_ERROR }  from '../../../helpers/constants'
+import { TYPE_MESSAGE }  from '../../../helpers/constants'
 import ShowMessage  from '../../../helpers/ShowMessage'
 
 export class RadioUser extends Component {
@@ -82,7 +82,7 @@ export default class Login extends Component {
       this.context.store.subscribe(() => {
         const errorMsg =  this.context.store.getState().auth.errorMsg;
         if(errorMsg !== '') {
-           ShowMessage.show(errorMsg,TYPE_MESSAGE_ERROR);
+           ShowMessage.show(errorMsg,TYPE_MESSAGE.ERROR);
            const newState = createInstance(this.state);
            newState.userLogin.usuario.senha = '';
            this.setState(newState);

@@ -3,7 +3,9 @@ import { buildPhone } from '../helpers/stringHelper'
 import { createInstance } from '../helpers/jsonHelper'
 import { authUser , unauthUser } from '../actions/authActionCreator'
 import { browserHistory } from 'react-router'
-import { URL_HOME } from '../helpers/constants'
+import { URL } from '../helpers/constants'
+import Base64Service from './app/Base64Service'
+import AuthenticationService from './app/AuthenticationService'
 
 
 export default class UserService {
@@ -39,9 +41,11 @@ export default class UserService {
           
             const tipoAcesso = usuarioLogin.usuario.email !== '' ? 'EMAIL'  : 'TELEFONE';
             const telefone = usuarioLogin.usuario.telefone;
+            const senha = usuarioLogin.usuario.senha;
             
             newUserLoginInstance.tipoAcesso = tipoAcesso;
             newUserInstance.telefone = buildPhone(telefone);
+            newUserInstance.senha = Base64Service.enconde(senha);
             newUserLoginInstance.usuario = newUserInstance;
 
 
@@ -52,13 +56,14 @@ export default class UserService {
                     'Content-type': 'application/json'
                 })
             }).then(response => {
-               response.json();
+               return response.json();
             }).then(json => {
                 if (json.anotaaiExceptionMessages) {
                      dispatch(unauthUser(json));
                 } else {
+                    AuthenticationService.setCredentials(json);
                     dispatch(authUser());
-                    browserHistory.push(URL_HOME);
+                    browserHistory.push(URL.HOME);
                 }
             }).catch(error => {
                 dispatch(unauthUser('Ocorreu um erro ao logar'));
