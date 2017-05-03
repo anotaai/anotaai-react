@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { urlHome, urlLogin, urlRegister } from '../helpers/constants'
+import { URL_HOME , URL_LOGIN, URL_REGISTER } from '../helpers/constants'
 import caderneta from "../img/128x128.png"
 import $ from 'jquery'
 import { connect } from 'react-redux';
@@ -16,9 +16,9 @@ class Links extends Component {
             <div> 
                 <li className="hide-on-large-only"> <a href="#" onClick={this.hideResponsiveMenu}><span className="right red-text">Fechar</span></a> </li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
-                <li> <Link to={urlLogin} onClick={this.hideResponsiveMenu} >Acessar</Link> </li>
+                <li> <Link to={URL_LOGIN} onClick={this.hideResponsiveMenu} >Acessar</Link> </li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
-                <li> <Link to={urlRegister} onClick={this.hideResponsiveMenu} >Registrar</Link></li>
+                <li> <Link to={URL_REGISTER} onClick={this.hideResponsiveMenu} >Registrar</Link></li>
             </div>
         )
 
@@ -61,7 +61,7 @@ class Links extends Component {
         return (
             <div>
                <nav className="indigo" role="navigation">
-                    <div className="nav-wrapper container"><Link id="logo-container" to={urlHome} className="brand-logo">Anota ai</Link>
+                    <div className="nav-wrapper container"><Link id="logo-container" to={URL_HOME} className="brand-logo">Anota ai</Link>
                         <ul className="right hide-on-med-and-down">
                          <Links />
                         </ul>

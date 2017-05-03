@@ -1,4 +1,4 @@
-import {urlBackend} from '../../helpers/constants'
+import {URL_BACKEND} from '../../helpers/constants'
 import { buildTelefone } from '../../helpers/stringHelper'
 
 export default class ClienteConsumidorService {
@@ -7,7 +7,7 @@ export default class ClienteConsumidorService {
 
         const telefone = buildTelefone(telefoneStr);
 
-        return   fetch(`${urlBackend}/rest/clienteconsumidor/findby/telefone`, {
+        return   fetch(`${URL_BACKEND}/rest/clienteconsumidor/findby/telefone`, {
             method: 'POST',
             body: JSON.stringify(telefone),
             headers: new Headers({

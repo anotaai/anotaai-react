@@ -1,4 +1,4 @@
-import {urlBackend } from '../helpers/constants'
+import {URL_BACKEND } from '../helpers/constants'
 import { buildPhone,getNumbers} from '../helpers/stringHelper'
 import {  createInstance  } from '../helpers/jsonHelper'
 
@@ -16,7 +16,7 @@ export default class ClientService {
         newClientInstance.address = newAddressInstance;
         newClientInstance.type = 'cliente';
 
-      return  fetch(`${urlBackend}/rest/clientes/`,{
+      return  fetch(`${URL_BACKEND}/rest/clientes/`,{
             method: 'POST',
             body: JSON.stringify(newClientInstance),
             headers: new Headers({

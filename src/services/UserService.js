@@ -1,9 +1,9 @@
-import { urlBackend} from '../helpers/constants'
+import { URL_BACKEND} from '../helpers/constants'
 import { buildPhone } from '../helpers/stringHelper'
 import { createInstance } from '../helpers/jsonHelper'
 import { authUser , unauthUser } from '../actions/authActionCreator'
 import { browserHistory } from 'react-router'
-import { urlHome } from '../helpers/constants'
+import { URL_HOME } from '../helpers/constants'
 
 
 export default class UserService {
@@ -13,7 +13,7 @@ export default class UserService {
         const newUserInstance = createInstance(usuario);
         newUserInstance.telefone = buildPhone(telefoneStr);
 
-        return fetch(`${urlBackend}/rest/usuarios`, {
+        return fetch(`${URL_BACKEND}/rest/usuarios`, {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: new Headers({
@@ -45,7 +45,7 @@ export default class UserService {
             newUserLoginInstance.usuario = newUserInstance;
 
 
-            return fetch(`${urlBackend}/rest/usuarios/login`, {
+            return fetch(`${URL_BACKEND}/rest/usuarios/login`, {
                 method: 'POST',
                 body: JSON.stringify(newUserLoginInstance),
                 headers: new Headers({
@@ -58,7 +58,7 @@ export default class UserService {
                      dispatch(unauthUser(json));
                 } else {
                     dispatch(authUser());
-                    browserHistory.push(urlHome);
+                    browserHistory.push(URL_HOME);
                 }
             }).catch(error => {
                 dispatch(unauthUser('Ocorreu um erro ao logar'));

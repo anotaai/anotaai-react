@@ -4,7 +4,7 @@ import MaskedInput from 'react-maskedinput'
 import EnumService from '../../../services/util/EnumService'
 import AddressService from '../../../services/register/AddressService'
 import ShowMessage from '../../../helpers/ShowMessage'
-import {toastWarning, toastInfo, toastError} from '../../../helpers/constants'
+import {TYPE_MESSAGE_WARNING, TYPE_MESSAGE_INFO, TYPE_MESSAGE_ERROR} from '../../../helpers/constants'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
 import {replaceMask} from '../../../helpers/stringHelper'
 import ClientService from '../../../services/ClientService'
@@ -30,7 +30,7 @@ export default class Vendedor extends Component {
             this.setState({ estadoList: json });
         }).catch(error => {
             console.log(error);
-            ShowMessage.show(`Ocorreu um erro ao recuperar o serviço de estados`, toastError)
+            ShowMessage.show(`Ocorreu um erro ao recuperar o serviço de estados`, TYPE_MESSAGE_ERROR)
         });
     }
 
@@ -77,9 +77,9 @@ export default class Vendedor extends Component {
             ReactDOM.findDOMNode(this.refs.senha).focus();
          } else {
             ClientService.save(this.state.cliente, this.state.usuario, this.state.telefone).then(response => {
-                ShowMessage.show("Registro incluído com sucesso", toastInfo);
+                ShowMessage.show("Registro incluído com sucesso", TYPE_MESSAGE_INFO);
             }).catch(error => {
-                ShowMessage("Ocorreu um erro ao incluir o comprador", toastError);
+                ShowMessage("Ocorreu um erro ao incluir o comprador", TYPE_MESSAGE_ERROR);
             });
          }
        
@@ -99,7 +99,7 @@ export default class Vendedor extends Component {
             AddressService.findCep(cepReplace).then(enderecoRecuperado => {
 
                 if (enderecoRecuperado.logradouro == null) {
-                    ShowMessage.show(`Não foi encontrado um endereço para o cep ${cepReplace}`, toastWarning);
+                    ShowMessage.show(`Não foi encontrado um endereço para o cep ${cepReplace}`, TYPE_MESSAGE_WARNING);
                     return;
                 }
                 const newState = createInstance(this.state);
@@ -113,7 +113,7 @@ export default class Vendedor extends Component {
                 this.setState(newState);
             }).catch(error => {
                 console.error(error);
-                ShowMessage.show(`Ocorreu um erro ao recuperar o cep ${cep}`, toastError)
+                ShowMessage.show(`Ocorreu um erro ao recuperar o cep ${cep}`, TYPE_MESSAGE_ERROR)
             });
 
         } else {
