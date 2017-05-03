@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import Menu from './Menu'
 import Footer from './Footer'
 import { Translator } from 'i18n-react-loader'
+import registerFetchInterceptor from '../services/app/fetchInterceptor' 
+
 
 export default class App extends Component {
 
   constructor() {
-    var t = {};
-    console.log(t);
     super();
-    this.renderTranslate();
+    this.renderTranslate(); 
+    registerFetchInterceptor();
   }
 
   renderTranslate() {

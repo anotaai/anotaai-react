@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "fetch-intercept": "^2.2.3",
     "i18n-react": "^0.3.0-ts1",
     "i18n-react-loader": "^0.1.0",
     "immutable": "^3.8.1",
