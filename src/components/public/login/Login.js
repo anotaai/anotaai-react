@@ -5,12 +5,16 @@ import UsuarioService from '../../../services/UserService'
 import { getObjectNewState , createInstance } from '../../../helpers/jsonHelper'
 import { TYPE_MESSAGE }  from '../../../helpers/constants'
 import ShowMessage  from '../../../helpers/ShowMessage'
+import { TOAST } from '../../../domain/TOAST'
 
 export class RadioUser extends Component {
 
   constructor() {
     super();
     this.state = { tipoContato: 'telefone' };
+    var info = TOAST.INFO;
+    console.log(TOAST.valueOf('INFO'));
+    console.log(info);
   }
 
   changeRadio(e) {
