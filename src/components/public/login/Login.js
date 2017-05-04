@@ -82,10 +82,10 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
-    this.context.store.subscribe(() => {
+    this.context.store.subscribe(login => {
       const errorMsg = this.context.store.getState().auth.errorMsg;
       if (errorMsg !== '') {
-        ShowMessage.show(errorMsg, TipoMensagem.ERROR);
+        ShowMessage.showMessages(errorMsg, TipoMensagem.ERROR);
         const newState = createInstance(this.state);
         newState.userLogin.usuario.senha = '';
         this.setState(newState);
