@@ -87,19 +87,7 @@ export default class Login extends Component {
     });
    
   }
-
-  componentDidMount() {
-    this.context.store.subscribe(login => {
-      const errorMsg = this.context.store.getState().auth.errorMsg;
-      if (errorMsg !== '') {
-        const newState = createInstance(this.state);
-        newState.userLogin.usuario.senha = '';
-        this.setState(newState);
-      }
-    })
-  }
-
-
+  
   render() {
 
     return (
