@@ -3,9 +3,11 @@ import Menu from './Menu'
 import Footer from './Footer'
 import { Translator } from 'i18n-react-loader'
 import registerFetchInterceptor from '../services/app/fetchInterceptor' 
+import SideNavMenu from './private/SideNavMenu'
+import { connect } from 'react-redux';
 
 
-export default class App extends Component {
+class App extends Component {
 
   constructor() {
     super();
@@ -38,18 +40,26 @@ export default class App extends Component {
   }
 
   render() {
-
+   
     return (
       <div>
         <header>
-          <Menu />
+           <Menu authenticated={this.props.authenticated} />
         </header>
         <main>
           {this.props.children}
         </main>
-        <Footer />
+        <Footer/>
       </div>
     )
   }
 
 }
+
+const mapStateToProps = state => {
+  return {authenticated : state.auth.authenticated}
+};
+
+const AppContainer = connect(mapStateToProps)(App);
+
+export default AppContainer

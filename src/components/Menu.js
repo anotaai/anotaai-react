@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import { URL } from '../helpers/constants'
 import caderneta from "../img/128x128.png"
 import $ from 'jquery'
-import { connect } from 'react-redux';
 
 class Links extends Component {
 
@@ -51,34 +50,25 @@ class Links extends Component {
     }
 }
 
- class Menu extends Component {
-
-    componentWillUpdate(nextProps) {
-       console.log(nextProps.authenticated);    
-    }
+ export default class Menu extends Component {
 
     render() {
         return (
             <div>
-               <nav className="indigo" role="navigation">
+                <nav className="indigo" role="navigation">
                     <div className="nav-wrapper container"><Link id="logo-container" to={URL.HOME} className="brand-logo">Anota ai</Link>
-                        <ul className="right hide-on-med-and-down">
-                         <Links />
-                        </ul>
-                      <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
+                       {!this.props.authenticated && 
+                        <div id="publico">
+                            <ul className="right hide-on-med-and-down">
+                                <Links />
+                            </ul>
+                            <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
+                        </div>}
                     </div>
                 </nav>
-                <MenuResponsivo/>
-             </div>   
+                <MenuResponsivo />
+            </div>   
             
         );
     }
 }
-
-const mapStateToProps = state => {
-  return {authenticated : state.auth.authenticated}
-};
-
-const MenuContainer = connect(mapStateToProps)(Menu);
-
-export default MenuContainer

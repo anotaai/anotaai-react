@@ -1,7 +1,8 @@
-import { Component } from 'react';
+import React , { Component } from 'react';
 import { connect } from 'react-redux';
 import {browserHistory} from 'react-router'
 import {URL} from '../helpers/constants'
+import SideNavMenu from './private/SideNavMenu'
 
 class Authentication extends Component {
  
@@ -13,7 +14,11 @@ class Authentication extends Component {
 
   render() {
     if (this.props.authenticated) {
-      return this.props.children
+      return (
+         <div>  
+          <SideNavMenu />
+          {this.props.children}
+         </div> );
     } else {
       return null
     }
