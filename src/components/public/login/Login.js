@@ -4,15 +4,15 @@ import ModalRenewPassword from './ModalRenewPassword'
 import UsuarioService from '../../../services/UserService'
 import { getObjectNewState , createInstance } from '../../../helpers/jsonHelper'
 import ShowMessage  from '../../../helpers/ShowMessage'
-import { TYPE_MESSAGE } from '../../../domain/TYPE_MESSAGE'
+import { TipoMensagem } from '../../../domain/TipoMensagem'
 
 export class RadioUser extends Component {
 
   constructor() {
     super();
     this.state = { tipoContato: 'telefone' };
-    var info = TYPE_MESSAGE.INFO;
-    console.log(TYPE_MESSAGE.valueOf('INFO'));
+    var info = TipoMensagem.INFO;
+    console.log(TipoMensagem.valueOf('INFO'));
     console.log(info);
   }
 
@@ -85,7 +85,7 @@ export default class Login extends Component {
       this.context.store.subscribe(() => {
         const errorMsg =  this.context.store.getState().auth.errorMsg;
         if(errorMsg !== '') {
-           ShowMessage.show(errorMsg,TYPE_MESSAGE.ERROR);
+           ShowMessage.show(errorMsg, TipoMensagem.ERROR);
            const newState = createInstance(this.state);
            newState.userLogin.usuario.senha = '';
            this.setState(newState);

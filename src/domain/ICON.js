@@ -1,6 +1,6 @@
 import { DataType } from './DataType'
 
-export class ICON extends DataType {
+export class Icon extends DataType {
 
     constructor(ordinal, type, className) {
         super(ordinal, type);
@@ -9,7 +9,7 @@ export class ICON extends DataType {
 
 }
 
-ICON.DONE = new ICON(0, 'DONE', 'done');
-ICON.INFO = new ICON(1, 'INFO', 'info');
-ICON.WARNING = new ICON(2, 'WARNING', 'warning');
-ICON.ERROR = new ICON(3, 'ERROR', 'error');
+Icon.DONE = new Icon(0, 'DONE', 'done');
+Icon.INFO = new Icon(1, 'INFO', 'info');
+Icon.WARNING = new Icon(2, 'WARNING', 'warning');
+Icon.ERROR = new Icon(3, 'ERROR', 'error');

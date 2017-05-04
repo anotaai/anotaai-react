@@ -1,5 +1,5 @@
 import { DEFAULT_TIME } from './constants'
-import { TYPE_MESSAGE } from '../domain/TYPE_MESSAGE'
+import { TipoMensagem } from '../domain/TipoMensagem'
 
 
 export default class ShowMessage {
@@ -14,7 +14,7 @@ export default class ShowMessage {
                 this.setMessage(message);
             });
         } else {
-            this.buildMessage({ key: 'message.defaulterror', type: TYPE_MESSAGE.ERROR, params: null });
+            this.buildMessage({ key: 'message.defaulterror', type: TipoMensagem.ERROR, params: null });
         }
     }
 

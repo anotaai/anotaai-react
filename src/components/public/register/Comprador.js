@@ -3,7 +3,7 @@ import MaskedInput from 'react-maskedinput'
 import ClienteConsumidorService from '../../../services/client/ClienteConsumidorService'
 import ShowMessage from '../../../helpers/ShowMessage'
 import UserService from '../../../services/UserService'
-import {TYPE_MESSAGE} from '../../../domain/TYPE_MESSAGE'
+import {TipoMensagem} from '../../../domain/TipoMensagem'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
 import {replaceMask} from '../../../helpers/stringHelper'
 import T from 'i18n-react';
@@ -44,7 +44,7 @@ export class FormUser extends Component {
                     alert(response);
                 })
                 .catch(error => {
-                    ShowMessage.show('Ocorreu um erro ao recuperar o telefone do usuário', TYPE_MESSAGE.ERROR);
+                    ShowMessage.show('Ocorreu um erro ao recuperar o telefone do usuário', TipoMensagem.ERROR);
                 })
         } 
     }
@@ -140,9 +140,9 @@ export default class Comprador extends Component {
             //ReactDOM.findDOMNode(this.refs.senha).focus();
          } else {
             UserService.save(this.state.usuario, this.state.telefone).then(response => {
-                ShowMessage.show("Sucesso", TYPE_MESSAGE.INFO);
+                ShowMessage.show("Sucesso", TipoMensagem.INFO);
             }).catch(error => {
-                ShowMessage.show('Ocorreu um erro ao incluir o usuário', TYPE_MESSAGE.ERROR);
+                ShowMessage.show('Ocorreu um erro ao incluir o usuário', TipoMensagem.ERROR);
             });
          }
 
