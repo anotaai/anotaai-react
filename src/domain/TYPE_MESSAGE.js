@@ -6,6 +6,7 @@ export class TYPE_MESSAGE extends DataType {
     constructor(ordinal, type, className, icon) {
         super(ordinal, type);
         this.className = className;
+        this.icon = icon;
     }
 
 }
