@@ -33,9 +33,10 @@ export default class UserService {
 
     }
 
-    static login(usuarioLogin, keepAlive) {
-        return function (dispatch) {
-            
+    static login(usuarioLogin,keepAlive) {
+
+        return new Promise((resolve, reject) => {
+
             const newUserLoginInstance = createInstance(usuarioLogin);
             const newUserInstance = createInstance(usuarioLogin.usuario);
           
@@ -48,7 +49,6 @@ export default class UserService {
             newUserInstance.senha = Base64Service.encode(senha);
             newUserLoginInstance.usuario = newUserInstance;
 
-
             return fetch(`${URL_BACKEND}/rest/usuarios/login`, {
                 method: 'POST',
                 body: JSON.stringify(newUserLoginInstance),
@@ -56,20 +56,26 @@ export default class UserService {
                     'Content-type': 'application/json'
                 })
             }).then(response => {
-               return response.json();
+                return response.json();
             }).then(json => {
                 if (json.anotaaiExceptionMessages) {
-                     dispatch(unauthUser(json));
+                    reject(json);
                 } else {
-                    AuthenticationService.setCredentials(json);
-                    dispatch(authUser());
-                    browserHistory.push(URL.HOME);
+                    resolve(json);
                 }
             }).catch(error => {
-                console.log(error);
-                dispatch(unauthUser('Ocorreu um erro ao logar'));
-            })
+                reject();
+            });
+        });
 
+    }
+   
+
+    static dispatchAuthenticated(response) {
+        return function (dispatch) {
+           AuthenticationService.setCredentials(response);
+           dispatch(authUser());
+           browserHistory.push(URL.HOME);
         }
     }
 
