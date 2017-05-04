@@ -20,7 +20,6 @@ class Links extends Component {
                 <li> <Link to={URL.REGISTER} onClick={this.hideResponsiveMenu} >Registrar</Link></li>
             </div>
         )
-
     }
 }
 
@@ -43,14 +42,14 @@ class Links extends Component {
                          <span className="white-text name">Anota ai</span>
                        </div>
                     </li>
-                    <Links />
+                    <Links/>
                 </ul>
             </div>
         )
     }
 }
 
- export default class Menu extends Component {
+ export default class Navbar extends Component {
 
     render() {
         return (
@@ -60,13 +59,13 @@ class Links extends Component {
                        {!this.props.authenticated && 
                         <div id="publico">
                             <ul className="right hide-on-med-and-down">
-                                <Links />
+                                <Links/>
                             </ul>
                             <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
                         </div>}
                     </div>
                 </nav>
-                <MenuResponsivo />
+              <MenuResponsivo/>
             </div>   
             
         );

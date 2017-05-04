@@ -54,6 +54,11 @@ footer {
 	bottom:0;
 }
 
+
+.side-nav {
+  top:inherit !important;
+}
+
 .info {
   background-color: #3f51b5 !important;
 }

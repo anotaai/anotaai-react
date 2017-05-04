@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Menu from './Menu'
+import NavBar from './NavBar'
 import Footer from './Footer'
 import { Translator } from 'i18n-react-loader'
 import registerFetchInterceptor from '../services/app/fetchInterceptor' 
-import SideNavMenu from './private/SideNavMenu'
+import SideMenu from './private/SideMenu'
 import { connect } from 'react-redux';
 
 
@@ -44,12 +44,12 @@ class App extends Component {
     return (
       <div>
         <header>
-           <Menu authenticated={this.props.authenticated} />
+           <NavBar authenticated={this.props.authenticated} />
         </header>
         <main>
           {this.props.children}
         </main>
-        <Footer/>
+        <Footer authenticated={this.props.authenticated}/>
       </div>
     )
   }
