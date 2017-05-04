@@ -1,20 +1,20 @@
-import {URL_BACKEND} from '../../helpers/constants'
+import { URL_BACKEND } from '../../helpers/constants'
 
-export default class MenuService  {
+export default class MenuService {
 
     static getMenu() {
 
-        return fetch(`${URL_BACKEND}/rest/menu`).then(response => {
-        
-           if(response.ok) {
-               return response.json();
-           }
-
-           throw Error(response);
-
+        const authdata = 'Basic ' + localStorage.getItem('authdata');
+        return fetch(`${URL_BACKEND}/rest/menu/principal`,{
+            headers: new Headers({'Authorization': authdata})
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw Error(response);
         }).catch(error => {
-          throw Error(error);
-        });  
+            throw Error(error);
+        });
     }
 
 

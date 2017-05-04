@@ -1,7 +1,7 @@
 import { URL_BACKEND} from '../helpers/constants'
 import { buildPhone } from '../helpers/stringHelper'
 import { createInstance } from '../helpers/jsonHelper'
-import { authUser , unauthUser } from '../actions/authActionCreator'
+import { authUser } from '../actions/authActionCreator'
 import { browserHistory } from 'react-router'
 import { URL } from '../helpers/constants'
 import Base64Service from './app/Base64Service'

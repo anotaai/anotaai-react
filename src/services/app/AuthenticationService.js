@@ -31,6 +31,9 @@ export default class AuthenticationService {
         }
 
         //$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+         //Verificar header genérico
+         localStorage.setItem('authdata',authdata);
+         
          const cookies = new Cookies();
          cookies.set(COOKIE_USER, JSON.stringify(globals), { 'expires': expireDate });
 

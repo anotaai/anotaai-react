@@ -3,7 +3,6 @@ import NavBar from './NavBar'
 import Footer from './Footer'
 import { Translator } from 'i18n-react-loader'
 import registerFetchInterceptor from '../services/app/fetchInterceptor' 
-import SideMenu from './private/SideMenu'
 import { connect } from 'react-redux';
 
 

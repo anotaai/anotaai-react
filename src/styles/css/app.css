@@ -79,4 +79,18 @@ footer {
   background-color: #9e9e9e !important;
 }
 
+.userDetais {
+   background: url(../../img/user-bg2.jpg) no-repeat center center;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   margin-bottom: 15px !important;
+   padding: 15px 0 0 15px !important;
+}
+   
+.profile-image {
+  background-color: #fff;
+}
+
  

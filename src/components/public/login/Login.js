@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MaskedInput from 'react-maskedinput'
 import ModalRenewPassword from './ModalRenewPassword'
 import UsuarioService from '../../../services/UserService'
-import { getObjectNewState, createInstance } from '../../../helpers/jsonHelper'
+import { getObjectNewState } from '../../../helpers/jsonHelper'
 import ShowMessage from '../../../helpers/ShowMessage'
 import { TipoMensagem } from '../../../domain/TipoMensagem'
 
