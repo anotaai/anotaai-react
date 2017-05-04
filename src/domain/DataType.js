@@ -2,9 +2,9 @@ const values = {};
 
 export class DataType {
 
-    constructor(ordinal, key) {
+    constructor(ordinal, type) {
         this.ordinal = ordinal;
-        this.key = key;
+        this.type = type;
         values[ordinal] = this;
     }
 
@@ -16,16 +16,16 @@ export class DataType {
     }
 
     static toString() {
-        return this.key;
+        return this.type;
     }
 
     static values() {
         return Object.values(values);
     }
 
-    static valueOf(key) {
+    static valueOf(typekey) {
         var type = null;
-        var bag = this.values().filter(e => {return e.key === key});
+        var bag = this.values().filter(e => {return e.type === type});
         if (bag.length > 0) {
             type = bag[0];
         }

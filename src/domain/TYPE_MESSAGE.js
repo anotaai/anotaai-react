@@ -3,8 +3,8 @@ import { ICON } from './ICON';
 
 export class TYPE_MESSAGE extends DataType {
 
-    constructor(ordinal, key, className, icon) {
-        super(ordinal, key);
+    constructor(ordinal, type, className, icon) {
+        super(ordinal, type);
         this.className = className;
     }
 

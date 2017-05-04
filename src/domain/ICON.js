@@ -2,8 +2,8 @@ import { DataType } from './DataType'
 
 export class ICON extends DataType {
 
-    constructor(ordinal, key, className) {
-        super(ordinal, key);
+    constructor(ordinal, type, className) {
+        super(ordinal, tyep);
         this.className = className;
     }
 
