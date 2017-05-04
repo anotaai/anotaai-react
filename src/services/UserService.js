@@ -72,7 +72,7 @@ export default class UserService {
    
 
     static dispatchAuthenticated(response) {
-        return function (dispatch) {
+        return dispatch => {
            AuthenticationService.setCredentials(response);
            dispatch(authUser());
            browserHistory.push(URL.HOME);
