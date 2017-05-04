@@ -15,6 +15,10 @@ export class DataType {
         return null;
     }
 
+    static toString() {
+        return this.key;
+    }
+
     static values() {
         return Object.values(values);
     }

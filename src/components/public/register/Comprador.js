@@ -3,7 +3,7 @@ import MaskedInput from 'react-maskedinput'
 import ClienteConsumidorService from '../../../services/client/ClienteConsumidorService'
 import ShowMessage from '../../../helpers/ShowMessage'
 import UserService from '../../../services/UserService'
-import {TYPE_MESSAGE} from '../../../helpers/constants'
+import {TYPE_MESSAGE} from '../../../domain/TYPE_MESSAGE'
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
 import {replaceMask} from '../../../helpers/stringHelper'
 import T from 'i18n-react';
@@ -16,7 +16,7 @@ export function checkInvalidPassword(state) {
         const newState = createInstance(state);
         newState.usuario.senha = '';
         newState.confirmarSenha = '';
-        ShowMessage.show("A senha não confere com a confirmação de senha. Informe novamente.", TYPE_MESSAGE.WARNING);
+        ShowMessage.showgMessage('message.login.confirmacaosenha');
         return newState;
     }
 }

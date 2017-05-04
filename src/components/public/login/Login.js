@@ -3,17 +3,16 @@ import MaskedInput from 'react-maskedinput'
 import ModalRenewPassword from './ModalRenewPassword'
 import UsuarioService from '../../../services/UserService'
 import { getObjectNewState , createInstance } from '../../../helpers/jsonHelper'
-import { TYPE_MESSAGE }  from '../../../helpers/constants'
 import ShowMessage  from '../../../helpers/ShowMessage'
-import { TOAST } from '../../../domain/TOAST'
+import { TYPE_MESSAGE } from '../../../domain/TYPE_MESSAGE'
 
 export class RadioUser extends Component {
 
   constructor() {
     super();
     this.state = { tipoContato: 'telefone' };
-    var info = TOAST.INFO;
-    console.log(TOAST.valueOf('INFO'));
+    var info = TYPE_MESSAGE.INFO;
+    console.log(TYPE_MESSAGE.valueOf('INFO'));
     console.log(info);
   }
 

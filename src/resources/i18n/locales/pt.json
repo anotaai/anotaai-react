@@ -1,15 +1,10 @@
 {
 
-    "welcome": {
-        "hello": "Olá, {name}",
-        "intro": "Isto é um exemplo de aplicação.",
-        "locales": {
-            "0": "{context} locais",
-            "1": "{context} locais",
-            "2..20": "{context} locais",
-            "_": "Um traço baixo"
-        },
-        "registeredText": "Houve {{welcome.locales}} registrado até hoje."
+    "message": {
+        "defulerror": "Erro inesperado...",
+        "login": {
+            "confirmacaosenha": "A senha não confere com a confirmação de senha. Informe novamente."
+        }
     },
     "label": {
         "comprador": "Comprador",

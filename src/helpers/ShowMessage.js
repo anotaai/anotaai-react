@@ -1,42 +1,38 @@
-import { TOAST, DEFAULT_TIME,TYPE_MESSAGE} from './constants'
- 
+import { DEFAULT_TIME } from './constants'
+import { TYPE_MESSAGE } from '../domain/TYPE_MESSAGE'
+
 
 export default class ShowMessage {
 
-    static show(message, type) {
+    static showMessage(key, typeMessage) {
+        this.buildMessage({ key: 'message.defaulterror', type: typeMessage, params: null });
+    }
 
-        if (message.anotaaiExceptionMessages) {
-            message.anotaaiExceptionMessages.forEach(message => {
-                ShowMessage.setMessage(message);
+    static showMessages(messages) {
+        if (messages && messages.length > 0) {
+            messages.forEach(message => {
+                this.setMessage(message);
             });
         } else {
-            ShowMessage.setMessage({key:message,type:{type:type}});
+            this.buildMessage({ key: 'message.defaulterror', type: TYPE_MESSAGE.ERROR, params: null });
         }
-
     }
 
-
-    static setMessage(message) {
-
+    buildMessage(message) {
         //var messageStr = message.isKey ? translateMessage(message.key, message.params) : message.text;
-        const messageStr = message.key;
+        const messageStr = this.translateMessage(message.key, message.params);
         const tipoMensagem = message.type;
-        switch (tipoMensagem.type) {
-            case TYPE_MESSAGE.ERROR:
-                window.Materialize.toast(`<i class="material-icons left">error</i>${messageStr}`, DEFAULT_TIME, TOAST.ERROR);
-                break;
-            case TYPE_MESSAGE.SUCCESS:
-                window.Materialize.toast(`<i class="material-icons left">done</i>${messageStr}`, DEFAULT_TIME, TOAST.SUCCESS);
-                break;
-            case TYPE_MESSAGE.INFO:
-                window.Materialize.toast(`<i class="material-icons left">info</i>${messageStr}`, DEFAULT_TIME, TOAST.INFO);
-                break;
-            case TYPE_MESSAGE.WARNING:
-                window.Materialize.toast(`<i class="material-icons left">warning</i>${messageStr}`, DEFAULT_TIME, TOAST.WARNING);
-                break;
-            default:
-                window.Materialize.toast(`<i class="material-icons left">error</i>${messageStr}`, DEFAULT_TIME, TOAST.ERROR );
-        }
+        window.Materialize.toast(`<i class="material-icons left">${tipoMensagem.icon.className}</i>${messageStr}`, DEFAULT_TIME, tipoMensagem.toString());
     }
+
+    translateMessage(key, params) {
+		var message = '';//TODO - recuperar mensagem
+		if (params && params.length > 0) {//TODO aplicar parametros
+			params.forEach(param => {
+				console.log(param);
+			});
+		}
+		return message;
+	}
 
 }
