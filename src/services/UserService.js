@@ -18,8 +18,7 @@ export default class UserService {
         return fetch(`${URL_BACKEND}/rest/usuarios`, {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
-            headers: new Headers({
-                'Content-type': 'application/json'})
+            headers: {'Content-type': 'application/json'}
             }).then(response => {
                 if (response.ok) {
                    return response.json();
@@ -40,9 +39,9 @@ export default class UserService {
            return fetch(`${URL_BACKEND}/rest/usuarios/logout`,{
                 method: 'POST',
                 body: JSON.stringify(login),
-                headers: new Headers(
-                    {'Content-type':'application/json'},
-                    {'Authorization': authdata})
+                headers: { 
+                    'Authorization': authdata,
+                    'Content-type':'application/json'}
             }).then(response => {
                 resolve(response.json());
             }).catch(error => {
@@ -79,9 +78,7 @@ export default class UserService {
             return fetch(`${URL_BACKEND}/rest/usuarios/login`, {
                 method: 'POST',
                 body: JSON.stringify(newUserLoginInstance),
-                headers: new Headers({
-                    'Content-type': 'application/json'
-                })
+                headers: {'Content-type': 'application/json'}
             }).then(response => {
                 return response.json();
             }).then(json => {
