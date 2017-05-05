@@ -7,7 +7,7 @@ export default class Footer extends Component {
 
         let greyLighten = null;
 
-        if (!this.props.authenticated) {
+        if (this.props.loginState == null) {
             greyLighten = "grey lighten-4";
         }
 

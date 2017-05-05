@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import MenuService from '../../services/menu/MenuService'
 import { Link } from 'react-router'
-import blank_avatar from "../../img/blank_avatar.png"
+import blank_avatar from '../../img/blank_avatar.png'
+import AuthenticationService from '../../services/app/AuthenticationService'
+import UserService from '../../services/UserService'
 import $ from 'jquery'
 
 
@@ -10,6 +12,21 @@ class Profile extends Component {
 
   componentDidMount() {
     $('#profile').dropdown({});
+  }
+
+  logout(e) {
+    
+     e.preventDefault();
+    
+     UserService.logout().then(response => {
+         AuthenticationService.clearCredentials();
+         this.context.store.dispatch(UserService.dispatchLogout(this.props.loginState));
+     }).catch(error => {
+         
+     });
+    
+  
+
   }
 
   render() {
@@ -24,11 +41,11 @@ class Profile extends Component {
           </div>
           <div className="row">
              <div className="col col s8 m8 l8">
-              <a id="profile" className="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"  href="#" data-activates='dropdown1'>Anota ai<i className="material-icons right">arrow_drop_down</i></a>
+              <a id="profile" className="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"  href="#" data-activates='dropdown1'>{this.props.loginState.login.primeiroNome}<i className="material-icons right">arrow_drop_down</i></a>
               <ul id="dropdown1" className="dropdown-content">
                 <li><a href="#!">Settings<i className="material-icons">settings</i></a></li>
                 <li className="divider"></li>
-                <li><a href="#!">Logout<i className="material-icons">power_settings_new</i></a></li>
+                <li><a href="#!" onClick={this.logout.bind(this)} >Logout<i className="material-icons">power_settings_new</i></a></li>
               </ul>
             </div>
           </div>
@@ -60,7 +77,7 @@ export default class SideMenu extends Component {
 
     return (
       <ul className="side-nav fixed">
-        <Profile />
+        <Profile loginState={this.props.loginState} />
         {this.state.listMenu.map(itensMenu =>
           (<div key={itensMenu.action}>
             <li><Link to="/home"><i className="material-icons">contacts</i>{itensMenu.descricao}</Link></li>

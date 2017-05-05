@@ -51,12 +51,14 @@ class Links extends Component {
 
  export default class Navbar extends Component {
 
+   
+
     render() {
         return (
             <div>
                 <nav className="indigo" role="navigation">
                     <div className="nav-wrapper container"><Link id="logo-container" to={URL.HOME} className="brand-logo">Anota ai</Link>
-                       {!this.props.authenticated && 
+                       {this.props.loginState == null && 
                         <div id="publico">
                             <ul className="right hide-on-med-and-down">
                                 <Links/>

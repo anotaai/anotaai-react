@@ -17,11 +17,11 @@ export default class AuthenticationService {
 
         telefoneStr = getPhoneMask(telefoneStr);
         
-         const globals = {};
-         globals.login = login;
-         globals.login.telefoneStr = telefoneStr;
-         globals.login.authdata = authdata;
-         globals.login.primeiroNome = primeiroNome;
+         const loginState = {};
+         loginState.login = login;
+         loginState.login.telefoneStr = telefoneStr;
+         loginState.login.authdata = authdata;
+         loginState.login.primeiroNome = primeiroNome;
 
         var d = new Date();
         var expireDate = new Date();
@@ -30,12 +30,15 @@ export default class AuthenticationService {
             expireDate.setFullYear(d.getFullYear() + 1);
         }
 
-        //$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+         //$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
          //Verificar header genérico
+         
          localStorage.setItem('authdata',authdata);
          
          const cookies = new Cookies();
-         cookies.set(COOKIE_USER, JSON.stringify(globals), { 'expires': expireDate });
+         cookies.set(COOKIE_USER, JSON.stringify(loginState), { 'expires': expireDate });
+
+         return loginState;
 
     }
 

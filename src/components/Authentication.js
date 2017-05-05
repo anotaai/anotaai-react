@@ -4,19 +4,19 @@ import {browserHistory} from 'react-router'
 import {URL} from '../helpers/constants'
 import SideMenu from './private/SideMenu'
 
-class Authentication extends Component {
- 
+export default class Authentication extends Component {
+
   componentDidMount() {
-    if (!this.props.authenticated) {
+    if (this.props.loginState == null) {
       browserHistory.push(URL.LOGIN);
     }
   }
 
   render() {
-    if (this.props.authenticated) {
+    if (this.props.loginState != null) {
       return (
          <div className="container">  
-           <SideMenu />
+           <SideMenu  loginState={this.props.loginState} />
            {this.props.children}
          </div> );
     } else {
@@ -24,11 +24,3 @@ class Authentication extends Component {
     }
   }
 }
-
-const mapStateToProps = state => {
-  return { authenticated: state.auth.authenticated }
-};
-
-const AuthenticationContainer = connect(mapStateToProps)(Authentication);
-
-export default AuthenticationContainer

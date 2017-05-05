@@ -39,16 +39,18 @@ class App extends Component {
   }
 
   render() {
-   
+    
+    let children = this.props.loginState != null ?  React.cloneElement(this.props.children, {loginState: this.props.loginState}) : this.props.children;
+
     return (
       <div>
         <header>
-           <NavBar authenticated={this.props.authenticated} />
+           <NavBar loginState={this.props.loginState}/>
         </header>
         <main>
-          {this.props.children}
+           {children}
         </main>
-        <Footer authenticated={this.props.authenticated}/>
+        <Footer loginState={this.props.loginState}/>
       </div>
     )
   }
@@ -56,7 +58,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return {authenticated : state.auth.authenticated}
+  return {loginState : state.auth.loginState}
 };
 
 const AppContainer = connect(mapStateToProps)(App);

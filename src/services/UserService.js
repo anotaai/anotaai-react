@@ -20,18 +20,43 @@ export default class UserService {
             body: JSON.stringify(newUserInstance),
             headers: new Headers({
                 'Content-type': 'application/json'})
-            })
-            .then(response => {
+            }).then(response => {
                 if (response.ok) {
                    return response.json();
                 }
                 throw Error(response);
-            })
-            .catch(error => {
+            }).catch(error => {
               throw Error(error);
             });
 
     }
+
+    static logout() {
+       
+       const auth = 'Basic ' + localStorage.getItem('auth');
+
+       return  new Promise((resolve,reject) => {
+ 
+            fetch(`${URL_BACKEND}/rest/logout`,{
+                method: 'POST',
+                headers: new Headers(
+                    {'Content-type':'application/json'},
+                    {'Authorization': auth})
+            }).then(response => {
+                resolve(response.json());
+            }).catch(error => {
+                reject(error);
+            })
+            
+       });
+    }
+
+    static dispatchLogout()  {
+
+        return dispatch => {
+            
+        }
+    } 
 
     static login(usuarioLogin,keepAlive) {
 
@@ -71,10 +96,10 @@ export default class UserService {
     }
    
 
-    static dispatchAuthenticated(response) {
+    static dispatchLogin(response) {
         return dispatch => {
-           AuthenticationService.setCredentials(response);
-           dispatch(authUser());
+           const loginState = AuthenticationService.setCredentials(response);
+           dispatch(authUser(loginState));
            browserHistory.push(URL.HOME);
         }
     }

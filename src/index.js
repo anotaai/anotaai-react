@@ -20,8 +20,9 @@ const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 //Check logged user
 const cookies = new Cookies();
-if (cookies.get(COOKIE_USER)) {
-   store.dispatch(authUser());
+const cookieLoginState = cookies.get(COOKIE_USER);
+if (cookieLoginState) {
+   store.dispatch(authUser(cookieLoginState));
    browserHistory.push(URL.HOME);
 } 
 

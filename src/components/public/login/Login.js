@@ -81,7 +81,7 @@ export default class Login extends Component {
     e.preventDefault();
     
     UsuarioService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
-       this.context.store.dispatch(UsuarioService.dispatchAuthenticated(response));   
+       this.context.store.dispatch(UsuarioService.dispatchLogin(response));   
     }).catch(error => {
         ShowMessage.showMessages(error);
     });
