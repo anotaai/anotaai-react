@@ -1,5 +1,4 @@
 import React , { Component } from 'react';
-import { connect } from 'react-redux';
 import {browserHistory} from 'react-router'
 import {URL} from '../helpers/constants'
 import SideMenu from './private/SideMenu'
