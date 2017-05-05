@@ -5,6 +5,7 @@ import UsuarioService from '../../../services/UserService'
 import { getObjectNewState } from '../../../helpers/jsonHelper'
 import ShowMessage from '../../../helpers/ShowMessage'
 import { TipoMensagem } from '../../../domain/TipoMensagem'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 export class RadioUser extends Component {
 
@@ -79,11 +80,16 @@ export default class Login extends Component {
   login(e) {
     
     e.preventDefault();
+    this.refs.loginBtn.setAttribute("disabled", "disabled");
+    this.context.store.dispatch(showLoading());
     
     UsuarioService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
        this.context.store.dispatch(UsuarioService.dispatchLogin(response));   
     }).catch(error => {
+        this.refs.loginBtn.removeAttribute("disabled");
         ShowMessage.showMessages(error);
+    }).then(() => {
+        this.context.store.dispatch(hideLoading());
     });
    
   }
@@ -118,7 +124,7 @@ export default class Login extends Component {
                 <br />
                 <center>
                   <div className='row'>
-                    <button type='submit' className='col s12 btn btn-large info'>Login</button>
+                    <button ref="loginBtn" type='submit' className='col s12 btn btn-large info'>Login</button>
                   </div>
                 </center>
               </form>

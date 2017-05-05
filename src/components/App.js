@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import NavBar from './NavBar'
 import Footer from './Footer'
 import { Translator } from 'i18n-react-loader'
-import registerFetchInterceptor from '../services/app/fetchInterceptor' 
+import registerFetchInterceptor from '../services/app/fetchInterceptor'
 import { connect } from 'react-redux';
+import LoadingBar from 'react-redux-loading-bar'
 
 
 class App extends Component {
 
   constructor() {
     super();
-    this.renderTranslate(); 
+    this.renderTranslate();
     registerFetchInterceptor();
   }
 
@@ -39,18 +40,19 @@ class App extends Component {
   }
 
   render() {
-    
-    let children = this.props.loginState != null ?  React.cloneElement(this.props.children, {loginState: this.props.loginState}) : this.props.children;
+
+    let children = this.props.loginState != null ? React.cloneElement(this.props.children, { loginState: this.props.loginState }) : this.props.children;
 
     return (
       <div>
         <header>
-           <NavBar loginState={this.props.loginState}/>
+           <NavBar loginState={this.props.loginState} />
+           <LoadingBar/>
         </header>
         <main>
-           {children}
+          {children}
         </main>
-        <Footer loginState={this.props.loginState}/>
+        <Footer loginState={this.props.loginState} />
       </div>
     )
   }
@@ -58,9 +60,9 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return {loginState : state.auth.loginState}
+  return { loginState: state.auth.loginState }
 };
 
 const AppContainer = connect(mapStateToProps)(App);
 
-export default AppContainer
+export default AppContainer;

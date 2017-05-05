@@ -13,9 +13,9 @@ import Cookies from 'universal-cookie'
 import {authUser} from './actions/authActionCreator'
 import {routes} from './routes/routes'
 import { COOKIE_USER , URL } from './helpers/constants'
+import { loadingBarReducer } from 'react-redux-loading-bar'
 
- 
-const reducers = combineReducers({auth:authReducer});
+const reducers = combineReducers({auth:authReducer,loadingBar:loadingBarReducer});
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 //Check logged user
