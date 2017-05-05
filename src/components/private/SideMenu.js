@@ -8,29 +8,21 @@ import $ from 'jquery'
 
 
 class Profile extends Component {
-
-
   componentDidMount() {
     $('#profile').dropdown({});
   }
 
   logout(e) {
-    
-     e.preventDefault();
-    
-     UserService.logout().then(response => {
+     e.preventDefault();  
+     UserService.logout(this.props.loginState).then(response => {
          AuthenticationService.clearCredentials();
-         this.context.store.dispatch(UserService.dispatchLogout(this.props.loginState));
+         this.context.store.dispatch(UserService.dispatchLogout());
      }).catch(error => {
-         
+         alert(error);
      });
-    
-  
-
   }
 
   render() {
-
     return (
       <li>
         <div className="userView profile-details">
@@ -52,9 +44,11 @@ class Profile extends Component {
         </div>
       </li>
     );
-
   }
+}
 
+Profile.contextTypes = {
+  store: React.PropTypes.object.isRequired
 }
 
 export default class SideMenu extends Component {
@@ -90,3 +84,4 @@ export default class SideMenu extends Component {
   }
 
 }
+

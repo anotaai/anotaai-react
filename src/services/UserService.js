@@ -1,7 +1,7 @@
 import { URL_BACKEND} from '../helpers/constants'
 import { buildPhone } from '../helpers/stringHelper'
 import { createInstance } from '../helpers/jsonHelper'
-import { authUser } from '../actions/authActionCreator'
+import { authUser, unauthUser } from '../actions/authActionCreator'
 import { browserHistory } from 'react-router'
 import { URL } from '../helpers/constants'
 import Base64Service from './app/Base64Service'
@@ -31,17 +31,18 @@ export default class UserService {
 
     }
 
-    static logout() {
+    static logout(login) {
        
-       const auth = 'Basic ' + localStorage.getItem('auth');
+       const authdata = 'Basic ' + localStorage.getItem('authdata');
 
        return  new Promise((resolve,reject) => {
  
-            fetch(`${URL_BACKEND}/rest/logout`,{
+           return fetch(`${URL_BACKEND}/rest/usuarios/logout`,{
                 method: 'POST',
+                body: JSON.stringify(login),
                 headers: new Headers(
                     {'Content-type':'application/json'},
-                    {'Authorization': auth})
+                    {'Authorization': authdata})
             }).then(response => {
                 resolve(response.json());
             }).catch(error => {
@@ -54,7 +55,8 @@ export default class UserService {
     static dispatchLogout()  {
 
         return dispatch => {
-            
+            dispatch(unauthUser());
+            browserHistory.push(URL.LOGIN);
         }
     } 
 

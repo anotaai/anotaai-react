@@ -6,9 +6,9 @@ const INITIAL_STATE = { loginState: null}
 export default function (state = INITIAL_STATE, action) {  
   switch(action.type) {
     case AUTH_USER:
-      return { ...state, loginState: action.loginState, errorMsg: '' };
+      return { ...state, loginState: action.loginState};
     case UNAUTH_USER:
-      return { ...state, loginState: null, errorMsg: action.msg};
+      return { ...state, loginState: null};
     default:
       return state;
   }

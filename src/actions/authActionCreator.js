@@ -5,6 +5,6 @@ export function authUser(loginState){
     return {type:AUTH_USER,loginState};
 }
 
-export function unauthUser(msg=''){
-    return {type:UNAUTH_USER,msg}    
+export function unauthUser(){
+    return {type:UNAUTH_USER}    
 }

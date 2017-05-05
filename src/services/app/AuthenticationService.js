@@ -43,7 +43,8 @@ export default class AuthenticationService {
     }
 
     static clearCredentials() {
-
+           const cookies = new Cookies();
+           cookies.remove(COOKIE_USER)
     }
 
 }
