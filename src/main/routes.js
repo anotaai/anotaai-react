@@ -16,7 +16,7 @@ const privateRoutes = (
     </Route> 
 );
 
-export const routes = (
+ const routes = (
   <Route path="/" component={App} >
     <Route path={URL.LOGIN} component={Login} />
     <Route path={URL.REGISTER} component={Register} />
@@ -25,3 +25,5 @@ export const routes = (
     {privateRoutes}
   </Route>
 );
+
+export default routes;
