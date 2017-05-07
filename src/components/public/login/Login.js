@@ -78,22 +78,26 @@ export default class Login extends Component {
   }
 
   login(e) {
-    
+
     e.preventDefault();
     this.refs.loginBtn.setAttribute("disabled", "disabled");
     this.context.store.dispatch(showLoading());
-    
+
     UsuarioService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
-       this.context.store.dispatch(UsuarioService.dispatchLogin(response));   
+      if (response.isValid) {
+        this.context.store.dispatch(UsuarioService.dispatchLogin(response));
+      } else {
+        ShowMessage.showMessages(response.messages);
+      }
     }).catch(error => {
-        this.refs.loginBtn.removeAttribute("disabled");
-        ShowMessage.showMessages(error);
+      this.refs.loginBtn.removeAttribute("disabled");
+      ShowMessage.showMessages(error.messages);
     }).then(() => {
-        this.context.store.dispatch(hideLoading());
+      this.context.store.dispatch(hideLoading());
     });
-   
+
   }
-  
+
   render() {
 
     return (
