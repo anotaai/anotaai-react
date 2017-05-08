@@ -4,7 +4,8 @@ export const URL = {
     REGISTER: '/register',
     HOME: '/home',
     COMPRADOR: '/comprador',
-    VENDEDOR: '/vendedor'
+    VENDEDOR: '/vendedor',
+    SETOR: '/setor'
 }
 
 export const DEFAULT_TIME = 3000;

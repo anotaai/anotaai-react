@@ -1,6 +1,6 @@
 
 import React from 'react'
-import Authentication from '../components/Authentication'
+import AuthenticationContainer from '../components/Authentication'
 import { URL } from '../helpers/constants'
 import { Route } from 'react-router'
 import Home from '../components/private/Home'
@@ -9,10 +9,12 @@ import Register from '../components/public/register/Register'
 import App from '../components/App'
 import Vendedor from '../components/public/register/Vendedor'
 import Comprador from '../components/public/register/Comprador'
+import Search from '../components/private/setor/Search'
 
 const privateRoutes = (
-    <Route component={Authentication}>
+    <Route component={AuthenticationContainer}>
       <Route path={URL.HOME} component={Home} />
+      <Route path={URL.SETOR} component={Search} />
     </Route> 
 );
 

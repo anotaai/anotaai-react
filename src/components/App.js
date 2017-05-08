@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import NavBar from './NavBar'
-import Footer from './Footer'
+import NavBarContainer from './NavBar'
+import FooterContainer from './Footer'
 import { Translator } from 'i18n-react-loader'
 import registerFetchInterceptor from '../services/app/fetchInterceptor'
-import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar'
 
 
@@ -14,6 +13,7 @@ export default class App extends Component {
     this.renderTranslate();
     registerFetchInterceptor();
   }
+
 
   renderTranslate() {
     var i18nReactLoader = require("i18n-react-loader");
@@ -44,13 +44,13 @@ export default class App extends Component {
     return (
       <div>
         <header>
-           <NavBar />
+           <NavBarContainer />
            <LoadingBar/>
         </header>
         <main>
           {this.props.children}
         </main>
-        <Footer/>
+        <FooterContainer/>
       </div>
     )
   }

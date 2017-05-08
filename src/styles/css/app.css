@@ -55,8 +55,9 @@ footer {
 }
 
 
-.side-nav {
-  top:inherit !important;
+.private-side-nav {
+  top:inherit;
+  height: calc(100% + 5px);
 }
 
 .info {

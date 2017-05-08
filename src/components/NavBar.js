@@ -25,11 +25,11 @@ class Links extends Component {
 }
 
 
- class MenuResponsivo extends Component {
+ class ResponsiveMenu extends Component {
 
     componentDidMount() {
-        $(".button-collapse").sideNav();
-    }
+      $(".button-collapse").sideNav();
+     }
 
     render() {
 
@@ -52,7 +52,6 @@ class Links extends Component {
 
  class Navbar extends Component {
 
-
     render() {
         return (
             <div>
@@ -63,11 +62,11 @@ class Links extends Component {
                             <ul className="right hide-on-med-and-down">
                                 <Links/>
                             </ul>
-                            <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
                         </div>}
+                        <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
                     </div>
                 </nav>
-              <MenuResponsivo/>
+                {this.props.loginState == null && <ResponsiveMenu/> }
             </div>   
             
         );
