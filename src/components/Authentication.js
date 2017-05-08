@@ -2,8 +2,9 @@ import React , { Component } from 'react';
 import {browserHistory} from 'react-router'
 import {URL} from '../helpers/constants'
 import SideMenu from './private/SideMenu'
+import { connect } from 'react-redux'
 
-export default class Authentication extends Component {
+class Authentication extends Component {
 
   componentDidMount() {
     if (this.props.loginState == null) {
@@ -23,3 +24,12 @@ export default class Authentication extends Component {
     }
   }
 }
+
+const mapStateToProps = state => {
+  return {loginState: state.auth.loginState}
+}
+
+const AuthenticationContainer = connect(mapStateToProps)(Authentication)
+
+export default AuthenticationContainer;
+

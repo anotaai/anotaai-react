@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { URL } from '../helpers/constants'
+import { connect } from 'react-redux'
 import caderneta from "../img/128x128.png"
 import $ from 'jquery'
 
@@ -49,9 +50,8 @@ class Links extends Component {
     }
 }
 
- export default class Navbar extends Component {
+ class Navbar extends Component {
 
-   
 
     render() {
         return (
@@ -73,3 +73,13 @@ class Links extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+   return { loginState: state.auth.loginState}
+}
+
+
+const NavbarContainer = connect(mapStateToProps)(Navbar);
+
+export default NavbarContainer;
+ 

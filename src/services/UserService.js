@@ -82,11 +82,11 @@ export default class UserService {
             }).then(response => {
                 return response.json();
             }).then(json => {
-                if (json.anotaaiExceptionMessages) {
-                    reject(json);
-                } else {
+               // if (json.anotaaiExceptionMessages) {
+                //    reject(json);
+               // } else {
                     resolve(json);
-                }
+               // }
             }).catch(error => {
                 reject();
             });

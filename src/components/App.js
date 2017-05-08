@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar'
 
 
-class App extends Component {
+export default class App extends Component {
 
   constructor() {
     super();
@@ -41,28 +41,18 @@ class App extends Component {
 
   render() {
 
-    let children = this.props.loginState != null ? React.cloneElement(this.props.children, { loginState: this.props.loginState }) : this.props.children;
-
     return (
       <div>
         <header>
-           <NavBar loginState={this.props.loginState} />
+           <NavBar />
            <LoadingBar/>
         </header>
         <main>
-          {children}
+          {this.props.children}
         </main>
-        <Footer loginState={this.props.loginState} />
+        <Footer />
       </div>
     )
   }
 
 }
-
-const mapStateToProps = state => {
-  return { loginState: state.auth.loginState }
-};
-
-const AppContainer = connect(mapStateToProps)(App);
-
-export default AppContainer;

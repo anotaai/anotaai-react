@@ -2,6 +2,7 @@ window.jQuery = require('jquery');
 require('materialize-css');
 import 'materialize-css/dist/css/materialize.min.css'
 import './styles/css/app.css'
+import './styles/css/material-icons.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, browserHistory } from 'react-router'

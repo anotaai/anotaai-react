@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import blank_avatar from '../../img/blank_avatar.png'
 import AuthenticationService from '../../services/app/AuthenticationService'
 import UserService from '../../services/UserService'
+import {connect} from 'react-redux'
 import $ from 'jquery'
 
 
@@ -50,6 +51,14 @@ class Profile extends Component {
 Profile.contextTypes = {
   store: React.PropTypes.object.isRequired
 }
+
+const mapStateToProps = state => {
+   return  {loginState: state.auth.loginState}
+}
+
+const ProfileContainer = connect(mapStateToProps)(Profile);
+
+export {ProfileContainer};
 
 export default class SideMenu extends Component {
 

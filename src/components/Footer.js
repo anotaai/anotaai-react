@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-export default class Footer extends Component {
+class Footer extends Component {
 
 
     render() {
@@ -23,3 +24,12 @@ export default class Footer extends Component {
         );
     }
 }
+
+
+const mapStateToProps = state => {
+    return { loginState: state.auth.loginState} 
+}
+
+const FooterContainer = connect(mapStateToProps)(Footer);
+
+export default FooterContainer;

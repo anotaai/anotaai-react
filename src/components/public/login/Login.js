@@ -84,10 +84,10 @@ export default class Login extends Component {
     this.context.store.dispatch(showLoading());
 
     UsuarioService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
-      if (response.isValid) {
-        this.context.store.dispatch(UsuarioService.dispatchLogin(response));
+      if (response.isValid === false) {
+          ShowMessage.showMessages(response.messages); 
       } else {
-        ShowMessage.showMessages(response.messages);
+         this.context.store.dispatch(UsuarioService.dispatchLogin(response));
       }
     }).catch(error => {
       this.refs.loginBtn.removeAttribute("disabled");

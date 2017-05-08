@@ -1,5 +1,5 @@
 import { DataType } from './DataType';
-import { Icon } from './Icon';
+import { Icon } from './ICON';
 
 export class TipoMensagem extends DataType {
 
@@ -11,7 +11,7 @@ export class TipoMensagem extends DataType {
 
 }
 
-TipoMensagem.SUCCESS = new TipoMensagem(0, 'SUCCESS', 'green darken-2', Icon.DONE);
-TipoMensagem.INFO = new TipoMensagem(1, 'INFO', 'Indigo', Icon.INFO);
-TipoMensagem.WARNING = new TipoMensagem(2, 'WARNING', 'yellow darken-2', Icon.WARNING);
-TipoMensagem.ERROR = new TipoMensagem(3, 'ERROR', 'red darken-2', Icon.ERROR);
+TipoMensagem.SUCCESS = new TipoMensagem(0, 'success', 'green darken-2', Icon.DONE);
+TipoMensagem.INFO = new TipoMensagem(1, 'info', 'Indigo', Icon.INFO);
+TipoMensagem.WARNING = new TipoMensagem(2, 'warning', 'yellow darken-2', Icon.WARNING);
+TipoMensagem.ERROR = new TipoMensagem(3, 'error', 'red darken-2', Icon.ERROR);
