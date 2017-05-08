@@ -83,7 +83,7 @@ export default class SideMenu extends Component {
         <Profile loginState={this.props.loginState} />
         {this.state.listMenu.map(itemMenu =>
           (<div key={itemMenu.action}>
-            <li><Link to="/home"><i className="material-icons">{itemMenu.icone.nameClass}</i>{itemMenu.descricao}</Link></li>
+            <li><Link to="/home"><i className="material-icons">{itemMenu.icone.descricao}</i>{itemMenu.descricao}</Link></li>
             <li><div className="divider"></div></li>
           </div>
           )
