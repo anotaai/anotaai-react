@@ -1,5 +1,6 @@
 
 export const URL = {
+    DYNAMIC_LOGIN: '/login(/:activation)',
     LOGIN: '/login',
     REGISTER: '/register',
     HOME: '/home',

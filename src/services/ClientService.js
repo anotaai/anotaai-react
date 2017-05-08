@@ -13,7 +13,7 @@ export default class ClientService {
         newClientInstance.cpf =   getNumbers(client.cpf);  
         newAddressInstance.cep = getNumbers(client.endereco.cep);  
         newClientInstance.usuario = newUserInstance;
-        newClientInstance.address = newAddressInstance;
+        newClientInstance.endereco = newAddressInstance;
         newClientInstance.type = 'cliente';
 
       return  fetch(`${URL_BACKEND}/rest/clientes/`,{

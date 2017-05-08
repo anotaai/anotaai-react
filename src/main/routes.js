@@ -20,7 +20,7 @@ const privateRoutes = (
 
  const routes = (
   <Route path="/" component={App} >
-    <Route path={URL.LOGIN} component={Login} />
+    <Route path={URL.DYNAMIC_LOGIN} component={Login} />
     <Route path={URL.REGISTER} component={Register} />
     <Route path={URL.VENDEDOR} component={Vendedor} />
     <Route path={URL.COMPRADOR} component={Comprador} />

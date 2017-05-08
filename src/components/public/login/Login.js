@@ -58,9 +58,13 @@ export class RadioUser extends Component {
 
 export default class Login extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { showModal: false, userLogin: { usuario: { email: '', telefone: '', senha: '' }, tipoAcesso: '' } };
+    
+    if(props.params.activation){
+        alert(props.params.activation);
+    }
   }
 
   showModal(e) {
