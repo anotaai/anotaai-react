@@ -1,46 +1,42 @@
 import React, { Component } from 'react'
 import { RadioUser } from './Login'
-import  Modal  from 'react-modal';
+import Modal  from 'react-modal';
+import UserService from '../../../services/UserService';
+import { getObjectNewState } from '../../../helpers/jsonHelper'
+import { customModalStyles } from '../../../helpers/constants'
 
 export default class ModalRenewPassword extends Component {
 
   constructor() {
     super();
-    this.state = { email: '', telefone: '' };
+    this.state = { userLogin: { usuario: { email: '', telefone: '', senha: '' } } };
   }
 
   hideModal() {
     this.props.callbackHideModal();
   }
 
-  handleInputChange(value, name) {
-    this.setState({ [name]: value });
+  handleInputChange(e) {
+    const newState = getObjectNewState(e.target.name, e.target.value, this.state);
+    this.setState(newState);
   }
 
 
   renewPassword(e) {
     e.preventDefault();
-    console.log(this.state.telefone);
-    console.log(this.state.email);
+    UserService.askNewPassword(this.state.userLogin.usuario).then(response => {
+        alert('sucesso');
+        this.hideModal();
+    }).catch(error => {
+        alert('erro');
+    });
   }
 
   render() {
-
-    const customStyles = {
-      content: {
-        top: '40%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        padding: '30px',
-        transform: 'translate(-50%, -50%)',
-
-      }
-    };
+    
 
     return (
-      <Modal isOpen={this.props.showModal} style={customStyles} contentLabel="Esqueci a senha">
+      <Modal isOpen={this.props.showModal} style={customModalStyles} contentLabel="Esqueci a senha">
 
         <h4 className="center-align">Esqueci a senha</h4>
 

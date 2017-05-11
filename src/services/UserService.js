@@ -10,6 +10,68 @@ import AuthenticationService from './app/AuthenticationService'
 
 export default class UserService {
 
+
+    static  getUser(activationCode) {
+
+     return fetch(`${URL_BACKEND}/rest/usuarios/recuperarUsuarioAlteracaoSenha`,{
+        method: 'POST',
+        headers: {'Content-type' : 'application/json'},
+        body: activationCode})
+        .then(response => {
+            return response.json();
+        }).catch(error => {
+            throw Error(error);
+        })
+         
+    }
+
+    static changePassword(user) {
+           
+        return fetch(`${URL_BACKEND}/rest/usuarios/alterarSenha`, {
+            method: 'POST',
+            headers: {'Content-type':'application/json'},
+            body: JSON.stringify(user) 
+        }).then(response => {
+           return response.json();
+        }).catch(error => {
+           throw Error(error);
+        });
+
+    }
+
+    static askNewPassword(user) {
+
+
+         const telefone = user.telefone; 
+         const newUserInstance = createInstance(user);
+         newUserInstance.telefone = buildPhone(telefone);
+
+         return fetch(`${URL_BACKEND}/rest/usuarios/solicitarMensagemAlteracaoSenha`,
+         { method: 'POST', 
+           body:  JSON.stringify(newUserInstance),
+           headers: {'Content-type': 'application/json'}})
+          .then(response => {
+             return response.json();
+          }).catch(error => {
+             throw Error(error);
+          });
+
+    }
+
+
+    static activation(code) {
+         
+         return fetch(`${URL_BACKEND}/rest/usuarios/activation`,{
+              headers: {'Content-type' : 'application/json'},
+              body: code,
+              method: 'POST'
+         }).then(response => {
+             return response.json();
+         }).catch(error => {
+             throw Error(error);
+         });
+    }
+
     static save(usuario, telefoneStr) {
         
         const newUserInstance = createInstance(usuario);

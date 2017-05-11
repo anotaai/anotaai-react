@@ -10,6 +10,7 @@ import App from '../components/App'
 import Vendedor from '../components/public/register/Vendedor'
 import Comprador from '../components/public/register/Comprador'
 import Search from '../components/private/setor/Search'
+import RenewPassword from '../components/public/renew/RenewPassword'
 
 const privateRoutes = (
     <Route component={AuthenticationContainer}>
@@ -24,6 +25,7 @@ const privateRoutes = (
     <Route path={URL.REGISTER} component={Register} />
     <Route path={URL.VENDEDOR} component={Vendedor} />
     <Route path={URL.COMPRADOR} component={Comprador} />
+    <Route path={URL.RENEW_PASSWORD} component={RenewPassword} />
     {privateRoutes}
   </Route>
 );

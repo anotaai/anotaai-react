@@ -10,6 +10,8 @@ import {replaceMask} from '../../../helpers/stringHelper'
 import ClientService from '../../../services/ClientService'
 import {FormUser,checkInvalidPassword} from './Comprador'
 import FooterPanel from '../../FooterPanel'
+import { browserHistory } from 'react-router'
+import { URL } from '../../../helpers/constants'
 
 export default class Vendedor extends Component {
  
@@ -77,7 +79,9 @@ export default class Vendedor extends Component {
             ReactDOM.findDOMNode(this.refs.senha).focus();
          } else {
             ClientService.save(this.state.cliente, this.state.usuario, this.state.telefone).then(response => {
-                ShowMessage.show("Registro incluído com sucesso", TipoMensagem.INFO);
+                alert('sucesso');
+                browserHistory.push(URL.LOGIN);
+                //ShowMessage.show("Registro incluído com sucesso", TipoMensagem.INFO);
             }).catch(error => {
                 ShowMessage("Ocorreu um erro ao incluir o comprador", TipoMensagem.ERROR);
             });

@@ -9,6 +9,8 @@ import {replaceMask} from '../../../helpers/stringHelper'
 import T from 'i18n-react';
 import { MDText } from 'i18n-react';
 import FooterPanel from '../../FooterPanel'
+import { URL } from '../../../helpers/constants'
+import { browserHistory } from 'react-router'
 
 export function checkInvalidPassword(state) {
     
@@ -131,20 +133,22 @@ export default class Comprador extends Component {
 
 
     send(e) {
+        
         e.preventDefault();
-         
-      const state = checkInvalidPassword(this.state);
+        const state = checkInvalidPassword(this.state);
 
-      if(state !== undefined) {           
+        if (state !== undefined) {
             this.setState(state);
             //ReactDOM.findDOMNode(this.refs.senha).focus();
-         } else {
+        } else {
             UserService.save(this.state.usuario, this.state.telefone).then(response => {
-                ShowMessage.show("Sucesso", TipoMensagem.INFO);
+                alert('sucesso');
+                browserHistory.push(URL.LOGIN);
+                //ShowMessage.show("Sucesso", TipoMensagem.INFO);
             }).catch(error => {
                 ShowMessage.show('Ocorreu um erro ao incluir o usuário', TipoMensagem.ERROR);
             });
-         }
+        }
 
     }
 

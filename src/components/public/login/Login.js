@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import MaskedInput from 'react-maskedinput'
 import ModalRenewPassword from './ModalRenewPassword'
-import UsuarioService from '../../../services/UserService'
+import UserService from '../../../services/UserService'
 import { getObjectNewState } from '../../../helpers/jsonHelper'
 import ShowMessage from '../../../helpers/ShowMessage'
 import { TipoMensagem } from '../../../domain/TipoMensagem'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+ 
 
 export class RadioUser extends Component {
 
@@ -63,7 +64,13 @@ export default class Login extends Component {
     this.state = { showModal: false, userLogin: { usuario: { email: '', telefone: '', senha: '' }, tipoAcesso: '' } };
     
     if(props.params.activation){
-        alert(props.params.activation);
+        UserService.activation(props.params.activation)
+         .then(response => {  
+            alert(response);
+         })
+         .catch(error => {
+            alert(error);
+         });
     }
   }
 
@@ -87,17 +94,17 @@ export default class Login extends Component {
     this.refs.loginBtn.setAttribute("disabled", "disabled");
     this.context.store.dispatch(showLoading());
 
-    UsuarioService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
+    UserService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
       if (response.isValid === false) {
           ShowMessage.showMessages(response.messages); 
       } else {
-         this.context.store.dispatch(UsuarioService.dispatchLogin(response));
+         this.context.store.dispatch(UserService.dispatchLogin(response));
       }
     }).catch(error => {
       this.refs.loginBtn.removeAttribute("disabled");
       ShowMessage.showMessages(error.messages);
     }).then(() => {
-      this.context.store.dispatch(hideLoading());
+       this.context.store.dispatch(hideLoading());
     });
 
   }
