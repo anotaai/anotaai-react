@@ -6,7 +6,7 @@ import { getObjectNewState } from '../../../helpers/jsonHelper'
 import ShowMessage from '../../../helpers/ShowMessage'
 import { TipoMensagem } from '../../../domain/TipoMensagem'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
- 
+
 
 export class RadioUser extends Component {
 
@@ -62,15 +62,15 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = { showModal: false, userLogin: { usuario: { email: '', telefone: '', senha: '' }, tipoAcesso: '' } };
-    
-    if(props.params.activation){
-        UserService.activation(props.params.activation)
-         .then(response => {  
-            alert(response);
-         })
-         .catch(error => {
-            alert(error);
-         });
+
+    if (props.params.activation) {
+      UserService.activation(props.params.activation)
+        .then(response => {
+          alert(response);
+        })
+        .catch(error => {
+          alert(error);
+        });
     }
   }
 
@@ -96,15 +96,15 @@ export default class Login extends Component {
 
     UserService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
       if (response.isValid) {
-         this.context.store.dispatch(UserService.dispatchLogin(response.login));
+        this.context.store.dispatch(UserService.dispatchLogin(response.login));
       } else {
-          ShowMessage.showMessages(response.messages);
+        ShowMessage.showMessages(response.messages);
       }
     }).catch(error => {
       this.refs.loginBtn.removeAttribute("disabled");
       ShowMessage.error();
     }).then(() => {
-       this.context.store.dispatch(hideLoading());
+      this.context.store.dispatch(hideLoading());
     });
 
   }
