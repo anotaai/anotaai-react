@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import $ from 'jquery'
-import AuthenticationService from '../../services/app/AuthenticationService'
-import UserService from '../../services/UserService'
-import blank_avatar from '../../img/blank_avatar.png'
-import { ShowMessage } from '../../helpers/ShowMessage'
+import AuthenticationService from '../../../services/app/AuthenticationService'
+import UserService from '../../../services/UserService'
+import blank_avatar from '../../../img/blank_avatar.png'
+import { ShowMessage } from '../../../helpers/ShowMessage'
+import { browserHistory } from 'react-router'
+import { URL } from '../../../helpers/constants'
 
 class Profile extends Component {
 
@@ -24,9 +26,11 @@ class Profile extends Component {
         this.context.store.dispatch(UserService.dispatchLogout());
     }
 
-    showSettings(e) {
+    redirectSettings(e) {
         e.preventDefault();
-        this.setState({ showModal: true });
+        $('.button-collapse').sideNav('hide');
+        browserHistory.push(URL.SETTINGS);
+
     }
 
     render() {
@@ -43,7 +47,7 @@ class Profile extends Component {
                             <div className="col col s8 m8 l8">
                                 <a className="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates={this.props.idDropdown}>{this.props.loginState.login.primeiroNome}<i className="material-icons right">arrow_drop_down</i></a>
                                 <ul id={this.props.idDropdown} className="dropdown-content">
-                                    <li><a href="#" onClick={this.showSettings.bind(this)}>Settings<i className="material-icons">settings</i></a></li>
+                                    <li><a href="#" onClick={this.redirectSettings.bind(this)}>Settings<i className="material-icons">settings</i></a></li>
                                     <li className="divider"></li>
                                     <li><a href="#!" onClick={this.logout.bind(this)} >Logout<i className="material-icons">power_settings_new</i></a></li>
                                 </ul>

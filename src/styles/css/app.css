@@ -115,5 +115,12 @@ footer {
 	width: 12px;
 	background-color: #F5F5F5;
 }
+
+.icon-panel {
+  position: relative;
+  top: 4px;
+  right: 10px;
+}
+
  
  

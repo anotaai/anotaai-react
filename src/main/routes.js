@@ -11,11 +11,13 @@ import Vendedor from '../components/public/register/Vendedor'
 import Comprador from '../components/public/register/Comprador'
 import Search from '../components/private/setor/Search'
 import RenewPassword from '../components/public/renew/RenewPassword'
+import Settings from '../components/private/profile/Settings'
 
 const privateRoutes = (
     <Route component={AuthenticationContainer}>
       <Route path={URL.HOME} component={Home} />
       <Route path={URL.SETOR} component={Search} />
+      <Route path={URL.SETTINGS} component={Settings} />
     </Route> 
 );
 

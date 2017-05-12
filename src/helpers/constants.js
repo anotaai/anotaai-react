@@ -7,7 +7,8 @@ export const URL = {
     COMPRADOR: '/comprador',
     VENDEDOR: '/vendedor',
     SETOR: '/setor',
-    RENEW_PASSWORD: '/renew(/:activation)'
+    RENEW_PASSWORD: '/renew(/:activation)',
+    SETTINGS: '/settings'
 }
 
 export const DEFAULT_TIME = 3000;

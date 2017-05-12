@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MenuService from '../../services/menu/MenuService'
 import { Link } from 'react-router'
-import {ProfileContainer} from  './Profile'
+import {ProfileContainer} from  './profile/Profile'
 import $ from 'jquery'
 
 export class Links extends Component {
