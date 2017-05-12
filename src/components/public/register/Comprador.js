@@ -18,8 +18,7 @@ export function checkInvalidPassword(state) {
         const newState = createInstance(state);
         newState.usuario.senha = '';
         newState.confirmarSenha = '';
-        let message = ShowMessage.build('usuario.senhaInvalida', Icon.INFO);
-            ShowMessage.showgMessage();
+        ShowMessage.warning('senhas.nao.conferem.warning');
         return newState;
     }
 }

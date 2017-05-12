@@ -77,9 +77,16 @@ export default class Vendedor extends Component {
             ReactDOM.findDOMNode(this.refs.senha).focus();
          } else {
             ClientService.save(this.state.cliente, this.state.usuario, this.state.telefone).then(response => {
-                alert('sucesso');
-                browserHistory.push(URL.LOGIN);
+            
+            if(response.isValid) {
+               ShowMessage.success('client.inserido.sucesso'); 
+               browserHistory.push(URL.LOGIN);
+             } else {
+               ShowMessage.showMessages(response.messages); 
+             }
+
             }).catch(error => {
+                console.log(error);
                 ShowMessage.error();
             });
          }

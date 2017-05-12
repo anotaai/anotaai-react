@@ -8,10 +8,7 @@ export default class MenuService {
         return fetch(`${URL_BACKEND}/rest/menu/principal`,{
             headers: new Headers({'Authorization': authdata})
         }).then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw Error(response);
+           return response.json();
         }).catch(error => {
             throw Error(error);
         });

@@ -82,10 +82,7 @@ export default class UserService {
             body: JSON.stringify(newUserInstance),
             headers: {'Content-type': 'application/json'}
             }).then(response => {
-                if (response.ok) {
-                   return response.json();
-                }
-                throw Error(response);
+              return response.json();
             }).catch(error => {
               throw Error(error);
             });
@@ -142,13 +139,7 @@ export default class UserService {
                 body: JSON.stringify(newUserLoginInstance),
                 headers: {'Content-type': 'application/json'}
             }).then(response => {
-                return response.json();
-            }).then(json => {
-               // if (json.anotaaiExceptionMessages) {
-                //    reject(json);
-               // } else {
-                    resolve(json);
-               // }
+                resolve(response.json());
             }).catch(error => {
                 reject();
             });

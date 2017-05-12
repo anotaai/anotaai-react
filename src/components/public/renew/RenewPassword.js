@@ -3,13 +3,14 @@ import { getObjectNewState } from '../../../helpers/jsonHelper'
 import UserService from '../../../services/UserService'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
+import ShowMessage from '../../../helpers/ShowMessage'
 
 export default class RenewPassword extends Component {
 
     constructor(props) {
-         super(props);
-         this.state = { usuario: { id: '', dataCadastro: '', email: '', telefone: '', senha: '' , codigoAtivacao: '' }, confirmarSenha: '' };
-         this.activation =  this.props.params.activation;
+        super(props);
+        this.state = { usuario: { id: '', dataCadastro: '', email: '', telefone: '', senha: '', codigoAtivacao: '' }, confirmarSenha: '' };
+        this.activation = this.props.params.activation;
     }
     componentDidMount() {
         if (this.activation) {
@@ -27,20 +28,25 @@ export default class RenewPassword extends Component {
 
     renew(e) {
         e.preventDefault();
-        
+
         if (this.state.usuario.senha !== this.state.confirmarSenha) {
-            alert('As senhas não conferem');
+            ShowMessage.warning('senhas.nao.conferem.warning');
             return;
         }
-        const usuario =  this.state.usuario;
+        const usuario = this.state.usuario;
         usuario.codigoAtivacao = this.activation;
         UserService.changePassword(usuario)
-        .then(response => {
-           alert('sucesso');
-           browserHistory.push(URL.LOGIN);
-        }).catch(error => {
-           alert('error');
-        });
+            .then(response => {
+                if (response.isValid) {
+                    ShowMessage.success('change.password.success');
+                    browserHistory.push(URL.LOGIN);
+                } else {
+                    ShowMessage.showMessages(response.messages);
+                }
+
+            }).catch(error => {
+                ShowMessage.error();
+            });
 
     }
 
@@ -49,26 +55,26 @@ export default class RenewPassword extends Component {
             <center>
                 <div className="section" />
                 <div className="section" />
-                <div className="container z-depth-1" style={{width:'25%'}}>
+                <div className="container z-depth-1" style={{ width: '25%' }}>
                     <div className="panel-header">
                         <span className="title-header">Redefinir Senha</span>
                     </div>
                     <div>
                         <form className="col s12 panel" method="post" onSubmit={this.renew.bind(this)}>
                             <div className="row">
-                              <div className="col s2">
-                                <i className="material-icons right" style={{marginTop:'5px'}}>account_circle</i>  
-                              </div>
-                               {this.state.usuario.email != null && 
+                                <div className="col s2">
+                                    <i className="material-icons right" style={{ marginTop: '5px' }}>account_circle</i>
+                                </div>
+                                {this.state.usuario.email != null &&
                                     <div className="col s7 left-align">
-                                      {this.state.usuario.email}
+                                        {this.state.usuario.email}
                                     </div>
-                               } 
-                               {this.state.usuario.telefone != null && 
+                                }
+                                {this.state.usuario.telefone != null &&
                                     <div className="col s7 left-align">
-                                       ({this.state.usuario.telefone.ddd}) {this.state.usuario.telefone.numero} 
+                                        ({this.state.usuario.telefone.ddd}) {this.state.usuario.telefone.numero}
                                     </div>
-                               } 
+                                }
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
@@ -83,8 +89,8 @@ export default class RenewPassword extends Component {
                                 </div>
                             </div>
                             <div className="row">
-                                <button type="submmit" className='col s12 waves-effect btn btn-large success'>Gerar Nova Senha</button> 
-                           </div>
+                                <button type="submmit" className='col s12 waves-effect btn btn-large success'>Gerar Nova Senha</button>
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -24,10 +24,7 @@ export default class ClientService {
             })
         })
         .then(response => {
-            if(response.ok) {
-                return response.json();
-            }
-            throw Error(response);
+           return response.json(); 
         })
         .catch(error => {
            throw Error(error);

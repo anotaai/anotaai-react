@@ -4,6 +4,7 @@ import Modal  from 'react-modal';
 import UserService from '../../../services/UserService';
 import { getObjectNewState } from '../../../helpers/jsonHelper'
 import { customModalStyles } from '../../../helpers/constants'
+import ShowMessage from '../../../helpers/ShowMessage'
 
 export default class ModalRenewPassword extends Component {
 
@@ -25,10 +26,16 @@ export default class ModalRenewPassword extends Component {
   renewPassword(e) {
     e.preventDefault();
     UserService.askNewPassword(this.state.userLogin.usuario).then(response => {
-        alert('sucesso');
-        this.hideModal();
+       
+        if(response.isValid) {
+          ShowMessage.success('password.renew.success');
+          this.hideModal();
+        } else {
+          ShowMessage.showMessages(response.messages);
+        }
+
     }).catch(error => {
-        alert('erro');
+        ShowMessage.error();
     });
   }
 
@@ -46,9 +53,9 @@ export default class ModalRenewPassword extends Component {
 
           <RadioUser idEmail="idEmailModal" idTelefone="idTelefoneModal" handleInputChange={this.handleInputChange.bind(this)} />
 
-          <button type="submit" className="btn btn-small waves-effect success" style={{ marginTop: '10px' }} >Gerar Senha</button>
+          <button type="submit" className="btn btn-small waves-effect SUCCESS" style={{ marginTop: '10px' }} >Gerar Senha</button>
 
-          <button onClick={this.hideModal.bind(this)} className="btn btn-small waves-effect warning" style={{ marginLeft: '5px', marginTop: '10px' }}>Fechar</button>
+          <button onClick={this.hideModal.bind(this)} className="btn btn-small waves-effect WARNING" style={{ marginLeft: '5px', marginTop: '10px' }}>Fechar</button>
 
         </form>
       </Modal>

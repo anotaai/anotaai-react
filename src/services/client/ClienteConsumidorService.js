@@ -14,10 +14,7 @@ export default class ClienteConsumidorService {
                 'Content-type': 'application/json'})
            }) 
           .then(response => {
-              if(response.ok) {
-                 return response.json();  
-              }
-              throw Error(response);
+             return response.json();
           })
           .catch(error => {
              throw Error(error);

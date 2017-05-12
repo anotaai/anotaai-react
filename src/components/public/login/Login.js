@@ -64,13 +64,15 @@ export default class Login extends Component {
     this.state = { showModal: false, userLogin: { usuario: { email: '', telefone: '', senha: '' }, tipoAcesso: '' } };
 
     if (props.params.activation) {
-      UserService.activation(props.params.activation)
-        .then(response => {
-          alert(response);
-        })
-        .catch(error => {
-          alert(error);
-        });
+      UserService.activation(props.params.activation).then(response => {
+         if(response.isValid) {
+            ShowMessage.success('login.activated.success');
+         } else {
+           ShowMessage.showMessages(response.messages);
+         }
+      }).catch(error => {
+        ShowMessage.error();
+      });
     }
   }
 
@@ -101,9 +103,13 @@ export default class Login extends Component {
         ShowMessage.showMessages(response.messages);
       }
     }).catch(error => {
-      this.refs.loginBtn.removeAttribute("disabled");
       ShowMessage.error();
     }).then(() => {
+      
+       if(this.refs.loginBtn != undefined) {
+          this.refs.loginBtn.removeAttribute("disabled");
+       }
+      
       this.context.store.dispatch(hideLoading());
     });
 
@@ -139,7 +145,7 @@ export default class Login extends Component {
                 <br />
                 <center>
                   <div className='row'>
-                    <button ref="loginBtn" type='submit' className='col s12 btn btn-large info'>Login</button>
+                    <button ref="loginBtn" type='submit' className='col s12 btn btn-large INFO'>Login</button>
                   </div>
                 </center>
               </form>

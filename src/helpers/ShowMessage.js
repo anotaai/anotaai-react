@@ -14,7 +14,7 @@ export default class ShowMessage {
                 _this.buildMessage(message);
             });
         } else {
-            this.buildMessage({ key: 'message.defaulterror', type: TipoMensagem.ERROR, params: null });
+            this.buildMessage({ key: 'message.defaulterror', type: { icon: Icon.ERROR, type: Icon.ERROR.type}, params: null });
         }
     }
 
@@ -22,23 +22,41 @@ export default class ShowMessage {
         //var messageStr = message.isKey ? translateMessage(message.key, message.params) : message.text;
         const messageStr = this.translateMessage(message.key, message.params);
         const tipoMensagem = message.type;
-        window.Materialize.toast(`<i class="material-icons left">${tipoMensagem.icon.className}</i>${messageStr}`, DEFAULT_TIME, tipoMensagem.type);
+        const className =  tipoMensagem.icon.className.split('-');
+        let materialIcon;
+    
+        if(className.length > 1) {
+            materialIcon = className[1];
+        } else {
+            materialIcon = className[0];
+        }
+        
+        window.Materialize.toast(`<i class="material-icons left">${materialIcon}</i>${messageStr}`, DEFAULT_TIME,tipoMensagem.type);
     }
 
     static build(key, icon, params) {
         return {
             type: {
-                icon: icon,
+                icon: icon, type: icon.type
             },
             params: params,
             key: key
         };
     }
 
-    static error() {
-        let mensagem = this.build('default.error', Icon.ERROR);
-        this.buildMessage(mensagem);
+    static success(key) {
+      let mensagem = this.build(key, Icon.DONE,null);
+      this.buildMessage(mensagem);
+    }
 
+    static warning(key) {
+      let mensagem = this.build(key, Icon.WARNING,null);
+      this.buildMessage(mensagem);
+    }
+
+    static error() {
+        let mensagem = this.build('default.error', Icon.ERROR,null);
+        this.buildMessage(mensagem);
     }
 
     static translateMessage(key, params) {
