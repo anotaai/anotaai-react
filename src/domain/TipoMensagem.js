@@ -1,5 +1,5 @@
 import { DataType } from './DataType';
-import { Icon } from './ICON';
+import { Icon } from './Icon';
 
 export class TipoMensagem extends DataType {
 
