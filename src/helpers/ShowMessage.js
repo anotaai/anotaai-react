@@ -1,6 +1,7 @@
 import { DEFAULT_TIME } from './constants';
 import { TipoMensagem } from '../domain/TipoMensagem';
 //import T from 'i18n-react';
+import { Icon } from '../domain/Icon';
 import { MDText } from 'i18n-react';
 
 
@@ -24,18 +25,32 @@ export default class ShowMessage {
         window.Materialize.toast(`<i class="material-icons left">${tipoMensagem.icon.className}</i>${messageStr}`, DEFAULT_TIME, tipoMensagem.type);
     }
 
-    static 
-    translateMessage(key, params) {
-        let T = new MDText();
-        let x = T.translate("nome");
-        console.log(x);
+    static build(key, icon, params) {
+        return {
+            type: {
+                icon: icon,
+            },
+            params: params,
+            key: key
+        };
+    }
+
+    static error() {
+        let mensagem = this.build('default.error', Icon.ERROR);
+        this.buildMessage(mensagem);
+
+    }
+
+    static translateMessage(key, params) {
+        //let T = new MDText();
+        //let x = T.translate("nome");
 		var message = '';//TODO - recuperar mensagem
 		if (params && params.length > 0) {//TODO aplicar parametros
 			params.forEach(param => {
 				console.log(param);
 			});
 		}
-		return message;
+		return key;
 	}
 
 }

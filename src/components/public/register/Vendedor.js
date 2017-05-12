@@ -1,17 +1,16 @@
-import React,{Component} from 'react'
-import ReactDOM from 'react-dom'
-import MaskedInput from 'react-maskedinput'
-import EnumService from '../../../services/util/EnumService'
-import AddressService from '../../../services/register/AddressService'
-import ShowMessage from '../../../helpers/ShowMessage'
-import {TipoMensagem} from '../../../domain/TipoMensagem'
-import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper'
-import {replaceMask} from '../../../helpers/stringHelper'
-import ClientService from '../../../services/ClientService'
-import {FormUser,checkInvalidPassword} from './Comprador'
-import FooterPanel from '../../FooterPanel'
-import { browserHistory } from 'react-router'
-import { URL } from '../../../helpers/constants'
+import React,{Component} from 'react';
+import ReactDOM from 'react-dom';
+import MaskedInput from 'react-maskedinput';
+import EnumService from '../../../services/util/EnumService';
+import AddressService from '../../../services/register/AddressService';
+import ShowMessage from '../../../helpers/ShowMessage';
+import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper';
+import {replaceMask} from '../../../helpers/stringHelper';
+import ClientService from '../../../services/ClientService';
+import {FormUser,checkInvalidPassword} from './Comprador';
+import FooterPanel from '../../FooterPanel';
+import { browserHistory } from 'react-router';
+import { URL } from '../../../helpers/constants';
 
 export default class Vendedor extends Component {
  
@@ -31,8 +30,7 @@ export default class Vendedor extends Component {
         EnumService.load('estados').then(json => {
             this.setState({ estadoList: json });
         }).catch(error => {
-            console.log(error);
-            ShowMessage.show(`Ocorreu um erro ao recuperar o serviço de estados`, TipoMensagem.ERROR)
+            ShowMessage.error();
         });
     }
 
@@ -81,9 +79,8 @@ export default class Vendedor extends Component {
             ClientService.save(this.state.cliente, this.state.usuario, this.state.telefone).then(response => {
                 alert('sucesso');
                 browserHistory.push(URL.LOGIN);
-                //ShowMessage.show("Registro incluído com sucesso", TipoMensagem.INFO);
             }).catch(error => {
-                ShowMessage("Ocorreu um erro ao incluir o comprador", TipoMensagem.ERROR);
+                ShowMessage.error();
             });
          }
        
@@ -103,21 +100,20 @@ export default class Vendedor extends Component {
             AddressService.findCep(cepReplace).then(enderecoRecuperado => {
 
                 if (enderecoRecuperado.logradouro == null) {
-                    ShowMessage.show(`Não foi encontrado um endereço para o cep ${cepReplace}`, TipoMensagem.WARNING);
-                    return;
+                    ShowMessage.error();
+                } else {
+                    const newState = createInstance(this.state);
+                    newState.cliente.endereco.logradouro = enderecoRecuperado.logradouro;
+                    newState.cliente.endereco.numero = enderecoRecuperado.numero;
+                    newState.cliente.endereco.complemento = enderecoRecuperado.numero;
+                    newState.cliente.endereco.bairro = enderecoRecuperado.bairro;
+                    newState.cliente.endereco.cidade = enderecoRecuperado.localidade;
+                    newState.cliente.endereco.estado = enderecoRecuperado.uf;
+                    this.cepRetornado = 'S';
+                    this.setState(newState);
                 }
-                const newState = createInstance(this.state);
-                newState.cliente.endereco.logradouro = enderecoRecuperado.logradouro;
-                newState.cliente.endereco.numero = enderecoRecuperado.numero;
-                newState.cliente.endereco.complemento = enderecoRecuperado.numero;
-                newState.cliente.endereco.bairro = enderecoRecuperado.bairro;
-                newState.cliente.endereco.cidade = enderecoRecuperado.localidade;
-                newState.cliente.endereco.estado = enderecoRecuperado.uf;
-                this.cepRetornado = 'S';
-                this.setState(newState);
             }).catch(error => {
-                console.error(error);
-                ShowMessage.show(`Ocorreu um erro ao recuperar o cep ${cep}`, TipoMensagem.ERROR)
+                ShowMessage.error();
             });
 
         } else {
