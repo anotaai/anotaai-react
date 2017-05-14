@@ -1,9 +1,19 @@
 import fetchIntercept from 'fetch-intercept'
+import Cookies from 'universal-cookie'
+import { COOKIE_USER } from '../../helpers/constants'
 
 export default function registerFetchInterceptor() {
 
     fetchIntercept.register({
         request(url, config) {
+
+            const cookies = new Cookies();
+            const cookieLoginState = cookies.get(COOKIE_USER);
+            
+            if(cookieLoginState != null) {
+               config = {headers : { 'Authorization' : 'Basic ' + cookieLoginState.login.authdata }};
+            }
+
             return [url, config];
         },
         

@@ -29,12 +29,8 @@ export default class AuthenticationService {
         if (login.keepAlive) {
             expireDate.setFullYear(d.getFullYear() + 1);
         }
-
-         //$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-         //Verificar header genérico
-         
-         localStorage.setItem('authdata',authdata);
-         
+        
+ 
          const cookies = new Cookies();
          cookies.set(COOKIE_USER, JSON.stringify(loginState), { 'expires': expireDate });
 
