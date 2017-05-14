@@ -66,13 +66,9 @@ export default class Login extends Component {
 
     if (props.params.activation) {
       UserService.activation(props.params.activation).then(response => {
-         if(response.isValid) {
-            Toast.show('login.activated.success', Icon.ERROR);
-         } else {
-           Toast.show(response.messages);
-         }
+          Toast.show(response.messages);
       }).catch(error => {
-        Toast.error();
+        Toast.defaultError();
       });
     }
   }
@@ -92,11 +88,9 @@ export default class Login extends Component {
   }
 
   login(e) {
-
     e.preventDefault();
     this.refs.loginBtn.setAttribute("disabled", "disabled");
     this.context.store.dispatch(showLoading());
-
     UserService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
       if (response.isValid) {
         this.context.store.dispatch(UserService.dispatchLogin(response.login));
@@ -104,16 +98,13 @@ export default class Login extends Component {
         Toast.show(response.messages);
       }
     }).catch(error => {
-      Toast.error();
+      Toast.defaultError();
     }).then(() => {
-      
-       if(this.refs.loginBtn != undefined) {
-          this.refs.loginBtn.removeAttribute("disabled");
-       }
-      
+      if (this.refs.loginBtn != undefined) {
+        this.refs.loginBtn.removeAttribute("disabled");
+      }
       this.context.store.dispatch(hideLoading());
     });
-
   }
 
   render() {

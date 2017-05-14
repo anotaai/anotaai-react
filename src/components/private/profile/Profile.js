@@ -20,7 +20,7 @@ class Profile extends Component {
         UserService.logout(this.props.loginState).then(response => {
             $('.button-collapse').sideNav('hide');
         }).catch(error => {
-            Toast.error();
+            Toast.defaultError();
         });
         AuthenticationService.clearCredentials();
         this.context.store.dispatch(UserService.dispatchLogout());

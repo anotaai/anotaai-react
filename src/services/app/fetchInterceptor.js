@@ -19,6 +19,9 @@ export default function registerFetchInterceptor() {
         
         response(response) {
             switch (response.status) {
+                case 200:
+                    //response = response.json()
+                    break;
                 case 401:
                     console.log('401');
                     break;

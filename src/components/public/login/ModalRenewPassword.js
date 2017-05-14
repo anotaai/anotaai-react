@@ -26,16 +26,12 @@ export default class ModalRenewPassword extends Component {
   renewPassword(e) {
     e.preventDefault();
     UserService.askNewPassword(this.state.userLogin.usuario).then(response => {
-       
+        Toast.show(response.messages);
         if(response.isValid) {
-          Toast.success('password.renew.success');
           this.hideModal();
-        } else {
-          Toast.show(response.messages);
         }
-
     }).catch(error => {
-        Toast.error();
+        Toast.defaultError();
     });
   }
 

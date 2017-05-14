@@ -18,7 +18,7 @@ export function checkInvalidPassword(state) {
         const newState = createInstance(state);
         newState.usuario.senha = '';
         newState.confirmarSenha = '';
-        Toast.warning('senhas.nao.conferem.warning');
+        Toast.show('senhas.nao.conferem.warning', Icon.WARNING);
         return newState;
     }
 }
@@ -43,10 +43,10 @@ export class FormUser extends Component {
         if (finalizouTelefone === -1 && telefoneReplace !== '') {
             ClienteConsumidorService.findUsuarioByPhone(telefoneReplace)
                 .then(response => {
-                    alert(response);
+                    Toast.show(response.messages);
                 })
                 .catch(error => {
-                    Toast.error();
+                    Toast.defaultError();
                 })
         }
     }
@@ -141,10 +141,12 @@ export default class Comprador extends Component {
             this.setState(state);
         } else {
             UserService.save(this.state.usuario, this.state.telefone).then(response => {
-                alert('sucesso');
-                browserHistory.push(URL.LOGIN);
+                Toast.show(response.messages);
+                if (response.isValid) {
+                    browserHistory.push(URL.LOGIN);
+                }
             }).catch(error => {
-                Toast.error();
+                Toast.defaultError();
             });
         }
 

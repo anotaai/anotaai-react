@@ -4,6 +4,7 @@ import UserService from '../../../services/UserService'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
 import Toast from '../../../helpers/Toast'
+import { Icon } from '../../../domain/Icon'
 
 export default class RenewPassword extends Component {
 
@@ -30,24 +31,20 @@ export default class RenewPassword extends Component {
         e.preventDefault();
 
         if (this.state.usuario.senha !== this.state.confirmarSenha) {
-            Toast.warning('senhas.nao.conferem.warning');
+            Toast.show('senhas.nao.conferem.warning', Icon.ERROR);
             return;
         }
         const usuario = this.state.usuario;
         usuario.codigoAtivacao = this.activation;
         UserService.changePassword(usuario)
             .then(response => {
+                Toast.show(response.messages);
                 if (response.isValid) {
-                    Toast.success('change.password.success');
                     browserHistory.push(URL.LOGIN);
-                } else {
-                    Toast.show(response.messages);
                 }
-
             }).catch(error => {
-                Toast.error();
+                Toast.defaultError();
             });
-
     }
 
     render() {
