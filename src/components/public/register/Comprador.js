@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MaskedInput from 'react-maskedinput';
 import ClienteConsumidorService from '../../../services/client/ClienteConsumidorService';
-import ShowMessage from '../../../helpers/ShowMessage';
+import Toast from '../../../helpers/Toast';
 import Icon from '../../../domain/Icon';
 import UserService from '../../../services/UserService';
 import { getObjectNewState, createInstance } from '../../../helpers/jsonHelper';
@@ -18,7 +18,7 @@ export function checkInvalidPassword(state) {
         const newState = createInstance(state);
         newState.usuario.senha = '';
         newState.confirmarSenha = '';
-        ShowMessage.warning('senhas.nao.conferem.warning');
+        Toast.warning('senhas.nao.conferem.warning');
         return newState;
     }
 }
@@ -46,7 +46,7 @@ export class FormUser extends Component {
                     alert(response);
                 })
                 .catch(error => {
-                    ShowMessage.error();
+                    Toast.error();
                 })
         }
     }
@@ -144,7 +144,7 @@ export default class Comprador extends Component {
                 alert('sucesso');
                 browserHistory.push(URL.LOGIN);
             }).catch(error => {
-                ShowMessage.error();
+                Toast.error();
             });
         }
 

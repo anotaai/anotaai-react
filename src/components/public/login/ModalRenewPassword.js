@@ -4,7 +4,7 @@ import Modal  from 'react-modal';
 import UserService from '../../../services/UserService';
 import { getObjectNewState } from '../../../helpers/jsonHelper'
 import { customModalStyles } from '../../../helpers/constants'
-import ShowMessage from '../../../helpers/ShowMessage'
+import Toast from '../../../helpers/Toast'
 
 export default class ModalRenewPassword extends Component {
 
@@ -28,14 +28,14 @@ export default class ModalRenewPassword extends Component {
     UserService.askNewPassword(this.state.userLogin.usuario).then(response => {
        
         if(response.isValid) {
-          ShowMessage.success('password.renew.success');
+          Toast.success('password.renew.success');
           this.hideModal();
         } else {
-          ShowMessage.showMessages(response.messages);
+          Toast.show(response.messages);
         }
 
     }).catch(error => {
-        ShowMessage.error();
+        Toast.error();
     });
   }
 

@@ -4,7 +4,7 @@ import $ from 'jquery'
 import AuthenticationService from '../../../services/app/AuthenticationService'
 import UserService from '../../../services/UserService'
 import blank_avatar from '../../../img/blank_avatar.png'
-import { ShowMessage } from '../../../helpers/ShowMessage'
+import { Toast } from '../../../helpers/Toast'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
 
@@ -20,7 +20,7 @@ class Profile extends Component {
         UserService.logout(this.props.loginState).then(response => {
             $('.button-collapse').sideNav('hide');
         }).catch(error => {
-            ShowMessage.error();
+            Toast.error();
         });
         AuthenticationService.clearCredentials();
         this.context.store.dispatch(UserService.dispatchLogout());

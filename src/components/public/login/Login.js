@@ -3,7 +3,8 @@ import MaskedInput from 'react-maskedinput'
 import ModalRenewPassword from './ModalRenewPassword'
 import UserService from '../../../services/UserService'
 import { getObjectNewState } from '../../../helpers/jsonHelper'
-import ShowMessage from '../../../helpers/ShowMessage'
+import Toast from '../../../helpers/Toast'
+import { Icon } from '../../../domain/Icon'
 import { TipoMensagem } from '../../../domain/TipoMensagem'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
@@ -66,12 +67,12 @@ export default class Login extends Component {
     if (props.params.activation) {
       UserService.activation(props.params.activation).then(response => {
          if(response.isValid) {
-            ShowMessage.success('login.activated.success');
+            Toast.show('login.activated.success', Icon.ERROR);
          } else {
-           ShowMessage.showMessages(response.messages);
+           Toast.show(response.messages);
          }
       }).catch(error => {
-        ShowMessage.error();
+        Toast.error();
       });
     }
   }
@@ -100,10 +101,10 @@ export default class Login extends Component {
       if (response.isValid) {
         this.context.store.dispatch(UserService.dispatchLogin(response.login));
       } else {
-        ShowMessage.showMessages(response.messages);
+        Toast.show(response.messages);
       }
     }).catch(error => {
-      ShowMessage.error();
+      Toast.error();
     }).then(() => {
       
        if(this.refs.loginBtn != undefined) {

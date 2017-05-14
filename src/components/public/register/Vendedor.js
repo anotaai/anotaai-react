@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import MaskedInput from 'react-maskedinput';
 import EnumService from '../../../services/util/EnumService';
 import AddressService from '../../../services/register/AddressService';
-import ShowMessage from '../../../helpers/ShowMessage';
+import Toast from '../../../helpers/Toast';
 import {getObjectNewState, createInstance} from '../../../helpers/jsonHelper';
 import {replaceMask} from '../../../helpers/stringHelper';
 import ClientService from '../../../services/ClientService';
@@ -30,7 +30,7 @@ export default class Vendedor extends Component {
         EnumService.load('estados').then(json => {
             this.setState({ estadoList: json });
         }).catch(error => {
-            ShowMessage.error();
+            Toast.error();
         });
     }
 
@@ -79,15 +79,15 @@ export default class Vendedor extends Component {
             ClientService.save(this.state.cliente, this.state.usuario, this.state.telefone).then(response => {
             
             if(response.isValid) {
-               ShowMessage.success('client.inserido.sucesso'); 
+               Toast.success('client.inserido.sucesso'); 
                browserHistory.push(URL.LOGIN);
              } else {
-               ShowMessage.showMessages(response.messages); 
+               Toast.show(response.messages); 
              }
 
             }).catch(error => {
                 console.log(error);
-                ShowMessage.error();
+                Toast.error();
             });
          }
        
@@ -107,7 +107,7 @@ export default class Vendedor extends Component {
             AddressService.findCep(cepReplace).then(enderecoRecuperado => {
 
                 if (enderecoRecuperado.logradouro == null) {
-                    ShowMessage.error();
+                    Toast.error();
                 } else {
                     const newState = createInstance(this.state);
                     newState.cliente.endereco.logradouro = enderecoRecuperado.logradouro;
@@ -120,7 +120,7 @@ export default class Vendedor extends Component {
                     this.setState(newState);
                 }
             }).catch(error => {
-                ShowMessage.error();
+                Toast.error();
             });
 
         } else {

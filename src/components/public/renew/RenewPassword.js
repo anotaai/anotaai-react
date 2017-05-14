@@ -3,7 +3,7 @@ import { getObjectNewState } from '../../../helpers/jsonHelper'
 import UserService from '../../../services/UserService'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
-import ShowMessage from '../../../helpers/ShowMessage'
+import Toast from '../../../helpers/Toast'
 
 export default class RenewPassword extends Component {
 
@@ -30,7 +30,7 @@ export default class RenewPassword extends Component {
         e.preventDefault();
 
         if (this.state.usuario.senha !== this.state.confirmarSenha) {
-            ShowMessage.warning('senhas.nao.conferem.warning');
+            Toast.warning('senhas.nao.conferem.warning');
             return;
         }
         const usuario = this.state.usuario;
@@ -38,14 +38,14 @@ export default class RenewPassword extends Component {
         UserService.changePassword(usuario)
             .then(response => {
                 if (response.isValid) {
-                    ShowMessage.success('change.password.success');
+                    Toast.success('change.password.success');
                     browserHistory.push(URL.LOGIN);
                 } else {
-                    ShowMessage.showMessages(response.messages);
+                    Toast.show(response.messages);
                 }
 
             }).catch(error => {
-                ShowMessage.error();
+                Toast.error();
             });
 
     }
