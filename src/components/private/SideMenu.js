@@ -17,7 +17,7 @@ export class Links extends Component {
         <li className="hide-on-large-only"> <div className="divider"></div> </li> 
          {this.props.listMenu.map(itemMenu =>
             (<div key={itemMenu.url}>
-              <li><Link to={itemMenu.url}><i className="material-icons">{itemMenu.iconeMaterial.descricao}</i>{itemMenu.descricao}</Link></li>
+              <li><Link to={itemMenu.url}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link></li>
               <li><div className="divider"></div></li>
             </div>
           ))}
