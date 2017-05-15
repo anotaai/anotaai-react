@@ -15,14 +15,12 @@ class Authentication extends Component {
   render() {
     if (this.props.loginState != null) {
       return (
-        <div className="container">
-          <div className="col s12 m12 l12">
-            <div className="col s5">
-              <SideMenu loginState={this.props.loginState} />
-            </div>
-            <div className="col s7">
-              {this.props.children}
-            </div>
+        <div className="row">
+          <div className="col s2 l1">
+            <SideMenu loginState={this.props.loginState} />
+          </div>
+          <div className="col s12 l10">
+            {this.props.children}
           </div>
         </div>);
     } else {

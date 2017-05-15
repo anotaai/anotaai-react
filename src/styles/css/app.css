@@ -53,11 +53,27 @@ footer {
 	position:absolute;
 	bottom:0;
 }
-
-
 .private-side-nav {
   top:inherit;
   height: calc(100% + 5px);
+}
+
+.side-nav::-webkit-scrollbar-track
+{
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+.side-nav::-webkit-scrollbar
+{
+  width: 10px;
+	background-color: #F5F5F5;
+}
+
+.side-nav::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #3f51b5;
 }
 
 .INFO {
@@ -103,24 +119,9 @@ footer {
     text-transform: capitalize;
 }
 
-#style-1::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
-}
-
-#style-1::-webkit-scrollbar
-{
-	width: 12px;
-	background-color: #F5F5F5;
-}
-
 .icon-panel {
   position: relative;
   top: 4px;
   right: 10px;
 }
-
- 
  
