@@ -13,15 +13,17 @@ export default class RenewPassword extends Component {
         this.state = { usuario: { id: '', dataCadastro: '', email: '', telefone: '', senha: '', codigoAtivacao: '' }, confirmarSenha: '' };
         this.activation = this.props.params.activation;
     }
+
     componentDidMount() {
         if (this.activation) {
             UserService.getUser(this.activation).then(response => {
                 this.setState({ usuario: response.entity, confirmarSenha: '' });
             }).catch(error => {
-                alert(error);
+                Toast.defaultError(error);
             });
         }
     }
+
     handleInputChange(e) {
         const newState = getObjectNewState(e.target.name, e.target.value, this.state);
         this.setState(newState);
@@ -29,15 +31,12 @@ export default class RenewPassword extends Component {
 
     renew(e) {
         e.preventDefault();
-
         if (this.state.usuario.senha !== this.state.confirmarSenha) {
             Toast.show('senhas.nao.conferem.warning', Icon.ERROR);
-            return;
-        }
-        const usuario = this.state.usuario;
-        usuario.codigoAtivacao = this.activation;
-        UserService.changePassword(usuario)
-            .then(response => {
+        } else {
+            const usuario = this.state.usuario;
+            usuario.codigoAtivacao = this.activation;
+            UserService.changePassword(usuario).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
                     browserHistory.push(URL.LOGIN);
@@ -45,6 +44,7 @@ export default class RenewPassword extends Component {
             }).catch(error => {
                 Toast.defaultError();
             });
+        }
     }
 
     render() {
@@ -92,8 +92,6 @@ export default class RenewPassword extends Component {
                     </div>
                 </div>
             </center>
-
         )
     }
-
 }
