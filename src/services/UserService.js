@@ -90,9 +90,7 @@ export default class UserService {
     }
 
     static logout(login) {
-       
-   
-
+    
        return  new Promise((resolve,reject) => {
  
            return fetch(`${URL_BACKEND}/rest/usuarios/logout`,{

@@ -22,6 +22,8 @@ export default class AuthenticationService {
          loginState.login.telefoneStr = telefoneStr;
          loginState.login.authdata = authdata;
          loginState.login.primeiroNome = primeiroNome;
+         loginState.login.email = login.usuario.email;
+         loginState.login.endereco = 'Rua da Paz';
 
         var d = new Date();
         var expireDate = new Date();

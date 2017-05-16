@@ -16,7 +16,7 @@ class Authentication extends Component {
     if (this.props.loginState != null) {
       return (
         <div className="row">
-          <div className="col s2 l1">
+          <div className="col s2 l2">
             <SideMenu loginState={this.props.loginState} />
           </div>
           <div className="col s12 l10">

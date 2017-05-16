@@ -109,6 +109,19 @@ footer {
   background-color: #fff;
 }
 
+.profile-image-settings {
+  position: relative;
+  top: -30px;
+  color: #F5F5F5;
+  font-weight: bold;
+}
+
+.settings-title {
+  color:#ee6e73;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 .profile-btn {
     margin: 0;
     padding: 0;
