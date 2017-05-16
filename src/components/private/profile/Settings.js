@@ -34,8 +34,8 @@ class Settings extends Component {
                     </div>
                     <div className="z-depth-1 panel row">
                         <div className="row">
-                         <div className="col s10 m10 l5"> 
-                            <div className="col s10 m10 l5" style={{marginLeft: '50px', marginTop: '40px'}}>
+                         <div className="col s9 m10 l6"> 
+                            <div className="col s9 m10 l6" style={{marginLeft: '60px'}}>
                                 <Dropzone accept="image/jpeg, image/png" onDrop={this.dropPicture.bind(this)} style={{ boderStyle: 'none' }}  >
                                     <img src={this.state.picture.preview} alt="Avatar" className="circle responsive-img" />
                                     <div className="center-align profile-image-settings">Change</div>
