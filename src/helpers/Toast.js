@@ -1,5 +1,4 @@
 import { DEFAULT_TIME } from './constants';
-import { TipoMensagem } from '../domain/TipoMensagem';
 //import T from 'i18n-react';
 import { Icon } from '../domain/Icon';
 import { MDText } from 'i18n-react';
