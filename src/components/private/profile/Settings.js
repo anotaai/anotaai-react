@@ -20,10 +20,11 @@ class Settings extends Component {
             Toast.show('formatos.permitidos.warning',Icon.WARNING);
         } else {
              const picture = file[0];
+             
+              this.setState({picture});
+
              ProfileService.upload(picture).then(response => {
-                if(response.isValid) {
-                   this.setState({picture});
-                }
+                
 
                 Toast.show(response.messages);
                 
