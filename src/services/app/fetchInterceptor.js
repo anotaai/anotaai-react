@@ -7,12 +7,20 @@ export default function registerFetchInterceptor() {
     fetchIntercept.register({
         request(url, config) {
 
+         
             const cookies = new Cookies();
             const cookieLoginState = cookies.get(COOKIE_USER);
             
             if(cookieLoginState != null) {
-               config = {headers : { 'Authorization' : 'Basic ' + cookieLoginState.login.authdata }};
-            }
+               const authorizationHeader = { 'Authorization' : 'Basic ' + cookieLoginState.login.authdata };
+
+               if(config !== undefined) {
+                  // TODO - avaliar - config.headers = {...config.headers,authorizationHeader};
+                  config.headers = authorizationHeader;
+               } else {
+                   config = {headers: authorizationHeader}; 
+               }
+            } 
 
             return [url, config];
         },
