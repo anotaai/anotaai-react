@@ -91,16 +91,14 @@ export default class UserService {
 
     static logout(login) {
        
-       const authdata = 'Basic ' + localStorage.getItem('authdata');
+   
 
        return  new Promise((resolve,reject) => {
  
            return fetch(`${URL_BACKEND}/rest/usuarios/logout`,{
                 method: 'POST',
                 body: JSON.stringify(login),
-                headers: { 
-                    'Authorization': authdata,
-                    'Content-type':'application/json'}
+                headers: { 'Content-type':'application/json'}
             }).then(response => {
                 resolve(response.json());
             }).catch(error => {

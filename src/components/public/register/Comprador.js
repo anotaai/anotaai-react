@@ -62,35 +62,35 @@ export class FormUser extends Component {
 
                     <div className="z-depth-1 panel row">
 
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="nome" ref="nome" type="text" value={this.props.usuario.nome} name="usuario.nome" onChange={this.handleInputChange.bind(this)} required />
                             <label htmlFor="nome">
                                 <T.span text={{ key: "nome" }} />
                             </label>
                         </div>
                         {this.props.cliente !== undefined &&
-                            <div className="input-field col s6">
+                            <div className="input-field col s12 m6 l6">
                                 <input id="nomeComercial" type="text" value={this.props.cliente.nomeComercial} name="cliente.nomeComercial" onChange={this.handleInputChange.bind(this)} required />
                                 <label htmlFor="nomeComercial">Nome Comercial</label>
                             </div>
                         }
                         {this.props.cliente !== undefined &&
-                            <div className="input-field col s6">
+                            <div className="input-field col s12 m6 l6">
                                 <MaskedInput id='cpf' value={this.props.cliente.cpf} name="cliente.cpf" onChange={this.handleInputChange.bind(this)} mask="111.111.111-11" required placeholder="Cpf" />
                             </div>
                         }
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <MaskedInput id='telefone' value={this.props.telefone} name="telefone" onChange={this.handleInputChange.bind(this)} mask="(11) 11111-1111" required placeholder="Telefone" />
                         </div>
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="email" value={this.props.usuario.email} name="usuario.email" className="validate" onChange={this.handleInputChange.bind(this)} type="email" />
                             <label htmlFor="email" data-error="Email inválido">Email</label>
                         </div>
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="senha" ref="senha" type="password" className="validate" minLength="6" required value={this.props.usuario.senha} name="usuario.senha" onChange={this.handleInputChange.bind(this)} />
                             <label htmlFor="senha" data-error="A senha deve conter no mínimo 6 caracteres">Senha</label>
                         </div>
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="confirmarSenha" className="validate" type="password" minLength="6" required value={this.props.confirmarSenha} name="confirmarSenha" onChange={this.handleInputChange.bind(this)} />
                             <label htmlFor="confirmarSenha" data-error="A senha deve conter no mínimo 6 caracteres">Confirmar Senha</label>
                         </div>

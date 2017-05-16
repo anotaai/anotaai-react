@@ -143,35 +143,35 @@ export default class Vendedor extends Component {
                     </div>
                     <div className="z-depth-1 panel row">
 
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <MaskedInput id='cep' ref="cep" value={this.state.cliente.endereco.cep} mask="11.111-111" required placeholder="Cep" name="cliente.endereco.cep" onChange={this.handleCepChange.bind(this)} />
                         </div>
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="logradouro" value={this.state.cliente.endereco.logradouro} disabled={disabled} type="text" name="cliente.endereco.logradouro" onChange={this.handleInputChange.bind(this)} />
                             <label htmlFor="logradouro" className={active}>Logradouro</label>
                         </div>
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="numero" type="number" value={this.state.cliente.endereco.numero} name="cliente.endereco.numero" onChange={this.handleInputChange.bind(this)} />
                             <label htmlFor="numero" className={active} >Número</label>
                         </div>
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="complemento" type="text" value={this.state.cliente.endereco.complemento} name="cliente.endereco.complemento" onChange={this.handleInputChange.bind(this)} />
                             <label htmlFor="complemento" className={active}>Complemento</label>
                         </div>
 
-                        <div id="estadosDiv" className="input-field col s6">
+                        <div id="estadosDiv" className="input-field col s12 m6 l6">
                             <select className="browser-default" disabled={disabled} onChange={this.handleInputChange.bind(this)} value={this.state.cliente.endereco.estado} name="cliente.endereco.estado"   >
                                 <option value="">Selecione o estado</option>
                                 {this.state.estadoList.map(estado => (<option key={estado.type} value={estado.type}>{estado.descricao}</option>))}
                             </select>
                         </div>
 
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="cidade" type="text" name="cliente.endereco.cidade" required disabled={disabled} value={this.state.cliente.endereco.cidade} onChange={this.handleInputChange.bind(this)} />
                             <label htmlFor="cidade" className={active}>Cidade</label>
                         </div>
 
-                        <div className="input-field col s6">
+                        <div className="input-field col s12 m6 l6">
                             <input id="bairro" type="text" name="cliente.endereco.bairro" onChange={this.handleInputChange.bind(this)} disabled={disabled} required value={this.state.cliente.endereco.bairro} />
                             <label htmlFor="bairro" className={active} disabled>Bairro</label>
                         </div>
