@@ -1,7 +1,7 @@
 import { DEFAULT_TIME } from './constants';
 //import T from 'i18n-react';
 import { Icon } from '../domain/Icon';
-import { MDText } from 'i18n-react';
+//import { MDText } from 'i18n-react';
 
 
 export default class Toast {
@@ -19,7 +19,7 @@ export default class Toast {
             }
         } else if (message.constructor === Object) {
             this.buildMessage(message);
-        } else if (message.constructor == String) {
+        } else if (message.constructor === String) {
             if (icon) {
                 let _message = this.build(message, icon, params);
                 this.buildMessage(_message);
@@ -56,7 +56,7 @@ export default class Toast {
     static translateMessage(key, params) {
         //let T = new MDText();
         //let x = T.translate("nome");
-        var message = '';//TODO - recuperar mensagem
+        //TODO - recuperar mensagem var message = '';
         if (params && params.length > 0) {//TODO aplicar parametros
             params.forEach(param => {
                 console.log(param);

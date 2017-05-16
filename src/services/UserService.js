@@ -1,4 +1,3 @@
-import { URL_BACKEND} from '../helpers/constants'
 import { buildPhone } from '../helpers/stringHelper'
 import { createInstance } from '../helpers/jsonHelper'
 import { authUser, unauthUser } from '../actions/authActionCreator'
@@ -13,7 +12,7 @@ export default class UserService {
 
     static  getUser(activationCode) {
 
-     return fetch(`${URL_BACKEND}/rest/usuarios/recuperarUsuarioAlteracaoSenha`,{
+     return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/recuperarUsuarioAlteracaoSenha`,{
         method: 'POST',
         headers: {'Content-type' : 'application/json'},
         body: activationCode})
@@ -27,7 +26,7 @@ export default class UserService {
 
     static changePassword(user) {
            
-        return fetch(`${URL_BACKEND}/rest/usuarios/alterarSenha`, {
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/alterarSenha`, {
             method: 'POST',
             headers: {'Content-type':'application/json'},
             body: JSON.stringify(user) 
@@ -46,7 +45,7 @@ export default class UserService {
          const newUserInstance = createInstance(user);
          newUserInstance.telefone = buildPhone(telefone);
 
-         return fetch(`${URL_BACKEND}/rest/usuarios/solicitarMensagemAlteracaoSenha`,
+         return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/solicitarMensagemAlteracaoSenha`,
          { method: 'POST', 
            body:  JSON.stringify(newUserInstance),
            headers: {'Content-type': 'application/json'}})
@@ -61,7 +60,7 @@ export default class UserService {
 
     static activation(code) {
          
-         return fetch(`${URL_BACKEND}/rest/usuarios/activation`,{
+         return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/activation`,{
               headers: {'Content-type' : 'application/json'},
               body: code,
               method: 'POST'
@@ -77,7 +76,7 @@ export default class UserService {
         const newUserInstance = createInstance(usuario);
         newUserInstance.telefone = buildPhone(telefoneStr);
 
-        return fetch(`${URL_BACKEND}/rest/usuarios`, {
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios`, {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: {'Content-type': 'application/json'}
@@ -93,7 +92,7 @@ export default class UserService {
     
        return  new Promise((resolve,reject) => {
  
-           return fetch(`${URL_BACKEND}/rest/usuarios/logout`,{
+           return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/logout`,{
                 method: 'POST',
                 body: JSON.stringify(login),
                 headers: { 'Content-type':'application/json'}
@@ -130,7 +129,7 @@ export default class UserService {
             newUserInstance.senha = Base64Service.encode(senha);
             newUserLoginInstance.usuario = newUserInstance;
 
-            return fetch(`${URL_BACKEND}/rest/usuarios/login`, {
+            return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/login`, {
                 method: 'POST',
                 body: JSON.stringify(newUserLoginInstance),
                 headers: {'Content-type': 'application/json'}

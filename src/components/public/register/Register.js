@@ -27,7 +27,7 @@ export default class Registrar extends Component {
                <img id="vendedor" src={vendedor} href="#" style={{cursor: 'pointer'}} alt="Cadastrar Vendedor" title="Cadastrar Vendedor" onClick={this.redireciona.bind(this,URL.VENDEDOR)} className="circle responsive-img indigo lighten-4" />  
                <h5 className="indigo-text"><T.span text={{ key: "label.vendedor"}}/></h5>
             </div>
-            <div className="col s10 m6 l6 center-align">
+            <div className="offset-s1 col s10 m6 l6 center-align">
                <img id="comprador" src={comprador} href="#"  style={{cursor: 'pointer'}}   alt="Cadastrar Comprador" title="Cadastrar Comprador" onClick={this.redireciona.bind(this,URL.COMPRADOR)}   className="circle responsive-img indigo lighten-4" />  
                <h5 className="indigo-text"><T.span text={{ key: "label.comprador"}}/></h5>
             </div>

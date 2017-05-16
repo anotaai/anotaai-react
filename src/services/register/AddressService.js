@@ -1,9 +1,8 @@
-import {URL_BACKEND} from '../../helpers/constants'
 
 export default class AddressService  {
         
         static findCep(cep) {
-            return fetch(`${URL_BACKEND}/rest/enderecos/findcep/${cep}`)
+            return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/enderecos/findcep/${cep}`)
                   .then(response => {
                         return response.json();
                     })

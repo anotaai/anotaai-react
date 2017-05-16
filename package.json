@@ -24,8 +24,8 @@
     "react-scripts": "0.9.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "set REACT_APP_URL_BACKEND=http://localhost:8080&& react-scripts start",
+    "build": "set REACT_APP_URL_BACKEND=http://production&& react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

@@ -1,4 +1,3 @@
-import {URL_BACKEND } from '../helpers/constants'
 import { buildPhone,getNumbers} from '../helpers/stringHelper'
 import {  createInstance  } from '../helpers/jsonHelper'
 
@@ -16,7 +15,7 @@ export default class ClientService {
         newClientInstance.endereco = newAddressInstance;
         newClientInstance.type = 'cliente';
 
-      return  fetch(`${URL_BACKEND}/rest/clientes/`,{
+      return  fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/clientes/`,{
             method: 'POST',
             body: JSON.stringify(newClientInstance),
             headers: new Headers({

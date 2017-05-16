@@ -12,7 +12,6 @@ export const URL = {
 }
 
 export const DEFAULT_TIME = 3000;
-export const URL_BACKEND = 'http://localhost:8080';
 export const COOKIE_USER = 'globals';
 
 

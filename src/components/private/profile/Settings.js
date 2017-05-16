@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 import blank_avatar from '../../../img/blank_avatar.png'
+import Toast from '../../../helpers/Toast'
+import { Icon } from '../../../domain/Icon'
 import { connect } from 'react-redux'
 
 
@@ -11,15 +13,13 @@ class Settings extends Component {
         this.state = {picture: {preview: blank_avatar}};
     }
 
-    handleError(e) {
-        console.log(e);
-    }
 
-    handleSuccess(e) {
-        console.log(e);
-    }
+    dropPicture(file,rejected) {
+        
+        if(rejected != null) {
+            Toast.show('formatos.permitidos.warning',Icon.WARNING);
+        }
 
-    dropPicture(file) {
         this.setState({picture: file[0]});
     }
 

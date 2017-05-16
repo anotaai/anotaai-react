@@ -4,7 +4,6 @@ import ModalRenewPassword from './ModalRenewPassword'
 import UserService from '../../../services/UserService'
 import { getObjectNewState } from '../../../helpers/jsonHelper'
 import Toast from '../../../helpers/Toast'
-import { Icon } from '../../../domain/Icon'
 import { TipoMensagem } from '../../../domain/TipoMensagem'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
@@ -100,7 +99,7 @@ export default class Login extends Component {
     }).catch(error => {
       Toast.defaultError();
     }).then(() => {
-      if (this.refs.loginBtn != undefined) {
+      if (this.refs.loginBtn !== undefined) {
         this.refs.loginBtn.removeAttribute("disabled");
       }
       this.context.store.dispatch(hideLoading());
