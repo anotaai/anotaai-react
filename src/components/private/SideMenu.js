@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MenuService from '../../services/menu/MenuService'
 import { Link } from 'react-router'
-import {ProfileContainer} from  './profile/Profile'
+import { ProfileContainer } from './profile/Profile'
 import $ from 'jquery'
 
 export class Links extends Component {
@@ -14,17 +14,17 @@ export class Links extends Component {
     return (
       <div>
         <li className="hide-on-large-only"> <a href="#" onClick={this.hideResponsiveMenu}><span className="right red-text">Fechar</span></a></li>
-        <li className="hide-on-large-only"> <div className="divider"></div> </li> 
-         {this.props.listMenu.map(itemMenu =>
-            (<div key={itemMenu.url}>
-              <li><Link to={itemMenu.url}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link></li>
-              <li><div className="divider"></div></li>
-            </div>
+        <li className="hide-on-large-only"> <div className="divider"></div> </li>
+        {this.props.listMenu.map(itemMenu =>
+          (<div key={itemMenu.url}>
+            <li><Link to={itemMenu.url}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link></li>
+            <li><div className="divider"></div></li>
+          </div>
           ))}
       </div>
     )
   }
-} 
+}
 
 export default class SideMenu extends Component {
 
@@ -39,7 +39,7 @@ export default class SideMenu extends Component {
     }).catch(error => {
       alert(error);
     });
-    
+
     $(".button-collapse").sideNav();
     $(".dropdown-button").dropdown({});
   }
@@ -52,7 +52,7 @@ export default class SideMenu extends Component {
           <Links listMenu={this.state.listMenu} />
         </ul>
         <ul id="slide-out" className="side-nav">
-          <ProfileContainer idDropdown="dropdownResponsive"/>
+          <ProfileContainer idDropdown="dropdownResponsive" />
           <Links listMenu={this.state.listMenu} />
         </ul>
       </div>
