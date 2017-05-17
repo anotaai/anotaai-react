@@ -6,7 +6,7 @@ const INITIAL_STATE = { pictureState: blank_avatar }
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case UPDATE_PICTURE:
-      return {pictureState: action.pictureState };
+      return { pictureState: action.pictureState };
     default:
       return state;
   }

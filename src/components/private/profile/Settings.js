@@ -14,7 +14,7 @@ class Settings extends Component {
         if (rejected.length > 0) {
             Toast.show('formatos.permitidos.warning', Icon.WARNING);
         } else {
-            const picture = file[0];
+           const picture = file[0];
             
            this.context.store.dispatch(showLoading());
 
