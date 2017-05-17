@@ -109,13 +109,12 @@ export default class Login extends Component {
   render() {
 
     return (
-      <main>
+      <main className="space-container"> 
         <center>
-          <div className="section"></div>
           <h5 className="indigo-text">Login</h5>
 
           <div className="container">
-            <div className="z-depth-1 row panel" style={{ display: 'inline-block' }}>
+            <div className="row panel" style={{ display: 'inline-block' }}>
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
                 <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin" handleInputChange={this.handleInputChange.bind(this)} />
                 <div className='row'>

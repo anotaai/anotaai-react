@@ -55,15 +55,13 @@ export default class RenewPassword extends Component {
 
     render() {
         return (
-            <center>
-                <div className="section" />
-                <div className="section" />
-                <div className="container z-depth-1" style={{ width: '25%' }}>
+            <center className="space-container">
+                <div className="container" style={{ width: '25%' }}>
                     <div className="panel-header">
                         <span className="title-header">Redefinir Senha</span>
                     </div>
                     <div>
-                        <form className="col s12 panel" method="post" onSubmit={this.renew.bind(this)}>
+                        <form className="panel col s12" method="post" onSubmit={this.renew.bind(this)}>
                             <div className="row">
                                 <div className="col s2">
                                     <i className="material-icons right" style={{ marginTop: '5px' }}>account_circle</i>

@@ -14,9 +14,8 @@ class Settings extends Component {
         if (rejected.length > 0) {
             Toast.show('formatos.permitidos.warning', Icon.WARNING);
         } else {
-           const picture = file[0];
-            
-           this.context.store.dispatch(showLoading());
+            const picture = file[0];
+            this.context.store.dispatch(showLoading());
 
             ProfileService.upload(picture).then(response => {
                 if(response.isValid) {
@@ -26,7 +25,7 @@ class Settings extends Component {
             }).catch(error => {
                 Toast.defaultError();
             }).then(response => {
-              this.context.store.dispatch(hideLoading());
+                this.context.store.dispatch(hideLoading());
             });
         }
     }
@@ -35,18 +34,17 @@ class Settings extends Component {
     render() {
 
         return (
-            <div>
-                <div className="section"></div>
+            <div className="space-container">
                 <div className="container">
-                    <div className="z-depth-1 panel-header" >
-                        <span className="title-header"> <i className="material-icons icon-panel">account_circle</i> User Settings </span>
+                    <div className="panel-header" >
+                        <span className="title-header"> <i className="material-icons icon-panel">settings</i> User Settings </span>
                     </div>
-                    <div className="z-depth-1 panel row">
+                    <div className="panel row">
                         <div className="row">
                             <PictureContainer handleDrop={this.handleDrop.bind(this)}  />
                             <div className="col s12 m12 l6">
                                 <div className="row">
-                                    <label className="settings-title">Personal Information</label>
+                                    <label className="settings-title"><i className="material-icons icon-panel">account_circle</i> Personal Information</label>
                                 </div>
                                 <div className="row">
                                     <label style={{ fontWeight: 'bold' }}> Nome </label>
@@ -77,7 +75,6 @@ class Settings extends Component {
                         </div>
                     </div>
                 </div>
-                 <div className="section"></div>
             </div>
         )
     }

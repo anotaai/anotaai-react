@@ -43,7 +43,7 @@ export default class ModalRenewPassword extends Component {
 
         <h4 className="center-align">Esqueci a senha</h4>
 
-        <div className="section"></div>
+         <div className="section"></div>
 
         <form className="col s12" method="post" onSubmit={this.renewPassword.bind(this)}>
 

@@ -26,11 +26,7 @@ select {
   border: 1px solid #ee6e73;
   height: 40px;
   font-size: 1.6rem;
-}
-
-.active-label {
-  font-size: .8rem;
-  -webkit-transform: translateY(-140%);
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
 }
 
 .panel {
@@ -39,8 +35,24 @@ select {
   border: 1px solid #EEE;
   margin-left: 0px !important;
   margin-right: 0px !important;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
 }
 
+.icon-panel {
+  position: relative;
+  top: 4px;
+  right: 10px;
+}
+
+ .space-container {
+   margin-top: 2rem;
+   margin-bottom: 5rem;
+ }
+
+.active-label {
+  font-size: .8rem;
+  -webkit-transform: translateY(-140%);
+}
 .panel-footer {
   margin-bottom: 10px;
   text-align: right;
@@ -131,10 +143,3 @@ footer {
     text-overflow: ellipsis;
     text-transform: capitalize;
 }
-
-.icon-panel {
-  position: relative;
-  top: 4px;
-  right: 10px;
-}
- 

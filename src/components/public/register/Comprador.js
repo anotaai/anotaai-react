@@ -54,13 +54,13 @@ export class FormUser extends Component {
     render() {
         return (
             <div>
-                <div className="section"></div>
+                <div className="section" /> 
                 <div className="container">
-                    <div className="z-depth-1 panel-header">
-                        <span className="title-header">Dados Comprador</span>
+                    <div className="panel-header">
+                        <span className="title-header"> <i className="material-icons icon-panel">perm_identity</i> Dados Comprador</span>
                     </div>
 
-                    <div className="z-depth-1 panel row">
+                    <div className="panel row">
 
                         <div className="input-field col s12 m6 l6">
                             <input id="nome" ref="nome" type="text" value={this.props.usuario.nome} name="usuario.nome" onChange={this.handleInputChange.bind(this)} required />
@@ -156,7 +156,7 @@ export default class Comprador extends Component {
         return (
             <form method="post" onSubmit={this.send.bind(this)}>
                 <FormUser usuario={this.state.usuario} telefone={this.state.telefone} confirmarSenha={this.state.confirmarSenha} handleInputChange={this.handleInputChange.bind(this)} />
-                <FooterPanel clearForm={this.clearForm.bind(this)} />
+                <FooterPanel clearForm={this.clearForm.bind(this)} label="Enviar" />
             </form>
         )
     }

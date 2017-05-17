@@ -138,10 +138,10 @@ export default class Vendedor extends Component {
                 <FormUser ref="formUser" usuario={this.state.usuario} cliente={this.state.cliente} telefone={this.state.telefone} confirmarSenha={this.state.confirmarSenha} handleInputChange={this.handleInputChange.bind(this)} />
 
                 <div className="container">
-                    <div className="z-depth-1 panel-header" >
-                        <span className="title-header">Dados Endereço</span>
+                    <div className="panel-header" >
+                        <span className="title-header"> <i className="material-icons icon-panel">home</i>  Dados Endereço</span>
                     </div>
-                    <div className="z-depth-1 panel row">
+                    <div className="panel row">
 
                         <div className="input-field col s12 m6 l6">
                             <MaskedInput id='cep' ref="cep" value={this.state.cliente.endereco.cep} mask="11.111-111" required placeholder="Cep" name="cliente.endereco.cep" onChange={this.handleCepChange.bind(this)} />
@@ -177,7 +177,7 @@ export default class Vendedor extends Component {
                         </div>
                     </div>
                 </div>
-                <FooterPanel clearForm={this.clearForm.bind(this)} />
+                <FooterPanel clearForm={this.clearForm.bind(this)} label="Enviar" />
             </form>)
     }
 
