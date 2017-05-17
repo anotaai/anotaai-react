@@ -58,6 +58,5 @@ export default class SideMenu extends Component {
       </div>
     )
   }
-
 }
 

@@ -30,7 +30,6 @@ class Profile extends Component {
         e.preventDefault();
         $('.button-collapse').sideNav('hide');
         browserHistory.push(URL.SETTINGS);
-
     }
 
     render() {
