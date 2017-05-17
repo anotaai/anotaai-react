@@ -93,16 +93,6 @@ export default class Login extends Component {
     UserService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
       if (response.isValid) {
         this.context.store.dispatch(UserService.dispatchLogin(response.login));
-        
-        //Mover para profile e acionar via publishere, escutar evento de login
-        //----------------------------------------------------------------
-        UserService.loadProfileImage().then(response => {
-          console.log(response);
-        }).catch(e => {
-          console.log(e);
-        });
-        //-----------------------------------------------------------------
-
       } else {
         Toast.show(response.messages);
       }

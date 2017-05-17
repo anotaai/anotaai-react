@@ -1,34 +1,36 @@
 import React, { Component } from 'react'
-import Dropzone from 'react-dropzone'
-import blank_avatar from '../../../img/blank_avatar.png'
 import Toast from '../../../helpers/Toast'
 import { Icon } from '../../../domain/Icon'
 import { connect } from 'react-redux'
 import ProfileService from '../../../services/profile/ProfileService'
+import { updatePicture } from '../../../actions/pictureActionCreator'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import PictureContainer from './Picture'
 
 
 class Settings extends Component {
 
-    constructor() {
-        super();
-        this.state = { picture: { preview: blank_avatar } };
-    }
-
-
-    dropPicture(file, rejected) {
+    handleDrop(file, rejected) {
         if (rejected.length > 0) {
             Toast.show('formatos.permitidos.warning', Icon.WARNING);
         } else {
             const picture = file[0];
-            this.setState({ picture });
+            
+           this.context.store.dispatch(showLoading());
+
             ProfileService.upload(picture).then(response => {
-                Toast.show(response.messages);
+                if(response.isValid) {
+                    this.setState({ picture });
+                    this.context.store.dispatch(updatePicture(picture.preview));
+                }
             }).catch(error => {
                 Toast.defaultError();
+            }).then(response => {
+              this.context.store.dispatch(hideLoading());
             });
-
         }
     }
+    
 
     render() {
 
@@ -41,14 +43,7 @@ class Settings extends Component {
                     </div>
                     <div className="z-depth-1 panel row">
                         <div className="row">
-                            <div className="col s9 m10 l6">
-                                <div className="col s9 m10 l6" style={{ marginLeft: '60px' }}>
-                                    <Dropzone accept="image/jpeg, image/png" onDrop={this.dropPicture.bind(this)} style={{ boderStyle: 'none' }}  >
-                                        <img src={this.state.picture.preview} alt="Avatar" className="circle responsive-img" />
-                                        <div className="center-align profile-image-settings">Change</div>
-                                    </Dropzone>
-                                </div>
-                            </div>
+                            <PictureContainer handleDrop={this.handleDrop.bind(this)}  />
                             <div className="col s12 m12 l6">
                                 <div className="row">
                                     <label className="settings-title">Personal Information</label>
@@ -82,15 +77,20 @@ class Settings extends Component {
                         </div>
                     </div>
                 </div>
+                 <div className="section"></div>
             </div>
         )
     }
 
+}
 
+
+Settings.contextTypes = {
+  store: React.PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
-    return { loginState: state.auth.loginState }
+    return {loginState: state.auth.loginState}
 }
 
 

@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import MenuService from '../../services/menu/MenuService'
+import UserService from '../../services/UserService'
 import { Link } from 'react-router'
 import { ProfileContainer } from './profile/Profile'
+import Toast from '../../helpers/Toast'
+import { updatePicture } from '../../actions/pictureActionCreator'
 import $ from 'jquery'
 
 export class Links extends Component {
@@ -26,18 +29,29 @@ export class Links extends Component {
   }
 }
 
-export default class SideMenu extends Component {
+ export default class SideMenu extends Component {
 
   constructor() {
     super();
-    this.state = { listMenu: [] };
+    this.state = { listMenu: []  };
   }
 
   componentDidMount() {
+    
     MenuService.getMenu().then(response => {
       this.setState({ listMenu: response });
     }).catch(error => {
-      alert(error);
+       Toast.defaultError();
+    });
+
+    UserService.loadProfileImage().then(response => {
+      if(response.entity) {
+         const mediaType = response.entity.tipoArquivo.mediaType;
+			   const data = 'data:' + mediaType + ';base64,' + response.entity.file;
+         this.context.store.dispatch(updatePicture(data));
+      }
+    }).catch(e => {
+        Toast.defaultError();
     });
 
     $(".button-collapse").sideNav();
@@ -48,7 +62,7 @@ export default class SideMenu extends Component {
     return (
       <div>
         <ul className="side-nav fixed private-side-nav">
-          <ProfileContainer idDropdown="dropdownDefault" />
+          <ProfileContainer idDropdown="dropdownDefault"  />
           <Links listMenu={this.state.listMenu} />
         </ul>
         <ul id="slide-out" className="side-nav">
@@ -59,4 +73,10 @@ export default class SideMenu extends Component {
     )
   }
 }
+
+SideMenu.contextTypes = {
+  store: React.PropTypes.object.isRequired
+}
+
+
 

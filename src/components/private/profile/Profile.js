@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import $ from 'jquery'
 import AuthenticationService from '../../../services/app/AuthenticationService'
 import UserService from '../../../services/UserService'
-import blank_avatar from '../../../img/blank_avatar.png'
 import { Toast } from '../../../helpers/Toast'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
+
 
 class Profile extends Component {
 
@@ -39,7 +39,7 @@ class Profile extends Component {
                     <div className="userView profile-details">
                         <div className="row">
                             <div className="col col s4 m4 l4">
-                                <img src={blank_avatar} alt="Avatar" className="circle responsive-img profile-image" />
+                                <img src={this.props.pictureState} className="circle responsive-img profile-image" style={{cursor:'pointer'}} title="Settings" alt={this.props.loginState.login.primeiroNome} onClick={this.redirectSettings.bind(this)} />
                             </div>
                         </div>
                         <div className="row">
@@ -64,7 +64,7 @@ Profile.contextTypes = {
 }
 
 const mapStateToProps = state => {
-    return { loginState: state.auth.loginState }
+    return {loginState: state.auth.loginState,pictureState:state.profilePicture.pictureState}
 }
 
 const ProfileContainer = connect(mapStateToProps)(Profile);
