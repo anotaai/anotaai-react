@@ -12,10 +12,10 @@ class Picture extends Component {
 
         return (
             <div className="col s9 m10 l6">
-                <div className="col s9 m10 l7" style={{ marginLeft: '50px' }}>
-                    <Dropzone accept="image/jpeg, image/png" onDrop={this.dropPicture.bind(this)} style={{ boderStyle: 'none' }}  >
-                        <img src={this.props.pictureState} alt="Avatar" className="circle responsive-img" />
-                        <div className="center-align profile-image-settings">Change</div>
+                <div className="col s9 m10 l7" style={{ marginLeft: '40px' }}>
+                    <Dropzone  accept="image/jpeg, image/png" onDrop={this.dropPicture.bind(this)} style={{ boderStyle: 'none'  }}  >
+                        <img src={this.props.pictureState} alt="Avatar"   className="circle settings-image" />
+                        <div className="settings-caption-image">Change</div>
                     </Dropzone>
                 </div>
             </div>

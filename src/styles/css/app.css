@@ -121,9 +121,18 @@ footer {
   background-color: #fff;
 }
 
-.profile-image-settings {
+.settings-image {
+  max-width: 200px;
+  min-width: 200px;
+  max-height: 200px;
+  min-height: 200px;
+}
+ 
+
+.settings-caption-image {
   position: relative;
   top: -30px;
+  left: 70px;
   color: #F5F5F5;
   font-weight: bold;
 }
