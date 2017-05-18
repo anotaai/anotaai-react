@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import MaskedInput from 'react-maskedinput';
-import ClienteConsumidorService from '../../../services/client/ClienteConsumidorService';
 import Toast from '../../../helpers/Toast';
 import Icon from '../../../domain/Icon';
 import UserService from '../../../services/UserService';
 import { getObjectNewState, createInstance } from '../../../helpers/jsonHelper';
 import { replaceMask } from '../../../helpers/stringHelper';
 import T from 'i18n-react';
-import { MDText } from 'i18n-react';
+//import { MDText } from 'i18n-react';
 import FooterPanel from '../../FooterPanel';
 import { URL } from '../../../helpers/constants';
 import { browserHistory } from 'react-router';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 export function checkInvalidPassword(state) {
 
@@ -24,11 +24,7 @@ export function checkInvalidPassword(state) {
 }
 
 export class FormUser extends Component {
-    componentDidMount() {
-        let T = new MDText();
-        let x = T.translate("nome");
-        console.log(x);
-    }
+    
 
     handleInputChange(e) {
         this.props.handleInputChange(e);
@@ -41,9 +37,13 @@ export class FormUser extends Component {
         this.props.handleInputChange(e);
 
         if (finalizouTelefone === -1 && telefoneReplace !== '') {
-            ClienteConsumidorService.findUsuarioByPhone(telefoneReplace)
-                .then(response => {
-                    Toast.show(response.messages);
+            UserService.findUsuarioByPhone(telefoneReplace,'usuarios')
+               .then(response => {
+                     if(response.isValid && response.entity) {
+                        this.props.handlePhoneChange(response.entity);                        
+                     } else if(response.messages) {
+                        Toast.show(response.messages);
+                     }
                 })
                 .catch(error => {
                     Toast.defaultError();
@@ -52,6 +52,11 @@ export class FormUser extends Component {
     }
 
     render() {
+        
+        const active = (this.props.telefoneRetornado === 'S' ? 'active-label' : '');
+        const disabled = (this.props.telefoneRetornado === 'S' ? 'disabled' : '');
+
+
         return (
             <div>
                 <div className="section" /> 
@@ -63,8 +68,8 @@ export class FormUser extends Component {
                     <div className="panel row">
 
                         <div className="input-field col s12 m6 l6">
-                            <input id="nome" ref="nome" type="text" value={this.props.usuario.nome} name="usuario.nome" onChange={this.handleInputChange.bind(this)} required />
-                            <label htmlFor="nome">
+                            <input id="nome" ref={this.props.inputRef} type="text" value={this.props.usuario.nome} name="usuario.nome" disabled={disabled} onChange={this.handleInputChange.bind(this)} required />
+                            <label htmlFor="nome" className={active} >
                                 <T.span text={{ key: "nome" }} />
                             </label>
                         </div>
@@ -80,11 +85,11 @@ export class FormUser extends Component {
                             </div>
                         }
                         <div className="input-field col s12 m6 l6">
-                            <MaskedInput id='telefone' value={this.props.telefone} name="telefone" onChange={this.handleInputChange.bind(this)} mask="(11) 11111-1111" required placeholder="Telefone" />
+                            <MaskedInput id='telefone' value={this.props.telefone} name="telefone" onChange={this.handlePhoneChange.bind(this)} disabled={disabled} mask="(11) 11111-1111" required placeholder="Telefone" />
                         </div>
                         <div className="input-field col s12 m6 l6">
-                            <input id="email" value={this.props.usuario.email} name="usuario.email" className="validate" onChange={this.handleInputChange.bind(this)} type="email" />
-                            <label htmlFor="email" data-error="Email inválido">Email</label>
+                            <input id="email" value={this.props.usuario.email} name="usuario.email" className="validate" disabled={disabled} onChange={this.handleInputChange.bind(this)} type="email" />
+                            <label htmlFor="email" data-error="Email inválido" className={active}>Email</label>
                         </div>
                         <div className="input-field col s12 m6 l6">
                             <input id="senha" ref="senha" type="password" className="validate" minLength="6" required value={this.props.usuario.senha} name="usuario.senha" onChange={this.handleInputChange.bind(this)} />
@@ -107,12 +112,24 @@ export default class Comprador extends Component {
 
     constructor() {
         super();
+        this.sendButton = null;
+        this.nameInput= null;
         this.state = {
             usuario: { nome: '', email: '', senha: '' },
             confirmarSenha: '',
-            telefone: ''
+            telefone: '',
+            telefoneRetornado: '' 
         };
     }
+
+     handlePhoneChange(entity) {
+        const newState = createInstance(this.state);
+        newState.usuario.nome  = entity.nome;
+        newState.usuario.email = entity.email;
+        newState.telefoneRetornado = 'S';
+        this.setState(newState);
+     }
+
 
     handleInputChange(e) {
         const newState = getObjectNewState(e.target.name, e.target.value, this.state);
@@ -121,14 +138,14 @@ export default class Comprador extends Component {
 
     clearForm(e) {
         e.preventDefault();
-        const newState = createInstance(this.state.usuario);
+        const newState = createInstance(this.state);
         newState.usuario.nome = '';
         newState.usuario.email = '';
         newState.usuario.senha = '';
         newState.confirmarSenha = '';
         newState.telefone = '';
         this.setState(newState);
-        //ReactDOM.findDOMNode(this.refs.nome).focus();
+        this.nameInput.focus();
     }
 
 
@@ -136,10 +153,13 @@ export default class Comprador extends Component {
 
         e.preventDefault();
         const state = checkInvalidPassword(this.state);
+        this.context.store.dispatch(showLoading());
 
         if (state !== undefined) {
             this.setState(state);
         } else {
+
+            this.sendButton.setAttribute("disabled", "disabled");
             UserService.save(this.state.usuario, this.state.telefone).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
@@ -147,6 +167,11 @@ export default class Comprador extends Component {
                 }
             }).catch(error => {
                 Toast.defaultError();
+            }).then(()=>{
+                if(this.sendButton !== undefined) {
+                   this.sendButton.removeAttribute("disabled");
+                }
+                this.context.store.dispatch(hideLoading());
             });
         }
 
@@ -155,10 +180,14 @@ export default class Comprador extends Component {
     render() {
         return (
             <form method="post" onSubmit={this.send.bind(this)}>
-                <FormUser usuario={this.state.usuario} telefone={this.state.telefone} confirmarSenha={this.state.confirmarSenha} handleInputChange={this.handleInputChange.bind(this)} />
-                <FooterPanel clearForm={this.clearForm.bind(this)} label="Enviar" />
+                <FormUser {... this.state} inputRef={el => this.nameInput = el} handleInputChange={this.handleInputChange.bind(this)} handlePhoneChange={this.handlePhoneChange.bind(this)}  />
+                <FooterPanel submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label="Enviar" />
             </form>
         )
     }
 
+}
+
+Comprador.contextTypes =  {
+    store: React.PropTypes.object.isRequired
 }

@@ -12,7 +12,7 @@ export default class FooterPanel extends Component {
                         <button className="btn waves-effect DEFAULT" formNoValidate onClick={this.props.clearForm.bind(this)}>
                             Limpar
                         </button>
-                        <button className="btn waves-effect SUCCESS" style={{ marginLeft: '5px' }} type="submit" name="action">{this.props.label}
+                        <button ref={this.props.submitRef} className="btn waves-effect SUCCESS" style={{ marginLeft: '5px' }} type="submit" name="action">{this.props.label}
                           <i className="material-icons right">send</i>
                         </button>
                     </div>

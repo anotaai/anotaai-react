@@ -162,4 +162,22 @@ export default class UserService {
         });
     }
 
+    static findUsuarioByPhone(telefoneStr,endpoint) {
+
+        const telefone = buildPhone(telefoneStr); 
+
+        return  fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/${endpoint}/findby/telefone`, {
+            method: 'POST',
+            body: JSON.stringify(telefone),
+            headers: new Headers({
+                'Content-type': 'application/json'})
+           }) 
+          .then(response => {
+             return response.json();
+          })
+          .catch(error => {
+             throw Error(error);
+          })
+    }
+
 }

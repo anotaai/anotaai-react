@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import MaskedInput from 'react-maskedinput';
 import EnumService from '../../../services/util/EnumService';
 import AddressService from '../../../services/register/AddressService';
@@ -12,18 +11,22 @@ import FooterPanel from '../../FooterPanel';
 import { browserHistory } from 'react-router';
 import { URL } from '../../../helpers/constants';
 import { Icon } from '../../../domain/Icon';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 export default class Vendedor extends Component {
 
     constructor() {
         super();
         this.cepRetornado = '';
+        this.sendButton = null;
+        this.nameInput= null;
         this.state = {
             usuario: { nome: '', email: '', senha: '' },
             cliente: { nomeComercial: '', cpf: '', endereco: { cep: '', logradouro: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '' } },
             estadoList: [],
             confirmarSenha: '',
-            telefone: ''
+            telefone: '',
+            telefoneRetornado: '' 
         };
     }
 
@@ -53,8 +56,7 @@ export default class Vendedor extends Component {
         newState.confirmarSenha = '';
         newState.telefone = '';
         this.setState(newState);
-        //ReactDOM.findDOMNode(this.refs.formUser.nome).focus();
-
+        this.nameInput.focus();
     }
 
     clearAddress(newState) {
@@ -75,21 +77,35 @@ export default class Vendedor extends Component {
 
         if (invalideState !== undefined) {
             this.setState(invalideState);
-            ReactDOM.findDOMNode(this.refs.senha).focus();
         } else {
+            
+            this.context.store.dispatch(showLoading());
+            this.sendButton.setAttribute('disabled','disabled');
             ClientService.save(this.state.cliente, this.state.usuario, this.state.telefone).then(response => {
-                Toast.show(response.messages);
-                if (response.isValid) {
+                 Toast.show(response.messages);
+                 if (response.isValid) {
                     browserHistory.push(URL.LOGIN);
-                }
+                 }
             }).catch(error => {
                 Toast.defaultError();
+            }).then(()=> {
+               
+                if(this.sendButton !== undefined) {
+                  this.sendButton.removeAttribute('disabled');
+                }  
+                this.context.store.dispatch(hideLoading());
             });
         }
 
     }
 
-
+    handlePhoneChange(entity) {
+        const newState = createInstance(this.state);
+        newState.usuario.nome  = entity.nome;
+        newState.usuario.email = entity.email;
+        newState.telefoneRetornado = 'S';
+        this.setState(newState);
+     }
 
     handleCepChange(e) {
 
@@ -99,7 +115,7 @@ export default class Vendedor extends Component {
         this.handleInputChange(e);
 
         if (finalizouCep === -1 && cepReplace !== '') {
-
+            this.context.store.dispatch(showLoading());
             AddressService.findCep(cepReplace).then(enderecoRecuperado => {
 
                 if (enderecoRecuperado.logradouro == null) {
@@ -107,8 +123,6 @@ export default class Vendedor extends Component {
                 } else {
                     const newState = createInstance(this.state);
                     newState.cliente.endereco.logradouro = enderecoRecuperado.logradouro;
-                    newState.cliente.endereco.numero = enderecoRecuperado.numero;
-                    newState.cliente.endereco.complemento = enderecoRecuperado.numero;
                     newState.cliente.endereco.bairro = enderecoRecuperado.bairro;
                     newState.cliente.endereco.cidade = enderecoRecuperado.localidade;
                     newState.cliente.endereco.estado = enderecoRecuperado.uf;
@@ -117,6 +131,8 @@ export default class Vendedor extends Component {
                 }
             }).catch(error => {
                 Toast.defaultError();
+            }).then(() => {
+                 this.context.store.dispatch(hideLoading());
             });
 
         } else {
@@ -135,7 +151,7 @@ export default class Vendedor extends Component {
         return (
             <form method="post" onSubmit={this.send.bind(this)}>
 
-                <FormUser ref="formUser" usuario={this.state.usuario} cliente={this.state.cliente} telefone={this.state.telefone} confirmarSenha={this.state.confirmarSenha} handleInputChange={this.handleInputChange.bind(this)} />
+                <FormUser {... this.state}  inputRef={el => this.nameInput = el} handleInputChange={this.handleInputChange.bind(this)} handlePhoneChange={this.handlePhoneChange.bind(this)} />
 
                 <div className="container">
                     <div className="panel-header" >
@@ -177,8 +193,12 @@ export default class Vendedor extends Component {
                         </div>
                     </div>
                 </div>
-                <FooterPanel clearForm={this.clearForm.bind(this)} label="Enviar" />
+                <FooterPanel submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" />
             </form>)
     }
 
+}
+
+Vendedor.contextTypes = {
+    store: React.PropTypes.object.isRequired
 }
