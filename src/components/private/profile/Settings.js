@@ -16,9 +16,9 @@ class Settings extends Component {
         } else {
             const picture = file[0];
             this.context.store.dispatch(showLoading());
-
             ProfileService.upload(picture).then(response => {
                 if(response.isValid) {
+                    Toast.show('sucesso.upload', Icon.DONE);
                     this.setState({ picture });
                     this.context.store.dispatch(updatePicture(picture.preview));
                 }
