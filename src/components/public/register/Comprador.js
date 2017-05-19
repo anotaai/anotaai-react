@@ -57,7 +57,6 @@ export class FormUser extends Component {
         const active = (this.props.telefoneRetornado === 'S' ? 'active-label' : '');
         const disabled = (this.props.telefoneRetornado === 'S' ? 'disabled' : '');
 
-
         return (
             <div>
                 <div className="section" /> 
@@ -182,7 +181,7 @@ class Comprador extends Component {
         return (
             <form method="post" onSubmit={this.send.bind(this)}>
                 <FormUser {... this.state} inputRef={el => this.nameInput = el} handleInputChange={this.handleInputChange.bind(this)} handlePhoneChange={this.handlePhoneChange.bind(this)}  />
-                <FooterPanel submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label="Enviar" />
+                <FooterPanel submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
             </form>
         )
     }

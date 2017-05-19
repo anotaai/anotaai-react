@@ -16,12 +16,11 @@ export default class UserService {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: activationCode
+        }).then(response => {
+            return response.json();
+        }).catch(error => {
+            throw Error(error);
         })
-            .then(response => {
-                return response.json();
-            }).catch(error => {
-                throw Error(error);
-            })
     }
 
     static changePassword(user) {
@@ -43,17 +42,15 @@ export default class UserService {
         const newUserInstance = createInstance(user);
         newUserInstance.telefone = buildPhone(telefone);
 
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/solicitarMensagemAlteracaoSenha`,
-            {
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/solicitarMensagemAlteracaoSenha`,{
                 method: 'POST',
                 body: JSON.stringify(newUserInstance),
                 headers: { 'Content-type': 'application/json' }
-            })
-            .then(response => {
-                return response.json();
-            }).catch(error => {
-                throw Error(error);
-            });
+        }).then(response => {
+            return response.json();
+        }).catch(error => {
+            throw Error(error);
+        });
     }
 
 
@@ -171,11 +168,9 @@ export default class UserService {
             body: JSON.stringify(telefone),
             headers: new Headers({
                 'Content-type': 'application/json'})
-           }) 
-          .then(response => {
+           }).then(response => {
              return response.json();
-          })
-          .catch(error => {
+          }).catch(error => {
              throw Error(error);
           })
     }

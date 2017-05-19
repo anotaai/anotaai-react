@@ -194,7 +194,7 @@ import { connect } from 'react-redux'
                         </div>
                     </div>
                 </div>
-                <FooterPanel submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" />
+                <FooterPanel submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
             </form>)
     }
 
