@@ -54,6 +54,8 @@ export default class RenewPassword extends Component {
     }
 
     render() {
+
+        if(this.state.usuario.id !== '') {
         return (
             <center className="space-container">
                 <div className="container" style={{ width: '25%' }}>
@@ -96,6 +98,8 @@ export default class RenewPassword extends Component {
                     </div>
                 </div>
             </center>
-        )
+        ) } else 
+            return null
+        
     }
 }
