@@ -6,6 +6,7 @@ import { getObjectNewState } from '../../../helpers/jsonHelper'
 import Toast from '../../../helpers/Toast'
 import { TipoMensagem } from '../../../domain/TipoMensagem'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { connect } from 'react-redux'
 
 
 export class RadioUser extends Component {
@@ -57,19 +58,11 @@ export class RadioUser extends Component {
 }
 
 
-export default class Login extends Component {
+class Login extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { showModal: false, userLogin: { usuario: { email: '', telefone: '', senha: '' }, tipoAcesso: '' } };
-
-    if (props.params.activation) {
-      UserService.activation(props.params.activation).then(response => {
-          Toast.show(response.messages);
-      }).catch(error => {
-        Toast.defaultError();
-      });
-    }
   }
 
   showModal(e) {
@@ -89,10 +82,10 @@ export default class Login extends Component {
   login(e) {
     e.preventDefault();
     this.refs.loginBtn.setAttribute("disabled", "disabled");
-    this.context.store.dispatch(showLoading());
+    this.props.showLoading();
     UserService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
       if (response.isValid) {
-        this.context.store.dispatch(UserService.dispatchLogin(response.login));
+        this.props.login(response.login);
       } else {
         Toast.show(response.messages);
       }
@@ -102,7 +95,7 @@ export default class Login extends Component {
       if (this.refs.loginBtn !== undefined) {
         this.refs.loginBtn.removeAttribute("disabled");
       }
-      this.context.store.dispatch(hideLoading());
+      this.props.hideLoading();
     });
   }
 
@@ -150,6 +143,24 @@ export default class Login extends Component {
   }
 }
 
-Login.contextTypes = {
-  store: React.PropTypes.object.isRequired
-}
+ 
+const mapDispatchToProps = dispatch => {
+  return {
+    showLoading:() => {
+      dispatch(showLoading());
+    },
+    hideLoading:() => {
+      dispatch(hideLoading());
+    },
+    login:(login) => {
+      dispatch(UserService.dispatchLogin(login));
+    }
+  }
+} 
+
+const LoginContainer = connect(null,mapDispatchToProps)(Login);
+
+export default LoginContainer;
+
+
+

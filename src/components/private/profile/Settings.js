@@ -15,21 +15,20 @@ class Settings extends Component {
             Toast.show('formatos.permitidos.warning', Icon.WARNING);
         } else {
             const picture = file[0];
-            this.context.store.dispatch(showLoading());
+            this.props.showLoading();
             ProfileService.upload(picture).then(response => {
                 if(response.isValid) {
                     Toast.show('sucesso.upload', Icon.DONE);
                     this.setState({ picture });
-                    this.context.store.dispatch(updatePicture(picture.preview));
+                    this.props.updatePicture(picture.preview);
                 }
             }).catch(error => {
                 Toast.defaultError();
             }).then(response => {
-                this.context.store.dispatch(hideLoading());
+                this.props.hideLoading();
             });
         }
     }
-    
 
     render() {
 
@@ -82,15 +81,24 @@ class Settings extends Component {
 }
 
 
-Settings.contextTypes = {
-  store: React.PropTypes.object.isRequired
-}
+const mapDispatchToProps = dispatch => {
+  return {
+    updatePicture : (picturePreview) => {
+      dispatch(updatePicture(picturePreview));
+    },
+    showLoading:() => {
+      dispatch(showLoading());
+    },
+    hideLoading:() => {
+      dispatch(hideLoading());
+    }
+  }
+} 
 
 const mapStateToProps = state => {
     return {loginState: state.auth.loginState}
 }
 
-
-const SettingsContainer = connect(mapStateToProps)(Settings);
+const SettingsContainer = connect(mapStateToProps,mapDispatchToProps)(Settings);
 
 export default SettingsContainer;

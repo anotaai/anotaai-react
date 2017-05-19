@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
 import {browserHistory} from 'react-router'
 import {URL} from '../helpers/constants'
-import SideMenu from './private/SideMenu'
+import SideMenuContainer from './private/SideMenu'
 import { connect } from 'react-redux'
 
 class Authentication extends Component {
@@ -17,7 +17,7 @@ class Authentication extends Component {
       return (
         <div className="row">
           <div className="col s2 l2">
-            <SideMenu loginState={this.props.loginState} />
+            <SideMenuContainer loginState={this.props.loginState} />
           </div>
           <div className="col s12 l10">
             {this.props.children}

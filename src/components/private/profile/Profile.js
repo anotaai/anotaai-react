@@ -18,12 +18,12 @@ class Profile extends Component {
     logout(e) {
         e.preventDefault();
         UserService.logout(this.props.loginState).then(response => {
-            $('.button-collapse').sideNav('hide');
+           $('.button-collapse').sideNav('hide');
+           AuthenticationService.clearCredentials();
+           this.props.logout();
         }).catch(error => {
             Toast.defaultError();
         });
-        AuthenticationService.clearCredentials();
-        this.context.store.dispatch(UserService.dispatchLogout());
     }
 
     redirectSettings(e) {
@@ -59,14 +59,18 @@ class Profile extends Component {
     }
 }
 
-Profile.contextTypes = {
-    store: React.PropTypes.object.isRequired
+const mapDispatchToPros = dispatch => {
+    return {
+        logout: () => {
+            dispatch(UserService.dispatchLogout());
+        }
+    }
 }
 
 const mapStateToProps = state => {
     return {loginState: state.auth.loginState,pictureState:state.profilePicture.pictureState}
 }
 
-const ProfileContainer = connect(mapStateToProps)(Profile);
+const ProfileContainer = connect(mapStateToProps,mapDispatchToPros)(Profile);
 
 export { ProfileContainer };

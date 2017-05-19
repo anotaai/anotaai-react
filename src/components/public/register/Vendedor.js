@@ -12,8 +12,9 @@ import { browserHistory } from 'react-router';
 import { URL } from '../../../helpers/constants';
 import { Icon } from '../../../domain/Icon';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { connect } from 'react-redux'
 
-export default class Vendedor extends Component {
+ class Vendedor extends Component {
 
     constructor() {
         super();
@@ -79,7 +80,7 @@ export default class Vendedor extends Component {
             this.setState(invalideState);
         } else {
             
-            this.context.store.dispatch(showLoading());
+            this.props.showLoading();
             this.sendButton.setAttribute('disabled','disabled');
             ClientService.save(this.state.cliente, this.state.usuario, this.state.telefone).then(response => {
                  Toast.show(response.messages);
@@ -93,7 +94,7 @@ export default class Vendedor extends Component {
                 if(this.sendButton !== undefined) {
                   this.sendButton.removeAttribute('disabled');
                 }  
-                this.context.store.dispatch(hideLoading());
+                 this.props.hideLoading();
             });
         }
 
@@ -115,7 +116,7 @@ export default class Vendedor extends Component {
         this.handleInputChange(e);
 
         if (finalizouCep === -1 && cepReplace !== '') {
-            this.context.store.dispatch(showLoading());
+            this.props.showLoading();
             AddressService.findCep(cepReplace).then(enderecoRecuperado => {
 
                 if (enderecoRecuperado.logradouro == null) {
@@ -132,7 +133,7 @@ export default class Vendedor extends Component {
             }).catch(error => {
                 Toast.defaultError();
             }).then(() => {
-                 this.context.store.dispatch(hideLoading());
+                 this.props.hideLoading();
             });
 
         } else {
@@ -199,6 +200,19 @@ export default class Vendedor extends Component {
 
 }
 
-Vendedor.contextTypes = {
-    store: React.PropTypes.object.isRequired
+
+ const mapDispatchToProps = dispatch => {
+
+    return {
+        showLoading: () => {
+            dispatch(showLoading());
+        },
+        hideLoading: () => {
+            dispatch(hideLoading());
+        }
+    }
 }
+
+const VendedorContainer = connect(null,mapDispatchToProps)(Vendedor);
+
+export default VendedorContainer;

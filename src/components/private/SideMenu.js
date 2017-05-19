@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 import { ProfileContainer } from './profile/Profile'
 import Toast from '../../helpers/Toast'
 import { updatePicture } from '../../actions/pictureActionCreator'
+import { connect } from 'react-redux'
 import $ from 'jquery'
 
 export class Links extends Component {
@@ -29,7 +30,7 @@ export class Links extends Component {
   }
 }
 
- export default class SideMenu extends Component {
+ class SideMenu extends Component {
 
   constructor() {
     super();
@@ -48,7 +49,7 @@ export class Links extends Component {
       if(response.entity) {
          const mediaType = response.entity.tipoArquivo.mediaType;
 			   const data = 'data:' + mediaType + ';base64,' + response.entity.file;
-         this.context.store.dispatch(updatePicture(data));
+         this.props.updatePicture(data);
       }
     }).catch(e => {
         Toast.defaultError();
@@ -74,9 +75,19 @@ export class Links extends Component {
   }
 }
 
-SideMenu.contextTypes = {
-  store: React.PropTypes.object.isRequired
+const mapDispatchToProps = dispatch => {
+   
+   return {
+      updatePicture: (picture) => {
+         dispatch(updatePicture(picture));
+      }
+   }
 }
+
+const SideMenuContainer = connect(null,mapDispatchToProps)(SideMenu);
+
+export default  SideMenuContainer;
+
 
 
 

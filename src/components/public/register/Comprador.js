@@ -11,6 +11,7 @@ import FooterPanel from '../../FooterPanel';
 import { URL } from '../../../helpers/constants';
 import { browserHistory } from 'react-router';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { connect } from 'react-redux'
 
 export function checkInvalidPassword(state) {
 
@@ -108,7 +109,7 @@ export class FormUser extends Component {
 }
 
 
-export default class Comprador extends Component {
+class Comprador extends Component {
 
     constructor() {
         super();
@@ -153,7 +154,7 @@ export default class Comprador extends Component {
 
         e.preventDefault();
         const state = checkInvalidPassword(this.state);
-        this.context.store.dispatch(showLoading());
+        this.props.showLoading();
 
         if (state !== undefined) {
             this.setState(state);
@@ -171,7 +172,7 @@ export default class Comprador extends Component {
                 if(this.sendButton !== undefined) {
                    this.sendButton.removeAttribute("disabled");
                 }
-                this.context.store.dispatch(hideLoading());
+                this.props.hideLoading();
             });
         }
 
@@ -188,6 +189,20 @@ export default class Comprador extends Component {
 
 }
 
-Comprador.contextTypes =  {
-    store: React.PropTypes.object.isRequired
+
+const mapDispatchToProps = dispatch => {
+
+    return {
+        showLoading: () => {
+            dispatch(showLoading());
+        },
+        hideLoading: () => {
+            dispatch(hideLoading());
+        }
+    }
 }
+
+const CompradorContainer = connect(null,mapDispatchToProps)(Comprador);
+
+export default CompradorContainer;
+

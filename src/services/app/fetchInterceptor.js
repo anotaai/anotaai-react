@@ -9,12 +9,17 @@ export default function registerFetchInterceptor() {
             const cookies = new Cookies();
             const cookieLoginState = cookies.get(COOKIE_USER);
             if(cookieLoginState != null) {
-               const authorizationHeader = { 'Authorization' : 'Basic ' + cookieLoginState.login.authdata };
-               if(config !== undefined) {
-                  // TODO - avaliar - config.headers = {...config.headers,authorizationHeader};
-                  config.headers = authorizationHeader;
+               const headerName =   'Authorization';
+               const headerValue = 'Basic ' + cookieLoginState.login.authdata;
+               if (config !== undefined) {
+                   const headers = config.headers !== undefined ? new Headers(config.headers) : new Headers();
+                   headers.append(headerName, headerValue);
+                   config.headers = headers;
                } else {
-                   config = {headers: authorizationHeader}; 
+                   //requisições sem objeto de configuracao porém que exigem o header de autenticacao
+                   const headers = new Headers();
+                   headers.append(headerName, headerValue);
+                   config = {headers: headers};
                }
             } 
             return [url, config];
