@@ -25,7 +25,8 @@
   },
   "scripts": {
     "start": "set REACT_APP_URL_BACKEND=http://localhost:8080&& react-scripts start",
-    "build": "set REACT_APP_URL_BACKEND=http://production&& react-scripts build",
+    "homologation": "set REACT_APP_URL_BACKEND=http://178.238.237.248:8080&& react-scripts start",
+    "production": "set REACT_APP_URL_BACKEND=http://178.238.237.248:8080&& react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

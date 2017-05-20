@@ -1,6 +1,11 @@
-import fetchIntercept from 'fetch-intercept'
-import Cookies from 'universal-cookie'
-import { COOKIE_USER } from '../../helpers/constants'
+import fetchIntercept from 'fetch-intercept';
+import Cookies from 'universal-cookie';
+import { COOKIE_USER } from '../../helpers/constants';
+import { browserHistory } from 'react-router';
+import { URL } from '../../helpers/constants';
+import Toast from '../../helpers/Toast';
+import AuthenticationService from '../../services/app/AuthenticationService'
+import { Icon } from '../../domain/Icon'
 
 export default function registerFetchInterceptor() {
 
@@ -24,7 +29,7 @@ export default function registerFetchInterceptor() {
             } 
             return [url, config];
         },
-        
+
         response(response) {
             switch (response.status) {
                 case 200:
@@ -34,7 +39,9 @@ export default function registerFetchInterceptor() {
                     console.log('401');
                     break;
                 case 403:
-                    console.log('403');
+                    Toast.show('message.login.forbidden', Icon.WARNING);
+                    AuthenticationService.clearCredentials();
+                    browserHistory.push(URL.LOGIN);
                     break;
                 default:
                     break;

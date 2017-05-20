@@ -20,10 +20,10 @@ export class Links extends Component {
         <li className="hide-on-large-only"> <a href="#" onClick={this.hideResponsiveMenu}><span className="right red-text">Fechar</span></a></li>
         <li className="hide-on-large-only"> <div className="divider"></div> </li>
         {this.props.listMenu.map(itemMenu =>
-          (<div key={itemMenu.url}>
-            <li><Link to={itemMenu.url} onClick={this.hideResponsiveMenu}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link></li>
-            <li><div className="divider"></div></li>
-          </div>
+          (<li key={itemMenu.url}>
+            <Link to={itemMenu.url} onClick={this.hideResponsiveMenu}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link>
+                <hr />
+           </li>
           ))}
       </div>
     )
