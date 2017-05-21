@@ -24,7 +24,6 @@
     "react-scripts": "0.9.5"
   },
   "scripts": {
-   /*  REACT_APP_LOCALE=locale */
     "start": "set REACT_APP_URL_BACKEND=http://localhost:8080&& react-scripts start",
     "hml": "set REACT_APP_URL_BACKEND=http://178.238.237.248:8080&& react-scripts start",
     "prod": "set REACT_APP_URL_BACKEND=http://178.238.237.248:8080&& react-scripts build",
