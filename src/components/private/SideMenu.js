@@ -21,12 +21,10 @@ export class Links extends Component {
 
   handleBackground(e) {
     e.target.className = 'selected';
-    if(this.element == null) {
-      this.element = e.target;
-    } else  {
+    if(this.element != null) {
       this.element.className =  null;
-      this.element = e.target;
     }
+    this.element = e.target;
    
   }
 
