@@ -10,8 +10,24 @@ import $ from 'jquery'
 
 export class Links extends Component {
 
+  constructor(){
+    super();
+    this.element = null;
+  }
+
   hideResponsiveMenu() {
     $('.button-collapse').sideNav('hide');
+  }
+
+  handleBackground(e) {
+    e.target.className = 'selected';
+    if(this.element == null) {
+      this.element = e.target;
+    } else  {
+      this.element.className =  null;
+      this.element = e.target;
+    }
+   
   }
 
   render() {
@@ -20,9 +36,9 @@ export class Links extends Component {
         <li className="hide-on-large-only"> <a href="#" onClick={this.hideResponsiveMenu}><span className="right red-text">Fechar</span></a></li>
         <li className="hide-on-large-only"> <div className="divider"></div> </li>
         {this.props.listMenu.map(itemMenu =>
-          (<li key={itemMenu.url}>
+          (<li key={itemMenu.url} onClick={this.handleBackground.bind(this)} >
             <Link to={itemMenu.url} onClick={this.hideResponsiveMenu}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link>
-                <hr />
+                <div className="divider"> </div>
            </li>
           ))}
       </div>

@@ -70,10 +70,15 @@ footer {
   height: calc(100% + 5px);
 }
 
+.side-nav .divider {
+  margin: 0px !important; 
+}
+
 .side-nav::-webkit-scrollbar-track
 {
 	background-color: #F5F5F5;
 	border-radius: 10px;
+  height: 10px;
 }
 
 .side-nav::-webkit-scrollbar
@@ -151,4 +156,8 @@ footer {
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: capitalize;
+}
+
+.selected {
+  background-color: rgba(0,0,0,0.05);
 }
