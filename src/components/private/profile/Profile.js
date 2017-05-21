@@ -6,6 +6,7 @@ import UserService from '../../../services/UserService'
 import Toast from '../../../helpers/Toast'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
+import {showLoading, hideLoading} from 'react-redux-loading-bar'
 
 
 class Profile extends Component {
@@ -17,12 +18,15 @@ class Profile extends Component {
 
     logout(e) {
         e.preventDefault();
+        this.props.showLoading();
         UserService.logout(this.props.loginState).then(response => {
            $('.button-collapse').sideNav('hide');
            AuthenticationService.clearCredentials();
            this.props.logout();
         }).catch(error => {
             Toast.defaultError();
+        }).then(() => {
+             this.props.hideLoading();
         });
     }
 
@@ -63,6 +67,12 @@ const mapDispatchToPros = dispatch => {
     return {
         logout: () => {
             dispatch(UserService.dispatchLogout());
+        },
+        showLoading: () => {
+              dispatch(showLoading());
+        },
+        hideLoading: () => {
+            dispatch(hideLoading());
         }
     }
 }
