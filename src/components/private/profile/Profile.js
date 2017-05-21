@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import $ from 'jquery'
 import AuthenticationService from '../../../services/app/AuthenticationService'
 import UserService from '../../../services/UserService'
-import { Toast } from '../../../helpers/Toast'
+import Toast from '../../../helpers/Toast'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
 
