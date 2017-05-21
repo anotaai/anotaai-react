@@ -24,9 +24,10 @@
     "react-scripts": "0.9.5"
   },
   "scripts": {
-    "start": "set REACT_APP_URL_BACKEND=http://localhost:8080 NODE_ENV=locale && react-scripts start",
-    "hml": "set REACT_APP_URL_BACKEND=http://178.238.237.248:8080 NODE_ENV=homologation && react-scripts start",
-    "prod": "set REACT_APP_URL_BACKEND=http://178.238.237.248:8080 NODE_ENV=production && react-scripts build",
+   /*  REACT_APP_LOCALE=locale */
+    "start": "set REACT_APP_URL_BACKEND=http://localhost:8080&& react-scripts start",
+    "hml": "set REACT_APP_URL_BACKEND=http://178.238.237.248:8080&& react-scripts start",
+    "prod": "set REACT_APP_URL_BACKEND=http://178.238.237.248:8080&& react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
