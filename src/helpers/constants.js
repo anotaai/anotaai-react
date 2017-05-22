@@ -13,6 +13,7 @@ export const URL = {
 
 export const DEFAULT_TIME = 3000;
 export const COOKIE_USER = 'globals';
+export const PAGE_SIZE = 5;
 
 
 export const customModalStyles = {

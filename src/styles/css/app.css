@@ -68,8 +68,8 @@ footer {
 .private-side-nav {
   top:inherit;
   height: calc(100% + 5px);
+  position: absolute !important;
 }
-
 .side-nav .divider {
   margin: 0px !important; 
 }
@@ -160,4 +160,12 @@ footer {
 
 .selected {
   background-color: rgba(0,0,0,0.05);
+}
+
+.pagination li.disabled a {
+    cursor: default !important;
+}
+ 
+.pagination li a {
+    cursor: pointer !important;
 }

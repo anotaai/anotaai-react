@@ -8,7 +8,7 @@ import Register from '../components/public/register/Register'
 import App from '../components/App'
 import VendedorContainer from '../components/public/register/Vendedor'
 import CompradorContainer from '../components/public/register/Comprador'
-import Search from '../components/private/setor/Search'
+import SearchContainer from '../components/private/sector/Search'
 import RenewPassword from '../components/public/renew/RenewPassword'
 import SettingsContainer from '../components/private/profile/Settings'
 import Activate from '../components/public/activation/Activate'
@@ -16,7 +16,7 @@ import Activate from '../components/public/activation/Activate'
 const privateRoutes = (
     <Route component={AuthenticationContainer}>
       <Route path={URL.HOME} component={Home} />
-      <Route path={URL.SETOR} component={Search} />
+      <Route path={URL.SETOR} component={SearchContainer} />
       <Route path={URL.SETTINGS} component={SettingsContainer} />
     </Route> 
 );
