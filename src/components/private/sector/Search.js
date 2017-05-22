@@ -7,17 +7,17 @@ import Toast from '../../../helpers/Toast'
 import Paginator from '../Paginator'
 import { PAGE_SIZE } from '../../../helpers/constants'
 import { connect } from 'react-redux'
-import { showLoading , hideLoading } from 'react-redux-loading-bar'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
- class Search extends Component {
+class Search extends Component {
 
-    constructor(){
+    constructor() {
         super();
-        this.state = { filteredResults: [] , offset: 0 , pageCount: 0 }
+        this.state = { filteredResults: [], offset: 0, pageCount: 0 }
         this.sendButton = null;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.search();
     }
 
@@ -29,7 +29,7 @@ import { showLoading , hideLoading } from 'react-redux-loading-bar'
         this.sendButton.setAttribute("disabled", "disabled");
         this.props.showLoading();
         SectorService.listAll(this.state.offset).then(response => {
-            this.setState({ filteredResults: response.itens.itens, offset: this.state.offset, pageCount: Math.ceil(response.itens.qtdTotalItens / PAGE_SIZE)  });
+            this.setState({ filteredResults: response.itens.itens, offset: this.state.offset, pageCount: Math.ceil(response.itens.qtdTotalItens / PAGE_SIZE) });
         }).catch(error => {
             Toast.defaultError();
         }).then(() => {
@@ -41,12 +41,12 @@ import { showLoading , hideLoading } from 'react-redux-loading-bar'
     }
 
     clearForm(e) {
-       e.preventDefault();
-       this.setState({ filteredResults: [] , offset: 0 , pageCount: 0 });
+        e.preventDefault();
+        this.setState({ filteredResults: [], offset: 0, pageCount: 0 });
     }
 
     handlePageClick(offset) {
-        this.setState({offset: offset}, () => {
+        this.setState({ offset: offset }, () => {
             this.search();
         });
     }
@@ -63,8 +63,8 @@ import { showLoading , hideLoading } from 'react-redux-loading-bar'
                         <form onSubmit={this.search.bind(this)}>
                             <Filters />
                             <FooterPanel submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label="Pesquisar" />
-                            <DataList  filteredResults={this.state.filteredResults} />
-                            <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount}  resultsLength={this.state.filteredResults.length}  />
+                            <DataList filteredResults={this.state.filteredResults} />
+                            <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount} resultsLength={this.state.filteredResults.length} />
                         </form>
                     </div>
                 </div>
@@ -75,20 +75,20 @@ import { showLoading , hideLoading } from 'react-redux-loading-bar'
 }
 
 const mapDispatchToProps = dispatch => {
-     
-     return {
 
-         showLoading: () => {
-             dispatch(showLoading());
-         },
+    return {
 
-         hideLoading: () => {
-              dispatch(hideLoading());
-         }
-     }
- 
+        showLoading: () => {
+            dispatch(showLoading());
+        },
+
+        hideLoading: () => {
+            dispatch(hideLoading());
+        }
+    }
+
 }
 
-const SearchContainer = connect(null,mapDispatchToProps)(Search);
+const SearchContainer = connect(null, mapDispatchToProps)(Search);
 
 export default SearchContainer; 
