@@ -14,9 +14,9 @@ export default class Paginator extends Component {
 
     render() {
 
-        const showPagination = this.props.resultsLength > 0 ? true : false;
+        const showPaginator = this.props.resultsLength > 0 ? true : false;
 
-        if (showPagination) {
+        if (showPaginator) {
             return (
                 <div className="row center-align">
                     <ReactPaginate previousLabel={"Anterior"} nextLabel={"Próximo"}
