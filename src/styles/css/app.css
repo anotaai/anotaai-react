@@ -67,7 +67,7 @@ footer {
 }
 .private-side-nav {
   top:inherit;
-  height: calc(100% + 5px);
+  height: 94%;
   position: absolute !important;
 }
 .side-nav .divider {

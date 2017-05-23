@@ -58,7 +58,7 @@ class Navbar extends Component {
             <div>
                 <nav className="indigo" role="navigation">
                     <div className="nav-wrapper container">
-                        <Link id="logo-container" to={URL.HOME} className="brand-logo">
+                        <Link id="logo-container" to="/" className="brand-logo">
                             <T.span id="app-name" text={{ key: "app" }} />
                         </Link>
                         {this.props.loginState == null &&
