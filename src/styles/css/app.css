@@ -169,3 +169,12 @@ footer {
 .pagination li a {
     cursor: pointer !important;
 }
+
+.row-th {
+  text-align: center;
+}
+
+.row-td {
+  text-align: center;
+  cursor: pointer;
+}

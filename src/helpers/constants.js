@@ -4,7 +4,8 @@ export const URL = {
     REGISTER: '/register',
     COMPRADOR: '/comprador',
     VENDEDOR: '/vendedor',
-    SETOR: '/setor',
+    SECTOR: '/setor',
+    NEW_SECTOR: '/new/setor',
     RENEW_PASSWORD: '/renew(/:activation)',
     SETTINGS: '/settings',
     DASHBOARD: '/dashboard'

@@ -6,7 +6,7 @@ import Toast from '../../../helpers/Toast';
 import { getObjectNewState, createInstance } from '../../../helpers/jsonHelper';
 import { replaceMask } from '../../../helpers/stringHelper';
 import ClientService from '../../../services/ClientService';
-import { FormUser, checkInvalidPassword } from './Comprador';
+import FormUser , { checkInvalidPassword } from './FormUser';
 import FooterPanel from '../../FooterPanel';
 import { browserHistory } from 'react-router';
 import { URL } from '../../../helpers/constants';
