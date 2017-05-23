@@ -2,8 +2,9 @@ import Base64Service from './Base64Service'
 import {COOKIE_USER} from '../../helpers/constants'
 import Cookies from 'universal-cookie';
 import {getPhoneMask} from '../../helpers/stringHelper'
-
-
+import { browserHistory } from 'react-router'
+import { authUser } from '../../actions/authActionCreator'
+import { URL } from '../../helpers/constants'
 
 export default class AuthenticationService {
 
@@ -32,7 +33,6 @@ export default class AuthenticationService {
             expireDate.setFullYear(d.getFullYear() + 1);
         }
         
- 
          const cookies = new Cookies();
          cookies.set(COOKIE_USER, JSON.stringify(loginState), { 'expires': expireDate });
 
@@ -43,6 +43,15 @@ export default class AuthenticationService {
     static clearCredentials() {
         const cookies = new Cookies();
         cookies.remove(COOKIE_USER)
+    }
+
+    static checkUserCookie(store) {
+        const cookies = new Cookies();
+        const cookieLoginState = cookies.get(COOKIE_USER);
+        if (cookieLoginState) {
+            store.dispatch(authUser(cookieLoginState));
+            browserHistory.push(URL.DASHBOARD);
+        }
     }
 
 }

@@ -142,7 +142,7 @@ export default class UserService {
         return dispatch => {
             const loginState = AuthenticationService.setCredentials(response);
             dispatch(authUser(loginState));
-            browserHistory.push(URL.HOME);
+            browserHistory.push(URL.DASHBOARD);
         }
     }
 

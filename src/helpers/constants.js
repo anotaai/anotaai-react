@@ -1,14 +1,13 @@
-
 export const URL = {
     ACTIVATE: '/activate(/:key)',
     LOGIN: '/login',
     REGISTER: '/register',
-    HOME: '/home',
     COMPRADOR: '/comprador',
     VENDEDOR: '/vendedor',
     SETOR: '/setor',
     RENEW_PASSWORD: '/renew(/:activation)',
-    SETTINGS: '/settings'
+    SETTINGS: '/settings',
+    DASHBOARD: '/dashboard'
 }
 
 export const DEFAULT_TIME = 3000;

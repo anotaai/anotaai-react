@@ -1,4 +1,5 @@
 window.jQuery = require('jquery');
+const i18nReactLoader = require("i18n-react-loader");
 require('materialize-css');
 import 'materialize-css/dist/css/materialize.min.css'
 import './styles/css/app.css'
@@ -9,22 +10,14 @@ import { Router, browserHistory } from 'react-router'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
-import Cookies from 'universal-cookie'
-import { authUser } from './actions/authActionCreator'
-import { COOKIE_USER, URL } from './helpers/constants'
 import routes from './main/routes'
 import reducers from './main/reducers'
+import AuthenticationService from './services/app/AuthenticationService'
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+AuthenticationService.checkUserCookie(store);
 
-//Check logged user
-const cookies = new Cookies();
-const cookieLoginState = cookies.get(COOKIE_USER);
-if (cookieLoginState) {
-  store.dispatch(authUser(cookieLoginState));
-  browserHistory.push(URL.HOME);
-}
-var i18nReactLoader = require("i18n-react-loader");
+
 i18nReactLoader.default.init({
   useExternalAPI: false,
   defaultLocale: 'pt',

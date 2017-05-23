@@ -10,10 +10,6 @@ export default class App extends Component {
   constructor() {
     super();
     registerFetchInterceptor();
-    let nodeEnv = `${process.env.NODE_ENV}`;
-    if (nodeEnv === 'production') {
-      console.clear();
-    }
   }
 
   render() {
