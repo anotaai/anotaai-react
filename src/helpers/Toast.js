@@ -48,7 +48,7 @@ export default class Toast {
     }
 
     static defaultError() {
-        let mensagem = this.build('default.error', Icon.ERROR, null);
+        let mensagem = this.build('message.defaulterror', Icon.ERROR, null);
         this.buildMessage(mensagem);
     }
 
@@ -57,7 +57,7 @@ export default class Toast {
         if (params && params.length > 0) {
             let index = 0;
             params.forEach(param => {
-                msg = msg.replace(`{$index}`, param);
+                msg = msg.replace('{' + index +'}', param);
                 index++;
             });
         }

@@ -2,7 +2,7 @@
 
     "app": "Anota ai",
     "message": {
-        "defulerror": "Erro inesperado...",
+        "defulterror": "Erro inesperado...",
         "login": {
             "forbidden": "Sessão expirada, favor efetuar o login novamente.",
             "confirmacaosenha": "A senha não confere com a confirmação de senha. Informe novamente."
