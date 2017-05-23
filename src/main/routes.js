@@ -24,7 +24,7 @@ const privateRoutes = (
 
  const routes = (
   <Route path="/" component={App} >
-    <IndexRoute path="/" component={Home} />
+    <IndexRoute component={Home} />
     <Route path={URL.ACTIVATE} component={Activate} />
     <Route path={URL.LOGIN} component={LoginContainer} />
     <Route path={URL.REGISTER} component={Register} />
