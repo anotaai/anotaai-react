@@ -1,7 +1,6 @@
 import { DEFAULT_TIME } from './constants';
-//import T from 'i18n-react';
+import T from 'i18n-react';
 import { Icon } from '../domain/Icon';
-//import { MDText } from 'i18n-react';
 
 
 export default class Toast {
@@ -54,15 +53,15 @@ export default class Toast {
     }
 
     static translateMessage(key, params) {
-        //let T = new MDText();
-        //let x = T.translate("nome");
-        //TODO - recuperar mensagem var message = '';
-        if (params && params.length > 0) {//TODO aplicar parametros
+        let msg = T.translate(key); 
+        if (params && params.length > 0) {
+            let index = 0;
             params.forEach(param => {
-                console.log(param);
+                msg = msg.replace(`{$index}`, param);
+                index++;
             });
         }
-        return key;
+        return msg;
     }
 
 }
