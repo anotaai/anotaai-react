@@ -23,18 +23,15 @@ export class RadioUser extends Component {
     this.setState({ tipoContato: e.target.value })
   }
 
-  handleInputChange(e) {
-    this.props.handleInputChange(e);
-  }
 
   render() {
     let field = null;
 
     if (this.state.tipoContato === 'telefone') {
-      field = <MaskedInput id='telefone' onChange={this.handleInputChange.bind(this)} mask="(11) 11111-1111" name="userLogin.usuario.telefone" required placeholder="Telefone" />
+      field = <MaskedInput id='telefone' onChange={this.props.handleInputChange.bind(this)} mask="(11) 11111-1111" name="userLogin.usuario.telefone" required placeholder="Telefone" />
     } else {
       field = <div>
-        <input id="email" className='validate' type='email' onChange={this.handleInputChange.bind(this)} name="userLogin.usuario.email" required placeholder="Email" />
+        <input id="email" className='validate' type='email' onChange={this.props.handleInputChange.bind(this)} name="userLogin.usuario.email" required placeholder="Email" />
         <label htmlFor="email" data-error="Email inválido" />
       </div>
     }

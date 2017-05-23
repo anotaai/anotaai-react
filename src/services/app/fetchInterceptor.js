@@ -1,13 +1,11 @@
 import fetchIntercept from 'fetch-intercept';
 import Cookies from 'universal-cookie';
 import { COOKIE_USER } from '../../helpers/constants';
-import { browserHistory } from 'react-router';
-import { URL } from '../../helpers/constants';
 import Toast from '../../helpers/Toast';
-import AuthenticationService from '../../services/app/AuthenticationService'
 import { Icon } from '../../domain/Icon'
+import UserService from '../../services/UserService'
 
-export default function registerFetchInterceptor() {
+export default function registerFetchInterceptor(store) {
 
     fetchIntercept.register({
         request(url, config) {
@@ -40,8 +38,7 @@ export default function registerFetchInterceptor() {
                     break;
                 case 403:
                     Toast.show('message.login.forbidden', Icon.WARNING);
-                    AuthenticationService.clearCredentials();
-                    browserHistory.push(URL.LOGIN);
+                    store.dispatch(UserService.dispatchLogout());
                     break;
                 default:
                     break;

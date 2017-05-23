@@ -67,7 +67,7 @@ footer {
 }
 .private-side-nav {
   top:inherit;
-  height: calc(100% + 5px);
+  height: 94%;
   position: absolute !important;
 }
 .side-nav .divider {
@@ -168,4 +168,13 @@ footer {
  
 .pagination li a {
     cursor: pointer !important;
+}
+
+.row-th {
+  text-align: center;
+}
+
+.row-td {
+  text-align: center;
+  cursor: pointer;
 }
