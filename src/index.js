@@ -13,9 +13,11 @@ import thunkMiddleware from 'redux-thunk'
 import routes from './main/routes'
 import reducers from './main/reducers'
 import AuthenticationService from './services/app/AuthenticationService'
+import registerFetchInterceptor from './services/app/fetchInterceptor'
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 AuthenticationService.checkUserCookie(store);
+registerFetchInterceptor(store);
 
 
 i18nReactLoader.default.init({

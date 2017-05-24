@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import $ from 'jquery'
-import AuthenticationService from '../../../services/app/AuthenticationService'
 import UserService from '../../../services/UserService'
 import Toast from '../../../helpers/Toast'
 import { browserHistory } from 'react-router'
@@ -21,7 +20,6 @@ class Profile extends Component {
         this.props.showLoading();
         UserService.logout(this.props.loginState).then(response => {
            $('.button-collapse').sideNav('hide');
-           AuthenticationService.clearCredentials();
            this.props.logout();
         }).catch(error => {
             Toast.defaultError();

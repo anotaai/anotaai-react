@@ -13,9 +13,9 @@ export default class DataList extends Component {
                     <table className="striped">
                         <thead>
                             <tr>
-                                <th>Nome</th>
-                                <th>Descrição</th>
-                                <th>Excluir</th>
+                                <th className="row-th">Nome</th>
+                                <th className="row-th">Descrição</th>
+                                <th className="row-th">Excluir</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,9 +23,9 @@ export default class DataList extends Component {
                                 return (
 
                                     <tr key={result.id}>
-                                        <td>{result.nome}</td>
-                                        <td>{result.descricao}</td>
-                                        <td><i className="material-icons">delete</i></td>
+                                        <td className="row-td">{result.nome}</td>
+                                        <td className="row-td">{result.descricao}</td>
+                                        <td className="row-td"><a href="#" onClick={this.props.removeItem.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
                         </tbody>

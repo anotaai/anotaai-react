@@ -103,6 +103,7 @@ export default class UserService {
     static dispatchLogout() {
 
         return dispatch => {
+            AuthenticationService.clearCredentials();
             dispatch(unauthUser());
             browserHistory.push(URL.LOGIN);
         }
