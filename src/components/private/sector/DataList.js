@@ -10,7 +10,7 @@ export default class DataList extends Component {
         if (results.length > 0) {
             return (
                 <div>
-                    <table className="striped">
+                    <table className="striped bordered responsive-table">
                         <thead>
                             <tr>
                                 <th className="row-th">Nome</th>
