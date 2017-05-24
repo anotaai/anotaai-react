@@ -9,7 +9,6 @@ import { PAGE_SIZE , URL } from '../../../helpers/constants'
 import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { getObjectNewState, createInstance } from '../../../helpers/jsonHelper'
-import { browserHistory } from 'react-router'
 
 class Search extends Component {
 

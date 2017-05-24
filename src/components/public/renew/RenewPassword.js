@@ -10,7 +10,6 @@ export default class RenewPassword extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = { usuario: { id: '', dataCadastro: '', email: '', telefone: '', senha: '', codigoAtivacao: '' }, confirmarSenha: '' };
         this.activation = this.props.params.activation;
     }

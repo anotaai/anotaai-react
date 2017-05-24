@@ -4,7 +4,6 @@ import ModalRenewPassword from './ModalRenewPassword'
 import UserService from '../../../services/UserService'
 import { getObjectNewState } from '../../../helpers/jsonHelper'
 import Toast from '../../../helpers/Toast'
-import { TipoMensagem } from '../../../domain/TipoMensagem'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { connect } from 'react-redux'
 
@@ -14,9 +13,6 @@ export class RadioUser extends Component {
   constructor() {
     super();
     this.state = { tipoContato: 'telefone' };
-    var info = TipoMensagem.INFO;
-    console.log(TipoMensagem.valueOf('INFO'));
-    console.log(info);
   }
 
   changeRadio(e) {
@@ -85,6 +81,7 @@ class Login extends Component {
         this.props.login(response.login);
       } else {
         Toast.show(response.messages);
+        this.clearPassword();
       }
     }).catch(error => {
       Toast.defaultError();
@@ -93,7 +90,13 @@ class Login extends Component {
         this.refs.loginBtn.removeAttribute("disabled");
       }
       this.props.hideLoading();
+      this.clearPassword();
     });
+  }
+
+  clearPassword() {
+    this.refs.senha.value = '';
+    this.refs.senha.focus();
   }
 
   render() {
@@ -109,7 +112,7 @@ class Login extends Component {
                 <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin" handleInputChange={this.handleInputChange.bind(this)} />
                 <div className='row'>
                   <div className='input-field col s12'>
-                    <input id="senha" type='password' name='userLogin.usuario.senha' value={this.state.userLogin.usuario.senha} placeholder="Senha" required onChange={this.handleInputChange.bind(this)} />
+                    <input ref="senha" id="senha" type='password' name='userLogin.usuario.senha' value={this.state.userLogin.usuario.senha} placeholder="Senha" required onChange={this.handleInputChange.bind(this)} />
                   </div>
                 </div>
                 <div className='row'>
