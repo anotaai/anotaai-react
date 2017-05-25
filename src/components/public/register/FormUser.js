@@ -6,6 +6,7 @@ import { replaceMask } from '../../../helpers/stringHelper';
 import T from 'i18n-react';
 import UserService from '../../../services/UserService';
 import { createInstance } from '../../../helpers/jsonHelper';
+import { PanelHeader } from '../../panels'
 
 export default class FormUser extends Component {
     
@@ -40,9 +41,8 @@ export default class FormUser extends Component {
             <div>
                 <div className="section" /> 
                 <div className="container">
-                    <div className="panel-header">
-                        <span className="title-header"> <i className="material-icons icon-panel">perm_identity</i> Dados Comprador</span>
-                    </div>
+
+                    <PanelHeader icon="perm_identity" label="Dados Comprador" />
 
                     <div className="panel row">
 

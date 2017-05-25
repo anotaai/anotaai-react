@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import $ from 'jquery'
 import UserService from '../../../services/UserService'
 import Toast from '../../../helpers/Toast'
-import { browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
 import {showLoading, hideLoading} from 'react-redux-loading-bar'
-
+import { push } from '../../App'
 
 class Profile extends Component {
 
@@ -28,11 +27,7 @@ class Profile extends Component {
         });
     }
 
-    redirectSettings(e) {
-        e.preventDefault();
-        $('.button-collapse').sideNav('hide');
-        browserHistory.push(URL.SETTINGS);
-    }
+     
 
     render() {
         return (
@@ -41,14 +36,14 @@ class Profile extends Component {
                     <div className="userView profile-details">
                         <div className="row">
                             <div className="col col s4 m4 l4">
-                                <img src={this.props.pictureState} className="circle responsive-img profile-image" style={{cursor:'pointer'}} title="Settings" alt={this.props.loginState.login.primeiroNome} onClick={this.redirectSettings.bind(this)} />
+                                <img src={this.props.pictureState} className="circle responsive-img profile-image" style={{cursor:'pointer'}} title="Settings" alt={this.props.loginState.login.primeiroNome} onClick={push.bind(this,URL.SETTINGS)} />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col col s11 m11 l11">
                                 <a className="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates={this.props.idDropdown}>{this.props.loginState.login.primeiroNome}<i className="material-icons right">arrow_drop_down</i></a>
                                 <ul id={this.props.idDropdown} className="dropdown-content">
-                                    <li><a href="#" onClick={this.redirectSettings.bind(this)}>Settings<i className="material-icons">settings</i></a></li>
+                                    <li><a href="#" onClick={push.bind(this,URL.SETTINGS)}>Settings<i className="material-icons">settings</i></a></li>
                                     <li className="divider"></li>
                                     <li><a href="#!" onClick={this.logout.bind(this)} >Logout<i className="material-icons">power_settings_new</i></a></li>
                                 </ul>

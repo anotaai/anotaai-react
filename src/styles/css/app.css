@@ -58,6 +58,11 @@ select {
   text-align: right;
 }
 
+.panel-footer-detail {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 footer {
   height: 75px;
   width: 100%;
@@ -177,4 +182,8 @@ footer {
 .row-td {
   text-align: center;
   cursor: pointer;
+}
+
+.buttons-space {
+   margin-left: 5px;
 }

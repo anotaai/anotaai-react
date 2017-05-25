@@ -6,6 +6,7 @@ import ProfileService from '../../../services/profile/ProfileService'
 import { updatePicture } from '../../../actions/pictureActionCreator'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import PictureContainer from './Picture'
+import { PanelHeader } from '../../panels'
 
 
 class Settings extends Component {
@@ -35,9 +36,9 @@ class Settings extends Component {
         return (
             <div className="space-container">
                 <div className="container">
-                    <div className="panel-header" >
-                        <span className="title-header"> <i className="material-icons icon-panel">settings</i> User Settings </span>
-                    </div>
+                    
+                    <PanelHeader label="User Settings" icon="settings" />
+                    
                     <div className="panel row">
                         <div className="row">
                             <PictureContainer handleDrop={this.handleDrop.bind(this)}  />

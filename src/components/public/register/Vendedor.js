@@ -7,7 +7,7 @@ import { getObjectNewState, createInstance } from '../../../helpers/jsonHelper';
 import { replaceMask } from '../../../helpers/stringHelper';
 import ClientService from '../../../services/ClientService';
 import FormUser , { checkInvalidPassword } from './FormUser';
-import FooterPanel from '../../FooterPanel';
+import { PanelHeader , PanelFooter } from '../../panels'
 import { browserHistory } from 'react-router';
 import { URL } from '../../../helpers/constants';
 import { Icon } from '../../../domain/Icon';
@@ -155,9 +155,9 @@ import { connect } from 'react-redux'
                 <FormUser {... this.state}  inputRef={el => this.nameInput = el} handleInputChange={this.handleInputChange.bind(this)} handlePhoneChange={this.handlePhoneChange.bind(this)} />
 
                 <div className="container">
-                    <div className="panel-header" >
-                        <span className="title-header"> <i className="material-icons icon-panel">home</i>  Dados Endereço</span>
-                    </div>
+                    
+                    <PanelHeader label="Dados Endereço" icon="home" />
+
                     <div className="panel row">
 
                         <div className="input-field col s12 m6 l6">
@@ -194,7 +194,7 @@ import { connect } from 'react-redux'
                         </div>
                     </div>
                 </div>
-                <FooterPanel submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
+                <PanelFooter submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
             </form>)
     }
 

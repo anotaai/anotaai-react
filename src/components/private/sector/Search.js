@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FooterPanel from '../../FooterPanel'
+import { PanelHeader , PanelFooter } from '../../panels'
 import Filters from './Filters'
 import DataList from './DataList'
 import SectorService from '../../../services/sector/SectorService'
@@ -19,7 +19,7 @@ class Search extends Component {
     }
 
     componentDidMount() {
-        this.search();
+       this.search();
     }
 
     search(e) {
@@ -85,13 +85,11 @@ class Search extends Component {
         return (
             <div className="space-container">
                 <div className="container">
-                    <div className="panel-header">
-                        <span className="title-header"><i className="material-icons icon-panel">business_center</i>Setor</span>
-                    </div>
+                    <PanelHeader icon="business_center" label="Setor" />
                     <div className="panel">
                         <form onSubmit={this.search.bind(this)}>
                             <Filters handleInputChange={this.handleInputChange.bind(this)} nomeSetor={this.state.nomeSetor} />
-                            <FooterPanel submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_SECTOR} label="Pesquisar" />
+                            <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_SECTOR} label="Pesquisar" />
                             <DataList filteredResults={this.state.filteredResults} removeItem={this.removeItem.bind(this)} />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount} resultsLength={this.state.filteredResults.length} />
                         </form>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Toast from '../../../helpers/Toast';
 import { getObjectNewState, createInstance } from '../../../helpers/jsonHelper';
-import FooterPanel from '../../FooterPanel';
+import { PanelFooter } from '../../panels'
 import { URL } from '../../../helpers/constants';
 import { browserHistory } from 'react-router';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
@@ -82,7 +82,7 @@ class Comprador extends Component {
         return (
             <form method="post" onSubmit={this.send.bind(this)}>
                 <FormUser {... this.state} inputRef={el => this.nameInput = el} handleInputChange={this.handleInputChange.bind(this)} handlePhoneChange={this.handlePhoneChange.bind(this)}  />
-                <FooterPanel submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
+                <PanelFooter submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
             </form>
         )
     }
