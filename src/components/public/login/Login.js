@@ -88,9 +88,9 @@ class Login extends Component {
     }).then(() => {
       if (this.refs.loginBtn !== undefined) {
         this.refs.loginBtn.removeAttribute("disabled");
+        this.clearPassword();
       }
       this.props.hideLoading();
-      this.clearPassword();
     });
   }
 

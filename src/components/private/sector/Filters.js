@@ -6,9 +6,11 @@ export default class Filters extends Component {
 
         return (
             <div className="container">
-                <div className="row input-field">
-                    <input id="nomeSetor" className="col s12 m12 l12" type="text"  value={this.props.nomeSetor} onChange={this.props.handleInputChange.bind(this)}  name="nomeSetor" />
-                    <label htmlFor="nomeSetor">Nome</label>
+                <div className="row">
+                    <div className="input-field col s12 m12 l12">
+                        <input id="nomeSetor" type="text" value={this.props.nomeSetor} onChange={this.props.handleInputChange.bind(this)} name="nomeSetor" />
+                        <label htmlFor="nomeSetor">Nome</label>
+                    </div>
                 </div>
             </div>);
     }
