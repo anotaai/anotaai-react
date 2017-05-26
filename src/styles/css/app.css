@@ -177,6 +177,7 @@ footer {
 
 .fixed-action-btn {
     position: relative !important;
+    bottom: 0px !important;
 }
 
 .selected {
