@@ -11,7 +11,7 @@ export function PanelFooter(props) {
 
                         {props.isPublic &&
                             <button className="btn waves-effect DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}>
-                                Limpar
+                                Limpar <i className="material-icons right">clear</i>
                             </button>
                         }
 
@@ -21,7 +21,7 @@ export function PanelFooter(props) {
                             </button>
                         }
 
-                        <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS"  type="submit" name="action">{props.label}
+                        <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">{props.label}
                             <i className="material-icons right">send</i>
                         </button>
                     </div>
@@ -36,25 +36,73 @@ export function PanelFooterDetail(props) {
 
     return (
 
-        <div className="panel-footer-detail" >
+        <div>
+             {/* Botões normais */}
+             
+             <div className="panel-footer-detail hide-on-small-only">
+                <button className="btn waves-effect WARNING" onClick={push.bind(this, props.searchUrl)}>
+                    Pesquisar <i className="material-icons right">search</i>
+                </button>
 
-             {props.customButtons}
+                {props.customButtons}
 
-            <button className="btn waves-effect DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}>
-                Limpar
-            </button>
+                <button className="btn waves-effect buttons-space DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}>
+                    Limpar <i className="material-icons right">clear</i>
+                </button>
 
-            <button className="btn waves-effect buttons-space WARNING"  formNoValidate  onClick={push.bind(this, props.searchUrl)}>
-                Pesquisar  
-            </button>
+                <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">
+                    Gravar <i className="material-icons right">send</i>
+                </button>
+            </div>
 
-            <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS"  type="submit" name="action"> 
-                Gravar <i className="material-icons right">send</i>
-            </button>
-           
+            {/* Botões responsivos */}
+            
+            <div className="panel-footer-detail-responsive hide-on-med-and-up">
+                <div className="fixed-action-btn click-to-toggle">
+                    <a className="btn-floating btn-large ERROR" title="Ações">
+                        <i className="large material-icons">mode_edit</i>
+                    </a>
+                    <ul>
+                        <li>
+                            <div className="row">
+                                <div className="col col s2 offset-s8">
+                                    <span className="new badge badge-responsive-align  WARNING">Pesquisar</span>
+                                </div>
+                                <div className="col col s2">
+                                    <button className="btn-floating WARNING" formNoValidate onClick={push.bind(this, props.searchUrl)}><i className="material-icons">search</i></button>
+                                </div>
+                            </div>
+                        </li>
+                         
+                        {props.customButtons}
+
+                        <li>
+                            <div className="row">
+                                <div className="col col s2 offset-s8">
+                                    <span className="new badge badge-responsive-align DEFAULT">Limpar</span>
+                                </div>
+                                <div className="col col s2">
+                                    <button className="btn-floating DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}> <i className="material-icons">clear</i></button>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="row">
+                                <div className="col col s2 offset-s8">
+                                    <span className="new badge badge-responsive-align SUCCESS">Gravar</span> </div>
+                                <div className="col col s2">
+                                    <button className="btn-floating SUCCESS"><i className="material-icons">send</i></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     );
 }
+
+
 
 export function PanelHeader(props) {
     return (
@@ -63,6 +111,3 @@ export function PanelHeader(props) {
         </div>
     )
 }
-
-
-

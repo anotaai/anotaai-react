@@ -26,6 +26,7 @@ class Detail extends Component {
       this.setState(newState);
     }
 
+
     save(e) {
        e.preventDefault();
        this.props.showLoading();

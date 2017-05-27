@@ -4,13 +4,15 @@ import UserService from '../../services/UserService'
 import { Link } from 'react-router'
 import { ProfileContainer } from './profile/Profile'
 import Toast from '../../helpers/Toast'
+import { URL } from '../../helpers/constants'
 import { updatePicture } from '../../actions/pictureActionCreator'
 import { connect } from 'react-redux'
 import $ from 'jquery'
+import { browserHistory } from 'react-router'
 
 export class Links extends Component {
 
-  constructor(){
+  constructor() {
     super();
     this.element = null;
   }
@@ -21,11 +23,11 @@ export class Links extends Component {
 
   handleBackground(e) {
     e.target.className = 'selected';
-    if(this.element != null) {
-      this.element.className =  null;
+    if (this.element != null) {
+      this.element.className = null;
     }
     this.element = e.target;
-   
+
   }
 
   render() {
@@ -36,37 +38,38 @@ export class Links extends Component {
         {this.props.listMenu.map(itemMenu =>
           (<li key={itemMenu.url} onClick={this.handleBackground.bind(this)} >
             <Link to={itemMenu.url} onClick={this.hideResponsiveMenu}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link>
-                <div className="divider"> </div>
-           </li>
+            <div className="divider"> </div>
+          </li>
           ))}
       </div>
     )
   }
 }
 
- class SideMenu extends Component {
+class SideMenu extends Component {
 
   constructor() {
     super();
-    this.state = { listMenu: []  };
+    this.state = { listMenu: [] };
   }
 
   componentDidMount() {
-    
+
     MenuService.getMenu().then(response => {
       this.setState({ listMenu: response });
     }).catch(error => {
-       Toast.defaultError();
+      Toast.defaultError();
+      this.props.logout();
     });
 
     UserService.loadProfileImage().then(response => {
-      if(response.entity) {
-         const mediaType = response.entity.tipoArquivo.mediaType;
-			   const data = 'data:' + mediaType + ';base64,' + response.entity.file;
-         this.props.updatePicture(data);
+      if (response.entity) {
+        const mediaType = response.entity.tipoArquivo.mediaType;
+        const data = 'data:' + mediaType + ';base64,' + response.entity.file;
+        this.props.updatePicture(data);
       }
     }).catch(e => {
-        Toast.defaultError();
+      Toast.defaultError();
     });
 
     $(".button-collapse").sideNav();
@@ -77,7 +80,7 @@ export class Links extends Component {
     return (
       <div>
         <ul className="side-nav fixed private-side-nav">
-          <ProfileContainer idDropdown="dropdownDefault"  />
+          <ProfileContainer idDropdown="dropdownDefault" />
           <Links listMenu={this.state.listMenu} />
         </ul>
         <ul id="slide-out" className="side-nav">
@@ -90,17 +93,20 @@ export class Links extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-   
-   return {
-      updatePicture: (picture) => {
-         dispatch(updatePicture(picture));
-      }
-   }
+
+  return {
+    updatePicture: (picture) => {
+      dispatch(updatePicture(picture));
+    },
+    logout: () => {
+      dispatch(UserService.dispatchLogout());
+    }
+  }
 }
 
-const SideMenuContainer = connect(null,mapDispatchToProps)(SideMenu);
+const SideMenuContainer = connect(null, mapDispatchToProps)(SideMenu);
 
-export default  SideMenuContainer;
+export default SideMenuContainer;
 
 
 
