@@ -16,7 +16,11 @@ class EditDetail extends Component {
         this.sendButton = null;
         this.activeClass = 'S';
         this.state = stateJsonDetail();
+    }
 
+    handleInputChange(e) {
+        const newState = getObjectNewState(e.target.name, e.target.value, this.state);
+        this.setState(newState);
     }
 
     componentDidMount() {
@@ -33,11 +37,6 @@ class EditDetail extends Component {
         }).then(() => {
             this.props.hideLoading();
         });
-    }
-
-    handleInputChange(e) {
-        const newState = getObjectNewState(e.target.name, e.target.value, this.state);
-        this.setState(newState);
     }
 
     update(e) {
@@ -97,7 +96,7 @@ class EditDetail extends Component {
 
 
         return (
-            <Detail {...this.state} customResponsiveButtons={customResponsiveButtons} customButtons={customButtons} activeClass={this.activeClass} merge={this.update.bind(this)} handleInputChange={this.handleInputChange.bind(this)} submitRef={el => this.sendButton = el} />
+            <Detail {...this.state} title="Edição de Setores" customResponsiveButtons={customResponsiveButtons} customButtons={customButtons} activeClass={this.activeClass} merge={this.update.bind(this)} handleInputChange={this.handleInputChange.bind(this)} submitRef={el => this.sendButton = el} />
         );
     }
 }

@@ -18,7 +18,7 @@ export default class Detail extends Component {
         return (
             <div className="space-container">
                 <div className="container">
-                    <PanelHeader icon="business_center" label="Setor" />
+                    <PanelHeader icon="business_center" label={this.props.title} />
                     <div className="panel">
                         <form onSubmit={this.props.merge.bind(this)}>
                             <div className="container">
