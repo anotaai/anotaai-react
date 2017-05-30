@@ -4,11 +4,9 @@ import UserService from '../../services/UserService'
 import { Link } from 'react-router'
 import { ProfileContainer } from './profile/Profile'
 import Toast from '../../helpers/Toast'
-import { URL } from '../../helpers/constants'
 import { updatePicture } from '../../actions/pictureActionCreator'
 import { connect } from 'react-redux'
 import $ from 'jquery'
-import { browserHistory } from 'react-router'
 
 export class Links extends Component {
 

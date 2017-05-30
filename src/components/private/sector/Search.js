@@ -29,8 +29,8 @@ class Search extends Component {
 
         this.sendButton.setAttribute("disabled", "disabled");
         this.props.showLoading();
-        SectorService.listAll(this.state.offset, this.state.nomeSetor).then(response => {
-            this.setState({ filteredResults: response.itens.itens, offset: this.state.offset, pageCount: Math.ceil(response.itens.qtdTotalItens / PAGE_SIZE) });
+        SectorService.list(this.state.offset, this.state.nomeSetor).then(response => {
+            this.setState({ filteredResults: response.list.itens, offset: this.state.offset, pageCount: Math.ceil(response.list.qtdTotalItens / PAGE_SIZE) });
         }).catch(error => {
             Toast.defaultError();
         }).then(() => {

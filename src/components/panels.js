@@ -40,16 +40,12 @@ export function PanelFooterDetail(props) {
              {/* Botões normais */}
              
              <div className="panel-footer-detail hide-on-small-only">
-                <button className="btn waves-effect WARNING" onClick={push.bind(this, props.searchUrl)}>
-                    Pesquisar <i className="material-icons right">search</i>
-                </button>
-
+                
                 {props.customButtons}
 
-                <button className="btn waves-effect buttons-space DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}>
-                    Limpar <i className="material-icons right">clear</i>
+                <button className="btn waves-effect buttons-space WARNING" onClick={push.bind(this, props.searchUrl)}>
+                    Pesquisar <i className="material-icons right">search</i>
                 </button>
-
                 <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">
                     Gravar <i className="material-icons right">send</i>
                 </button>
@@ -63,6 +59,8 @@ export function PanelFooterDetail(props) {
                         <i className="large material-icons">mode_edit</i>
                     </a>
                     <ul>
+                        {props.customResponsiveButtons}
+                        
                         <li>
                             <div className="row">
                                 <div className="col col s2 offset-s8">
@@ -70,19 +68,6 @@ export function PanelFooterDetail(props) {
                                 </div>
                                 <div className="col col s2">
                                     <button className="btn-floating WARNING" formNoValidate onClick={push.bind(this, props.searchUrl)}><i className="material-icons">search</i></button>
-                                </div>
-                            </div>
-                        </li>
-                         
-                        {props.customButtons}
-
-                        <li>
-                            <div className="row">
-                                <div className="col col s2 offset-s8">
-                                    <span className="new badge badge-responsive-align DEFAULT">Limpar</span>
-                                </div>
-                                <div className="col col s2">
-                                    <button className="btn-floating DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}> <i className="material-icons">clear</i></button>
                                 </div>
                             </div>
                         </li>

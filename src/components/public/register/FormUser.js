@@ -8,6 +8,17 @@ import UserService from '../../../services/UserService';
 import { createInstance } from '../../../helpers/jsonHelper';
 import { PanelHeader } from '../../panels'
 
+export function checkInvalidPassword(state) {
+
+    if (state.usuario.senha !== state.confirmarSenha) {
+        const newState = createInstance(state);
+        newState.usuario.senha = '';
+        newState.confirmarSenha = '';
+        Toast.show('senhas.nao.conferem.warning', Icon.WARNING);
+        return newState;
+    }
+}
+
 export default class FormUser extends Component {
     
 
@@ -34,7 +45,7 @@ export default class FormUser extends Component {
 
     render() {
         
-        const active = (this.props.telefoneRetornado === 'S' ? 'active-label' : '');
+        const activeClass = (this.props.telefoneRetornado === 'S' ? 'active-label' : '');
         const disabled = (this.props.telefoneRetornado === 'S' ? 'disabled' : '');
 
         return (
@@ -48,7 +59,7 @@ export default class FormUser extends Component {
 
                         <div className="input-field col s12 m6 l6">
                             <input id="nome" ref={this.props.inputRef} type="text" value={this.props.usuario.nome} name="usuario.nome" disabled={disabled} onChange={this.props.handleInputChange.bind(this)} required />
-                            <label htmlFor="nome" className={active} >
+                            <label htmlFor="nome" className={activeClass} >
                                 <T.span text={{ key: "nome" }} />
                             </label>
                         </div>
@@ -68,7 +79,7 @@ export default class FormUser extends Component {
                         </div>
                         <div className="input-field col s12 m6 l6">
                             <input id="email" value={this.props.usuario.email} name="usuario.email" className="validate" disabled={disabled} onChange={this.props.handleInputChange.bind(this)} type="email" />
-                            <label htmlFor="email" data-error="Email inválido" className={active}>Email</label>
+                            <label htmlFor="email" data-error="Email inválido" className={activeClass}>Email</label>
                         </div>
                         <div className="input-field col s12 m6 l6">
                             <input id="senha" ref="senha" type="password" className="validate" minLength="6" required value={this.props.usuario.senha} name="usuario.senha" onChange={this.props.handleInputChange.bind(this)} />
@@ -84,15 +95,4 @@ export default class FormUser extends Component {
         )
     }
 
-}
-
-export function checkInvalidPassword(state) {
-
-    if (state.usuario.senha !== state.confirmarSenha) {
-        const newState = createInstance(state);
-        newState.usuario.senha = '';
-        newState.confirmarSenha = '';
-        Toast.show('senhas.nao.conferem.warning', Icon.WARNING);
-        return newState;
-    }
 }

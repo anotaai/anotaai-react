@@ -4,8 +4,10 @@ export const URL = {
     REGISTER: '/register',
     COMPRADOR: '/comprador',
     VENDEDOR: '/vendedor',
+    GROUP_PRODUCT: '/setor',
     SECTOR: '/setor',
     NEW_SECTOR: '/new/setor',
+    EDIT_SECTOR: '/setor(/:id)',
     RENEW_PASSWORD: '/renew(/:activation)',
     SETTINGS: '/settings',
     DASHBOARD: '/dashboard'
