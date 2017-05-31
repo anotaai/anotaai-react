@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { URL } from '../../../helpers/constants'
+import { URL } from '../../../../helpers/constants'
 import { browserHistory } from 'react-router'
-import SectorService from '../../../services/sector/SectorService'
-import Base64Service from '../../../services/app/Base64Service'
-import Toast from '../../../helpers/Toast'
+import SectorService from '../../../../services/sector/SectorService'
+import Base64Service from '../../../../services/app/Base64Service'
+import Toast from '../../../../helpers/Toast'
 import Detail, { stateJsonDetail } from './Detail'
-import { getObjectNewState } from '../../../helpers/jsonHelper'
+import { getObjectNewState } from '../../../../helpers/jsonHelper'
 
 class NewDetail extends Component {
 

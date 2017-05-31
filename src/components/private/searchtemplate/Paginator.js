@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactPaginate from 'react-paginate';
-import { PAGE_SIZE } from '../../helpers/constants'
+import { PAGE_SIZE } from '../../../helpers/constants'
 
 
 export default class Paginator extends Component {

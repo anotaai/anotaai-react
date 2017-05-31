@@ -34,6 +34,7 @@ export function PanelFooter(props) {
 
 export function PanelFooterDetail(props) {
 
+
     return (
 
         <div>

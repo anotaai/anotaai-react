@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { PanelHeader, PanelFooterDetail } from '../../panels'
-import { URL } from '../../../helpers/constants'
+import { PanelHeader, PanelFooterDetail } from '../../../panels'
+import { URL } from '../../../../helpers/constants'
 
 export function stateJsonDetail() {
     return {

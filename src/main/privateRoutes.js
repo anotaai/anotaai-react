@@ -4,9 +4,9 @@ import { Route } from 'react-router'
 import AuthenticationContainer from '../components/Authentication'
 import { URL } from '../helpers/constants'
 import SettingsContainer from '../components/private/profile/Settings'
-import NewSectorContainer from '../components/private/sector/NewDetail'
-import EditSectorContainer from '../components/private/sector/EditDetail'
-import SearchSectorContainer from '../components/private/sector/Search'
+import NewSectorContainer from '../components/private/sector/detail/NewDetail'
+import EditSectorContainer from '../components/private/sector/detail/EditDetail'
+import SearchSectorContainer from '../components/private/sector/search/Search'
 
 
  const privateRoutes = (

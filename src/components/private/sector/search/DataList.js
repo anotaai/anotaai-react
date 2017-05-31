@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { URL } from '../../../helpers/constants'
-import { pushEncoded } from '../../App'
+import { URL } from '../../../../helpers/constants'
+import { pushEncoded } from '../../../App'
 
 export default class DataList extends Component {
  
