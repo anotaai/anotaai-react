@@ -7,7 +7,6 @@ export function stateJsonDetail() {
         id: '',
         nome: '',
         descricao: ''
-        
      }
 }
 
