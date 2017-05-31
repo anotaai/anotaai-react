@@ -6,7 +6,7 @@ export function stateJsonDetail() {
     return {
         id: '',
         nome: '',
-        setor: ''
+        descricao: ''
      }
 }
 
