@@ -104,8 +104,9 @@ class Login extends Component {
     return (
       <main className="space-container"> 
         <center>
+          <div className="section" />
+          <div className="section" />
           <h5 className="indigo-text">Login</h5>
-
           <div className="container">
             <div className="row panel" style={{ display: 'inline-block' }}>
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
