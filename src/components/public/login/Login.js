@@ -104,8 +104,11 @@ class Login extends Component {
     return (
       <main className="space-container"> 
         <center>
-          <div className="section" />
-          <div className="section" />
+          <div className="hide-on-small-only">
+            <div className="section" />
+            <div className="section" />
+          </div>
+        
           <h5 className="indigo-text">Login</h5>
           <div className="container">
             <div className="row panel" style={{ display: 'inline-block' }}>
