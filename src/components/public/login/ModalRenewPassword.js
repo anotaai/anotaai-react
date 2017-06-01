@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { RadioUser } from './Login'
 import Modal  from 'react-modal';
 import UserService from '../../../services/UserService';
 import { getObjectNewState } from '../../../helpers/jsonHelper'
 import { customModalStyles } from '../../../helpers/constants'
 import Toast from '../../../helpers/Toast'
+import RadioUser from './RadioUser'
 
 export default class ModalRenewPassword extends Component {
 
