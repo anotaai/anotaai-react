@@ -57,7 +57,7 @@ class Search extends Component {
     }
 
 
-    removeItem(id, e) {
+    remove(id, e) {
 
         e.preventDefault();
 
@@ -90,7 +90,7 @@ class Search extends Component {
                         <form onSubmit={this.search.bind(this)}>
                             <Filters basicId="nomeSetor" basicLabel="Nome" handleInputChange={this.handleInputChange.bind(this)} basicField={this.state.nomeSetor} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_SECTOR} label="Pesquisar" />
-                            <DataList filteredResults={this.state.filteredResults} removeItem={this.removeItem.bind(this)} />
+                            <DataList filteredResults={this.state.filteredResults} remove={this.remove.bind(this)} />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount} resultsLength={this.state.filteredResults.length} />
                         </form>
                     </div>

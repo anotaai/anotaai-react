@@ -5,8 +5,10 @@ import Base64Service from '../../../../services/app/Base64Service'
 import { getObjectNewState } from '../../../../helpers/jsonHelper'
 import SectorService from '../../../../services/sector/SectorService'
 import Toast from '../../../../helpers/Toast'
+import { browserHistory } from 'react-router'
 import Detail, { stateJsonDetail } from './Detail'
 import { CustomButtons, CustomResponsiveButtons } from './customButtons'
+import { URL } from '../../../../helpers/constants'
 
 
 class EditDetail extends Component {
@@ -59,7 +61,21 @@ class EditDetail extends Component {
 
     remove(e) {
         e.preventDefault();
-        alert('aaaaaaaa bertos finissimo!');
+
+        if (confirm('Confirma a exclusão do setor?')) {
+
+            this.props.showLoading();
+            SectorService.remove(this.state.id).then(response => {
+                if (response.isValid) {
+                    Toast.show(response.messages);
+                    browserHistory.push(URL.SECTOR);
+                }
+            }).catch(error => {
+                Toast.defaultError();
+            }).then(() => {
+                this.props.hideLoading();
+            });
+        }
     }
 
     render() {

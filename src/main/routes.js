@@ -11,8 +11,6 @@ import RenewPassword from '../components/public/renew/RenewPassword'
 import Activate from '../components/public/activation/Activate'
 import privateRoutes from './privateRoutes'
 
-
-
  const routes = (
   <Route path="/" component={App} >
     <IndexRoute component={Home} />
