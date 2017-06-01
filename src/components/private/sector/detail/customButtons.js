@@ -3,7 +3,8 @@ import { push } from '../../../App'
 import { URL } from '../../../../helpers/constants'
 
 export function CustomButtons(props) {
-    return (<span>
+    return 
+    (<span>
         <button className="btn waves-effect buttons-space INFO" onClick={push.bind(this, URL.GROUP_PRODUCT)}>
             Grupo Produto <i className="material-icons right">apps</i>
         </button>
@@ -15,7 +16,8 @@ export function CustomButtons(props) {
 
 export function CustomResponsiveButtons(props) {
    
-   return (<span>
+   return
+    (<span>
         <li>
             <div className="row">
                 <div className="col col s2 offset-s8">

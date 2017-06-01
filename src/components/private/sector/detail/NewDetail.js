@@ -49,7 +49,11 @@ class NewDetail extends Component {
 
     render() {
         return (
-            <Detail {...this.state} title="Cadastro de Setores" merge={this.save.bind(this)} handleInputChange={this.handleInputChange.bind(this)}  submitRef={el => this.sendButton = el} />
+            <Detail {...this.state} 
+               title="Cadastro de Setores" 
+               merge={this.save.bind(this)} 
+               handleInputChange={this.handleInputChange.bind(this)}  
+               submitRef={el => this.sendButton = el} />
         );
     }
 }

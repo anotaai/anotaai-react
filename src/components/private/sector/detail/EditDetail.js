@@ -40,37 +40,37 @@ class EditDetail extends Component {
     }
 
     update(e) {
+
         e.preventDefault();
+        this.props.showLoading();
+        this.sendButton.setAttribute("disabled", "disabled");
 
-        if (e.target.name === 'remove') {
-            this.remove();
-        } else {
-
-            this.props.showLoading();
-            this.sendButton.setAttribute("disabled", "disabled");
-
-            SectorService.update(this.state).then(response => {
-                Toast.show(response.messages);
-            }).catch(error => {
-                Toast.defaultError();
-            }).then(() => {
-                if (this.sendButton) {
-                    this.sendButton.removeAttribute("disabled");
-                }
-                this.props.hideLoading();
-            });
-        }
-
+        SectorService.update(this.state).then(response => {
+            Toast.show(response.messages);
+        }).catch(error => {
+            Toast.defaultError();
+        }).then(() => {
+            if (this.sendButton) {
+                this.sendButton.removeAttribute("disabled");
+            }
+            this.props.hideLoading();
+        });
     }
 
     remove(e) {
-      e.preventDefault();
-      alert('aaaaaaaa bertos finissimo!');
+        e.preventDefault();
+        alert('aaaaaaaa bertos finissimo!');
     }
 
     render() {
         return (
-            <Detail {...this.state} title="Edição de Setores" customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}  customButtons={<CustomButtons remove={this.remove.bind(this)} />} activeClass={this.activeClass} merge={this.update.bind(this)} handleInputChange={this.handleInputChange.bind(this)} submitRef={el => this.sendButton = el} />
+            <Detail {...this.state}
+                title="Edição de Setores"
+                customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
+                customButtons={<CustomButtons remove={this.remove.bind(this)} />}
+                activeClass={this.activeClass} merge={this.update.bind(this)}
+                handleInputChange={this.handleInputChange.bind(this)}
+                submitRef={el => this.sendButton = el} />
         );
     }
 }

@@ -13,9 +13,7 @@ export default class Filters extends Component {
                         <label htmlFor={this.props.basicId}>{this.props.basicLabel}</label>
                     </div>
                 </div>
-
                 {this.props.customFilters}
-
             </div>);
     }
 } 
