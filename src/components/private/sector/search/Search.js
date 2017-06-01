@@ -88,7 +88,7 @@ class Search extends Component {
                     <PanelHeader icon="business_center" label="Setor" />
                     <div className="panel">
                         <form onSubmit={this.search.bind(this)}>
-                            <Filters basicLabel="Nome" handleInputChange={this.handleInputChange.bind(this)} basicField={this.state.nomeSetor} />
+                            <Filters handleInputChange={this.handleInputChange.bind(this)} basicField={this.state.nome}  basicId="nome" basicLabel="Nome" />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_SECTOR} label="Pesquisar" />
                             <DataList filteredResults={this.state.filteredResults} remove={this.remove.bind(this)}  editUrl={URL.SECTOR} />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount} resultsLength={this.state.filteredResults.length} />
