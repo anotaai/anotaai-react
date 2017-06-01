@@ -26,9 +26,13 @@ class EditDetail extends Component {
     }
 
     componentDidMount() {
+       this.getEntity(this.props.params.id);
+    }
 
+    getEntity(idParam) {
+        
         this.props.showLoading();
-        const id = Base64Service.decode(this.props.params.id);
+        const id = Base64Service.decode(idParam);
         SectorService.findById(id).then(response => {
             if (response.isValid)
                 this.setState(response.entity);

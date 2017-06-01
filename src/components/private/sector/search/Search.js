@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { PanelHeader, PanelFooter } from '../../../panels'
-import DataList from './DataList'
 import SectorService from '../../../../services/sector/SectorService'
 import Toast from '../../../../helpers/Toast'
-import Filters from '../../searchtemplate/Filters'
-import Paginator from '../../searchtemplate/Paginator'
+import Filters from '../../templatesearch/Filters'
+import Paginator from '../../templatesearch/Paginator'
+import DataList from '../../templatesearch/DataList'
 import { PAGE_SIZE, URL } from '../../../../helpers/constants'
 import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
@@ -14,7 +14,7 @@ class Search extends Component {
 
     constructor() {
         super();
-        this.state = { filteredResults: [], offset: 0, pageCount: 0, nomeSetor: '' }
+        this.state = { filteredResults: [], offset: 0, pageCount: 0, nome: '' }
         this.sendButton = null;
     }
 
@@ -29,7 +29,7 @@ class Search extends Component {
 
         this.sendButton.setAttribute("disabled", "disabled");
         this.props.showLoading();
-        SectorService.list(this.state.offset, this.state.nomeSetor).then(response => {
+        SectorService.list(this.state.offset, this.state.nome).then(response => {
             this.setState({ filteredResults: response.list.itens, offset: this.state.offset, pageCount: Math.ceil(response.list.qtdTotalItens / PAGE_SIZE) });
         }).catch(error => {
             Toast.defaultError();
@@ -88,9 +88,9 @@ class Search extends Component {
                     <PanelHeader icon="business_center" label="Setor" />
                     <div className="panel">
                         <form onSubmit={this.search.bind(this)}>
-                            <Filters basicId="nomeSetor" basicLabel="Nome" handleInputChange={this.handleInputChange.bind(this)} basicField={this.state.nomeSetor} />
+                            <Filters basicLabel="Nome" handleInputChange={this.handleInputChange.bind(this)} basicField={this.state.nomeSetor} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_SECTOR} label="Pesquisar" />
-                            <DataList filteredResults={this.state.filteredResults} remove={this.remove.bind(this)} />
+                            <DataList filteredResults={this.state.filteredResults} remove={this.remove.bind(this)}  editUrl={URL.SECTOR} />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount} resultsLength={this.state.filteredResults.length} />
                         </form>
                     </div>
