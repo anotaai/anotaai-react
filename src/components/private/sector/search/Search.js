@@ -5,7 +5,7 @@ import Toast from '../../../../helpers/Toast'
 import Filters from '../../templatesearch/Filters'
 import Paginator from '../../templatesearch/Paginator'
 import DataList from '../../templatesearch/DataList'
-import { PAGE_SIZE, URL } from '../../../../helpers/constants'
+import { PAGE_SIZE, URL, defaultFilters } from '../../../../helpers/constants'
 import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { getObjectNewState, createInstance } from '../../../../helpers/jsonHelper'
@@ -16,6 +16,7 @@ class Search extends Component {
         super();
         this.state = { filteredResults: [], offset: 0, pageCount: 0, nome: '' }
         this.sendButton = null;
+        this.filters = defaultFilters;
     }
 
     componentDidMount() {
@@ -88,9 +89,9 @@ class Search extends Component {
                     <PanelHeader icon="business_center" label="Setor" />
                     <div className="panel">
                         <form onSubmit={this.search.bind(this)}>
-                            <Filters handleInputChange={this.handleInputChange.bind(this)} basicField={this.state.nome}  basicId="nome" basicLabel="Nome" />
+                            <Filters handleInputChange={this.handleInputChange.bind(this)} basicField={this.state.nome} filters={this.filters} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_SECTOR} label="Pesquisar" />
-                            <DataList filteredResults={this.state.filteredResults} remove={this.remove.bind(this)}  editUrl={URL.SECTOR} />
+                            <DataList filteredResults={this.state.filteredResults} remove={this.remove.bind(this)} editUrl={URL.SECTOR} />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount} resultsLength={this.state.filteredResults.length} />
                         </form>
                     </div>

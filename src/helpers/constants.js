@@ -31,4 +31,9 @@ export const customModalStyles = {
         transform: 'translate(-50%, -50%)'
       }
 }
+
+
+export const defaultFilters = (
+  [{id: 'nome', label: 'Nome'}]
+)
  

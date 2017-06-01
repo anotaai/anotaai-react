@@ -6,14 +6,15 @@ export default class Filters extends Component {
 
         return (
             <div className="container">
-
-                <div className="row">
-                    <div className="input-field col s12 m12 l12">
-                        <input id={this.props.basicId} type="text" value={this.props.basicField} onChange={this.props.handleInputChange.bind(this)} name={this.props.basicId} />
-                        <label htmlFor={this.props.basicLabel}>{this.props.basicLabel}</label>
-                    </div>
-                </div>
-                {this.props.customFilters}
+                {this.props.filters.map(filterObj => {
+                  return (  
+                    <div className="row">
+                        <div className="input-field col s12 m12 l12">
+                            <input id={filterObj.id} type="text" value={filterObj.basicField} onChange={this.props.handleInputChange.bind(this)} name={filterObj.id} />
+                            <label htmlFor={filterObj.id}>{filterObj.label}</label>
+                        </div>
+                    </div>)
+                })}
             </div>);
     }
 } 
