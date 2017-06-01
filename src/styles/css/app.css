@@ -204,3 +204,13 @@ footer {
 .buttons-space {
    margin-left: 5px;
 }
+
+.anotaai-appear {
+  opacity: 0.01;
+}
+
+.anotaai-appear.anotaai-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
