@@ -37,8 +37,10 @@ class Profile extends Component {
                             <div className="col col s4 m4 l4">
                                 <CSSTransitionGroup
                                     transitionName="anotaai"
-                                    transitionAppear={true}
-                                    transitionAppearTimeout={500}>
+                                     transitionAppear={true}
+                                     transitionEnter={false}
+                                     transitionLeave={false}
+                                     transitionAppearTimeout={500}>
                                     <img src={this.props.pictureState} className="circle responsive-img profile-image" style={{ cursor: 'pointer' }} title="Settings" alt={this.props.loginState.login.primeiroNome} onClick={push.bind(this, URL.SETTINGS)} />
                                 </CSSTransitionGroup>
                             </div>

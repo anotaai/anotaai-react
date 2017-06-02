@@ -13,6 +13,8 @@ class Picture extends Component {
             <CSSTransitionGroup
                 transitionName="anotaai"
                 transitionAppear={true}
+                transitionEnter={false}
+                transitionLeave={false}
                 transitionAppearTimeout={500}>
                 <div className="col s9 m10 l6">
                     <div className="col s9 m10 l7 offset-s1 offset-m2 offset-l2">

@@ -16,6 +16,8 @@ export default class Register extends Component {
       <CSSTransitionGroup
         transitionName="anotaai"
         transitionAppear={true}
+        transitionEnter={false}
+        transitionLeave={false}
         transitionAppearTimeout={500}>
         <div className="container">
           <div className="section" />
