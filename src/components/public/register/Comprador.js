@@ -54,8 +54,7 @@ class Comprador extends Component {
 
         e.preventDefault();
         const state = checkInvalidPassword(this.state);
-        this.props.showLoading();
-
+       
         if (state !== undefined) {
             this.setState(state);
         } else {
@@ -72,7 +71,6 @@ class Comprador extends Component {
                 if(this.sendButton !== undefined) {
                    this.sendButton.removeAttribute("disabled");
                 }
-                this.props.hideLoading();
             });
         }
 

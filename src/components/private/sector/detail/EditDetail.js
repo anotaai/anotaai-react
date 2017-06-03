@@ -30,8 +30,7 @@ class EditDetail extends Component {
     }
 
     getEntity(idParam) {
-        
-        this.props.showLoading();
+    
         const id = Base64Service.decode(idParam);
         SectorService.findById(id).then(response => {
             if (response.isValid)
@@ -40,15 +39,13 @@ class EditDetail extends Component {
                 Toast.show(response.messages);
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            this.props.hideLoading();
         });
     }
 
     update(e) {
 
         e.preventDefault();
-        this.props.showLoading();
+      
         this.sendButton.setAttribute("disabled", "disabled");
 
         SectorService.update(this.state).then(response => {
@@ -59,7 +56,6 @@ class EditDetail extends Component {
             if (this.sendButton) {
                 this.sendButton.removeAttribute("disabled");
             }
-            this.props.hideLoading();
         });
     }
 
@@ -68,7 +64,7 @@ class EditDetail extends Component {
 
         if (confirm('Confirma a exclusão do setor?')) {
 
-            this.props.showLoading();
+
             SectorService.remove(this.state.id).then(response => {
                 if (response.isValid) {
                     Toast.show(response.messages);
@@ -76,8 +72,6 @@ class EditDetail extends Component {
                 }
             }).catch(error => {
                 Toast.defaultError();
-            }).then(() => {
-                this.props.hideLoading();
             });
         }
     }

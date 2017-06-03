@@ -79,8 +79,7 @@ import { connect } from 'react-redux'
         if (invalideState !== undefined) {
             this.setState(invalideState);
         } else {
-            
-            this.props.showLoading();
+    
             this.sendButton.setAttribute('disabled','disabled');
             ClientService.save(this.state.cliente, this.state.usuario, this.state.telefone).then(response => {
                  Toast.show(response.messages);
@@ -94,7 +93,6 @@ import { connect } from 'react-redux'
                 if(this.sendButton !== undefined) {
                   this.sendButton.removeAttribute('disabled');
                 }  
-                 this.props.hideLoading();
             });
         }
 
@@ -116,7 +114,6 @@ import { connect } from 'react-redux'
         this.handleInputChange(e);
 
         if (finalizouCep === -1 && cepReplace !== '') {
-            this.props.showLoading();
             AddressService.findCep(cepReplace).then(enderecoRecuperado => {
 
                 if (enderecoRecuperado.logradouro == null) {
@@ -132,8 +129,6 @@ import { connect } from 'react-redux'
                 }
             }).catch(error => {
                 Toast.defaultError();
-            }).then(() => {
-                 this.props.hideLoading();
             });
 
         } else {

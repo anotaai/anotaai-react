@@ -17,14 +17,12 @@ class Profile extends Component {
 
     logout(e) {
         e.preventDefault();
-        this.props.showLoading();
+
         UserService.logout(this.props.loginState).then(response => {
             $('.button-collapse').sideNav('hide');
             this.props.logout();
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            this.props.hideLoading();
         });
     }
     

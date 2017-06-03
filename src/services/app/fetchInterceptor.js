@@ -4,11 +4,13 @@ import { COOKIE_USER } from '../../helpers/constants';
 import Toast from '../../helpers/Toast';
 import { Icon } from '../../domain/Icon'
 import UserService from '../../services/UserService'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 export default function registerFetchInterceptor(store) {
 
     fetchIntercept.register({
         request(url, config) {
+            store.dispatch(showLoading());
             const cookies = new Cookies();
             const cookieLoginState = cookies.get(COOKIE_USER);
             if(cookieLoginState != null) {
@@ -29,6 +31,7 @@ export default function registerFetchInterceptor(store) {
         },
 
         response(response) {
+            store.dispatch(hideLoading());
             switch (response.status) {
                 case 200:
                     //response = response.json()

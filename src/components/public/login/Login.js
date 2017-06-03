@@ -31,7 +31,7 @@ class Login extends Component {
   login(e) {
     e.preventDefault();
     this.refs.loginBtn.setAttribute("disabled", "disabled");
-    this.props.showLoading();
+   
     UserService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
       if (response.isValid) {
         this.props.login(response.login);
@@ -46,7 +46,6 @@ class Login extends Component {
         this.refs.loginBtn.removeAttribute("disabled");
         this.clearPassword();
       }
-      this.props.hideLoading();
     });
   }
 

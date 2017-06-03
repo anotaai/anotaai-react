@@ -28,7 +28,6 @@ class EditDetail extends Component {
     }
 
     getEntity(idParam) {
-        this.props.showLoading();
         const id = Base64Service.decode(idParam);
         GroupProductService.findById(id).then(response => {
             if (response.isValid)
@@ -37,15 +36,13 @@ class EditDetail extends Component {
                 Toast.show(response.messages);
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            this.props.hideLoading();
         });
     }
 
     update(e) {
 
         e.preventDefault();
-        this.props.showLoading();
+       
         this.sendButton.setAttribute("disabled", "disabled");
 
         GroupProductService.update(this.state).then(response => {
@@ -56,7 +53,6 @@ class EditDetail extends Component {
             if (this.sendButton) {
                 this.sendButton.removeAttribute("disabled");
             }
-            this.props.hideLoading();
         });
     }
 
@@ -65,7 +61,6 @@ class EditDetail extends Component {
 
         if (confirm('Confirma a exclusão do grupo de produto?')) {
 
-            this.props.showLoading();
             GroupProductService.remove(this.state.id).then(response => {
                 if (response.isValid) {
                     Toast.show(response.messages);
@@ -73,8 +68,6 @@ class EditDetail extends Component {
                 }
             }).catch(error => {
                 Toast.defaultError();
-            }).then(() => {
-                this.props.hideLoading();
             });
         }
     }

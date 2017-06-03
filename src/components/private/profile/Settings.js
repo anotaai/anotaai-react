@@ -16,7 +16,7 @@ class Settings extends Component {
             Toast.show('formatos.permitidos.warning', Icon.WARNING);
         } else {
             const picture = file[0];
-            this.props.showLoading();
+        
             ProfileService.upload(picture).then(response => {
                 if(response.isValid) {
                     Toast.show('sucesso.upload', Icon.DONE);
@@ -25,8 +25,6 @@ class Settings extends Component {
                 }
             }).catch(error => {
                 Toast.defaultError();
-            }).then(response => {
-                this.props.hideLoading();
             });
         }
     }

@@ -29,7 +29,7 @@ class Search extends Component {
             e.preventDefault();
 
         this.sendButton.setAttribute("disabled", "disabled");
-        this.props.showLoading();
+       
         SectorService.list(this.state.offset, this.state.nome).then(response => {
             this.setState({ filteredResults: response.list.itens, offset: this.state.offset, pageCount: Math.ceil(response.list.qtdTotalItens / PAGE_SIZE) });
         }).catch(error => {
@@ -38,7 +38,7 @@ class Search extends Component {
             if (this.sendButton !== undefined) {
                 this.sendButton.removeAttribute("disabled");
             }
-            this.props.hideLoading();
+           
         });
     }
 
@@ -64,7 +64,6 @@ class Search extends Component {
 
         if (confirm('Confirma a exclusão do setor?')) {
 
-            this.props.showLoading();
             SectorService.remove(id).then(response => {
                 if (response.isValid) {
                     Toast.show(response.messages);
@@ -75,8 +74,6 @@ class Search extends Component {
                 }
             }).catch(error => {
                 Toast.defaultError();
-            }).then(() => {
-                this.props.hideLoading();
             });
         }
     }

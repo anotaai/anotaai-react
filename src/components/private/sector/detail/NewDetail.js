@@ -25,7 +25,7 @@ class NewDetail extends Component {
 
     save(e) {
         e.preventDefault();
-        this.props.showLoading();
+    
         this.sendButton.setAttribute("disabled", "disabled");
 
         SectorService.save(this.state).then(response => {
@@ -42,7 +42,7 @@ class NewDetail extends Component {
             if (this.sendButton) {
                 this.sendButton.removeAttribute("disabled");
             }
-            this.props.hideLoading();
+           
         });
 
     }
