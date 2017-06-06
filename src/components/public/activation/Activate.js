@@ -33,7 +33,7 @@ export default class Activate extends Component {
                 <div className="space-container">
                     <div className="container">
                         <h4>
-                            <div className="SUCCESS"><i className="medium material-icons left" style={{ position: 'relative', top: '-12px' }}>done</i> Ativação efetuada com sucesso, você já pode efetuar o login: <Link to={URL.LOGIN} style={{ color: '#3f51b5' }} >Login</Link> </div>
+                            <div><i className="medium material-icons left" style={{ position: 'relative', top: '-12px' }}>done</i> Ativação efetuada com sucesso, você já pode efetuar o login: <Link to={URL.LOGIN} style={{ color: '#3f51b5' }} >Login</Link> </div>
                         </h4>
                     </div>
                 </div>
