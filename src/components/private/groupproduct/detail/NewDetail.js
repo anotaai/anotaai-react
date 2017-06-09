@@ -1,46 +1,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import Detail, { stateJsonDetail } from './Detail'
+import Detail from './Detail'
 import Toast from '../../../../helpers/Toast'
 import Base64Service from '../../../../services/app/Base64Service'
 import { browserHistory } from 'react-router'
-import { getObjectNewState } from '../../../../helpers/jsonHelper'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
+import { clearForm , handleInputChange } from '../../../../actions/groupProductActionCreator'
 
 class NewDetail extends Component {
 
     constructor() {
         super();
-        this.state = stateJsonDetail();
+        this.sendButton = null;    
     }
 
-
-    handleInputChange(e) {
-        const newState = getObjectNewState(e.target.name, e.target.value, this.state);
-        this.setState(newState);
+    componentWillUnmount() {
+        this.props.clearForm();
     }
-
 
     save(e) {
         e.preventDefault();
        
         this.sendButton.setAttribute("disabled", "disabled");
 
-        GroupProductService.save(this.state).then(response => {
+        GroupProductService.save(this.props.detailState).then(response => {
+            Toast.show(response.messages);
             if (response.isValid) {
-                Toast.show(response.messages);
                 const id = Base64Service.encode(response.entity.id.toString());
                 browserHistory.push(`${URL.SECTOR}/${id}`);
-            } else {
-                Toast.show(response.messages);
-            }
+            } 
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            if (this.sendButton) {
-                this.sendButton.removeAttribute("disabled");
-            }
+            this.sendButton.removeAttribute("disabled");
         });
 
     }
@@ -50,24 +41,27 @@ class NewDetail extends Component {
             <Detail title="Cadastro de Grupo de Produtos"
                 merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el} 
-                handleInputChange={this.handleInputChange.bind(this)} />
+                handleInputChange={this.props.handleInputChange}/>
         )
     }
 
 }
 
+const mapStateToProps = state => {
+     return { detailState: state.detailGroupProduct }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        showLoading: () => {
-            dispatch(showLoading());
+        handleInputChange: (e) => {
+            dispatch(handleInputChange(e.target.name,e.target.value));
         },
-
-        hideLoading: () => {
-            dispatch(hideLoading());
+        clearForm: () => {
+            dispatch(clearForm());
         }
     }
 }
 
-const NewGroupProductDetailContainer = connect(null, mapDispatchToProps)(NewDetail);
+const NewGroupProductDetailContainer = connect(mapStateToProps,mapDispatchToProps)(NewDetail);
 
 export default NewGroupProductDetailContainer;

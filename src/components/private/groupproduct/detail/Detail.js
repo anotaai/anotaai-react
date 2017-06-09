@@ -2,20 +2,10 @@ import React , { Component } from 'react'
 import { PanelHeader, PanelFooterDetail } from '../../../panels'
 import { URL } from '../../../../helpers/constants'
 
-export function stateJsonDetail() {
-    return {
-        id: '',
-        nome: '',
-        descricao: '',
-        setor: ''
-     }
-}
-
-
 export default class Detail extends Component {
+    
 
     render() {
-        
         return (
             <div className="space-container">
                 <div className="container">
@@ -25,13 +15,13 @@ export default class Detail extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="nome" ref="nome" value={this.props.nome} name="nome" required onChange={this.props.handleInputChange.bind(this)} type="text" />
+                                        <input id="nome" ref="nome" value={this.props.nome} name="nome" required onChange={this.props.handleInputChange} type="text" />
                                         <label htmlFor="nome" className={this.props.activeClass === 'S' && this.props.nome != null ? 'active' : ''}>Nome</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="descricao" type="text" required value={this.props.descricao} name="descricao" onChange={this.props.handleInputChange.bind(this)} />
+                                        <input id="descricao" type="text" required value={this.props.descricao} name="descricao" onChange={this.props.handleInputChange} />
                                         <label htmlFor="descricao" className={this.props.activeClass === 'S' && this.props.descricao != null ? 'active' : ''} >Descrição</label>
                                     </div>
                                 </div>

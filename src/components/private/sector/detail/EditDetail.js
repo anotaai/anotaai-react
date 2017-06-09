@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import Base64Service from '../../../../services/app/Base64Service'
-import { getObjectNewState } from '../../../../helpers/jsonHelper'
 import SectorService from '../../../../services/sector/SectorService'
 import Toast from '../../../../helpers/Toast'
 import { browserHistory } from 'react-router'
-import Detail, { stateJsonDetail } from './Detail'
+import Detail from './Detail'
 import { CustomButtons, CustomResponsiveButtons } from './customButtons'
 import { URL } from '../../../../helpers/constants'
+import { clearForm , handleInputChange, updateState } from '../../../../actions/sectorActionCreator'
 
 
 class EditDetail extends Component {
@@ -17,29 +16,14 @@ class EditDetail extends Component {
         super(props);
         this.sendButton = null;
         this.activeClass = 'S';
-        this.state = stateJsonDetail();
     }
 
-    handleInputChange(e) {
-        const newState = getObjectNewState(e.target.name, e.target.value, this.state);
-        this.setState(newState);
+    componentWillUnmount() {
+      this.props.clearForm();
     }
 
     componentDidMount() {
-       this.getEntity(this.props.params.id);
-    }
-
-    getEntity(idParam) {
-    
-        const id = Base64Service.decode(idParam);
-        SectorService.findById(id).then(response => {
-            if (response.isValid)
-                this.setState(response.entity);
-            else
-                Toast.show(response.messages);
-        }).catch(error => {
-            Toast.defaultError();
-        });
+       this.props.findById(Base64Service.decode(this.props.params.id));
     }
 
     update(e) {
@@ -48,14 +32,12 @@ class EditDetail extends Component {
       
         this.sendButton.setAttribute("disabled", "disabled");
 
-        SectorService.update(this.state).then(response => {
+        SectorService.update(this.props.detailState).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
             Toast.defaultError();
         }).then(() => {
-            if (this.sendButton) {
-                this.sendButton.removeAttribute("disabled");
-            }
+            this.sendButton.removeAttribute("disabled");  
         });
     }
 
@@ -64,11 +46,10 @@ class EditDetail extends Component {
 
         if (confirm('Confirma a exclusão do setor?')) {
 
-
-            SectorService.remove(this.state.id).then(response => {
+            SectorService.remove(this.props.detailState.id).then(response => {
+                Toast.show(response.messages);
                 if (response.isValid) {
-                    Toast.show(response.messages);
-                    browserHistory.push(URL.SECTOR);
+                  browserHistory.push(URL.SECTOR);
                 }
             }).catch(error => {
                 Toast.defaultError();
@@ -78,30 +59,35 @@ class EditDetail extends Component {
 
     render() {
         return (
-            <Detail {...this.state}
+            <Detail {...this.props.detailState}
                 title="Edição de Setores"
                 customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
                 customButtons={<CustomButtons remove={this.remove.bind(this)} />}
                 activeClass={this.activeClass} merge={this.update.bind(this)}
-                handleInputChange={this.handleInputChange.bind(this)}
+                handleInputChange={this.props.handleInputChange}
                 submitRef={el => this.sendButton = el} />
         );
     }
 }
 
+const mapStateToProps = state => {
+     return { detailState: state.detailSector }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        showLoading: () => {
-            dispatch(showLoading());
+        handleInputChange: (e) => {
+            dispatch(handleInputChange(e.target.name,e.target.value));
         },
-        hideLoading: () => {
-            dispatch(hideLoading());
+        clearForm: () => {
+            dispatch(clearForm());
+        },
+        findById: (id) => {
+            dispatch(SectorService.findById(id,updateState));
         }
     }
 }
 
-
-
-const EditSectorContainer = connect(null, mapDispatchToProps)(EditDetail);
+const EditSectorContainer = connect(mapStateToProps, mapDispatchToProps)(EditDetail);
 
 export default EditSectorContainer;

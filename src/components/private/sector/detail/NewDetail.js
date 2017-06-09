@@ -1,76 +1,69 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { URL } from '../../../../helpers/constants'
 import { browserHistory } from 'react-router'
 import SectorService from '../../../../services/sector/SectorService'
 import Base64Service from '../../../../services/app/Base64Service'
 import Toast from '../../../../helpers/Toast'
-import Detail, { stateJsonDetail } from './Detail'
-import { getObjectNewState } from '../../../../helpers/jsonHelper'
+import Detail from './Detail'
+import { clearForm , handleInputChange } from '../../../../actions/sectorActionCreator'
 
 class NewDetail extends Component {
 
     constructor() {
         super();
         this.sendButton = null;
-        this.state = stateJsonDetail();
     }
 
-    handleInputChange(e) {
-        const newState = getObjectNewState(e.target.name, e.target.value, this.state);
-        this.setState(newState);
+    componentWillUnmount() {
+        this.props.clearForm();
     }
-
 
     save(e) {
+       
         e.preventDefault();
     
         this.sendButton.setAttribute("disabled", "disabled");
 
-        SectorService.save(this.state).then(response => {
+        SectorService.save(this.props.detailState).then(response => {
+            Toast.show(response.messages);
             if (response.isValid) {
-                Toast.show(response.messages);
                 const id = Base64Service.encode(response.entity.id.toString());
                 browserHistory.push(`${URL.SECTOR}/${id}`);
-            } else {
-                Toast.show(response.messages);
             }
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            if (this.sendButton) {
-                this.sendButton.removeAttribute("disabled");
-            }
-           
+            this.sendButton.removeAttribute("disabled");
         });
 
     }
 
     render() {
         return (
-            <Detail {...this.state} 
+            <Detail {...this.props.detailState} 
                title="Cadastro de Setores" 
                merge={this.save.bind(this)} 
-               handleInputChange={this.handleInputChange.bind(this)}  
+               handleInputChange={this.props.handleInputChange}  
                submitRef={el => this.sendButton = el} />
         );
     }
 }
 
+const mapStateToProps = state => {
+     return { detailState: state.detailSector }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        showLoading: () => {
-            dispatch(showLoading());
+        handleInputChange: (e) => {
+            dispatch(handleInputChange(e.target.name,e.target.value));
         },
-        hideLoading: () => {
-            dispatch(hideLoading());
+        clearForm: () => {
+            dispatch(clearForm());
         }
     }
 }
 
-
-
-const NewSectorContainer = connect(null,mapDispatchToProps)(NewDetail);
+const NewSectorContainer = connect(mapStateToProps,mapDispatchToProps)(NewDetail);
 
 export default NewSectorContainer;

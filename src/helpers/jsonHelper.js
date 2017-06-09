@@ -5,9 +5,27 @@ export function getObjectNewState(name, value, currentState) {
 }
 
 export function createInstance(currentState) {
-  return Object.assign({}, currentState);
+    return Object.assign({}, currentState);
 }
 
+export var clearAllPropertiesObject = (objToClear) => {
+    Object.keys(objToClear).forEach((param) => {
+        if ( (objToClear[param]).toString() === "[object Object]" ) {
+            clearAllPropertiesObject(objToClear[param]);
+        } else {
+             if (Array.isArray(objToClear[param])) {
+                  objToClear[param] = [];
+             } else if(Number.isInteger(objToClear[param])) {
+                  objToClear[param] = 0;
+             }  else if(typeof objToClear[param] === 'boolean') {
+                  objToClear[param] = false;
+             } else {
+                  objToClear[param] = '';
+             }
+        }
+    })
+    return objToClear;
+}
 
 function setData(key, val, obj) {
 

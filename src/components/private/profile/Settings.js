@@ -10,6 +10,7 @@ import { PanelHeader } from '../../panels'
 
 
 class Settings extends Component {
+    
 
     handleDrop(file, rejected) {
         if (rejected.length > 0) {
@@ -20,7 +21,6 @@ class Settings extends Component {
             ProfileService.upload(picture).then(response => {
                 if(response.isValid) {
                     Toast.show('sucesso.upload', Icon.DONE);
-                    this.setState({ picture });
                     this.props.updatePicture(picture.preview);
                 }
             }).catch(error => {

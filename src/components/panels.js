@@ -44,9 +44,6 @@ export function PanelFooterDetail(props) {
                 
                 {props.customButtons}
 
-                <button className="btn waves-effect buttons-space WARNING" onClick={push.bind(this, props.searchUrl)}>
-                    Pesquisar <i className="material-icons right">search</i>
-                </button>
                 <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">
                     Gravar <i className="material-icons right">send</i>
                 </button>
@@ -62,16 +59,6 @@ export function PanelFooterDetail(props) {
                     <ul>
                         {props.customResponsiveButtons}
                         
-                        <li>
-                            <div className="row">
-                                <div className="col col s2 offset-s8">
-                                    <span className="new badge badge-responsive-align  WARNING">Pesquisar</span>
-                                </div>
-                                <div className="col col s2">
-                                    <button className="btn-floating WARNING" formNoValidate onClick={push.bind(this, props.searchUrl)}><i className="material-icons">search</i></button>
-                                </div>
-                            </div>
-                        </li>
                         <li>
                             <div className="row">
                                 <div className="col col s2 offset-s8">

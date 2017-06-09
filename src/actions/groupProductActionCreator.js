@@ -1,0 +1,13 @@
+export const CLEAR_FORM_GROUP_PRODUCT = 'clear_form_group_product', HANDLE_INPUT_CHANGE_GROUP_PRODUCT = 'handle_input_change_group_product', UPDATE_STATE_GROUP_PRODUCT = 'update_state_group_product'
+
+export function clearForm() {
+    return { type: CLEAR_FORM_GROUP_PRODUCT }
+}
+
+export function handleInputChange(name, value) {
+    return { type: HANDLE_INPUT_CHANGE_GROUP_PRODUCT, name, value }
+}
+
+export function updateState(entity) {
+    return { type: UPDATE_STATE_GROUP_PRODUCT, entity }
+}

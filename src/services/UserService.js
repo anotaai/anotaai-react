@@ -1,6 +1,9 @@
 import { buildPhone } from '../helpers/stringHelper'
 import { createInstance } from '../helpers/jsonHelper'
+import Toast from '../helpers/Toast'
+import { USE_CASE } from '../helpers/constants'
 import { authUser, unauthUser } from '../actions/authActionCreator'
+import { updateUser } from '../actions/userActionCreator'
 import { browserHistory } from 'react-router'
 import { URL } from '../helpers/constants'
 import Base64Service from './app/Base64Service'
@@ -11,16 +14,21 @@ export default class UserService {
 
 
     static getUser(activationCode) {
+        return dispatch => {
 
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/recuperarUsuarioAlteracaoSenha`, {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json' },
-            body: activationCode
-        }).then(response => {
-            return response.json();
-        }).catch(error => {
-            throw Error(error);
-        })
+            fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/recuperarUsuarioAlteracaoSenha`, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: activationCode
+            }).then(response => {
+                return response.json();
+            }).then(json => {
+                return dispatch(updateUser(USE_CASE.RENEW,json.entity,activationCode));
+            }).catch(error => {
+                Toast.defaultError();
+            })
+        }
+
     }
 
     static changePassword(user) {
@@ -42,10 +50,10 @@ export default class UserService {
         const newUserInstance = createInstance(user);
         newUserInstance.telefone = buildPhone(telefone);
 
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/solicitarMensagemAlteracaoSenha`,{
-                method: 'POST',
-                body: JSON.stringify(newUserInstance),
-                headers: { 'Content-type': 'application/json' }
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/solicitarMensagemAlteracaoSenha`, {
+            method: 'POST',
+            body: JSON.stringify(newUserInstance),
+            headers: { 'Content-type': 'application/json' }
         }).then(response => {
             return response.json();
         }).catch(error => {
@@ -160,20 +168,21 @@ export default class UserService {
         });
     }
 
-    static findUsuarioByPhone(telefoneStr,endpoint) {
+    static findUsuarioByPhone(telefoneStr, endpoint) {
 
-        const telefone = buildPhone(telefoneStr); 
+        const telefone = buildPhone(telefoneStr);
 
-        return  fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/${endpoint}/findby/telefone`, {
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/${endpoint}/findby/telefone`, {
             method: 'POST',
             body: JSON.stringify(telefone),
             headers: new Headers({
-                'Content-type': 'application/json'})
-           }).then(response => {
-             return response.json();
-          }).catch(error => {
-             throw Error(error);
-          })
+                'Content-type': 'application/json'
+            })
+        }).then(response => {
+            return response.json();
+        }).catch(error => {
+            throw Error(error);
+        })
     }
 
 }

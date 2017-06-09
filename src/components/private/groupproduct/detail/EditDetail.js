@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Toast from '../../../../helpers/Toast'
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import Detail, { stateJsonDetail } from './Detail'
+import Detail from './Detail'
 import Base64Service from '../../../../services/app/Base64Service'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
-import { getObjectNewState } from '../../../../helpers/jsonHelper'
 import { CustomButtons, CustomResponsiveButtons } from '../../templatedetail/customButtons'
+import { clearForm, handleInputChange, updateState } from '../../../../actions/groupProductActionCreator'
 import { browserHistory } from 'react-router'
 
 class EditDetail extends Component {
@@ -15,55 +14,40 @@ class EditDetail extends Component {
         super(props);
         this.sendButton = null;
         this.activeClass = 'S';
-        this.state = stateJsonDetail();
     }
 
-    handleInputChange(e) {
-        const newState = getObjectNewState(e.target.name, e.target.value, this.state);
-        this.setState(newState);
+    componentWillUnmount() {
+        this.props.clearForm();
     }
 
     componentDidMount() {
-        this.getEntity(this.props.params.id);
-    }
-
-    getEntity(idParam) {
-        const id = Base64Service.decode(idParam);
-        GroupProductService.findById(id).then(response => {
-            if (response.isValid)
-                this.setState(response.entity);
-            else
-                Toast.show(response.messages);
-        }).catch(error => {
-            Toast.defaultError();
-        });
+        this.props.findById(Base64Service.decode(this.props.params.id));
     }
 
     update(e) {
 
         e.preventDefault();
-       
+
         this.sendButton.setAttribute("disabled", "disabled");
 
-        GroupProductService.update(this.state).then(response => {
+        GroupProductService.update(this.props.detailState).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
             Toast.defaultError();
         }).then(() => {
-            if (this.sendButton) {
-                this.sendButton.removeAttribute("disabled");
-            }
+            this.sendButton.removeAttribute("disabled");
         });
     }
+
 
     remove(e) {
         e.preventDefault();
 
         if (confirm('Confirma a exclusão do grupo de produto?')) {
 
-            GroupProductService.remove(this.state.id).then(response => {
+            GroupProductService.remove(this.props.detailState.id).then(response => {
+                Toast.show(response.messages);
                 if (response.isValid) {
-                    Toast.show(response.messages);
                     browserHistory.push(URL.SECTOR);
                 }
             }).catch(error => {
@@ -75,32 +59,37 @@ class EditDetail extends Component {
 
     render() {
         return (
-            <Detail {...this.state} 
+            <Detail {...this.props.detailState}
                 title="Edição de Grupos de Produtos"
                 merge={this.update.bind(this)}
-                handleInputChange={this.handleInputChange.bind(this)}
-                activeClass={this.activeClass} 
-                submitRef={el => this.sendButton = el} 
+                handleInputChange={this.props.handleInputChange}
+                activeClass={this.activeClass}
+                submitRef={el => this.sendButton = el}
                 customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
-                customButtons={<CustomButtons remove={this.remove.bind(this)}  />} />
+                customButtons={<CustomButtons remove={this.remove.bind(this)} />} />
         )
     }
 
 }
 
+const mapStateToProps = state => {
+    return { detailState: state.detailGroupProduct }
+}
 
 const mapDispatchToProps = dispatch => {
     return {
-        showLoading: () => {
-            dispatch(showLoading());
+        handleInputChange: (e) => {
+            dispatch(handleInputChange(e.target.name, e.target.value));
         },
-
-        hideLoading: () => {
-            dispatch(hideLoading());
+        clearForm: () => {
+            dispatch(clearForm());
+        },
+        findById: (id) => {
+            dispatch(GroupProductService.findById(id, updateState));
         }
     }
 }
 
-const EditGroupProductDetailContainer = connect(null, mapDispatchToProps)(EditDetail);
+const EditGroupProductDetailContainer = connect(mapStateToProps, mapDispatchToProps)(EditDetail);
 
 export default EditGroupProductDetailContainer;

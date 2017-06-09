@@ -1,38 +1,34 @@
 import React, { Component } from 'react'
-import ModalRenewPassword from './ModalRenewPassword'
+import ModalRenewPasswordContainer from './ModalRenewPassword'
 import UserService from '../../../services/UserService'
-import { getObjectNewState } from '../../../helpers/jsonHelper'
+import { USE_CASE } from '../../../helpers/constants'
+import { handleInputChange, clearForm, clearPassword, showModal, hideModal } from '../../../actions/userActionCreator'
 import Toast from '../../../helpers/Toast'
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { connect } from 'react-redux'
 import RadioUser from './RadioUser'
 
 class Login extends Component {
 
-  constructor() {
-    super();
-    this.state = { showModal: false, userLogin: { usuario: { email: '', telefone: '', senha: '' }, tipoAcesso: '' } };
+
+  componentWillUnmount() {
+    this.props.clearForm();
   }
 
   showModal(e) {
     e.preventDefault();
-    this.setState({ showModal: true });
+    this.props.showModal();
   }
 
   hideModal() {
-    this.setState({ showModal: false });
+    this.props.hideModal();
   }
 
-  handleInputChange(e) {
-    const newState = getObjectNewState(e.target.name, e.target.value, this.state);
-    this.setState(newState);
-  }
 
   login(e) {
     e.preventDefault();
+
     this.refs.loginBtn.setAttribute("disabled", "disabled");
-   
-    UserService.login(this.state.userLogin, this.keepAlive.checked).then(response => {
+    UserService.login(this.props.loginState.userLogin, this.keepAlive.checked).then(response => {
       if (response.isValid) {
         this.props.login(response.login);
       } else {
@@ -50,27 +46,26 @@ class Login extends Component {
   }
 
   clearPassword() {
-    this.refs.senha.value = '';
     this.refs.senha.focus();
+    this.props.clearPassword();
   }
 
   render() {
 
     return (
-      <main className="space-container"> 
+      <main className="space-container">
         <center>
           <div className="hide-on-small-only">
             <div className="section" />
           </div>
-        
           <h5 className="indigo-text">Login</h5>
           <div className="container">
             <div className="row panel" style={{ display: 'inline-block' }}>
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
-                <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin" handleInputChange={this.handleInputChange.bind(this)} />
+                <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin" handleInputChange={this.props.handleInputChange} />
                 <div className='row'>
                   <div className='input-field col s12'>
-                    <input ref="senha" id="senha" type='password' name='userLogin.usuario.senha' value={this.state.userLogin.usuario.senha} placeholder="Senha" required onChange={this.handleInputChange.bind(this)} />
+                    <input ref="senha" id="senha" type='password' name='userLogin.usuario.senha' value={this.props.loginState.userLogin.usuario.senha} placeholder="Senha" required onChange={this.props.handleInputChange} />
                   </div>
                 </div>
                 <div className='row'>
@@ -93,7 +88,7 @@ class Login extends Component {
             </div>
           </div>
         </center>
-        <ModalRenewPassword showModal={this.state.showModal} callbackHideModal={this.hideModal.bind(this)} />
+        <ModalRenewPasswordContainer showModal={this.props.loginState.showModal} callbackHideModal={this.hideModal.bind(this)} />
       </main>
 
     );
@@ -101,24 +96,34 @@ class Login extends Component {
   }
 }
 
- 
+
+const mapStateToProps = state => {
+  return { loginState: state.login }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
-    showLoading:() => {
-      dispatch(showLoading());
+    handleInputChange: (e) => {
+      dispatch(handleInputChange(USE_CASE.LOGIN, e.target.name, e.target.value));
     },
-    hideLoading:() => {
-      dispatch(hideLoading());
+    clearForm: () => {
+      dispatch(clearForm(USE_CASE.LOGIN));
     },
-    login:(login) => {
+    clearPassword: () => {
+      dispatch(clearPassword(USE_CASE.LOGIN));
+    },
+    showModal: () => {
+      dispatch(showModal(USE_CASE.LOGIN));
+    },
+    hideModal: () => {
+      dispatch(hideModal(USE_CASE.LOGIN));
+    },
+    login: (login) => {
       dispatch(UserService.dispatchLogin(login));
     }
   }
-} 
+}
 
-const LoginContainer = connect(null,mapDispatchToProps)(Login);
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default LoginContainer;
-
-
-

@@ -4,23 +4,28 @@ import SectorService from '../../../../services/sector/SectorService'
 import Toast from '../../../../helpers/Toast'
 import Filters from '../../templatesearch/Filters'
 import Paginator from '../../templatesearch/Paginator'
-import DataList from '../../templatesearch/DataList'
-import { PAGE_SIZE, URL, defaultFilters } from '../../../../helpers/constants'
+import DataList from '../../groupproduct/search/DataList'
+import { URL, defaultFilters, USE_CASE } from '../../../../helpers/constants'
 import { connect } from 'react-redux'
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { getObjectNewState, createInstance } from '../../../../helpers/jsonHelper'
+import { getObjectNewState } from '../../../../helpers/jsonHelper'
+import { clearForm, list, remove } from '../../../../actions/searchActionCreator'
 
 class Search extends Component {
 
     constructor() {
         super();
-        this.state = { filteredResults: [], offset: 0, pageCount: 0, nome: '' }
         this.sendButton = null;
         this.filters = defaultFilters;
+        this.offset = 0;
+        this.state = { nome: '' }
     }
 
     componentDidMount() {
-        this.search();
+      this.search();
+    }
+
+    componentWillUnmount() {
+       this.props.clearForm();
     }
 
     search(e) {
@@ -30,47 +35,38 @@ class Search extends Component {
 
         this.sendButton.setAttribute("disabled", "disabled");
        
-        SectorService.list(this.state.offset, this.state.nome).then(response => {
-            this.setState({ filteredResults: response.list.itens, offset: this.state.offset, pageCount: Math.ceil(response.list.qtdTotalItens / PAGE_SIZE) });
+        SectorService.list(this.offset, this.state.nome).then(response => {
+           this.props.list(response);
         }).catch(error => {
             Toast.defaultError();
         }).then(() => {
             if (this.sendButton !== undefined) {
                 this.sendButton.removeAttribute("disabled");
             }
-           
         });
     }
 
 
     handlePageClick(offset) {
-        const newState = createInstance(this.state);
-        newState.offset = offset;
-        this.setState(newState, () => {
-            this.search();
-        });
+       this.offset = offset;
+       this.search();
     }
 
-
-    handleInputChange(e) {
+    handleInputChange(e)  {
         const newState = getObjectNewState(e.target.name, e.target.value, this.state);
         this.setState(newState);
     }
-
 
     remove(id, e) {
 
         e.preventDefault();
 
         if (confirm('Confirma a exclusão do setor?')) {
-
+          
             SectorService.remove(id).then(response => {
+                Toast.show(response.messages);
                 if (response.isValid) {
-                    Toast.show(response.messages);
-                    const filtered = this.state.filteredResults.filter(item => item.id !== id);
-                    const newState = createInstance(this.state);
-                    newState.filteredResults = filtered;
-                    this.setState(newState);
+                    this.props.remove(id);
                 }
             }).catch(error => {
                 Toast.defaultError();
@@ -86,34 +82,34 @@ class Search extends Component {
                     <PanelHeader icon="business_center" label="Setor" />
                     <div className="panel">
                         <form onSubmit={this.search.bind(this)}>
-                            <Filters handleInputChange={this.handleInputChange.bind(this)} basicField={this.state.nome} filters={this.filters} />
+                            <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_SECTOR} label="Pesquisar" />
-                            <DataList filteredResults={this.state.filteredResults} remove={this.remove.bind(this)} editUrl={URL.SECTOR} />
-                            <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount} resultsLength={this.state.filteredResults.length} />
+                            <DataList filteredResults={this.props.searchState.filteredResults} remove={this.remove.bind(this)} editUrl={URL.SECTOR} />
+                            <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.props.searchState.pageCount} resultsLength={this.props.searchState.filteredResults.length} />
                         </form>
                     </div>
                 </div>
             </div>
         )
     }
-
 }
 
+const mapStateToProps = state => {
+    return { searchState: state.searchSector }
+}
 const mapDispatchToProps = dispatch => {
-
     return {
-
-        showLoading: () => {
-            dispatch(showLoading());
+        list: (filteredResults) => {
+            dispatch(list(USE_CASE.SEARCH_SECTOR,filteredResults));
         },
-
-        hideLoading: () => {
-            dispatch(hideLoading());
+        remove: (id) => {
+            dispatch(remove(USE_CASE.SEARCH_SECTOR,id));
+        },
+        clearForm: () => {
+            dispatch(clearForm(USE_CASE.SEARCH_SECTOR));
         }
     }
-
 }
-
-const SearchSectorContainer = connect(null, mapDispatchToProps)(Search);
+const SearchSectorContainer = connect(mapStateToProps, mapDispatchToProps)(Search);
 
 export default SearchSectorContainer; 

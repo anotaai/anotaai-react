@@ -10,11 +10,11 @@ export default class AuthenticationService {
 
     static setCredentials(login) {
 
-        var telefoneStr = login.usuario.telefone.ddd.toString() + login.usuario.telefone.numero.toString();
+        let telefoneStr = login.usuario.telefone.ddd.toString() + login.usuario.telefone.numero.toString();
 
-        var authdata = Base64Service.encode(login.usuario.email + ':' + login.sessionID + ':' + login.usuario.telefone.ddi.toString() + telefoneStr);
-        var index = login.usuario.nome.indexOf(' ');
-        var primeiroNome = index !== -1 ? login.usuario.nome.substring(0, index) : login.usuario.nome;
+        let authdata = Base64Service.encode(login.usuario.email + ':' + login.sessionID + ':' + login.usuario.telefone.ddi.toString() + telefoneStr);
+        let index = login.usuario.nome.indexOf(' ');
+        let primeiroNome = index !== -1 ? login.usuario.nome.substring(0, index) : login.usuario.nome;
 
         telefoneStr = getPhoneMask(telefoneStr);
         
@@ -26,8 +26,8 @@ export default class AuthenticationService {
          loginState.login.email = login.usuario.email;
          loginState.login.endereco = 'Rua da Paz';
 
-        var d = new Date();
-        var expireDate = new Date();
+        let d = new Date();
+        let expireDate = new Date();
         expireDate.setMinutes(d.getMinutes() + login.sessionTime);
         if (login.keepAlive) {
             expireDate.setFullYear(d.getFullYear() + 1);

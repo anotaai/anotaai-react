@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { pushEncoded } from '../../App'
+import { pushEncoded } from '../../../App'
 
 export default class DataList extends Component {
  

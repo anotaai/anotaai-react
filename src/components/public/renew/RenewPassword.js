@@ -1,104 +1,124 @@
 import React, { Component } from 'react'
-import { getObjectNewState } from '../../../helpers/jsonHelper'
 import UserService from '../../../services/UserService'
 import { browserHistory } from 'react-router'
-import { URL } from '../../../helpers/constants'
+import { URL, USE_CASE } from '../../../helpers/constants'
 import Toast from '../../../helpers/Toast'
 import { Icon } from '../../../domain/Icon'
+import { connect } from 'react-redux'
+import { handleInputChange, clearForm, clearPassword } from '../../../actions/userActionCreator'
 
-export default class RenewPassword extends Component {
+class RenewPassword extends Component {
+
 
     constructor(props) {
         super(props);
-        this.state = { usuario: { id: '', dataCadastro: '', email: '', telefone: '', senha: '', codigoAtivacao: '' }, confirmarSenha: '' };
         this.activation = this.props.params.activation;
+    }
+
+    componentWillUnmount() {
+        this.props.clearForm();
     }
 
     componentDidMount() {
         if (this.activation) {
-            UserService.getUser(this.activation).then(response => {
-                if (response.isValid) {
-                    this.setState({ usuario: response.entity, confirmarSenha: '' });
-                } else {
-                    Toast.show(response.messages);
-                    browserHistory.push(URL.LOGIN);
-                }
-            }).catch(error => {
-                Toast.defaultError(error);
-            });
+            this.props.getUser(this.activation);
         }
     }
 
-    handleInputChange(e) {
-        const newState = getObjectNewState(e.target.name, e.target.value, this.state);
-        this.setState(newState);
-    }
 
     renew(e) {
         e.preventDefault();
-        if (this.state.usuario.senha !== this.state.confirmarSenha) {
+        if (this.props.renewState.userLogin.usuario.senha !== this.props.renewState.confirmarSenha) {
             Toast.show('senhas.nao.conferem.warning', Icon.ERROR);
+            this.props.clearPassword();
         } else {
-            const usuario = this.state.usuario;
-            usuario.codigoAtivacao = this.activation;
-            UserService.changePassword(usuario).then(response => {
+
+            this.refs.newPassword.setAttribute("disabled", "disabled");
+            UserService.changePassword(this.props.renewState.userLogin.usuario).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
                     browserHistory.push(URL.LOGIN);
                 }
             }).catch(error => {
                 Toast.defaultError();
+                this.refs.newPassword.removeAttribute("disabled");
             });
         }
     }
 
     render() {
 
-        if(this.state.usuario.id !== '') {
-        return (
-            <center className="space-container">
-                <div className="container" style={{ width: '25%' }}>
-                    <div className="panel-header">
-                        <span className="title-header">Redefinir Senha</span>
-                    </div>
-                    <div>
-                        <form className="panel col s12" method="post" onSubmit={this.renew.bind(this)}>
-                            <div className="row">
-                                <div className="col s2">
-                                    <i className="material-icons right" style={{ marginTop: '5px' }}>account_circle</i>
-                                </div>
-                                {this.state.usuario.email != null &&
-                                    <div className="col s7 left-align">
-                                        {this.state.usuario.email}
+        if (this.props.renewState.userLogin.usuario.id !== '') {
+            return (
+                <center className="space-container">
+                    <div className="container" style={{ width: '25%' }}>
+                        <div className="panel-header">
+                            <span className="title-header">Redefinir Senha</span>
+                        </div>
+                        <div>
+                            <form className="panel col s12" method="post" onSubmit={this.renew.bind(this)}>
+                                <div className="row">
+                                    <div className="col s2">
+                                        <i className="material-icons right" style={{ marginTop: '5px' }}>account_circle</i>
                                     </div>
-                                }
-                                {this.state.usuario.telefone != null &&
-                                    <div className="col s7 left-align">
-                                        ({this.state.usuario.telefone.ddd}) {this.state.usuario.telefone.numero}
+                                    {this.props.renewState.userLogin.usuario.email != null &&
+                                        <div className="col s7 left-align">
+                                            {this.props.renewState.userLogin.usuario.email}
+                                        </div>
+                                    }
+                                    {this.props.renewState.userLogin.usuario.telefone != null &&
+                                        <div className="col s7 left-align">
+                                            ({this.props.renewState.userLogin.usuario.telefone.ddd}) {this.props.renewState.userLogin.usuario.telefone.numero}
+                                        </div>
+                                    }
+                                </div>
+                                <div className="row">
+                                    <div className="input-field col s12">
+                                        <input id="senha" ref="senha" type="password" name="userLogin.usuario.senha" value={this.props.renewState.userLogin.usuario.senha} onChange={this.props.handleInputChange} required />
+                                        <label htmlFor="senha">Senha</label>
                                     </div>
-                                }
-                            </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="senha" type="password" name="usuario.senha" value={this.state.usuario.senha} onChange={this.handleInputChange.bind(this)} required />
-                                    <label htmlFor="senha">Senha</label>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="confirmarSenha" type="password" name="confirmarSenha" value={this.state.confirmarSenha} onChange={this.handleInputChange.bind(this)} required />
-                                    <label htmlFor="confirmarSenha">Confirmar Senha </label>
+                                <div className="row">
+                                    <div className="input-field col s12">
+                                        <input id="confirmarSenha" type="password" name="confirmarSenha" value={this.props.renewState.confirmarSenha} onChange={this.props.handleInputChange} required />
+                                        <label htmlFor="confirmarSenha">Confirmar Senha </label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <button type="submmit" className='col s12 waves-effect btn btn-large success'>Gerar Nova Senha</button>
-                            </div>
-                        </form>
+                                <div className="row">
+                                    <button ref="newPassword" type="submmit" className='col s12 waves-effect btn btn-large success'>Gerar Nova Senha</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </center>
-        ) } else 
+                </center>
+            )
+        } else
             return null
-        
+
     }
 }
+
+const mapStateToProps = state => {
+    return { renewState: state.renew }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        handleInputChange: (e) => {
+            dispatch(handleInputChange(USE_CASE.RENEW, e.target.name, e.target.value));
+        },
+        getUser: (code) => {
+            dispatch(UserService.getUser(code));
+        },
+        clearForm: () => {
+            dispatch(clearForm(USE_CASE.RENEW));
+        },
+        clearPassword: () => {
+            dispatch(clearPassword(USE_CASE.RENEW));
+        }
+    }
+}
+
+const RenewPasswordContainer = connect(mapStateToProps, mapDispatchToProps)(RenewPassword);
+
+export default RenewPasswordContainer;

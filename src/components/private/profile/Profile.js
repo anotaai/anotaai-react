@@ -10,10 +10,6 @@ import { push } from '../../App'
 
 class Profile extends Component {
 
-    constructor() {
-        super();
-        this.state = { showModal: false };
-    }
 
     logout(e) {
         e.preventDefault();
@@ -60,6 +56,10 @@ class Profile extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return { loginState: state.auth.loginState, pictureState: state.profilePicture.pictureState }
+}
+
 const mapDispatchToPros = dispatch => {
     return {
         logout: () => {
@@ -72,10 +72,6 @@ const mapDispatchToPros = dispatch => {
             dispatch(hideLoading());
         }
     }
-}
-
-const mapStateToProps = state => {
-    return { loginState: state.auth.loginState, pictureState: state.profilePicture.pictureState }
 }
 
 const ProfileContainer = connect(mapStateToProps, mapDispatchToPros)(Profile);

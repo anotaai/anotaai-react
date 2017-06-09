@@ -15,6 +15,15 @@ export const URL = {
     DASHBOARD: '/dashboard'
 }
 
+export const USE_CASE = {
+    SEARCH_SECTOR: 'SEARCH_SECTOR',
+    SEARCH_GROUP_PRODUCT: 'SEARCH_GROUP_PRODUCT',
+    LOGIN: 'LOGIN',
+    MODAL_RENEW: 'MODAL_RENEW',
+    RENEW: 'RENEW'
+}
+
+
 export const DEFAULT_TIME = 3000;
 export const COOKIE_USER = 'globals';
 export const PAGE_SIZE = 5;

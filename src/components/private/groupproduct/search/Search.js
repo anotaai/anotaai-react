@@ -1,26 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
 import Toast from '../../../../helpers/Toast'
 import Filters from '../../templatesearch/Filters'
 import Paginator from '../../templatesearch/Paginator'
-import DataList from '../../templatesearch/DataList'
-import { PAGE_SIZE, URL , defaultFilters } from '../../../../helpers/constants'
+import DataList from './DataList'
+import { URL, defaultFilters , USE_CASE } from '../../../../helpers/constants'
 import { PanelHeader, PanelFooter } from '../../../panels'
-import { getObjectNewState, createInstance } from '../../../../helpers/jsonHelper'
+import { getObjectNewState } from '../../../../helpers/jsonHelper'
+import { clearForm, list, remove } from '../../../../actions/searchActionCreator'
 
 class Search extends Component {
 
     constructor() {
         super();
-        this.state = { filteredResults: [], offset: 0, pageCount: 0, nome: '' }
         this.sendButton = null;
         this.filters = defaultFilters;
+        this.state = { nome: '' };
+        this.offset = 0;
     }
 
     componentDidMount() {
         this.search();
+    }
+
+    componentWillUnmount() {
+        this.props.clearForm();
     }
 
     search(e) {
@@ -29,9 +34,9 @@ class Search extends Component {
             e.preventDefault();
 
         this.sendButton.setAttribute("disabled", "disabled");
-       
-        GroupProductService.list(this.state.offset, this.state.nome).then(response => {
-            this.setState({ filteredResults: response.list.itens, offset: this.state.offset, pageCount: Math.ceil(response.list.qtdTotalItens / PAGE_SIZE) });
+    
+        GroupProductService.list(this.offset, this.state.nome).then(response => {
+            this.props.list(response);
         }).catch(error => {
             Toast.defaultError();
         }).then(() => {
@@ -42,11 +47,8 @@ class Search extends Component {
     }
 
     handlePageClick(offset) {
-        const newState = createInstance(this.state);
-        newState.offset = offset;
-        this.setState(newState, () => {
-            this.search();
-        });
+        this.offset = offset;
+        this.search();
     }
 
 
@@ -60,13 +62,11 @@ class Search extends Component {
         e.preventDefault();
 
         if (confirm('Confirma a exclusão do setor?')) {
+
             GroupProductService.remove(id).then(response => {
                 if (response.isValid) {
                     Toast.show(response.messages);
-                    const filtered = this.state.filteredResults.filter(item => item.id !== id);
-                    const newState = createInstance(this.state);
-                    newState.filteredResults = filtered;
-                    this.setState(newState);
+                    this.props.remove(id);
                 }
             }).catch(error => {
                 Toast.defaultError();
@@ -75,16 +75,17 @@ class Search extends Component {
     }
 
     render() {
+
         return (
             <div className="space-container">
                 <div className="container">
                     <PanelHeader icon="business_center" label="Grupo de Produto" />
                     <div className="panel">
                         <form onSubmit={this.search.bind(this)}>
-                            <Filters handleInputChange={this.handleInputChange.bind(this)}  filters={this.filters} />
+                            <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_GROUP_PRODUCT} label="Pesquisar" />
-                            <DataList filteredResults={this.state.filteredResults} remove={this.remove.bind(this)} editUrl={URL.GROUP_PRODUCT} />
-                            <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.state.pageCount} resultsLength={this.state.filteredResults.length} />
+                            <DataList filteredResults={this.props.searchState.filteredResults} remove={this.remove.bind(this)} editUrl={URL.GROUP_PRODUCT} />
+                            <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.props.searchState.pageCount} resultsLength={this.props.searchState.filteredResults.length} />
                         </form>
                     </div>
                 </div>
@@ -94,18 +95,24 @@ class Search extends Component {
 }
 
 
+const mapStateToProps = state => {
+    return { searchState: state.searchGroupProduct }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        showLoading: () => {
-            dispatch(showLoading());
+        list: (filteredResults) => {
+            dispatch(list(USE_CASE.SEARCH_GROUP_PRODUCT,filteredResults));
         },
-
-        hideLoading: () => {
-            dispatch(hideLoading());
+        remove: (id) => {
+            dispatch(remove(USE_CASE.SEARCH_GROUP_PRODUCT,id));
+        },
+        clearForm: () => {
+            dispatch(clearForm(USE_CASE.SEARCH_GROUP_PRODUCT));
         }
     }
 }
 
-const SearchGroupProductContainer = connect(null, mapDispatchToProps)(Search);
+const SearchGroupProductContainer = connect(mapStateToProps, mapDispatchToProps)(Search);
 
 export default SearchGroupProductContainer;
