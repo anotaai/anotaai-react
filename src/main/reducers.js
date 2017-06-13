@@ -5,6 +5,7 @@ import vendedorReducer from '../reducers/vendedorReducer'
 import compradorReducer from '../reducers/compradorReducer'
 import createSearchReducerByUseCase from '../reducers/searchReducer'
 import createUserReducerByUseCase from '../reducers/userReducer'
+import menuReducer from '../reducers/menuReducer'
 import groupProductReducer from '../reducers/groupProductReducer'
 import { loadingBarReducer } from 'react-redux-loading-bar'
 import { combineReducers } from 'redux'
@@ -22,7 +23,8 @@ const reducers = combineReducers(
      modalRenew: createUserReducerByUseCase(USE_CASE.MODAL_RENEW),
      renew: createUserReducerByUseCase(USE_CASE.RENEW),
      vendedor: vendedorReducer,
-     comprador: compradorReducer
+     comprador: compradorReducer,
+     menu: menuReducer
     });
 
 export default reducers;

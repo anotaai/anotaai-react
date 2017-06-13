@@ -5,10 +5,10 @@ import Toast from '../../../../helpers/Toast'
 import Filters from '../../templatesearch/Filters'
 import Paginator from '../../templatesearch/Paginator'
 import DataList from './DataList'
-import { URL, defaultFilters , USE_CASE } from '../../../../helpers/constants'
+import { URL, defaultFilters, USE_CASE } from '../../../../helpers/constants'
 import { PanelHeader, PanelFooter } from '../../../panels'
 import { getObjectNewState } from '../../../../helpers/jsonHelper'
-import { clearForm, list, remove } from '../../../../actions/searchActionCreator'
+import { clearForm, list, remove, handlePageClick } from '../../../../actions/searchActionCreator'
 
 class Search extends Component {
 
@@ -17,7 +17,6 @@ class Search extends Component {
         this.sendButton = null;
         this.filters = defaultFilters;
         this.state = { nome: '' };
-        this.offset = 0;
     }
 
     componentDidMount() {
@@ -34,8 +33,8 @@ class Search extends Component {
             e.preventDefault();
 
         this.sendButton.setAttribute("disabled", "disabled");
-    
-        GroupProductService.list(this.offset, this.state.nome).then(response => {
+
+        GroupProductService.list(this.props.searchState.offset, this.state.nome).then(response => {
             this.props.list(response);
         }).catch(error => {
             Toast.defaultError();
@@ -47,8 +46,7 @@ class Search extends Component {
     }
 
     handlePageClick(offset) {
-        this.offset = offset;
-        this.search();
+        this.props.handlePageClick(offset, this);
     }
 
 
@@ -62,15 +60,7 @@ class Search extends Component {
         e.preventDefault();
 
         if (confirm('Confirma a exclusão do setor?')) {
-
-            GroupProductService.remove(id).then(response => {
-                if (response.isValid) {
-                    Toast.show(response.messages);
-                    this.props.remove(id);
-                }
-            }).catch(error => {
-                Toast.defaultError();
-            });
+            this.props.remove(id);
         }
     }
 
@@ -102,17 +92,30 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         list: (filteredResults) => {
-            dispatch(list(USE_CASE.SEARCH_GROUP_PRODUCT,filteredResults));
+            dispatch(list(USE_CASE.SEARCH_GROUP_PRODUCT, filteredResults));
         },
         remove: (id) => {
-            dispatch(remove(USE_CASE.SEARCH_GROUP_PRODUCT,id));
+            GroupProductService.remove(id).then(response => {
+                if (response.isValid) {
+                    dispatch(remove(USE_CASE.SEARCH_GROUP_PRODUCT, id));
+                }
+            }).catch(error => {
+                Toast.defaultError();
+            });
+
+        },
+        handlePageClick: (offset, reactContext) => {
+            new Promise((resolve) => {
+                resolve(dispatch(handlePageClick(USE_CASE.SEARCH_GROUP_PRODUCT, offset)));
+            }).then(() => {
+                reactContext.search();
+            });
         },
         clearForm: () => {
             dispatch(clearForm(USE_CASE.SEARCH_GROUP_PRODUCT));
         }
     }
 }
-
 const SearchGroupProductContainer = connect(mapStateToProps, mapDispatchToProps)(Search);
 
 export default SearchGroupProductContainer;

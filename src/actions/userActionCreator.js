@@ -21,3 +21,7 @@ export function hideModal(action) {
 export function updateUser(action, entity, activationCode) {
     return { type: `UPDATE_USER_${action}`, entity, activationCode }
 }
+
+export function changeRadio(action, value) {
+    return { type: `CHANGE_RADIO_${action}`, value }
+}

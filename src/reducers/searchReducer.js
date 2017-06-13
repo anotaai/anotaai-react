@@ -2,7 +2,7 @@ import { PAGE_SIZE } from '../helpers/constants'
 import { createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
 
 const INITIAL_STATE = {
-    filteredResults: [], pageCount: 0
+    filteredResults: [], pageCount: 0 , offset: 0
 }
 
 export default function createSearchReducerByUseCase(useCase = '') {
@@ -10,6 +10,13 @@ export default function createSearchReducerByUseCase(useCase = '') {
     return function (state = INITIAL_STATE, action) {
 
         switch (action.type) {
+            
+            case `LIST_${useCase}`: {
+                const newState = createInstance(state);
+                newState.filteredResults = action.filteredResults.list.itens;
+                newState.pageCount = Math.ceil(action.filteredResults.list.qtdTotalItens / PAGE_SIZE);
+                return newState;
+            }
 
             case `REMOVE_${useCase}`: {
                 const newState = createInstance(state);
@@ -18,10 +25,9 @@ export default function createSearchReducerByUseCase(useCase = '') {
                 return newState;
             }
 
-            case `LIST_${useCase}`: {
+            case `HANDLE_PAGE_CLICK_${useCase}`: {
                 const newState = createInstance(state);
-                newState.filteredResults = action.filteredResults.list.itens;
-                newState.pageCount = Math.ceil(action.filteredResults.list.qtdTotalItens / PAGE_SIZE);
+                newState.offset = action.offset;
                 return newState;
             }
 

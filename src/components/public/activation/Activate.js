@@ -7,19 +7,14 @@ import  UserService from '../../../services/UserService'
 
 export default class Activate extends Component {
 
-    constructor() {
-        super();
-        this.state = {activated: false}
-    }
+    
 
     componentDidMount() {
         UserService.activation(this.props.params.key).then(response => {
-            if (response.isValid) {
-                this.setState({activated: true})
-            } else {
-                Toast.show('error.code', Icon.ERROR);
-                browserHistory.push(URL.LOGIN);
-            }
+            if (!response.isValid) {
+                 Toast.show('error.code', Icon.ERROR);
+                 browserHistory.push(URL.LOGIN);
+            }  
         }).catch(error => {
             Toast.defaultError();
             browserHistory.push(URL.LOGIN);
@@ -28,7 +23,7 @@ export default class Activate extends Component {
 
     render() {
 
-        if (this.state.activated) {
+        if (this.props.params.key) {
             return (
                 <div className="space-container">
                     <div className="container">

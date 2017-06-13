@@ -8,7 +8,7 @@ import DataList from '../../groupproduct/search/DataList'
 import { URL, defaultFilters, USE_CASE } from '../../../../helpers/constants'
 import { connect } from 'react-redux'
 import { getObjectNewState } from '../../../../helpers/jsonHelper'
-import { clearForm, list, remove } from '../../../../actions/searchActionCreator'
+import { clearForm, list, remove, handlePageClick } from '../../../../actions/searchActionCreator'
 
 class Search extends Component {
 
@@ -16,16 +16,15 @@ class Search extends Component {
         super();
         this.sendButton = null;
         this.filters = defaultFilters;
-        this.offset = 0;
         this.state = { nome: '' }
     }
 
     componentDidMount() {
-      this.search();
+        this.search();
     }
 
     componentWillUnmount() {
-       this.props.clearForm();
+        this.props.clearForm();
     }
 
     search(e) {
@@ -34,9 +33,9 @@ class Search extends Component {
             e.preventDefault();
 
         this.sendButton.setAttribute("disabled", "disabled");
-       
-        SectorService.list(this.offset, this.state.nome).then(response => {
-           this.props.list(response);
+
+        SectorService.list(this.props.searchState.offset, this.state.nome).then(response => {
+            this.props.list(response);
         }).catch(error => {
             Toast.defaultError();
         }).then(() => {
@@ -48,11 +47,10 @@ class Search extends Component {
 
 
     handlePageClick(offset) {
-       this.offset = offset;
-       this.search();
+        this.props.handlePageClick(offset, this);
     }
 
-    handleInputChange(e)  {
+    handleInputChange(e) {
         const newState = getObjectNewState(e.target.name, e.target.value, this.state);
         this.setState(newState);
     }
@@ -62,15 +60,7 @@ class Search extends Component {
         e.preventDefault();
 
         if (confirm('Confirma a exclusão do setor?')) {
-          
-            SectorService.remove(id).then(response => {
-                Toast.show(response.messages);
-                if (response.isValid) {
-                    this.props.remove(id);
-                }
-            }).catch(error => {
-                Toast.defaultError();
-            });
+            this.props.remove(id);
         }
     }
 
@@ -100,10 +90,24 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         list: (filteredResults) => {
-            dispatch(list(USE_CASE.SEARCH_SECTOR,filteredResults));
+            dispatch(list(USE_CASE.SEARCH_SECTOR, filteredResults));
         },
         remove: (id) => {
-            dispatch(remove(USE_CASE.SEARCH_SECTOR,id));
+            SectorService.remove(id).then(response => {
+                Toast.show(response.messages);
+                if (response.isValid) {
+                    dispatch(remove(USE_CASE.SEARCH_SECTOR, id));
+                }
+            }).catch(error => {
+                Toast.defaultError();
+            });
+        },
+        handlePageClick: (offset, reactContext) => {
+            new Promise((resolve) => {
+                resolve(dispatch(handlePageClick(USE_CASE.SEARCH_SECTOR, offset)));
+            }).then(() => {
+                reactContext.search();
+            });
         },
         clearForm: () => {
             dispatch(clearForm(USE_CASE.SEARCH_SECTOR));

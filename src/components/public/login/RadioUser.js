@@ -3,24 +3,15 @@ import MaskedInput from 'react-maskedinput'
 
 export default class RadioUser extends Component {
 
-  constructor() {
-    super();
-    this.state = { tipoContato: 'telefone' };
-  }
-
-  changeRadio(e) {
-    this.setState({ tipoContato: e.target.value })
-  }
-
-
+  
   render() {
     let field = null;
-
-    if (this.state.tipoContato === 'telefone') {
-      field = <MaskedInput id='telefone' onChange={this.props.handleInputChange.bind(this)} mask="(11) 11111-1111" name="userLogin.usuario.telefone" required placeholder="Telefone" />
+    
+    if (this.props.userLogin.tipoAcesso === 'TELEFONE') {
+      field = <MaskedInput id='telefone' value={this.props.userLogin.usuario.telefone} onChange={this.props.handleInputChange.bind(this)} mask="(11) 11111-1111" name="userLogin.usuario.telefone" required placeholder="Telefone" />
     } else {
       field = <div>
-        <input id="email" className='validate' type='email' onChange={this.props.handleInputChange.bind(this)} name="userLogin.usuario.email" required placeholder="Email" />
+        <input id="email" className='validate' value={this.props.userLogin.usuario.email} type='email' onChange={this.props.handleInputChange.bind(this)} name="userLogin.usuario.email" required placeholder="Email" />
         <label htmlFor="email" data-error="Email inválido" />
       </div>
     }
@@ -28,9 +19,9 @@ export default class RadioUser extends Component {
     return (
       <div>
         <div className="row">
-          <input type="radio" id={this.props.idTelefone} name="radioContato" value="telefone" defaultChecked onChange={this.changeRadio.bind(this)} />
+          <input type="radio" id={this.props.idTelefone} name="radioContato" value="TELEFONE" checked={this.props.userLogin.tipoAcesso === 'TELEFONE'} onChange={this.props.changeRadio.bind(this)} />
           <label htmlFor={this.props.idTelefone} style={{ paddingRight: '20px' }}>Telefone</label>
-          <input type="radio" id={this.props.idEmail} name="radioContato" value="email" onChange={this.changeRadio.bind(this)} />
+          <input type="radio" id={this.props.idEmail} name="radioContato" value="EMAIL"  checked={this.props.userLogin.tipoAcesso === 'EMAIL'}  onChange={this.props.changeRadio.bind(this)} />
           <label htmlFor={this.props.idEmail}>Email</label>
         </div>
         <div className='row'>

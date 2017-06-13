@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import ModalRenewPasswordContainer from './ModalRenewPassword'
 import UserService from '../../../services/UserService'
 import { USE_CASE } from '../../../helpers/constants'
-import { handleInputChange, clearForm, clearPassword, showModal, hideModal } from '../../../actions/userActionCreator'
+import { handleInputChange, clearForm, clearPassword, showModal, hideModal, changeRadio } from '../../../actions/userActionCreator'
 import Toast from '../../../helpers/Toast'
 import { connect } from 'react-redux'
 import RadioUser from './RadioUser'
 
 class Login extends Component {
-
 
   componentWillUnmount() {
     this.props.clearForm();
@@ -22,7 +21,6 @@ class Login extends Component {
   hideModal() {
     this.props.hideModal();
   }
-
 
   login(e) {
     e.preventDefault();
@@ -38,7 +36,7 @@ class Login extends Component {
     }).catch(error => {
       Toast.defaultError();
     }).then(() => {
-      if (this.refs.loginBtn !== undefined) {
+       if (this.refs.loginBtn !== undefined) {
         this.refs.loginBtn.removeAttribute("disabled");
         this.clearPassword();
       }
@@ -62,7 +60,7 @@ class Login extends Component {
           <div className="container">
             <div className="row panel" style={{ display: 'inline-block' }}>
               <form className="col s12" method="post" onSubmit={this.login.bind(this)}>
-                <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin" handleInputChange={this.props.handleInputChange} />
+                <RadioUser idEmail="idEmailLogin" idTelefone="idTelefoneLogin" userLogin={this.props.loginState.userLogin} changeRadio={this.props.changeRadio} handleInputChange={this.props.handleInputChange} />
                 <div className='row'>
                   <div className='input-field col s12'>
                     <input ref="senha" id="senha" type='password' name='userLogin.usuario.senha' value={this.props.loginState.userLogin.usuario.senha} placeholder="Senha" required onChange={this.props.handleInputChange} />
@@ -113,13 +111,18 @@ const mapDispatchToProps = dispatch => {
       dispatch(clearPassword(USE_CASE.LOGIN));
     },
     showModal: () => {
+      dispatch(clearForm(USE_CASE.LOGIN));
       dispatch(showModal(USE_CASE.LOGIN));
     },
     hideModal: () => {
+      dispatch(clearForm(USE_CASE.LOGIN));
       dispatch(hideModal(USE_CASE.LOGIN));
     },
     login: (login) => {
       dispatch(UserService.dispatchLogin(login));
+    },
+    changeRadio: (e) => {
+      dispatch(changeRadio(USE_CASE.LOGIN, e.target.value));
     }
   }
 }

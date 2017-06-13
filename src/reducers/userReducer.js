@@ -1,7 +1,7 @@
 import { createInstance, clearAllPropertiesObject, getObjectNewState } from '../helpers/jsonHelper'
  
 const INITIAL_STATE = {
-    userLogin: { usuario: { id: 0, email: '', telefone: '', senha: '', codigoAtivacao: '' } },
+    userLogin: { usuario: { id: 0, email: '', telefone: '', senha: '', codigoAtivacao: '' } ,tipoAcesso: 'TELEFONE' },
     confirmarSenha: '',
     showModal: false
 }
@@ -21,6 +21,7 @@ export default function createUserReducerByUseCase(useCase = '') {
                 const newState = createInstance(state);
                 clearAllPropertiesObject(newState);
                 newState.userLogin.usuario.telefone = '';
+                newState.userLogin.tipoAcesso = 'TELEFONE';
                 return newState;
             }
 
@@ -51,6 +52,14 @@ export default function createUserReducerByUseCase(useCase = '') {
                 newState.userLogin.usuario.telefone = action.entity.telefone;
                 newState.userLogin.usuario.nome = action.entity.nome;
                 newState.userLogin.usuario.codigoAtivacao = action.activationCode;
+                return newState
+            }
+
+            case `CHANGE_RADIO_${useCase}`: { 
+                const newState = createInstance(state);
+                newState.userLogin.tipoAcesso = action.value;
+                newState.userLogin.usuario.telefone = '';
+                newState.userLogin.usuario.email = '';
                 return newState
             }
 

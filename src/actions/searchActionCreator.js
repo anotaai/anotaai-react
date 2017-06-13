@@ -9,3 +9,8 @@ export function remove(action,id) {
 export function clearForm(action) {
     return { type: `CLEAR_FORM_${action}` }
 }
+
+export function handlePageClick(action,offset) {
+    return { type: `HANDLE_PAGE_CLICK_${action}` , offset }
+}
+

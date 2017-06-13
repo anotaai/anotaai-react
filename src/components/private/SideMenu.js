@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import MenuService from '../../services/menu/MenuService'
-import UserService from '../../services/UserService'
 import { Link } from 'react-router'
 import { ProfileContainer } from './profile/Profile'
-import Toast from '../../helpers/Toast'
-import { updatePicture } from '../../actions/pictureActionCreator'
+import UserService from '../../services/UserService'
 import { connect } from 'react-redux'
 import $ from 'jquery'
 
@@ -23,10 +21,12 @@ export class Links extends Component {
     e.target.className = 'selected';
     if (this.element != null) {
       this.element.className = null;
+
     }
     this.element = e.target;
 
   }
+
 
   render() {
     return (
@@ -46,29 +46,12 @@ export class Links extends Component {
 
 class SideMenu extends Component {
 
-  constructor() {
-    super();
-    this.state = { listMenu: [] };
-  }
+  
 
   componentDidMount() {
 
-    MenuService.getMenu().then(response => {
-      this.setState({ listMenu: response });
-    }).catch(error => {
-      Toast.defaultError();
-      this.props.logout();
-    });
-
-    UserService.loadProfileImage().then(response => {
-      if (response.entity) {
-        const mediaType = response.entity.tipoArquivo.mediaType;
-        const data = 'data:' + mediaType + ';base64,' + response.entity.file;
-        this.props.updatePicture(data);
-      }
-    }).catch(e => {
-      Toast.defaultError();
-    });
+    this.props.getMenu();
+    this.props.loadProfileImage();
 
     $(".button-collapse").sideNav();
     $(".dropdown-button").dropdown({});
@@ -79,30 +62,36 @@ class SideMenu extends Component {
       <div>
         <ul className="side-nav fixed private-side-nav">
           <ProfileContainer idDropdown="dropdownDefault" />
-          <Links listMenu={this.state.listMenu} />
+          <Links listMenu={this.props.menuState} />
         </ul>
         <ul id="slide-out" className="side-nav">
           <ProfileContainer idDropdown="dropdownResponsive" />
-          <Links listMenu={this.state.listMenu} />
+          <Links listMenu={this.props.menuState} />
         </ul>
       </div>
     )
   }
 }
 
+const mapStateToProps = state => {
+    return  {
+       menuState:state.menu.listMenu
+    }
+}
+
 const mapDispatchToProps = dispatch => {
 
   return {
-    updatePicture: (picture) => {
-      dispatch(updatePicture(picture));
+    getMenu: () => {
+      dispatch(MenuService.getMenu());
     },
-    logout: () => {
-      dispatch(UserService.dispatchLogout());
+    loadProfileImage:() => {
+      dispatch(UserService.loadProfileImage());
     }
   }
 }
 
-const SideMenuContainer = connect(null, mapDispatchToProps)(SideMenu);
+const SideMenuContainer = connect(mapStateToProps, mapDispatchToProps)(SideMenu);
 
 export default SideMenuContainer;
 

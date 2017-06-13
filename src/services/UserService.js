@@ -3,6 +3,7 @@ import { createInstance } from '../helpers/jsonHelper'
 import Toast from '../helpers/Toast'
 import { USE_CASE } from '../helpers/constants'
 import { authUser, unauthUser } from '../actions/authActionCreator'
+import { updatePicture } from '../actions/pictureActionCreator'
 import { updateUser } from '../actions/userActionCreator'
 import { browserHistory } from 'react-router'
 import { URL } from '../helpers/constants'
@@ -23,7 +24,7 @@ export default class UserService {
             }).then(response => {
                 return response.json();
             }).then(json => {
-                return dispatch(updateUser(USE_CASE.RENEW,json.entity,activationCode));
+                return dispatch(updateUser(USE_CASE.RENEW, json.entity, activationCode));
             }).catch(error => {
                 Toast.defaultError();
             })
@@ -117,18 +118,18 @@ export default class UserService {
         }
     }
 
-    static login(usuarioLogin, keepAlive) {
+    static login(userLogin, keepAlive) {
 
         return new Promise((resolve, reject) => {
 
-            const newUserLoginInstance = createInstance(usuarioLogin);
-            const newUserInstance = createInstance(usuarioLogin.usuario);
+            const newUserLoginInstance = createInstance(userLogin);
+            const newUserInstance = createInstance(userLogin.usuario);
 
-            const tipoAcesso = usuarioLogin.usuario.email !== '' ? 'EMAIL' : 'TELEFONE';
-            const telefone = usuarioLogin.usuario.telefone;
-            const senha = usuarioLogin.usuario.senha;
 
-            newUserLoginInstance.tipoAcesso = tipoAcesso;
+            const telefone = userLogin.usuario.telefone;
+            const senha = userLogin.usuario.senha;
+
+            newUserLoginInstance.tipoAcesso = userLogin.tipoAcesso;
             newUserInstance.telefone = buildPhone(telefone);
             newUserInstance.senha = Base64Service.encode(senha);
             newUserLoginInstance.usuario = newUserInstance;
@@ -156,16 +157,23 @@ export default class UserService {
     }
 
     static loadProfileImage() {
-        return new Promise((resolve, reject) => {
-            return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/profilePhoto`, {
+        return dispatch => {
+
+            fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/profilePhoto`, {
                 method: 'GET',
                 headers: { 'Content-type': 'application/json' }
             }).then(response => {
-                resolve(response.json());
+                return response.json();
+            }).then(json => {
+                if (json.entity != null) {
+                    const mediaType = json.entity.tipoArquivo.mediaType;
+                    const picture = 'data:' + mediaType + ';base64,' + json.entity.file;
+                    dispatch(updatePicture(picture));
+                }
             }).catch(error => {
-                reject(error);
+                Toast.defaultError();
             })
-        });
+        };
     }
 
     static findUsuarioByPhone(telefoneStr, endpoint) {

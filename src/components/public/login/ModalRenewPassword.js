@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Modal from 'react-modal';
 import UserService from '../../../services/UserService';
 import { USE_CASE } from '../../../helpers/constants'
-import { handleInputChange } from '../../../actions/userActionCreator'
+import { handleInputChange, changeRadio } from '../../../actions/userActionCreator'
 import { customModalStyles } from '../../../helpers/constants'
 import Toast from '../../../helpers/Toast'
 import RadioUser from './RadioUser'
@@ -40,7 +40,7 @@ class ModalRenewPassword extends Component {
 
         <form className="col s12" method="post" onSubmit={this.renewPassword.bind(this)}>
 
-          <RadioUser idEmail="idEmailModal" idTelefone="idTelefoneModal" handleInputChange={this.props.handleInputChange} />
+          <RadioUser idEmail="idEmailModal" idTelefone="idTelefoneModal" changeRadio={this.props.changeRadio} userLogin={this.props.modalRenewState.userLogin} handleInputChange={this.props.handleInputChange} />
 
           <button type="submit" className="btn btn-small waves-effect SUCCESS" style={{ marginTop: '10px' }} >Gerar Senha</button>
 
@@ -61,6 +61,9 @@ const mapDispatchToProps = dispatch => {
   return {
     handleInputChange: (e) => {
       dispatch(handleInputChange(USE_CASE.MODAL_RENEW, e.target.name, e.target.value));
+    },
+    changeRadio: (e) => {
+      dispatch(changeRadio(USE_CASE.MODAL_RENEW,e.target.value));
     }
   }
 }
