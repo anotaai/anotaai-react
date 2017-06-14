@@ -5,7 +5,7 @@ import Detail from './Detail'
 import Base64Service from '../../../../services/app/Base64Service'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
 import { CustomButtons, CustomResponsiveButtons } from '../../templatedetail/customButtons'
-import { clearForm, handleInputChange, updateState } from '../../../../actions/groupProductActionCreator'
+import { clearForm, handleInputChange, updateState, updateSector } from '../../../../actions/groupProductActionCreator'
 import { browserHistory } from 'react-router'
 
 class EditDetail extends Component {
@@ -59,12 +59,19 @@ class EditDetail extends Component {
 
     render() {
         return (
-            <Detail {...this.props.detailState}
+            <Detail
                 title="Edição de Grupos de Produtos"
+                id={this.props.detailState.id}
+                nome={this.props.detailState.nome}
+                descricao={this.props.detailState.descricao}
+                setor={this.props.detailState.setor}
+                setores={this.props.detailState.setores}
                 merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
                 activeClass={this.activeClass}
                 submitRef={el => this.sendButton = el}
+                getSector={this.props.getSector}
+                setSector={this.props.setSector}
                 customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
                 customButtons={<CustomButtons remove={this.remove.bind(this)} />} />
         )
@@ -86,6 +93,17 @@ const mapDispatchToProps = dispatch => {
         },
         findById: (id) => {
             dispatch(GroupProductService.findById(id, updateState));
+        },
+        getSector: (name,value) => {
+            new Promise((resolve) => {
+                resolve(dispatch(handleInputChange(name,value)));
+            }).then(() => {
+                dispatch(GroupProductService.getSectors(value));
+            }); 
+           
+        },
+        setSector: (sector) => {
+           dispatch(updateSector(sector));
         }
     }
 }

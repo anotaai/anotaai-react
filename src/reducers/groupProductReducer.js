@@ -1,11 +1,12 @@
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
-import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, UPDATE_STATE_GROUP_PRODUCT } from '../actions/groupProductActionCreator';
- 
+import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, UPDATE_STATE_GROUP_PRODUCT, UPDATE_SECTOR_LIST, UPDATE_SECTOR } from '../actions/groupProductActionCreator';
+
 const INITIAL_STATE = {
     id: '',
     nome: '',
     descricao: '',
-    setor: {}
+    setor: { id: '', nome: '', descricao: '' },
+    setores: []
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -20,11 +21,28 @@ export default function (state = INITIAL_STATE, action) {
         case CLEAR_FORM_GROUP_PRODUCT: {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
+            newState.id = '';
+            newState.setor.id = '';
             return newState;
         }
 
         case UPDATE_STATE_GROUP_PRODUCT: {
             const newState = createInstance(action.entity);
+            newState.setores = [];
+            return newState;
+        }
+
+        case UPDATE_SECTOR_LIST: {
+            const newState = createInstance(state);
+            newState.setores = action.list;
+            return newState;
+        }
+
+        case UPDATE_SECTOR: {
+            const newState = createInstance(state);
+            newState.setor.id = action.sector.id;
+            newState.setor.nome = action.sector.nome;
+            newState.setor.descricao = action.sector.descricao;
             return newState;
         }
 

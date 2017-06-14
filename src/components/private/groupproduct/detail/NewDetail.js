@@ -5,7 +5,9 @@ import Toast from '../../../../helpers/Toast'
 import Base64Service from '../../../../services/app/Base64Service'
 import { browserHistory } from 'react-router'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
-import { clearForm , handleInputChange } from '../../../../actions/groupProductActionCreator'
+import { clearForm , handleInputChange, updateSector } from '../../../../actions/groupProductActionCreator'
+import { URL } from '../../../../helpers/constants'
+
 
 class NewDetail extends Component {
 
@@ -18,16 +20,16 @@ class NewDetail extends Component {
         this.props.clearForm();
     }
 
+
     save(e) {
-        e.preventDefault();
-       
+    
         this.sendButton.setAttribute("disabled", "disabled");
 
         GroupProductService.save(this.props.detailState).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
                 const id = Base64Service.encode(response.entity.id.toString());
-                browserHistory.push(`${URL.SECTOR}/${id}`);
+                browserHistory.push(`${URL.GROUP_PRODUCT}/${id}`);
             } 
         }).catch(error => {
             Toast.defaultError();
@@ -39,9 +41,17 @@ class NewDetail extends Component {
     render() {
         return (
             <Detail title="Cadastro de Grupo de Produtos"
+                id={this.props.detailState.id}
+                nome={this.props.detailState.nome}
+                descricao={this.props.detailState.descricao}
+                setor={this.props.detailState.setor}
+                setores={this.props.detailState.setores}
                 merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el} 
+                getSector={this.props.getSector}
+                setSector={this.props.setSector}
                 handleInputChange={this.props.handleInputChange}/>
+
         )
     }
 
@@ -58,6 +68,17 @@ const mapDispatchToProps = dispatch => {
         },
         clearForm: () => {
             dispatch(clearForm());
+        },
+        getSector: (name,value) => {
+            new Promise((resolve) => {
+                resolve(dispatch(handleInputChange(name,value)));
+            }).then(() => {
+                 dispatch(GroupProductService.getSectors(value));
+            }); 
+           
+        },
+        setSector: (sector) => {
+           dispatch(updateSector(sector));
         }
     }
 }
