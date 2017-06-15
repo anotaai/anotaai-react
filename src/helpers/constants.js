@@ -12,12 +12,16 @@ export const URL = {
   EDIT_SECTOR: '/setor(/:id)',
   RENEW_PASSWORD: '/renew(/:activation)',
   SETTINGS: '/settings',
-  DASHBOARD: '/dashboard'
+  DASHBOARD: '/dashboard',
+  CONSUMER: '/consumidor',
+  NEW_CONSUMER: '/new/consumidor',
+  EDIT_CONSUMER: '/consumidor(/:id)'
 }
 
 export const USE_CASE = {
   SEARCH_SECTOR: 'SEARCH_SECTOR',
   SEARCH_GROUP_PRODUCT: 'SEARCH_GROUP_PRODUCT',
+  SEARCH_CONSUMER: 'SEARCH_CONSUMER',
   LOGIN: 'LOGIN',
   MODAL_RENEW: 'MODAL_RENEW',
   RENEW: 'RENEW'

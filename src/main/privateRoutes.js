@@ -10,6 +10,10 @@ import SearchSectorContainer from '../components/private/sector/search/Search'
 import NewGroupProductDetailContainer from '../components/private/groupproduct/detail/NewDetail'
 import EditGroupProductDetailContainer from '../components/private/groupproduct/detail/EditDetail'
 import SearchGroupProductContainer from '../components/private/groupproduct/search/Search'
+import SearchConsumerContainer from '../components/private/consumer/search/Search'
+import NewConsumerDetailContainer from '../components/private/consumer/detail/NewDetail'
+import EditConsumerDetailContainer from '../components/private/consumer/detail/EditDetail'
+
 
 
  const privateRoutes = (
@@ -22,6 +26,9 @@ import SearchGroupProductContainer from '../components/private/groupproduct/sear
       <Route path={URL.GROUP_PRODUCT} component={SearchGroupProductContainer} />
       <Route path={URL.NEW_GROUP_PRODUCT} component={NewGroupProductDetailContainer} />
       <Route path={URL.EDIT_GROUP_PRODUCT} component={EditGroupProductDetailContainer} />
+      <Route path={URL.CONSUMER} component={SearchConsumerContainer} />
+      <Route path={URL.NEW_CONSUMER} component={NewConsumerDetailContainer} />
+      <Route path={URL.EDIT_CONSUMER} component={EditConsumerDetailContainer} />
     </Route> 
 );
 
