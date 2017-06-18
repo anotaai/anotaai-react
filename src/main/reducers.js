@@ -23,6 +23,7 @@ const reducers = combineReducers(
      login: createUserReducerByUseCase(USE_CASE.LOGIN),
      modalRenew: createUserReducerByUseCase(USE_CASE.MODAL_RENEW),
      renew: createUserReducerByUseCase(USE_CASE.RENEW),
+     consumer: createUserReducerByUseCase(USE_CASE.CONSUMER),
      vendedor: vendedorReducer,
      comprador: compradorReducer,
      menu: menuReducer

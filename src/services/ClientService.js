@@ -13,7 +13,6 @@ export default class ClientService {
         newAddressInstance.cep = getNumbers(client.endereco.cep);  
         newClientInstance.usuario = newUserInstance;
         newClientInstance.endereco = newAddressInstance;
-        newClientInstance.type = 'cliente';
 
       return  fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/clientes/`,{
             method: 'POST',

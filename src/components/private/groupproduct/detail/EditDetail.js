@@ -13,7 +13,6 @@ class EditDetail extends Component {
     constructor(props) {
         super(props);
         this.sendButton = null;
-        this.activeClass = 'S';
     }
 
     componentWillUnmount() {
@@ -68,7 +67,7 @@ class EditDetail extends Component {
                 setores={this.props.detailState.setores}
                 merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
-                activeClass={this.activeClass}
+                editMode="S"
                 submitRef={el => this.sendButton = el}
                 getSector={this.props.getSector}
                 setSector={this.props.setSector}

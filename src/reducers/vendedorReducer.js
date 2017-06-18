@@ -3,7 +3,7 @@ import { createInstance, getObjectNewState, clearAllPropertiesObject } from '../
 
 const INITIAL_STATE = {
     usuario: { nome: '', email: '', senha: '' },
-    cliente: { nomeComercial: '', cpf: '', endereco: { cep: '', logradouro: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '' } },
+    cliente: { nomeComercial: '', cpf: '', type: 'cliente' , endereco: { cep: '', logradouro: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '' } },
     estadoList: [],
     confirmarSenha: '',
     telefone: '',

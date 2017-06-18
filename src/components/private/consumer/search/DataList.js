@@ -17,6 +17,7 @@ export default class DataList extends Component {
                                 <th className="row-th">Nome</th>
                                 <th className="row-th">Email</th>
                                 <th className="row-th">Telefone</th>
+                                <th className="row-th">Excluir</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,6 +27,7 @@ export default class DataList extends Component {
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.nome}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.email}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.telefone.numero}</td>
+                                        <td  className="row-td"><a href="#" onClick={this.props.remove.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
                         </tbody>

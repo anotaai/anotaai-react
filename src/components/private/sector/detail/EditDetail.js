@@ -15,7 +15,6 @@ class EditDetail extends Component {
     constructor(props) {
         super(props);
         this.sendButton = null;
-        this.activeClass = 'S';
     }
 
     componentWillUnmount() {
@@ -63,7 +62,7 @@ class EditDetail extends Component {
                 title="Edição de Setores"
                 customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
                 customButtons={<CustomButtons remove={this.remove.bind(this)} />}
-                activeClass={this.activeClass} merge={this.update.bind(this)}
+                editMode="S" merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
                 submitRef={el => this.sendButton = el} />
         );

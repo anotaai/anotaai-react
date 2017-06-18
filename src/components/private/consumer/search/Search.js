@@ -8,7 +8,7 @@ import DataList from './DataList'
 import { URL, defaultFilters, USE_CASE } from '../../../../helpers/constants'
 import { PanelHeader, PanelFooter } from '../../../panels'
 import { getObjectNewState } from '../../../../helpers/jsonHelper'
-import { clearForm, list, handlePageClick } from '../../../../actions/searchActionCreator'
+import { clearForm, list, handlePageClick, remove } from '../../../../actions/searchActionCreator'
 
 class Search extends Component {
 
@@ -55,6 +55,15 @@ class Search extends Component {
         this.setState(newState);
     }
 
+    remove(id, e) {
+
+        e.preventDefault();
+
+        if (confirm('Confirma a exclusão do consumidor?')) {
+            this.props.remove(id);
+        }
+    }
+
      
 
     render() {
@@ -67,7 +76,7 @@ class Search extends Component {
                         <form onSubmit={this.search.bind(this)}>
                             <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_CONSUMER} label="Pesquisar" />
-                            <DataList filteredResults={this.props.searchState.filteredResults}   editUrl={URL.CONSUMER} />
+                            <DataList filteredResults={this.props.searchState.filteredResults} remove={this.remove.bind(this)}  editUrl={URL.CONSUMER} />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.props.searchState.pageCount} resultsLength={this.props.searchState.filteredResults.length} />
                         </form>
                     </div>
@@ -87,6 +96,16 @@ const mapDispatchToProps = dispatch => {
     return {
         list: (filteredResults) => {
             dispatch(list(USE_CASE.SEARCH_CONSUMER, filteredResults));
+        },
+        remove: (id) => {
+            ClienteConsumidorService.remove(id).then(response => {
+                if (response.isValid) {
+                    dispatch(remove(USE_CASE.SEARCH_CONSUMER, id));
+                }
+            }).catch(error => {
+                Toast.defaultError();
+            });
+
         },
         handlePageClick: (offset, reactContext) => {
             new Promise((resolve) => {

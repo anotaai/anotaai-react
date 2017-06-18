@@ -31,13 +31,13 @@ export default class Detail extends Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="nome" ref="nome" value={this.props.nome} name="nome" required onChange={this.props.handleInputChange} type="text" />
-                                        <label htmlFor="nome" className={this.props.activeClass === 'S' && this.props.nome != null ? 'active' : ''}>Nome</label>
+                                        <label htmlFor="nome" className={this.props.editMode === 'S' && this.props.nome != null ? 'active' : ''}>Nome</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="descricao" type="text" required value={this.props.descricao} name="descricao" onChange={this.props.handleInputChange} />
-                                        <label htmlFor="descricao" className={this.props.activeClass === 'S' && this.props.descricao != null ? 'active' : ''} >Descrição</label>
+                                        <label htmlFor="descricao" className={this.props.editMode === 'S' && this.props.descricao != null ? 'active' : ''} >Descrição</label>
                                     </div>
                                 </div>
                                 <div className="row">

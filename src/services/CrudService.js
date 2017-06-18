@@ -4,7 +4,7 @@ import Toast from '../helpers/Toast'
 export default class CrudService {
 
 
-    static findById(id, updateState) {
+    static findById(id, updateState, urlUsecase) {
 
         return dispatch => {
 
@@ -12,7 +12,12 @@ export default class CrudService {
             ).then(response => {
                 return response.json();
             }).then(json => {
-                dispatch(updateState(json.entity));
+                if(urlUsecase !== undefined) {
+                   dispatch(updateState(urlUsecase,json.entity));
+                } else {
+                   dispatch(updateState(json.entity));
+                }
+                
             }).catch(error => {
                 Toast.defaultError();
             });
