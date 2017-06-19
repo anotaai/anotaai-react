@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { USE_CASE } from '../../../../helpers/constants'
+import { USE_CASE, URL } from '../../../../helpers/constants'
 import Detail from './Detail'
 import ClienteConsumidorService from '../../../../services/consumer/ClienteConsumidorService'
 import Base64Service from '../../../../services/app/Base64Service'
@@ -48,7 +48,7 @@ class EditDetail extends Component {
 
         if (confirm('Confirma a exclusão do consumidor?')) {
 
-            ClienteConsumidorService.remove(this.props.detailState.userLogin.usuario.id).then(response => {
+            ClienteConsumidorService.remove(this.id).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
                     browserHistory.push(URL.CONSUMER);

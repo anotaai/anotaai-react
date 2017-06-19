@@ -20,7 +20,6 @@ class NewDetail extends Component {
         this.props.clearForm();
     }
 
-
     save(e) {
     
         this.sendButton.setAttribute("disabled", "disabled");
@@ -33,7 +32,9 @@ class NewDetail extends Component {
             } 
         }).catch(error => {
             Toast.defaultError();
-            this.sendButton.removeAttribute("disabled");
+        }).then(() =>{
+              if(this.sendButton != null)
+              this.sendButton.removeAttribute("disabled");
         });
 
     }
