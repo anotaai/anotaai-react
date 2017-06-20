@@ -15,13 +15,17 @@ export const URL = {
   DASHBOARD: '/dashboard',
   CONSUMER: '/consumidor',
   NEW_CONSUMER: '/new/consumidor',
-  EDIT_CONSUMER: '/consumidor(/:id)'
+  EDIT_CONSUMER: '/consumidor(/:id)',
+  PRODUCT: '/produto',
+  NEW_PRODUCT: '/new/produto',
+  EDIT_PRODUCT: '/produto(/:id)'
 }
 
 export const USE_CASE = {
   SEARCH_SECTOR: 'SEARCH_SECTOR',
   SEARCH_GROUP_PRODUCT: 'SEARCH_GROUP_PRODUCT',
   SEARCH_CONSUMER: 'SEARCH_CONSUMER',
+  SEARCH_PRODUCT: 'SEARCH_PRODUCT',
   LOGIN: 'LOGIN',
   MODAL_RENEW: 'MODAL_RENEW',
   RENEW: 'RENEW',

@@ -20,6 +20,7 @@ const reducers = combineReducers(
      searchSector: createSearchReducerByUseCase(USE_CASE.SEARCH_SECTOR),
      searchGroupProduct: createSearchReducerByUseCase(USE_CASE.SEARCH_GROUP_PRODUCT),
      searchConsumer: createSearchReducerByUseCase(USE_CASE.SEARCH_CONSUMER),
+     searchProduct: createSearchReducerByUseCase(USE_CASE.SEARCH_PRODUCT),
      login: createUserReducerByUseCase(USE_CASE.LOGIN),
      modalRenew: createUserReducerByUseCase(USE_CASE.MODAL_RENEW),
      renew: createUserReducerByUseCase(USE_CASE.RENEW),

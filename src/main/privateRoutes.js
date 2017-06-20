@@ -13,8 +13,9 @@ import SearchGroupProductContainer from '../components/private/groupproduct/sear
 import SearchConsumerContainer from '../components/private/consumer/search/Search'
 import NewConsumerDetailContainer from '../components/private/consumer/detail/NewDetail'
 import EditConsumerDetailContainer from '../components/private/consumer/detail/EditDetail'
-
-
+import SearchProductContainer from '../components/private/product/search/Search'
+import NewProductDetailContainer from '../components/private/product/detail/NewDetail'
+import EditProductDetailContainer from '../components/private/product/detail/EditDetail'
 
  const privateRoutes = (
     <Route component={AuthenticationContainer}>
@@ -29,8 +30,10 @@ import EditConsumerDetailContainer from '../components/private/consumer/detail/E
       <Route path={URL.CONSUMER} component={SearchConsumerContainer} />
       <Route path={URL.NEW_CONSUMER} component={NewConsumerDetailContainer} />
       <Route path={URL.EDIT_CONSUMER} component={EditConsumerDetailContainer} />
+      <Route path={URL.PRODUCT} component={SearchProductContainer} />
+      <Route path={URL.NEW_PRODUCT} component={NewProductDetailContainer} />
+      <Route path={URL.EDIT_PRODUCT} component={EditProductDetailContainer} />
     </Route> 
 );
-
 
 export default privateRoutes;
