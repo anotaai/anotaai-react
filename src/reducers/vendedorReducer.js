@@ -22,6 +22,7 @@ export default function (state = INITIAL_STATE, action) {
         case CLEAR_FORM_VENDEDOR: {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
+            newState.cliente.type = 'cliente';
             return newState;
         }
         case CLEAR_PASSWORD_VENDEDOR: {

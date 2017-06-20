@@ -2,10 +2,10 @@ import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../
 import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, UPDATE_STATE_GROUP_PRODUCT, UPDATE_SECTOR_LIST, UPDATE_SECTOR } from '../actions/groupProductActionCreator';
 
 const INITIAL_STATE = {
-    id: '',
+    id: null,
     nome: '',
     descricao: '',
-    setor: { id: '', nome: '', descricao: '' },
+    setor: { id: null, nome: '', descricao: '' },
     setores: []
 }
 
@@ -21,8 +21,6 @@ export default function (state = INITIAL_STATE, action) {
         case CLEAR_FORM_GROUP_PRODUCT: {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
-            newState.id = '';
-            newState.setor.id = '';
             return newState;
         }
 

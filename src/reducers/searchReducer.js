@@ -34,6 +34,7 @@ export default function createSearchReducerByUseCase(useCase = '') {
             case `CLEAR_FORM_${useCase}`: {
                 const newState = createInstance(state);
                 clearAllPropertiesObject(newState);
+                newState.offset = 0;
                 return newState;
             }
 

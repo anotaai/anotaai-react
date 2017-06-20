@@ -3,7 +3,7 @@ import { HANDLE_INPUT_CHANGE_SECTOR, CLEAR_FORM_SECTOR, UPDATE_STATE_SECTOR } fr
 
 
 const INITIAL_STATE = {
-    id: '',
+    id: null,
     nome: '',
     descricao: ''
 }

@@ -2,7 +2,7 @@ import { createInstance, clearAllPropertiesObject, getObjectNewState } from '../
 import { getPhoneMask } from '../helpers/stringHelper'
  
 const INITIAL_STATE = {
-    userLogin: { usuario: { id: 0, nome: '', email: '', telefone: '', senha: '', codigoAtivacao: '' } ,tipoAcesso: 'TELEFONE' },
+    userLogin: { usuario: { id: null, nome: '', email: '', telefone: '', senha: '', codigoAtivacao: '' } ,tipoAcesso: 'TELEFONE' },
     confirmarSenha: '',
     showModal: false
 }

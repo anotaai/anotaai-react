@@ -7,6 +7,7 @@ import GroupProductService from '../../../../services/groupproduct/GroupProductS
 import { CustomButtons, CustomResponsiveButtons } from '../../templatedetail/customButtons'
 import { clearForm, handleInputChange, updateState, updateSector } from '../../../../actions/groupProductActionCreator'
 import { browserHistory } from 'react-router'
+import { URL } from '../../../../helpers/constants'
 
 class EditDetail extends Component {
 
@@ -47,7 +48,7 @@ class EditDetail extends Component {
             GroupProductService.remove(this.props.detailState.id).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
-                    browserHistory.push(URL.SECTOR);
+                    browserHistory.push(URL.GROUP_PRODUCT);
                 }
             }).catch(error => {
                 Toast.defaultError();

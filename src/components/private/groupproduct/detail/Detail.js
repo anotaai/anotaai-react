@@ -11,7 +11,7 @@ export default class Detail extends Component {
         
       e.preventDefault();
 
-      if(this.props.setor.id === '') {
+      if(this.props.setor.id === null) {
          Toast.show('setor.required', Icon.WARNING);
       } else {
          this.props.merge(e);

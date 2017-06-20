@@ -48,7 +48,7 @@ class RenewPassword extends Component {
 
     render() {
 
-        if (this.props.renewState.userLogin.usuario.id !== '') {
+        if (this.props.renewState.userLogin.usuario.id !== null) {
             return (
                 <center className="space-container">
                     <div className="container" style={{ width: '25%' }}>

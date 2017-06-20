@@ -10,19 +10,24 @@ export function createInstance(currentState) {
 
 export var clearAllPropertiesObject = (objToClear) => {
     Object.keys(objToClear).forEach((param) => {
-        if ( (objToClear[param]).toString() === "[object Object]" ) {
-            clearAllPropertiesObject(objToClear[param]);
-        } else {
-             if (Array.isArray(objToClear[param])) {
-                  objToClear[param] = [];
-             } else if(Number.isInteger(objToClear[param])) {
-                  objToClear[param] = 0;
-             }  else if(typeof objToClear[param] === 'boolean') {
-                  objToClear[param] = false;
-             } else {
-                  objToClear[param] = '';
-             }
+        if (objToClear[param] != null) {
+
+            if ((objToClear[param]).toString() === "[object Object]") {
+                clearAllPropertiesObject(objToClear[param]);
+            } else {
+                if (Array.isArray(objToClear[param])) {
+                    objToClear[param] = [];
+                } else if (Number.isInteger(objToClear[param])) {
+                    objToClear[param] = null;
+                } else if (typeof objToClear[param] === 'boolean') {
+                    objToClear[param] = false;
+                } else {
+                    objToClear[param] = '';
+                }
+            }
+
         }
+
     })
     return objToClear;
 }
