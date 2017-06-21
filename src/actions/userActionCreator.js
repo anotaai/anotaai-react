@@ -25,7 +25,3 @@ export function updateUser(action, entity, activationCode) {
 export function changeRadio(action, value) {
     return { type: `CHANGE_RADIO_${action}`, value }
 }
-
-export function updateConsumer(action , clientConsumer) {
-    return { type: `UPDATE_USER_CONSUMER_${action}`, clientConsumer }
-}

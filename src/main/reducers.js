@@ -7,6 +7,8 @@ import createSearchReducerByUseCase from '../reducers/searchReducer'
 import createUserReducerByUseCase from '../reducers/userReducer'
 import menuReducer from '../reducers/menuReducer'
 import groupProductReducer from '../reducers/groupProductReducer'
+import consumerReducer from '../reducers/consumerReducer'
+
 import { loadingBarReducer } from 'react-redux-loading-bar'
 import { combineReducers } from 'redux'
 import { USE_CASE } from '../helpers/constants'
@@ -15,6 +17,7 @@ const reducers = combineReducers(
     {auth:authReducer,
      profilePicture:pictureReducer,
      loadingBar:loadingBarReducer,
+     detailConsumer: consumerReducer,
      detailSector: sectorReducer,
      detailGroupProduct: groupProductReducer,
      searchSector: createSearchReducerByUseCase(USE_CASE.SEARCH_SECTOR),
@@ -24,7 +27,6 @@ const reducers = combineReducers(
      login: createUserReducerByUseCase(USE_CASE.LOGIN),
      modalRenew: createUserReducerByUseCase(USE_CASE.MODAL_RENEW),
      renew: createUserReducerByUseCase(USE_CASE.RENEW),
-     consumer: createUserReducerByUseCase(USE_CASE.CONSUMER),
      vendedor: vendedorReducer,
      comprador: compradorReducer,
      menu: menuReducer

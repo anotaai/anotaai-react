@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { USE_CASE, URL } from '../../../../helpers/constants'
+import { URL } from '../../../../helpers/constants'
 import Detail from './Detail'
 import ClienteConsumidorService from '../../../../services/consumer/ClienteConsumidorService'
 import Base64Service from '../../../../services/app/Base64Service'
-import { clearForm, handleInputChange, updateConsumer } from '../../../../actions/userActionCreator'
+import { clearForm, handleInputChange, updateState } from '../../../../actions/consumerActionCreator'
 import { CustomButtons, CustomResponsiveButtons } from '../../templatedetail/customButtons'
 import Toast from '../../../../helpers/Toast'
 import { browserHistory } from 'react-router'
@@ -31,10 +31,10 @@ class EditDetail extends Component {
     e.preventDefault();
 
     this.sendButton.setAttribute("disabled", "disabled");
+    
+    const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
 
-    const clienteConsumidor = ClienteConsumidorService.buildConsumer(this.id,this.props.detailState.userLogin.usuario);
-
-    ClienteConsumidorService.update(clienteConsumidor).then(response => {
+    ClienteConsumidorService.update(newInstance).then(response => {
       Toast.show(response.messages);
     }).catch(error => {
       Toast.defaultError();
@@ -58,6 +58,7 @@ class EditDetail extends Component {
             });
         }
     }
+    
 
   render() {
     return (
@@ -78,19 +79,19 @@ class EditDetail extends Component {
 
 
 const mapStateToProps = state => {
-  return { detailState: state.consumer }
+  return { detailState: state.detailConsumer }
 }
 
 const matDispatchToProps = dispatch => {
   return {
     handleInputChange: (e) => {
-      dispatch(handleInputChange(USE_CASE.CONSUMER, e.target.name, e.target.value));
+      dispatch(handleInputChange(e.target.name, e.target.value));
     },
     clearForm: () => {
-      dispatch(clearForm(USE_CASE.CONSUMER));
+      dispatch(clearForm());
     },
     findById: (id) => {
-      dispatch(ClienteConsumidorService.findById(id, updateConsumer,USE_CASE.CONSUMER));
+      dispatch(ClienteConsumidorService.findById(id, updateState));
     }
   }
 }

@@ -15,19 +15,19 @@ export default class Detail extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="nome" ref="nome" value={this.props.userLogin.usuario.nome} name="userLogin.usuario.nome" required onChange={this.props.handleInputChange} type="text" />
-                                        <label htmlFor="nome" className={this.props.editMode === 'S' && this.props.userLogin.usuario.nome != null ? 'active' : ''}>Nome</label>
+                                        <input id="nome" ref="nome" value={this.props.consumidor.usuario.nome} name="consumidor.usuario.nome" required onChange={this.props.handleInputChange} type="text" />
+                                        <label htmlFor="nome" className={this.props.editMode === 'S' && this.props.consumidor.usuario.nome != null ? 'active' : ''}>Nome</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="email" value={this.props.userLogin.usuario.email} name="userLogin.usuario.email" className="validate" onChange={this.props.handleInputChange} type="email" />
-                                        <label htmlFor="email" data-error="Email inválido" className={this.props.editMode === 'S' && this.props.userLogin.usuario.email != null ? 'active' : ''}>Email</label>
+                                        <input id="email" value={this.props.consumidor.usuario.email} name="consumidor.usuario.email" className="validate" onChange={this.props.handleInputChange} type="email" />
+                                        <label htmlFor="email" data-error="Email inválido" className={this.props.editMode === 'S' && this.props.consumidor.usuario.email != null ? 'active' : ''}>Email</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <MaskedInput  value={this.props.userLogin.usuario.telefone} name="userLogin.usuario.telefone" onChange={this.props.handleInputChange} mask="(11) 11111-1111" required placeholder="Telefone" />
+                                        <MaskedInput  value={this.props.consumidor.usuario.telefone} name="consumidor.usuario.telefone" onChange={this.props.handleInputChange} mask="(11) 11111-1111" required placeholder="Telefone" />
                                     </div>
                                 </div>
                             </div>

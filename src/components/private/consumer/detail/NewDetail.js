@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { USE_CASE, URL } from '../../../../helpers/constants'
+import { URL } from '../../../../helpers/constants'
 import Toast from '../../../../helpers/Toast'
 import Detail from './Detail'
 import Base64Service from '../../../../services/app/Base64Service'
 import { browserHistory } from 'react-router'
 import ClienteConsumidorService from '../../../../services/consumer/ClienteConsumidorService'
-import { clearForm, handleInputChange } from '../../../../actions/userActionCreator'
+import { clearForm, handleInputChange } from '../../../../actions/consumerActionCreator'
 
 class NewDetail extends Component {
 
@@ -25,9 +25,9 @@ class NewDetail extends Component {
     
         this.sendButton.setAttribute("disabled", "disabled");
         
-        const clienteConsumidor = ClienteConsumidorService.buildConsumer(null,this.props.detailState.userLogin.usuario);
+        const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
 
-        ClienteConsumidorService.save(clienteConsumidor).then(response => {
+        ClienteConsumidorService.save(newInstance).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
                 const id = Base64Service.encode(response.entity.id.toString());
@@ -59,16 +59,16 @@ class NewDetail extends Component {
 
 
 const mapStateToProps = state => {
-    return { detailState: state.consumer }
+    return { detailState: state.detailConsumer }
 }
 
 const matDispatchToProps = dispatch => {
     return {
         handleInputChange: (e) => {
-            dispatch(handleInputChange(USE_CASE.CONSUMER, e.target.name, e.target.value));
+            dispatch(handleInputChange(e.target.name, e.target.value));
         },
         clearForm: () => {
-            dispatch(clearForm(USE_CASE.CONSUMER));
+            dispatch(clearForm());
         },
     }
 }

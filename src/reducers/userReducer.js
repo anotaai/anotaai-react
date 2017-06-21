@@ -1,8 +1,7 @@
 import { createInstance, clearAllPropertiesObject, getObjectNewState } from '../helpers/jsonHelper'
-import { getPhoneMask } from '../helpers/stringHelper'
  
 const INITIAL_STATE = {
-    userLogin: { usuario: { id: null, nome: '', email: '', telefone: '', senha: '', codigoAtivacao: '' } ,tipoAcesso: 'TELEFONE' },
+    userLogin: { usuario: { id: null,  email: '', telefone: '', senha: '', codigoAtivacao: '' } ,tipoAcesso: 'TELEFONE' },
     confirmarSenha: '',
     showModal: false
 }
@@ -63,16 +62,6 @@ export default function createUserReducerByUseCase(useCase = '') {
                 newState.userLogin.usuario.email = '';
                 return newState
             }
-
-             case `UPDATE_USER_CONSUMER_${useCase}`: { 
-                const newState = createInstance(state);
-                newState.userLogin.usuario = createInstance(action.clientConsumer.consumidor.usuario);
-                let telefoneStr = action.clientConsumer.consumidor.usuario.telefone.ddd.toString() + action.clientConsumer.consumidor.usuario.telefone.numero.toString();
-                telefoneStr = getPhoneMask(telefoneStr);
-                newState.userLogin.usuario.telefone = telefoneStr;
-                return newState
-            }
-
 
             default:
                 return state;

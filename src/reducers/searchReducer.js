@@ -1,5 +1,5 @@
 import { PAGE_SIZE } from '../helpers/constants'
-import { createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
+import { createInstance } from '../helpers/jsonHelper'
 
 const INITIAL_STATE = {
     filteredResults: [], pageCount: 0 , offset: 0
@@ -33,8 +33,9 @@ export default function createSearchReducerByUseCase(useCase = '') {
 
             case `CLEAR_FORM_${useCase}`: {
                 const newState = createInstance(state);
-                clearAllPropertiesObject(newState);
+                newState.filteredResults = [];
                 newState.offset = 0;
+                newState.pageCount = 0;
                 return newState;
             }
 
