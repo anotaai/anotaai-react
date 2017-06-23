@@ -17,9 +17,7 @@ export default class CrudService {
                 Toast.defaultError();
             });
         }
-
     }
-
 
     static list(offset, name) {
         return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}?start=${offset}&max=${PAGE_SIZE}&nome=${name}`
