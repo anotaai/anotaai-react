@@ -47,7 +47,7 @@ class NewDetail extends Component {
         return (
             <Detail
                title="Cadastro de Consumidor"
-               {...this.props.detailState}
+               {... this.props.detailState}
                merge={this.save.bind(this)}
                submitRef={el => this.sendButton = el} 
                handleInputChange={this.props.handleInputChange}

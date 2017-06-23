@@ -58,7 +58,7 @@ class EditDetail extends Component {
 
     render() {
         return (
-            <Detail {...this.props.detailState}
+            <Detail {... this.props.detailState}
                 title="Edição de Setores"
                 customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
                 customButtons={<CustomButtons remove={this.remove.bind(this)} />}

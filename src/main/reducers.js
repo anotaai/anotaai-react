@@ -8,7 +8,7 @@ import createUserReducerByUseCase from '../reducers/userReducer'
 import menuReducer from '../reducers/menuReducer'
 import groupProductReducer from '../reducers/groupProductReducer'
 import consumerReducer from '../reducers/consumerReducer'
-
+import productReducer from '../reducers/productReducer'
 import { loadingBarReducer } from 'react-redux-loading-bar'
 import { combineReducers } from 'redux'
 import { USE_CASE } from '../helpers/constants'
@@ -20,6 +20,7 @@ const reducers = combineReducers(
      detailConsumer: consumerReducer,
      detailSector: sectorReducer,
      detailGroupProduct: groupProductReducer,
+     detailProduct: productReducer,
      searchSector: createSearchReducerByUseCase(USE_CASE.SEARCH_SECTOR),
      searchGroupProduct: createSearchReducerByUseCase(USE_CASE.SEARCH_GROUP_PRODUCT),
      searchConsumer: createSearchReducerByUseCase(USE_CASE.SEARCH_CONSUMER),

@@ -42,7 +42,7 @@ class NewDetail extends Component {
 
     render() {
         return (
-            <Detail {...this.props.detailState} 
+            <Detail {... this.props.detailState} 
                title="Cadastro de Setores" 
                merge={this.save.bind(this)} 
                handleInputChange={this.props.handleInputChange}  
