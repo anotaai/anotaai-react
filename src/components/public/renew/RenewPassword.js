@@ -10,18 +10,13 @@ import { handleInputChange, clearForm, clearPassword } from '../../../actions/us
 class RenewPassword extends Component {
 
 
-    constructor(props) {
-        super(props);
-        this.activation = this.props.params.activation;
-    }
-
     componentWillUnmount() {
         this.props.clearForm();
     }
 
     componentDidMount() {
-        if (this.activation) {
-            this.props.getUser(this.activation);
+        if (this.props.params.activation) {
+            this.props.getUser(this.props.params.activation);
         }
     }
 
