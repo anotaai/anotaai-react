@@ -12,6 +12,6 @@ export function updateState(entity) {
     return { type: UPDATE_STATE_CONSUMER, entity }
 }
 
-export function recommendEdition(entity) {
+export function activateRecommendEdition(entity) {
     return { type: RECOMMEND_EDITION, entity }
 }

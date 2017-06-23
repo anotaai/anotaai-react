@@ -66,9 +66,14 @@ class EditDetail extends Component {
     e.preventDefault();
 
     this.recommendButton.setAttribute("disabled", "disabled");
+
+    const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
     
-    ClienteConsumidorService.recommendEdition(this.props.detailState).then(response => {
+    ClienteConsumidorService.recommendEdition(newInstance).then(response => {
       Toast.show(response.messages);
+       if (response.isValid) {
+          browserHistory.push(URL.CONSUMER);
+       }
     }).catch(error => {
       Toast.defaultError();
     }).then(() => {

@@ -1,7 +1,7 @@
 import CrudService from '../CrudService'
 import { buildPhone } from '../../helpers/stringHelper'
 import { createInstance } from '../../helpers/jsonHelper'
-import { recommendEdition } from '../../actions/consumerActionCreator'
+import { activateRecommendEdition } from '../../actions/consumerActionCreator'
 import  Toast  from '../../helpers/Toast'
 
 
@@ -32,13 +32,26 @@ export default class ClienteConsumidorService extends CrudService {
                   dispatch(updateState(json.entity));
                } else {
                   Toast.show(json.messages);
-                  dispatch(recommendEdition(json.entity));
+                  dispatch(activateRecommendEdition(json.entity));
                }
             }).catch(error => {
                 Toast.defaultError();
             });
         }
 
+    }
+
+    static recommendEdition(clienteConsumidor) {
+
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/usuario/recomendaredicao`, {
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(clienteConsumidor),
+            method: 'POST'
+        }).then(response => {
+            return response.json();
+        }).catch(error => {
+            throw Error(error);
+        });
     }
 
  
