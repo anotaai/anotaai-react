@@ -16,6 +16,12 @@ class Comprador extends Component {
         this.sendButton = null;
     }
 
+    componentDidMount() {
+        const key = this.props.params.key;
+        if(key)
+         this.props.getUserByActivationKey(key);
+    }
+
     componentWillUnmount() {
          this.props.clearForm();
     }
@@ -26,14 +32,21 @@ class Comprador extends Component {
     }
 
     send(e) {
+        
         e.preventDefault();
 
         if (this.props.compradorState.usuario.senha !== this.props.compradorState.confirmarSenha) {
              Toast.show('senhas.nao.conferem.warning', Icon.WARNING);
              this.props.clearPassword();
         } else {
+            
+             this.sendButton.setAttribute("disabled", "disabled");
 
-            this.sendButton.setAttribute("disabled", "disabled");
+            if (this.props.compradorState.activation) {
+                this.activate();
+                return;
+            }
+
             UserService.save(this.props.compradorState.usuario, this.props.compradorState.telefone).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
@@ -47,11 +60,25 @@ class Comprador extends Component {
 
     }
 
+    activate() {
+
+        UserService.activationUser(this.props.compradorState.usuario, this.props.compradorState.telefone).then(response => {
+            Toast.show(response.messages);
+            if (response.isValid) {
+                browserHistory.push(URL.LOGIN);
+            }
+        }).catch(error => {
+            Toast.defaultError();
+            this.sendButton.removeAttribute("disabled");
+        });
+
+    }
+
     render() {
         return (
             <form method="post" onSubmit={this.send.bind(this)}>
                 <FormUser {...this.props.compradorState} handleInputChange={this.props.handleInputChange} handlePhoneChange={this.props.handlePhoneChange} />
-                <PanelFooter submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
+                <PanelFooter submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label={this.props.compradorState.activation === true ? "Ativar" : "Enviar"} isPublic={true} />
             </form>
         )
     }
@@ -76,6 +103,9 @@ const mapDispatchToProps = dispatch => {
         }, 
         handlePhoneChange: (e) => {
             dispatch(handlePhoneChange(e));
+        },
+        getUserByActivationKey:(key) => {
+            dispatch(UserService.getUserByActivationKey(key));
         }
     }
 }

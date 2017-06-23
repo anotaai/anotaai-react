@@ -1,7 +1,8 @@
 export const HANDLE_INPUT_CHANGE_COMPRADOR = 'handle_input_change_comprador',
     CLEAR_FORM_COMPRADOR = 'clear_form_comprador',
     HANDLE_PHONE_CHANGE_COMPRADOR = 'handle_phone_change_comprador',
-    CLEAR_PASSWORD_COMPRADOR = 'clear_password_comprador';
+    CLEAR_PASSWORD_COMPRADOR = 'clear_password_comprador',
+    UPDATE_COMPRADOR = 'update_comprador';
 
 
 export function handleInputChange(name, value) {
@@ -18,4 +19,8 @@ export function clearForm() {
 
 export function clearPassword() {
     return { type: CLEAR_PASSWORD_COMPRADOR }
+}
+
+export function updateComprador(entity) {
+    return { type: UPDATE_COMPRADOR , entity }
 }

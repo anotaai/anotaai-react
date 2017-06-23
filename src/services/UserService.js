@@ -3,6 +3,7 @@ import { createInstance } from '../helpers/jsonHelper'
 import Toast from '../helpers/Toast'
 import { USE_CASE } from '../helpers/constants'
 import { authUser, unauthUser } from '../actions/authActionCreator'
+import { updateComprador } from '../actions/compradorActionCreator'
 import { updatePicture } from '../actions/pictureActionCreator'
 import { updateUser } from '../actions/userActionCreator'
 import { browserHistory } from 'react-router'
@@ -25,6 +26,29 @@ export default class UserService {
                 return response.json();
             }).then(json => {
                 return dispatch(updateUser(USE_CASE.RENEW, json.entity, activationCode));
+            }).catch(error => {
+                Toast.defaultError();
+            })
+        }
+
+    }
+
+     static getUserByActivationKey(key) {
+        return dispatch => {
+
+            fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/byactivationcode`, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: key
+            }).then(response => {
+                return response.json();
+            }).then(json => {
+                if(json.isValid) {
+                   return dispatch(updateComprador(json.entity));
+                } else {
+                    Toast.show(json.messages);
+                }
+               
             }).catch(error => {
                 Toast.defaultError();
             })
@@ -81,6 +105,24 @@ export default class UserService {
         newUserInstance.telefone = buildPhone(telefoneStr);
 
         return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios`, {
+            method: 'POST',
+            body: JSON.stringify(newUserInstance),
+            headers: { 'Content-type': 'application/json' }
+        }).then(response => {
+            return response.json();
+        }).catch(error => {
+            throw Error(error);
+        });
+
+    }
+
+
+    static activationUser(usuario, telefoneStr) {
+
+        const newUserInstance = createInstance(usuario);
+        newUserInstance.telefone = buildPhone(telefoneStr);
+
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/activationuser`, {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: { 'Content-type': 'application/json' }

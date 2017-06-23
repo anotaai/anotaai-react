@@ -3,6 +3,7 @@ export const URL = {
   LOGIN: '/login',
   REGISTER: '/register',
   COMPRADOR: '/comprador',
+  COMPRADOR_ACTIVATE: '/comprador(/:key)',
   VENDEDOR: '/vendedor',
   GROUP_PRODUCT: '/grupoproduto',
   NEW_GROUP_PRODUCT: '/new/grupoproduto',

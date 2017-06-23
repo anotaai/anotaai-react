@@ -19,6 +19,7 @@ import privateRoutes from './privateRoutes'
     <Route path={URL.REGISTER} component={Register} />
     <Route path={URL.VENDEDOR} component={VendedorContainer} />
     <Route path={URL.COMPRADOR} component={CompradorContainer} />
+    <Route path={URL.COMPRADOR_ACTIVATE} component={CompradorContainer} />
     <Route path={URL.RENEW_PASSWORD} component={RenewPasswordContainer} />
     {privateRoutes}
   </Route>
