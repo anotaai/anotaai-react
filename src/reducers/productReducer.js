@@ -8,9 +8,12 @@ const INITIAL_STATE = {
     descricaoResumida: '',
     unidadeMedida: { type: '' , descricao: ''},
     precoVenda: 0,
+    codigoGerado: false,
+    ehInsumo: false,
     unidadeList: [],
     diasDisponibilidades: [],
-    diasSemana: []
+    diasSemana: [],
+    blockCode: false
 }
 
 
@@ -18,7 +21,16 @@ export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
 
         case HANDLE_INPUT_CHANGE_PRODUCT: {
+           
             const newState = getObjectNewState(action.name, action.value, state);
+            
+            if(action.name === 'codigoGerado' && action.value === true){
+               newState.blockCode = true;
+               newState.codigo = '';
+            } else {
+               newState.blockCode = false;
+            }
+
             return newState;
         }
 

@@ -17,9 +17,19 @@ export default class Detail  extends Component {
                     <div className="panel">
                         <form onSubmit={this.props.merge.bind(this)}>
                             <div className="container">
+                                 <div className="row center-align">
+                                    <div className="input-field col s6 m6 l6">
+                                          <input type="checkbox" id="codigoProduto" name="codigoGerado"  value={this.props.codigoGerado} onClick={this.props.handleCheckbox}  />
+                                          <label htmlFor="codigoProduto">Gerar código Produto</label>
+                                    </div>
+                                     <div className="input-field col s6 m6 l6">
+                                         <input type="checkbox" id="insumo" value={this.props.ehInsumo}  name="insumo" onClick={this.props.handleCheckbox} />
+                                         <label htmlFor="insumo">Insumo</label>
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="codigo" ref="codigo" value={this.props.codigo} name="nome" onChange={this.props.handleInputChange} type="number" required />
+                                        <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode} type="number" required />
                                         <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''}>Código</label>
                                     </div>
                                 </div>

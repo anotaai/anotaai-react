@@ -27,17 +27,21 @@ class NewDetail extends Component {
             <Detail
                 title="Cadastro de Produtos"
                 id={this.props.detailState.id}
+                codigoGerado={this.props.detailState.codigoGerado}
+                ehInsumo={this.props.detailState.ehInsumo}
                 codigo={this.props.detailState.codigo}
                 descricao={this.props.detailState.descricao}
                 descricaoResumida={this.props.detailState.descricaoResumida}
                 unidadeMedida={this.props.detailState.unidadeMedida}
                 precoVenda={this.props.detailState.precoVenda}
+                blockCode={this.props.detailState.blockCode}
                 unidadeList={this.props.detailState.unidadeList}
                 diasDisponibilidades={this.props.detailState.diasDisponibilidades}
                 diasSemana={this.props.detailState.diasSemana}
                 merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}
+                handleCheckbox={this.props.handleCheckbox}
                 updateAvailableDays={this.props.updateAvailableDays} />
         )
     }
@@ -53,6 +57,10 @@ const mapDispatchToProps = dispatch => {
 
         handleInputChange: (e) => {
           dispatch(handleInputChange(e.target.name, e.target.value));
+        },
+
+        handleCheckbox: (e) => {
+          dispatch(handleInputChange(e.target.name, e.target.checked));
         },
 
         clearForm: () => {
