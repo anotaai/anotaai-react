@@ -19,6 +19,7 @@ class NewDetail extends Component {
         this.props.clearForm();
     }
 
+
     save(e) {
 
         e.preventDefault();

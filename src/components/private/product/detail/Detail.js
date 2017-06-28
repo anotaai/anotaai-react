@@ -1,10 +1,12 @@
 import React , {Component} from 'react'
 import { PanelHeader, PanelFooterDetail } from '../../../panels'
-import { URL } from '../../../../helpers/constants'
+import { URL, CHIPS_THEME } from '../../../../helpers/constants'
+import  SimpleCurrencyInput from  'react-simple-currency'
+import Chips  from 'react-chips'
 
 export default class Detail  extends Component {
 
-
+   
 
   
     render() {
@@ -18,19 +20,44 @@ export default class Detail  extends Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="codigo" ref="codigo" value={this.props.codigo} name="nome" onChange={this.props.handleInputChange} type="number" required />
-                                        <label htmlFor="codigo" className={this.props.codigo != null ? 'active' : ''}>Código</label>
+                                        <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''}>Código</label>
                                     </div>
                                 </div>
                                  <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="descricao" value={this.props.descricao} name="descricao" onChange={this.props.handleInputChange} type="text" required />
-                                        <label htmlFor="descricao" className={this.props.descricao != null ? 'active' : ''}>Descrição</label>
+                                        <label htmlFor="descricao" className={this.props.descricao !== '' ? 'active' : ''}>Descrição</label>
                                     </div>
                                 </div>
                                  <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="descricaoResumida" value={this.props.descricaoResumida} name="descricaoResumida" onChange={this.props.handleInputChange} type="text" required />
-                                        <label htmlFor="descricaoResumida" className={this.props.codigo != null ? 'active' : ''}>Descrição Resumida</label>
+                                        <label htmlFor="descricaoResumida" className={this.props.descricaoResumida !== '' ? 'active' : ''}>Descrição Resumida</label>
+                                    </div>
+                                </div>
+                                 <div className="row">
+                                    <div className="input-field col s12 m12 l12">
+                                        <select className="browser-default"  onChange={this.props.handleInputChange} value={this.props.unidadeMedida.type} name="unidadeMedida.type" >
+                                            <option value="">Unidade de Medida</option>
+                                            {this.props.unidadeList.map(unidade => (<option key={unidade.type} value={unidade.type}>{unidade.descricao}</option>))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="input-field col s12 m12 l12">
+                                        <label htmlFor="precoVenda" className="active">Preço</label>
+                                        <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$' precision={2} separator=',' delimiter='.' name="precoVenda" 
+                                         onChange={this.props.handleInputChange}
+                                         onInputChange={this.onMoneyInputChange} />                                    
+                                    </div>
+                                </div>
+                                 <div className="row">
+                                    <div className="input-field col s12 m12 l12">
+                                        <label htmlFor="dias" className="active" style={{paddingBottom:'8px'}} >Disponibilidade</label>
+                                        <Chips id="dias"  theme={CHIPS_THEME}
+                                            value={this.props.diasDisponibilidades}
+                                            onChange={this.props.updateAvailableDays}
+                                            suggestions={this.props.diasSemana} />
                                     </div>
                                 </div>
                             </div>

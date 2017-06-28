@@ -102,7 +102,7 @@ import { connect } from 'react-redux';
 
                         <div id="estadosDiv" className="input-field col s12 m6 l6">
                             <select className="browser-default" disabled={disabled} onChange={this.props.handleInputChange} value={this.props.vendedorState.cliente.endereco.estado} name="cliente.endereco.estado"   >
-                                <option value="">Selecione o estado</option>
+                                <option value="">Estado</option>
                                 {this.props.vendedorState.estadoList.map(estado => (<option key={estado.type} value={estado.type}>{estado.descricao}</option>))}
                             </select>
                         </div>
