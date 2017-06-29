@@ -1,4 +1,4 @@
-import { CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK,UPDATE_AVAILABLE_DAYS } from '../actions/productActionCreator';
+import { CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK,UPDATE_AVAILABLE_DAYS, UPDATE_PRODUCT, NEW_DEFAULT_VALUES } from '../actions/productActionCreator';
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
 
 const INITIAL_STATE = {
@@ -11,7 +11,7 @@ const INITIAL_STATE = {
     codigoGerado: false,
     ehInsumo: false,
     unidadeList: [],
-    diasDisponibilidades: [],
+    diasDisponibilidade: [],
     diasSemana: [],
     blockCode: false
 }
@@ -21,7 +21,6 @@ export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
 
         case HANDLE_INPUT_CHANGE_PRODUCT: {
-           
             const newState = getObjectNewState(action.name, action.value, state);
             
             if(action.name === 'codigoGerado' && action.value === true){
@@ -47,20 +46,41 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
-         case UPDATE_DAY_OF_WEEK: {
+        case UPDATE_DAY_OF_WEEK: {
              const newState = createInstance(state);
              action.json.forEach(day => {
                  newState.diasSemana.push(day.descricao);
              });
-             
-             newState.diasDisponibilidades = newState.diasSemana;
-             
              return newState;
+        }
+
+        case NEW_DEFAULT_VALUES: {
+            const newState = createInstance(state);
+            newState.diasDisponibilidade = newState.diasSemana; 
+            return newState;
         }
         
         case UPDATE_AVAILABLE_DAYS: {
             const newState = createInstance(state);
-            newState.diasDisponibilidades = action.chips;
+            newState.diasDisponibilidade = action.chips;
+            return newState;
+        }
+
+         case UPDATE_PRODUCT: {
+           
+            const newState = createInstance(state);
+            newState.id = action.entity.id;
+            newState.codigo = action.entity.codigo;
+            newState.descricao = action.entity.descricao;
+            newState.descricaoResumida = action.entity.descricaoResumida;
+            newState.unidadeMedida = action.entity.unidadeMedida;
+            newState.precoVenda = action.entity.precoVenda;
+            newState.codigoGerado = action.entity.codigoGerado;
+            
+             action.entity.diasDisponibilidade.forEach(json => {
+                 newState.diasDisponibilidade.push(json.dia.descricao);
+             });
+
             return newState;
         }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays,newDefaultValues } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 
 
@@ -11,6 +11,7 @@ class NewDetail extends Component {
     componentDidMount() {
         this.props.loadUnityEnum();
         this.props.loadDayOfWeekEnum();
+        this.props.newDefaultValues();
     }
 
     componentWillUnmount() {
@@ -21,6 +22,7 @@ class NewDetail extends Component {
     save(e) {
         e.preventDefault();
     }
+
 
     render() {
         return (
@@ -36,7 +38,7 @@ class NewDetail extends Component {
                 precoVenda={this.props.detailState.precoVenda}
                 blockCode={this.props.detailState.blockCode}
                 unidadeList={this.props.detailState.unidadeList}
-                diasDisponibilidades={this.props.detailState.diasDisponibilidades}
+                diasDisponibilidade={this.props.detailState.diasDisponibilidade}
                 diasSemana={this.props.detailState.diasSemana}
                 merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el}
@@ -74,9 +76,11 @@ const mapDispatchToProps = dispatch => {
         loadDayOfWeekEnum: () => {
            dispatch(EnumService.load('diasemana',updateDayOfWeek));
         },
-
         updateAvailableDays: (chips) => {
            dispatch(updateAvailableDays(chips));
+        },
+        newDefaultValues:() => {
+           dispatch(newDefaultValues());
         }
     }
 }

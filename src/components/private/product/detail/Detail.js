@@ -1,13 +1,13 @@
 import React , {Component} from 'react'
 import { PanelHeader, PanelFooterDetail } from '../../../panels'
-import { URL, CHIPS_THEME } from '../../../../helpers/constants'
+import { URL, CHIPS_THEME, AUTO_COMPLETE_WRAPPER_STYLE, AUTO_COMPLETE_MENU_STYLE } from '../../../../helpers/constants'
 import  SimpleCurrencyInput from  'react-simple-currency'
 import Chips  from 'react-chips'
+import Autocomplete from 'react-autocomplete'
 
 export default class Detail  extends Component {
 
    
-
   
     render() {
         return (
@@ -56,20 +56,25 @@ export default class Detail  extends Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <label htmlFor="precoVenda" className="active">Preço</label>
-                                        <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$' precision={2} separator=',' delimiter='.' name="precoVenda" 
-                                         onChange={this.props.handleInputChange}
-                                         onInputChange={this.onMoneyInputChange} />                                    
+                                        <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$' precision={2} separator=',' delimiter='.' name="precoVenda"  onChange={this.props.handleInputChange}/>                                    
                                     </div>
                                 </div>
                                  <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <label htmlFor="dias" className="active" style={{paddingBottom:'8px'}} >Disponibilidade</label>
                                         <Chips id="dias"  theme={CHIPS_THEME}
-                                            value={this.props.diasDisponibilidades}
+                                            value={this.props.diasDisponibilidade}
                                             onChange={this.props.updateAvailableDays}
                                             suggestions={this.props.diasSemana} />
                                     </div>
                                 </div>
+                                
+                                  <div className="row">
+                                    <div className="input-field col s12 m12 l12">
+                                        
+                                    </div>
+                                 </div>
+
                             </div>
                             <PanelFooterDetail customButtons={this.props.customButtons}  customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.GROUP_PRODUCT} submitRef={this.props.submitRef}   />
                         </form>

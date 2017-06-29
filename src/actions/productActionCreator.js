@@ -3,7 +3,9 @@ HANDLE_INPUT_CHANGE_PRODUCT = 'handle_input_change_product',
 UPDATE_STATE_PRODUCT = 'update_state_product',
 UPDATE_UNIT = 'update_unit',
 UPDATE_DAY_OF_WEEK = 'update_day_of_week',
-UPDATE_AVAILABLE_DAYS = 'update_available_days'
+UPDATE_AVAILABLE_DAYS = 'update_available_days',
+UPDATE_PRODUCT ='update_product',
+NEW_DEFAULT_VALUES = 'new_default_values'
 
 
 
@@ -29,4 +31,12 @@ export function updateDayOfWeek(json) {
 
 export function updateAvailableDays(chips) {
      return { type: UPDATE_AVAILABLE_DAYS , chips }
+}
+
+export function updateProduct(entity) {
+     return { type: UPDATE_PRODUCT , entity }
+}
+
+export function newDefaultValues(json) {
+     return { type: NEW_DEFAULT_VALUES  }
 }
