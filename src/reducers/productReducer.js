@@ -37,6 +37,7 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
             newState.precoVenda = 0;
+            newState.codigo = '';
             return newState;
         }
 
