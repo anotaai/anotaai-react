@@ -65,7 +65,8 @@ export const AUTO_COMPLETE_MENU_STYLE = {
   position: 'fixed',
   overflow: 'auto',
   maxHeight: '50%',
-  zIndex: '999'
+  zIndex: '999',
+  cursor: 'pointer'
 }
 
 export const AUTO_COMPLETE_WRAPPER_STYLE = { display: 'inline' }
@@ -116,6 +117,7 @@ export const CHIPS_THEME = {
     listStyle: 'none',
     padding: 0,
     margin: 0,
+    cursor: 'pointer'
   },
   suggestion: {
     padding: '5px 15px'
