@@ -46,8 +46,7 @@ export default class Detail extends Component {
                                         <label htmlFor="sector-autocomplete">Setor</label>
 
                                         <Autocomplete
-                                            inputProps={{ id: 'sector-autocomplete' }}
-                                            ref="autocomplete"
+                                            inputProps={{ id: 'sector-autocomplete', placeholder: "Nome" }}
                                             value={this.props.setor.nome}
                                             wrapperStyle={AUTO_COMPLETE_WRAPPER_STYLE}
                                             menuStyle={AUTO_COMPLETE_MENU_STYLE}

@@ -75,10 +75,9 @@ export default class Detail  extends Component {
 
                                         <label htmlFor="product-autocomplete" className="active">Receita</label>
 
+
                                          <Autocomplete
-                                            inputProps={{ id: 'product-autocomplete' }}
-                                            ref="autocomplete"
-                                            id="product-autocomplete"
+                                            inputProps={{ id: 'product-autocomplete' , placeholder: 'Produto' }}
                                             value={this.props.produtoSelecionado.descricao}
                                             wrapperStyle={AUTO_COMPLETE_WRAPPER_STYLE}
                                             menuStyle={AUTO_COMPLETE_MENU_STYLE}
