@@ -6,6 +6,7 @@ UPDATE_AVAILABLE_DAYS = 'update_available_days',
 UPDATE_PRODUCT ='update_product',
 UPDATE_PRODUCT_LIST = 'update_product_list',
 UPDATE_PRODUCT_AUTO_COMPLETE = 'update_product_auto_complete',
+UPDATE_TABLE_ITENS = 'update_table_itens',
 NEW_DEFAULT_VALUES = 'new_default_values'
 
 export function clearForm() {
@@ -42,5 +43,9 @@ export function updateProductAutoComplete(product) {
 
 export function newDefaultValues(json) {
      return { type: NEW_DEFAULT_VALUES  }
+}
+
+export function updateTableItens(json) {
+     return { type: UPDATE_TABLE_ITENS  }
 }
 

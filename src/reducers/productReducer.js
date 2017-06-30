@@ -1,5 +1,5 @@
 import { CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK,UPDATE_AVAILABLE_DAYS, UPDATE_PRODUCT, NEW_DEFAULT_VALUES,
-UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE } from '../actions/productActionCreator';
+UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE, UPDATE_TABLE_ITENS } from '../actions/productActionCreator';
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
 
 const INITIAL_STATE = {
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
     unidadeList: [],
     diasDisponibilidade: [],
     diasSemana: [],
-    itemReceita: [],
+    itensReceita: [],
     produtos: []
 }
 
@@ -104,6 +104,13 @@ export default function (state = INITIAL_STATE, action) {
                  newState.diasDisponibilidade.push(json.dia.descricao);
             });
 
+            return newState;
+        }
+
+        case UPDATE_TABLE_ITENS: {
+
+            const newState = createInstance(state);
+           
             return newState;
         }
 

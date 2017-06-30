@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, newDefaultValues, updateProductAutoComplete } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, newDefaultValues, 
+    updateProductAutoComplete, updateTableItens } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
 
@@ -45,8 +46,10 @@ class NewDetail extends Component {
                 diasSemana={this.props.detailState.diasSemana}
                 produtos={this.props.detailState.produtos}
                 produtoSelecionado={this.props.detailState.produtoSelecionado}
+                itensReceita={this.props.detailState.itensReceita}
                 getProduct={this.props.getProduct}
                 setProduct={this.props.setProduct}
+                updateTableItens={this.props.updateTableItens}
                 merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}
@@ -97,6 +100,10 @@ const mapDispatchToProps = dispatch => {
                 dispatch(ProductService.getProducts(value));
             });
 
+        },
+
+        updateTableItens: () => {
+           dispatch(updateTableItens());
         },
 
         setProduct: (product) => {
