@@ -103,7 +103,7 @@ export default class Detail  extends Component {
                                     </div>
                                     <div className="input-field col s12 m2 l2" style={{paddingTop:'10px'}}>
                                         <button type="button" className="btn  waves-effect INFO"  title="Adicionar" >
-                                            <i className="material-icons center">arrow_downward</i>
+                                            <i className="material-icons center">file_download</i>
                                         </button>
                                     </div>
                                  </div>
