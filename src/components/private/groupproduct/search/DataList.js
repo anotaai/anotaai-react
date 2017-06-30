@@ -3,6 +3,7 @@ import { pushEncoded } from '../../../App'
 
 export default class DataList extends Component {
  
+ 
 
     render() {
 
@@ -25,7 +26,7 @@ export default class DataList extends Component {
                                     <tr key={result.id}>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.nome}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.descricao}</td>
-                                        <td  className="row-td"><a href="#" onClick={this.props.remove.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
+                                        <td  className="row-td"><a onClick={this.props.remove.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
                         </tbody>

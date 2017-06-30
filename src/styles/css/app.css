@@ -201,6 +201,10 @@ footer {
   cursor: pointer;
 }
 
+.row-td-detail {
+  text-align: center;
+}
+
 .buttons-space {
    margin-left: 5px;
 }

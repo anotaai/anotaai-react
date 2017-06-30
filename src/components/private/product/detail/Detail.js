@@ -66,8 +66,7 @@ export default class Detail extends Component {
                                             suggestions={this.props.diasSemana} />
                                     </div>
                                 </div>
-
-
+                                
                                 <div className="row">
                                     <div className="input-field col s12 m8 l8">
 
@@ -94,7 +93,7 @@ export default class Detail extends Component {
                                             }} />
                                     </div>
                                     <div className="input-field col s12 m2 l2">
-                                        <input type="number" value={this.props.qtdProduct} placeholder="Quantidade" />
+                                        <input type="number" value={this.props.qtdProduct} placeholder="Quantidade" name="qtdProduct" onChange={this.props.handleInputChange} />
                                     </div>
                                     <div className="input-field col s12 m2 l2" style={{ paddingTop: '10px' }}>
                                         <button type="button" className="btn  waves-effect INFO" title="Adicionar" onClick={this.props.updateTableItens} >
@@ -102,17 +101,13 @@ export default class Detail extends Component {
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
 
-
-                            {this.props.itensReceita !== 0 && 
+                            {this.props.itensReceita.length > 0 && 
                              
                              <div className="row">
-
                                 <div className="col s12 offset-m2 m7 offset-l2 l7">
-                                 
-                                <table className="striped">
+                                <table className="striped bordered">
                                     <thead>
                                         <tr>
                                             <th className="row-th">Produto</th>
@@ -123,17 +118,16 @@ export default class Detail extends Component {
                                     <tbody>
                                         {this.props.itensReceita.map(item => {
                                             return (
-                                                <tr key={item.id}>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                <tr key={item.ingrediente.id}>
+                                                    <td className="row-td-detail">{item.ingrediente.descricao}</td>
+                                                    <td className="row-td-detail">{item.quantidade}</td>
+                                                    <td className="row-td"><a onClick={this.props.removeProduct.bind(this,item.ingrediente.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                                 </tr>)
                                         })}
                                     </tbody>
                                 </table>
                                 </div>                                  
                              </div> }
-
                             <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.GROUP_PRODUCT} submitRef={this.props.submitRef} />
                         </form>
                     </div>
@@ -141,6 +135,4 @@ export default class Detail extends Component {
             </div>
         );
     }
-
-
 }

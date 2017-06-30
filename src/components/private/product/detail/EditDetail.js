@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, updateProduct } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, updateProduct, updateProductAutoComplete, updateTableItens,removeProduct } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
 import Base64Service from '../../../../services/app/Base64Service'
@@ -19,7 +19,7 @@ class EditDetail extends Component {
     }
 
     componentWillUnmount() {
-       this.props.clearForm();
+        this.props.clearForm();
     }
 
     componentDidMount() {
@@ -30,6 +30,7 @@ class EditDetail extends Component {
         return (
             <Detail
                 title="Edição de Produtos"
+                merge={this.update.bind(this)}
                 id={this.props.detailState.id}
                 codigoGerado={this.props.detailState.codigoGerado}
                 ehInsumo={this.props.detailState.ehInsumo}
@@ -41,10 +42,15 @@ class EditDetail extends Component {
                 blockCode={this.props.detailState.blockCode}
                 unidadeList={this.props.detailState.unidadeList}
                 diasDisponibilidade={this.props.detailState.diasDisponibilidade}
+                qtdProduct={this.props.detailState.qtdProduct}
                 diasSemana={this.props.detailState.diasSemana}
                 produtos={this.props.detailState.produtos}
                 produtoSelecionado={this.props.detailState.produtoSelecionado}
-                merge={this.update.bind(this)}
+                itensReceita={this.props.detailState.itensReceita}
+                getProduct={this.props.getProduct}
+                setProduct={this.props.setProduct}
+                removeProduct={this.props.removeProduct}
+                updateTableItens={this.props.updateTableItens}
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}
                 handleCheckbox={this.props.handleCheckbox}
@@ -62,31 +68,54 @@ const mapDispatchToProps = dispatch => {
     return {
 
         handleInputChange: (e) => {
-          dispatch(handleInputChange(e.target.name, e.target.value));
+            dispatch(handleInputChange(e.target.name, e.target.value));
         },
 
         handleCheckbox: (e) => {
-          dispatch(handleInputChange(e.target.name, e.target.checked));
+            dispatch(handleInputChange(e.target.name, e.target.checked));
         },
 
         clearForm: () => {
             dispatch(clearForm());
         },
+        loadUnityEnum: () => {
+            dispatch(EnumService.load('unidadesmedida', updateUnit));
+        },
+        loadDayOfWeekEnum: () => {
+            dispatch(EnumService.load('diasemana', updateDayOfWeek));
+        },
+        updateAvailableDays: (chips) => {
+            dispatch(updateAvailableDays(chips));
+        },
+        getProduct: (name, value) => {
+            new Promise((resolve) => {
+                resolve(dispatch(handleInputChange(name, value)));
+            }).then(() => {
+                dispatch(ProductService.getProducts(value));
+            });
+        },
+
+        updateTableItens: () => {
+            dispatch(updateTableItens());
+        },
+        setProduct: (product) => {
+            dispatch(updateProductAutoComplete(product));
+        },
+        removeProduct: (id) => {
+            dispatch(removeProduct(id));
+        },
 
         findById: (id) => {
-            
             new Promise((resolve) => {
                 resolve(dispatch(ProductService.findById(id, updateProduct)));
             }).then(() => {
-                dispatch(EnumService.load('unidadesmedida',updateUnit));
-                dispatch(EnumService.load('diasemana',updateDayOfWeek));
+                dispatch(EnumService.load('unidadesmedida', updateUnit));
+                dispatch(EnumService.load('diasemana', updateDayOfWeek));
             });
 
         },
 
-        updateAvailableDays: (chips) => {
-           dispatch(updateAvailableDays(chips));
-        }
+
     }
 }
 

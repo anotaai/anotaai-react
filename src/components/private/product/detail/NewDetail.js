@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, newDefaultValues, 
-    updateProductAutoComplete, updateTableItens } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, 
+    updateAvailableDays, newDefaultValues, updateProductAutoComplete, updateTableItens,removeProduct } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
-
-
 
 
 class NewDetail extends Component {
@@ -29,9 +27,11 @@ class NewDetail extends Component {
 
 
     render() {
+        
         return (
             <Detail
                 title="Cadastro de Produtos"
+                merge={this.save.bind(this)}
                 id={this.props.detailState.id}
                 codigoGerado={this.props.detailState.codigoGerado}
                 ehInsumo={this.props.detailState.ehInsumo}
@@ -43,14 +43,15 @@ class NewDetail extends Component {
                 blockCode={this.props.detailState.blockCode}
                 unidadeList={this.props.detailState.unidadeList}
                 diasDisponibilidade={this.props.detailState.diasDisponibilidade}
+                qtdProduct={this.props.detailState.qtdProduct}
                 diasSemana={this.props.detailState.diasSemana}
                 produtos={this.props.detailState.produtos}
                 produtoSelecionado={this.props.detailState.produtoSelecionado}
                 itensReceita={this.props.detailState.itensReceita}
                 getProduct={this.props.getProduct}
                 setProduct={this.props.setProduct}
+                removeProduct={this.props.removeProduct}
                 updateTableItens={this.props.updateTableItens}
-                merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}
                 handleCheckbox={this.props.handleCheckbox}
@@ -105,9 +106,11 @@ const mapDispatchToProps = dispatch => {
         updateTableItens: () => {
            dispatch(updateTableItens());
         },
-
         setProduct: (product) => {
             dispatch(updateProductAutoComplete(product));
+        },
+        removeProduct: (id) => {
+            dispatch(removeProduct(id));
         }
     }
 }

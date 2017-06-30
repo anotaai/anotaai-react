@@ -31,7 +31,7 @@ export default class DataList extends Component {
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.estoque.precoCusto}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.precoVenda}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.estoque.quantidadeEstoque}&nbsp;{result.unidadeMedida.sigla}</td>
-                                        <td  className="row-td"><a href="#" onClick={this.props.remove.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
+                                        <td  className="row-td"><a onClick={this.props.remove.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
                         </tbody>
