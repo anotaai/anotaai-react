@@ -42,6 +42,8 @@ class EditDetail extends Component {
                 unidadeList={this.props.detailState.unidadeList}
                 diasDisponibilidade={this.props.detailState.diasDisponibilidade}
                 diasSemana={this.props.detailState.diasSemana}
+                produtos={this.props.detailState.produtos}
+                produtoSelecionado={this.props.detailState.produtoSelecionado}
                 merge={this.update.bind(this)}
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}

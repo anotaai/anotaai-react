@@ -1,4 +1,5 @@
-import { CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK,UPDATE_AVAILABLE_DAYS, UPDATE_PRODUCT, NEW_DEFAULT_VALUES } from '../actions/productActionCreator';
+import { CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK,UPDATE_AVAILABLE_DAYS, UPDATE_PRODUCT, NEW_DEFAULT_VALUES,
+UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE } from '../actions/productActionCreator';
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
 
 const INITIAL_STATE = {
@@ -7,13 +8,16 @@ const INITIAL_STATE = {
     descricao: '',
     descricaoResumida: '',
     unidadeMedida: { type: '' , descricao: ''},
+    produtoSelecionado: { id: null,  descricao: '' },
     precoVenda: 0,
     codigoGerado: false,
     ehInsumo: false,
+    blockCode: false,
     unidadeList: [],
     diasDisponibilidade: [],
     diasSemana: [],
-    blockCode: false
+    itemReceita: [],
+    produtos: []
 }
 
 
@@ -67,6 +71,24 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
+         case UPDATE_PRODUCT_LIST: {
+            const newState = createInstance(state);
+            newState.produtos = [];
+          
+            action.list.forEach(product => {
+                 newState.produtos.push({id: product.id  , descricao: product.descricao });
+            });
+            return newState;
+        }
+
+
+        case UPDATE_PRODUCT_AUTO_COMPLETE: {
+           const newState = createInstance(state);
+           newState.produtoSelecionado.id = action.product.id;
+           newState.produtoSelecionado.descricao = action.product.descricao;
+           return newState;
+        }
+
          case UPDATE_PRODUCT: {
            
             const newState = createInstance(state);
@@ -78,9 +100,9 @@ export default function (state = INITIAL_STATE, action) {
             newState.precoVenda = action.entity.precoVenda;
             newState.codigoGerado = action.entity.codigoGerado;
             
-             action.entity.diasDisponibilidade.forEach(json => {
+            action.entity.diasDisponibilidade.forEach(json => {
                  newState.diasDisponibilidade.push(json.dia.descricao);
-             });
+            });
 
             return newState;
         }

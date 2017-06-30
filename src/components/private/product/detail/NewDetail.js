@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays,newDefaultValues } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, newDefaultValues, updateProductAutoComplete } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
+import ProductService from '../../../../services/product/ProductService'
+
+
 
 
 class NewDetail extends Component {
@@ -15,7 +18,7 @@ class NewDetail extends Component {
     }
 
     componentWillUnmount() {
-      this.props.clearForm();
+        this.props.clearForm();
     }
 
 
@@ -40,6 +43,10 @@ class NewDetail extends Component {
                 unidadeList={this.props.detailState.unidadeList}
                 diasDisponibilidade={this.props.detailState.diasDisponibilidade}
                 diasSemana={this.props.detailState.diasSemana}
+                produtos={this.props.detailState.produtos}
+                produtoSelecionado={this.props.detailState.produtoSelecionado}
+                getProduct={this.props.getProduct}
+                setProduct={this.props.setProduct}
                 merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}
@@ -58,11 +65,11 @@ const mapDispatchToProps = dispatch => {
     return {
 
         handleInputChange: (e) => {
-          dispatch(handleInputChange(e.target.name, e.target.value));
+            dispatch(handleInputChange(e.target.name, e.target.value));
         },
 
         handleCheckbox: (e) => {
-          dispatch(handleInputChange(e.target.name, e.target.checked));
+            dispatch(handleInputChange(e.target.name, e.target.checked));
         },
 
         clearForm: () => {
@@ -70,17 +77,30 @@ const mapDispatchToProps = dispatch => {
         },
 
         loadUnityEnum: () => {
-           dispatch(EnumService.load('unidadesmedida',updateUnit));
+            dispatch(EnumService.load('unidadesmedida', updateUnit));
         },
 
         loadDayOfWeekEnum: () => {
-           dispatch(EnumService.load('diasemana',updateDayOfWeek));
+            dispatch(EnumService.load('diasemana', updateDayOfWeek));
         },
         updateAvailableDays: (chips) => {
-           dispatch(updateAvailableDays(chips));
+            dispatch(updateAvailableDays(chips));
         },
-        newDefaultValues:() => {
-           dispatch(newDefaultValues());
+        newDefaultValues: () => {
+            dispatch(newDefaultValues());
+        },
+
+        getProduct: (name, value) => {
+            new Promise((resolve) => {
+                resolve(dispatch(handleInputChange(name, value)));
+            }).then(() => {
+                dispatch(ProductService.getProducts(value));
+            });
+
+        },
+
+        setProduct: (product) => {
+            dispatch(updateProductAutoComplete(product));
         }
     }
 }

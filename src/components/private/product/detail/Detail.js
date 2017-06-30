@@ -69,14 +69,48 @@ export default class Detail  extends Component {
                                     </div>
                                 </div>
                                 
+
                                   <div className="row">
-                                    <div className="input-field col s12 m12 l12">
+                                    <div className="input-field col s12 m8 l8">
+
+                                        <label htmlFor="product-autocomplete" className="active">Receita</label>
+
+                                         <Autocomplete
+                                            inputProps={{ id: 'product-autocomplete' }}
+                                            ref="autocomplete"
+                                            id="product-autocomplete"
+                                            value={this.props.produtoSelecionado.descricao}
+                                            wrapperStyle={AUTO_COMPLETE_WRAPPER_STYLE}
+                                            menuStyle={AUTO_COMPLETE_MENU_STYLE}
+                                            renderItem={(item, isHighlighted) =>
+                                                <div id={item.id}  key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                                    {item.descricao}
+                                                </div>
+                                            }
+                                            items={this.props.produtos}
+                                            getItemValue={(item) => item.descricao}
+                                            onSelect={(value, item) => {
+                                                this.props.setProduct(item);
+                                            }}
+
+                                            onChange={(event, value) => {
+                                                this.props.getProduct('produtoSelecionado.descricao',value);
+                                            }}
+                                        />
                                         
+                                    </div>
+                                    <div className="input-field col s12 m2 l2">
+                                         <input type="number"  value={this.props.qtdProduct}  placeholder="Quantidade" />
+                                    </div>
+                                    <div className="input-field col s12 m2 l2" style={{paddingTop:'10px'}}>
+                                        <button type="button" className="btn  waves-effect INFO"  title="Adicionar" >
+                                            <i className="material-icons center">arrow_downward</i>
+                                        </button>
                                     </div>
                                  </div>
 
                             </div>
-                            <PanelFooterDetail customButtons={this.props.customButtons}  customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.GROUP_PRODUCT} submitRef={this.props.submitRef}   />
+                            <PanelFooterDetail customButtons={this.props.customButtons}  customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.GROUP_PRODUCT} submitRef={this.props.submitRef} />
                         </form>
                     </div>
                 </div>
