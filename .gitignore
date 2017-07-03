@@ -22,3 +22,4 @@ yarn-error.log*
 # eclipse ide
 /.project
 /.settings/
+/.tern-project
