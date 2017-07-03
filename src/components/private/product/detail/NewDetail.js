@@ -23,6 +23,8 @@ class NewDetail extends Component {
 
     save(e) {
         e.preventDefault();
+
+       
     }
 
 

@@ -51,18 +51,7 @@ export default class Detail extends Component {
                                         <label htmlFor="descricaoResumida" className={this.props.descricaoResumida !== '' ? 'active' : ''}>Descrição Resumida</label>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="space-container">
-                    <div className="container">
-                        <PanelHeader icon="library_books" label="Itens Receita" />
-                        <div className="panel">
-                            <div className="container">
-                                <div className="row">
-
+                                  <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <label htmlFor="precoVenda" className="active">Preço</label>
                                         <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$' precision={2} separator=',' delimiter='.' name="precoVenda" onChange={this.props.handleInputChange} />
@@ -77,7 +66,16 @@ export default class Detail extends Component {
                                             suggestions={this.props.diasSemana} />
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div className="space-container">
+                    <div className="container">
+                        <PanelHeader icon="library_books" label="Itens Receita" />
+                        <div className="panel">
+                            <div className="container">
                                 <div className="row">
                                     <div className="input-field col s12 m8 l8">
 
