@@ -51,7 +51,7 @@ export default class Detail extends Component {
                                             wrapperStyle={AUTO_COMPLETE_WRAPPER_STYLE}
                                             menuStyle={AUTO_COMPLETE_MENU_STYLE}
                                             renderItem={(item, isHighlighted) =>
-                                                <div id={item.id}  key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                                <div id={item.id}  key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' , cursor:'pointer'}}>
                                                     {item.nome}
                                                 </div>
                                             }
