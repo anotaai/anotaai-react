@@ -9,11 +9,11 @@ export default class Detail extends Component {
 
     render() {
         return (
-            <div className="space-container">
-                <div className="container">
-                    <PanelHeader icon="business_center" label={this.props.title} />
-                    <div className="panel">
-                        <form onSubmit={this.props.merge.bind(this)}>
+            <form onSubmit={this.props.merge.bind(this)}>
+                <div className="space-container">
+                    <div className="container">
+                        <PanelHeader icon="business_center" label={this.props.title} />
+                        <div className="panel">
                             <div className="container">
                                 <div className="row center-align">
                                     <div className="input-field col s6 m6 l6">
@@ -39,12 +39,6 @@ export default class Detail extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="descricaoResumida" value={this.props.descricaoResumida} name="descricaoResumida" onChange={this.props.handleInputChange} type="text" required />
-                                        <label htmlFor="descricaoResumida" className={this.props.descricaoResumida !== '' ? 'active' : ''}>Descrição Resumida</label>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="input-field col s12 m12 l12">
                                         <select className="browser-default" onChange={this.props.handleInputChange} value={this.props.unidadeMedida.type} name="unidadeMedida.type" >
                                             <option value="">Unidade de Medida</option>
                                             {this.props.unidadeList.map(unidade => (<option key={unidade.type} value={unidade.type}>{unidade.descricao}</option>))}
@@ -52,6 +46,23 @@ export default class Detail extends Component {
                                     </div>
                                 </div>
                                 <div className="row">
+                                    <div className="input-field col s12 m12 l12">
+                                        <input id="descricaoResumida" value={this.props.descricaoResumida} name="descricaoResumida" onChange={this.props.handleInputChange} type="text" required />
+                                        <label htmlFor="descricaoResumida" className={this.props.descricaoResumida !== '' ? 'active' : ''}>Descrição Resumida</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-container">
+                    <div className="container">
+                        <PanelHeader icon="library_books" label="Itens Receita" />
+                        <div className="panel">
+                            <div className="container">
+                                <div className="row">
+
                                     <div className="input-field col s12 m12 l12">
                                         <label htmlFor="precoVenda" className="active">Preço</label>
                                         <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$' precision={2} separator=',' delimiter='.' name="precoVenda" onChange={this.props.handleInputChange} />
@@ -66,7 +77,7 @@ export default class Detail extends Component {
                                             suggestions={this.props.diasSemana} />
                                     </div>
                                 </div>
-                                
+
                                 <div className="row">
                                     <div className="input-field col s12 m8 l8">
 
@@ -103,36 +114,36 @@ export default class Detail extends Component {
                                 </div>
                             </div>
 
-                            {this.props.itensReceita.length > 0 && 
-                             
-                             <div className="row">
-                                <div className="col s12 offset-m2 m7 offset-l2 l7">
-                                <table className="striped bordered">
-                                    <thead>
-                                        <tr>
-                                            <th className="row-th">Produto</th>
-                                            <th className="row-th">Quantidade</th>
-                                            <th className="row-th">Excluir</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.props.itensReceita.map(item => {
-                                            return (
-                                                <tr key={item.ingrediente.id}>
-                                                    <td className="row-td-detail">{item.ingrediente.descricao}</td>
-                                                    <td className="row-td-detail">{item.quantidade}</td>
-                                                    <td className="row-td"><a onClick={this.props.removeProduct.bind(this,item.ingrediente.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
-                                                </tr>)
-                                        })}
-                                    </tbody>
-                                </table>
-                                </div>                                  
-                             </div> }
+                            {this.props.itensReceita.length > 0 &&
+
+                                <div className="row">
+                                    <div className="col s12 offset-m2 m7 offset-l2 l7">
+                                        <table className="striped bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th className="row-th">Produto</th>
+                                                    <th className="row-th">Quantidade</th>
+                                                    <th className="row-th">Excluir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {this.props.itensReceita.map(item => {
+                                                    return (
+                                                        <tr key={item.ingrediente.id}>
+                                                            <td className="row-td-detail">{item.ingrediente.descricao}</td>
+                                                            <td className="row-td-detail">{item.quantidade}</td>
+                                                            <td className="row-td"><a onClick={this.props.removeProduct.bind(this, item.ingrediente.id)} style={{ color: 'black' }}><i className="material-icons">delete</i></a></td>
+                                                        </tr>)
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>}
                             <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.GROUP_PRODUCT} submitRef={this.props.submitRef} />
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         );
     }
 }
