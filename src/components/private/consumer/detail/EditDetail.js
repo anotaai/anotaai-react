@@ -91,8 +91,9 @@ class EditDetail extends Component {
         merge={this.update.bind(this)}
         handleInputChange={this.props.handleInputChange}
         editMode="S"
-        customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} isRecommendEdition={this.props.detailState.recommendEdition} recommendEdition={this.recommendEdition.bind(this)} />}
-        customButtons={<CustomButtons remove={this.remove.bind(this)} isRecommendEdition={this.props.detailState.recommendEdition} recommendEdition={this.recommendEdition.bind(this)} submitRef={el => this.recommendButton = el} />}
+        remove={this.remove.bind(this)}
+        customResponsiveButtons={<CustomResponsiveButtons isRecommendEdition={this.props.detailState.recommendEdition} recommendEdition={this.recommendEdition.bind(this)} />}
+        customButtons={<CustomButtons  isRecommendEdition={this.props.detailState.recommendEdition} recommendEdition={this.recommendEdition.bind(this)} submitRef={el => this.recommendButton = el} />}
         submitRef={el => this.sendButton = el} />
     );
   }

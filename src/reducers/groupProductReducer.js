@@ -25,7 +25,13 @@ export default function (state = INITIAL_STATE, action) {
         }
 
         case UPDATE_STATE_GROUP_PRODUCT: {
-            const newState = createInstance(action.entity);
+            const newState = createInstance(state);
+            newState.id = action.entity.id;
+            newState.nome = action.entity.nome;
+            newState.descricao =  action.entity.descricao;
+            newState.setor.id =  action.entity.setor.id;
+            newState.setor.nome =  action.entity.setor.nome;
+            newState.setor.descricao =  action.entity.setor.descricao;
             newState.setores = [];
             return newState;
         }

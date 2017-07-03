@@ -4,7 +4,6 @@ import Toast from '../../../../helpers/Toast'
 import Detail from './Detail'
 import Base64Service from '../../../../services/app/Base64Service'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
-import { CustomButtons, CustomResponsiveButtons } from '../../templatedetail/customButtons'
 import { clearForm, handleInputChange, updateState, updateSector } from '../../../../actions/groupProductActionCreator'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../../helpers/constants'
@@ -72,8 +71,7 @@ class EditDetail extends Component {
                 submitRef={el => this.sendButton = el}
                 getSector={this.props.getSector}
                 setSector={this.props.setSector}
-                customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
-                customButtons={<CustomButtons remove={this.remove.bind(this)} />} />
+                remove={this.remove.bind(this)} />
         )
     }
 

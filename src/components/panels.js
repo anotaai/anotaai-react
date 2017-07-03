@@ -8,7 +8,7 @@ export function PanelFooter(props) {
             <div className={props.isPublic ? 'container' : ''}>
                 <div className={props.isPublic ? 'row' : ''}>
 
-                      {/* Botões normais */}
+                    {/* Botões normais */}
 
                     <div className="panel-footer hide-on-small-only">
 
@@ -29,7 +29,7 @@ export function PanelFooter(props) {
                         </button>
                     </div>
 
-                      {/* Botões responsivos */}
+                    {/* Botões responsivos */}
 
                     <div className="panel-footer hide-on-med-and-up">
                         <div className="fixed-action-btn click-to-toggle">
@@ -90,6 +90,11 @@ export function PanelFooterDetail(props) {
             <div className="panel-footer-detail hide-on-small-only">
 
                 {props.customButtons}
+                
+                {props.remove !== undefined &&
+                <button className="btn waves-effect buttons-space ERROR" onClick={props.remove}>
+                    Deletar <i className="material-icons right">delete</i>
+                </button> }
 
                 <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">
                     Gravar <i className="material-icons right">send</i>
@@ -105,6 +110,19 @@ export function PanelFooterDetail(props) {
                     </a>
                     <ul>
                         {props.customResponsiveButtons}
+                        
+                        {props.remove !== undefined &&
+                        <li>
+                            <div className="row">
+                                <div className="col col s2 offset-s8">
+                                    <span className="new badge badge-responsive-align ERROR">Deletar</span>
+                                </div>
+                                <div className="col col s2">
+                                    <button className="btn-floating ERROR" onClick={props.remove}><i className="material-icons">delete</i></button>
+                                </div>
+                            </div>
+                        </li>
+                        }
 
                         <li>
                             <div className="row">

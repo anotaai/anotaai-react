@@ -4,12 +4,24 @@ import { URL, CHIPS_THEME, AUTO_COMPLETE_WRAPPER_STYLE, AUTO_COMPLETE_MENU_STYLE
 import SimpleCurrencyInput from 'react-simple-currency'
 import Chips from 'react-chips'
 import Autocomplete from 'react-autocomplete'
+import { Icon } from '../../../../domain/Icon';
+import Toast from '../../../../helpers/Toast';
 
 export default class Detail extends Component {
 
+   merge(e) {
+
+     if(!this.props.codigoGerado && this.props.codigo === '' ) {
+         Toast.show('codigo.required', Icon.WARNING);
+         return;
+     }
+
+     this.props.merge(e);
+   } 
+
     render() {
         return (
-            <form onSubmit={this.props.merge.bind(this)}>
+            <form onSubmit={this.merge.bind(this)}>
                 <div className="space-container">
                     <div className="container">
                         <PanelHeader icon="business_center" label={this.props.title} />
@@ -27,7 +39,7 @@ export default class Detail extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode} type="number" required />
+                                        <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode} type="number" />
                                         <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''}>Código</label>
                                     </div>
                                 </div>
@@ -144,7 +156,7 @@ export default class Detail extends Component {
                                         </table>
                                     </div>
                                 </div>}
-                            <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.GROUP_PRODUCT} submitRef={this.props.submitRef} />
+                            <PanelFooterDetail   remove={this.props.remove}   searchUrl={URL.PRODUCT} submitRef={this.props.submitRef} />
                         </div>
                     </div>
                 </div>

@@ -31,7 +31,7 @@ export default class Detail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons}  submitRef={this.props.submitRef} />
+                            <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} remove={this.props.remove}  submitRef={this.props.submitRef} />
                         </form>
                     </div>
                 </div>

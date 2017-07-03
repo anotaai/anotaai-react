@@ -64,6 +64,7 @@ class EditDetail extends Component {
                 customButtons={<CustomButtons remove={this.remove.bind(this)} />}
                 editMode="S" merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
+                remove={this.remove.bind(this)}
                 submitRef={el => this.sendButton = el} />
         );
     }

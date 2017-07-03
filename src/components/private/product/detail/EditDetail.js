@@ -26,6 +26,10 @@ class EditDetail extends Component {
         this.props.findById(Base64Service.decode(this.props.params.id));
     }
 
+    remove(e) {
+        e.preventDefault();
+    }
+
     render() {
         return (
             <Detail
@@ -54,7 +58,8 @@ class EditDetail extends Component {
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}
                 handleCheckbox={this.props.handleCheckbox}
-                updateAvailableDays={this.props.updateAvailableDays} />
+                updateAvailableDays={this.props.updateAvailableDays}
+                remove={this.remove.bind(this)}  />
         )
     }
 
