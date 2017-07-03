@@ -1,5 +1,7 @@
-import CrudService from '../CrudService'
-import { updateProductList } from '../../actions/productActionCreator'
+import CrudService from '../CrudService';
+import { updateProductList } from '../../actions/productActionCreator';
+import { createInstance } from '../../helpers/jsonHelper';
+import { getDayForEnum } from '../../helpers/stringHelper';
 
 export default class ProductService extends CrudService {
 
@@ -21,6 +23,20 @@ export default class ProductService extends CrudService {
             });
 
         }
+    }
+
+    static getAvailableDays(product) {
+       
+       const newProductInstance = createInstance(product);
+       const diasDisponibilidade = [];
+       
+       product.diasDisponibilidade.forEach(day => {
+          diasDisponibilidade.push({dia: getDayForEnum(day)});   
+       });
+       
+       newProductInstance.diasDisponibilidade = diasDisponibilidade;
+
+       return newProductInstance;
     }
 
 }

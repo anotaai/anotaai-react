@@ -34,3 +34,7 @@ export function replaceMask(stringParameter) {
     return stringParameter.replace('(', '').replace(')', '').replace('-', '').replace('.', '');
 }
 
+export function getDayForEnum(day) {
+    return day.toUpperCase().replace(' ','_').replace('Ç','C').replace('Á','A');
+}
+

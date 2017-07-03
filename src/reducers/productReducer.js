@@ -22,7 +22,7 @@ const INITIAL_STATE = {
     diasSemana: [],
     unidadeList: [],
     blockCode: false,
-    qtdProduct: '',
+    qtdProduct: ''
 }
 
 export default function (state = INITIAL_STATE, action) {

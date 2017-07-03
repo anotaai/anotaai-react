@@ -55,6 +55,11 @@ export default class Detail extends Component {
                                                     {item.nome}
                                                 </div>
                                             }
+                                            renderMenu={(items, value, style) => (
+                                                <div>
+                                                    { items.length === 0 && value !== '' ? ( <div style={{ padding: 6 }}><i className="material-icons icon-autocomplete">clear</i>Nenhum registro encontrado para {value}</div>) : <div style={{ ...style, ...this.menuStyle }} children={items}/>}
+                                                </div>
+                                            )}
                                             items={this.props.setores}
                                             getItemValue={(item) => item.nome}
                                             onSelect={(value, item) => {

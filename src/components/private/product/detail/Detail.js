@@ -88,9 +88,15 @@ export default class Detail extends Component {
                                             menuStyle={AUTO_COMPLETE_MENU_STYLE}
                                             renderItem={(item, isHighlighted) =>
                                                 <div id={item.id} key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                                                    {item.descricao}
+                                                    {item.descricao }
                                                 </div>
                                             }
+
+                                            renderMenu={(items, value, style) => (
+                                                <div>
+                                                    { items.length === 0 && value !== '' ? ( <div style={{ padding: 6 }}><i className="material-icons icon-autocomplete">clear</i>Nenhum registro encontrado para {value}</div>) : <div style={{ ...style, ...this.menuStyle }} children={items}/>}
+                                                </div>
+                                            )}
                                             items={this.props.produtos}
                                             getItemValue={(item) => item.descricao}
                                             onSelect={(value, item) => {

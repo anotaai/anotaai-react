@@ -218,3 +218,8 @@ footer {
   transition: opacity .5s ease-in;
 }
 
+.icon-autocomplete {
+  position:relative;
+  top:6px;
+}
+

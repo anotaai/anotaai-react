@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, 
-    updateAvailableDays, newDefaultValues, updateProductAutoComplete, updateTableItens,removeProduct } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, newDefaultValues, updateProductAutoComplete, updateTableItens,removeProduct } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
+import { URL } from '../../../../helpers/constants'
+import Toast from '../../../../helpers/Toast'
+import Base64Service from '../../../../services/app/Base64Service'
+import { browserHistory } from 'react-router'
 
 
 class NewDetail extends Component {
@@ -22,9 +25,23 @@ class NewDetail extends Component {
 
 
     save(e) {
+
         e.preventDefault();
 
-       
+       const newInstance = ProductService.getAvailableDays(this.props.detailState);
+
+        ProductService.save(newInstance).then(response => {
+            Toast.show(response.messages);
+            if (response.isValid) {
+                const id = Base64Service.encode(response.entity.id.toString());
+                browserHistory.push(`${URL.PRODUCT}/${id}`);
+            } 
+        }).catch(error => {
+              Toast.defaultError();
+         }).then(() => {
+              if(this.sendButton != null)
+               this.sendButton.removeAttribute("disabled");
+        });
     }
 
 
