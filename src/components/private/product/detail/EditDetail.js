@@ -65,21 +65,11 @@ class EditDetail extends Component {
                 title="Edição de Produtos"
                 editMode="S"
                 merge={this.update.bind(this)}
-                id={this.props.detailState.id}
-                codigoGerado={this.props.detailState.codigoGerado}
-                ehInsumo={this.props.detailState.ehInsumo}
-                codigo={this.props.detailState.codigo}
-                descricao={this.props.detailState.descricao}
-                descricaoResumida={this.props.detailState.descricaoResumida}
-                unidadeMedida={this.props.detailState.unidadeMedida}
-                precoVenda={this.props.detailState.precoVenda}
-                blockCode={this.props.detailState.blockCode}
+                {... this.props.detailState}
                 unidadeList={this.props.detailState.unidadeList}
                 diasDisponibilidade={this.props.detailState.diasDisponibilidade}
-                qtdProduct={this.props.detailState.qtdProduct}
                 diasSemana={this.props.detailState.diasSemana}
                 produtos={this.props.detailState.produtos}
-                produtoSelecionado={this.props.detailState.produtoSelecionado}
                 itensReceita={this.props.detailState.itensReceita}
                 getProduct={this.props.getProduct}
                 setProduct={this.props.setProduct}
@@ -148,10 +138,7 @@ const mapDispatchToProps = dispatch => {
                 dispatch(EnumService.load('unidadesmedida', updateUnit));
                 dispatch(EnumService.load('diasemana', updateDayOfWeek));
             });
-
         },
-
-
     }
 }
 

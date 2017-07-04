@@ -60,10 +60,7 @@ class EditDetail extends Component {
         return (
             <Detail
                 title="Edição de Grupos de Produtos"
-                id={this.props.detailState.id}
-                nome={this.props.detailState.nome}
-                descricao={this.props.detailState.descricao}
-                setor={this.props.detailState.setor}
+                {... this.props.detailState}
                 setores={this.props.detailState.setores}
                 merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}

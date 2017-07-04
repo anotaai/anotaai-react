@@ -42,10 +42,7 @@ class NewDetail extends Component {
     render() {
         return (
             <Detail title="Cadastro de Grupo de Produtos"
-                id={this.props.detailState.id}
-                nome={this.props.detailState.nome}
-                descricao={this.props.detailState.descricao}
-                setor={this.props.detailState.setor}
+                {... this.props.detailState}
                 setores={this.props.detailState.setores}
                 merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el} 
