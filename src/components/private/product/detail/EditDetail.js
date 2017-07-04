@@ -34,6 +34,7 @@ class EditDetail extends Component {
         return (
             <Detail
                 title="Edição de Produtos"
+                editMode="S"
                 merge={this.update.bind(this)}
                 id={this.props.detailState.id}
                 codigoGerado={this.props.detailState.codigoGerado}
@@ -58,6 +59,7 @@ class EditDetail extends Component {
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}
                 handleCheckbox={this.props.handleCheckbox}
+                handleNumericChange={this.props.handleNumericChange}
                 updateAvailableDays={this.props.updateAvailableDays}
                 remove={this.remove.bind(this)}  />
         )
@@ -76,18 +78,18 @@ const mapDispatchToProps = dispatch => {
             dispatch(handleInputChange(e.target.name, e.target.value));
         },
 
+        handleNumericChange: (name,value) => {
+            if(value !== 0) {
+               dispatch(handleInputChange(name, value));
+            }
+        },
+
         handleCheckbox: (e) => {
             dispatch(handleInputChange(e.target.name, e.target.checked));
         },
 
         clearForm: () => {
             dispatch(clearForm());
-        },
-        loadUnityEnum: () => {
-            dispatch(EnumService.load('unidadesmedida', updateUnit));
-        },
-        loadDayOfWeekEnum: () => {
-            dispatch(EnumService.load('diasemana', updateDayOfWeek));
         },
         updateAvailableDays: (chips) => {
             dispatch(updateAvailableDays(chips));

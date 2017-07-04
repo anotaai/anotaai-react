@@ -1,7 +1,7 @@
 import CrudService from '../CrudService';
 import { updateProductList } from '../../actions/productActionCreator';
 import { createInstance } from '../../helpers/jsonHelper';
-import { getDayForEnum } from '../../helpers/stringHelper';
+import { getDayForEnum, concatDot } from '../../helpers/stringHelper';
 
 export default class ProductService extends CrudService {
 
@@ -25,7 +25,7 @@ export default class ProductService extends CrudService {
         }
     }
 
-    static getAvailableDays(product) {
+    static setJson(product) {
        
        const newProductInstance = createInstance(product);
        const diasDisponibilidade = [];
@@ -35,6 +35,7 @@ export default class ProductService extends CrudService {
        });
        
        newProductInstance.diasDisponibilidade = diasDisponibilidade;
+       newProductInstance.precoVenda = concatDot(newProductInstance.precoVenda);
 
        return newProductInstance;
     }

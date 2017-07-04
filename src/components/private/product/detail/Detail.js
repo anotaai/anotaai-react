@@ -40,13 +40,13 @@ export default class Detail extends Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode} type="number" />
-                                        <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''}>Código</label>
+                                        <label htmlFor="codigo" className={this.props.editMode === 'S' && this.props.codigo !== '' ? 'active' : ''}>Código</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="descricao" value={this.props.descricao} name="descricao" onChange={this.props.handleInputChange} type="text" required />
-                                        <label htmlFor="descricao" className={this.props.descricao !== '' ? 'active' : ''}>Descrição</label>
+                                        <label htmlFor="descricao" className={this.props.editMode === 'S' && this.props.descricao !== '' ? 'active' : ''}>Descrição</label>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -60,13 +60,13 @@ export default class Detail extends Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="descricaoResumida" value={this.props.descricaoResumida} name="descricaoResumida" onChange={this.props.handleInputChange} type="text" required />
-                                        <label htmlFor="descricaoResumida" className={this.props.descricaoResumida !== '' ? 'active' : ''}>Descrição Resumida</label>
+                                        <label htmlFor="descricaoResumida" className={this.props.editMode === 'S' && this.props.descricaoResumida !== '' ? 'active' : ''}>Descrição Resumida</label>
                                     </div>
                                 </div>
                                   <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <label htmlFor="precoVenda" className="active">Preço</label>
-                                        <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$' precision={2} separator=',' delimiter='.' name="precoVenda" onChange={this.props.handleInputChange} />
+                                        <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$'  name="precoVenda"  onInputChange={this.props.handleNumericChange.bind(this,'precoVenda')}   />
                                     </div>
                                 </div>
                                 <div className="row">
@@ -156,7 +156,7 @@ export default class Detail extends Component {
                                         </table>
                                     </div>
                                 </div>}
-                            <PanelFooterDetail   remove={this.props.remove}   searchUrl={URL.PRODUCT} submitRef={this.props.submitRef} />
+                            <PanelFooterDetail remove={this.props.remove} searchUrl={URL.PRODUCT} submitRef={this.props.submitRef} />
                         </div>
                     </div>
                 </div>

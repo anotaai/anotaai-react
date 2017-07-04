@@ -14,8 +14,8 @@ class NewDetail extends Component {
 
 
     componentDidMount() {
-        this.props.loadUnityEnum();
-        this.props.loadDayOfWeekEnum();
+        this.props.loadEnum('unidadesmedida',updateUnit);
+        this.props.loadEnum('diasemana',updateDayOfWeek);
         this.props.newDefaultValues();
     }
 
@@ -23,12 +23,14 @@ class NewDetail extends Component {
         this.props.clearForm();
     }
 
+    
+
 
     save(e) {
 
         e.preventDefault();
 
-       const newInstance = ProductService.getAvailableDays(this.props.detailState);
+       const newInstance = ProductService.setJson(this.props.detailState);
 
         ProductService.save(newInstance).then(response => {
             Toast.show(response.messages);
@@ -74,6 +76,7 @@ class NewDetail extends Component {
                 submitRef={el => this.sendButton = el}
                 handleInputChange={this.props.handleInputChange}
                 handleCheckbox={this.props.handleCheckbox}
+                handleNumericChange={this.props.handleNumericChange}
                 updateAvailableDays={this.props.updateAvailableDays} />
         )
     }
@@ -91,6 +94,12 @@ const mapDispatchToProps = dispatch => {
             dispatch(handleInputChange(e.target.name, e.target.value));
         },
 
+        handleNumericChange: (name,value) => {
+            if(value !== 0) {
+               dispatch(handleInputChange(name, value));
+            }
+        },
+
         handleCheckbox: (e) => {
             dispatch(handleInputChange(e.target.name, e.target.checked));
         },
@@ -98,13 +107,8 @@ const mapDispatchToProps = dispatch => {
         clearForm: () => {
             dispatch(clearForm());
         },
-
-        loadUnityEnum: () => {
-            dispatch(EnumService.load('unidadesmedida', updateUnit));
-        },
-
-        loadDayOfWeekEnum: () => {
-            dispatch(EnumService.load('diasemana', updateDayOfWeek));
+        loadEnum: (name,functionUpdate) => {
+            dispatch(EnumService.load(name, functionUpdate));
         },
         updateAvailableDays: (chips) => {
             dispatch(updateAvailableDays(chips));
@@ -112,16 +116,13 @@ const mapDispatchToProps = dispatch => {
         newDefaultValues: () => {
             dispatch(newDefaultValues());
         },
-
         getProduct: (name, value) => {
             new Promise((resolve) => {
                 resolve(dispatch(handleInputChange(name, value)));
             }).then(() => {
                 dispatch(ProductService.getProducts(value));
             });
-
         },
-
         updateTableItens: () => {
            dispatch(updateTableItens());
         },

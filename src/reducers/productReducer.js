@@ -3,6 +3,7 @@ import {
     UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE, UPDATE_TABLE_ITENS, REMOVE_PRODUCT
 } from '../actions/productActionCreator';
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper';
+import { concatZeros } from '../helpers/stringHelper';
 import { Icon } from '../domain/Icon';
 import Toast from '../helpers/Toast';
 
@@ -47,6 +48,7 @@ export default function (state = INITIAL_STATE, action) {
             newState.precoVenda = 0;
             newState.codigo = '';
             newState.qtdProduct = '';
+            newState.itensReceita = [];
             return newState;
         }
 
@@ -102,7 +104,7 @@ export default function (state = INITIAL_STATE, action) {
             newState.descricao = action.entity.descricao;
             newState.descricaoResumida = action.entity.descricaoResumida;
             newState.unidadeMedida = action.entity.unidadeMedida;
-            newState.precoVenda = action.entity.precoVenda;
+            newState.precoVenda =  concatZeros(action.entity.precoVenda) 
             newState.codigoGerado = action.entity.codigoGerado;
 
             action.entity.diasDisponibilidade.forEach(json => {

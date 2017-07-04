@@ -26,8 +26,8 @@ export function getNumbers(stringParameter) {
 }
 
 export function getPhoneMask(telefoneParameter) {
-     const telefoneStr = telefoneParameter.replace(/^(\d{2})(\d)/g, "($1) $2");
-     return telefoneStr.replace(/(\d)(\d{4})$/, "$1-$2");
+    const telefoneStr = telefoneParameter.replace(/^(\d{2})(\d)/g, "($1) $2");
+    return telefoneStr.replace(/(\d)(\d{4})$/, "$1-$2");
 }
 
 export function replaceMask(stringParameter) {
@@ -35,6 +35,32 @@ export function replaceMask(stringParameter) {
 }
 
 export function getDayForEnum(day) {
-    return day.toUpperCase().replace(' ','_').replace('Ç','C').replace('Á','A');
+    return day.toUpperCase().replace(' ', '_').replace('Ç', 'C').replace('Á', 'A');
 }
 
+export function concatZeros(number) {
+
+    let splitNumber = number.toString().split('.');
+    let finalValue = splitNumber[0];
+
+    //com decimais
+    if (splitNumber.length === 2) {
+        finalValue += splitNumber[1];
+
+        if (splitNumber[1].length === 1) {
+            finalValue += '0';
+        }
+
+        //sem decimais
+    } else {
+        finalValue += '00';
+    }
+
+    return Number(finalValue);
+}
+
+export function concatDot(number) {
+    let str = number.toString();
+    var output = str.substr(0, str.length - 2) + '.' + str.substr(str.length - 2);
+    return Number(output);
+}
