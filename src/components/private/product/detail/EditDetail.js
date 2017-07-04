@@ -5,6 +5,9 @@ import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvaila
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
 import Base64Service from '../../../../services/app/Base64Service'
+import Toast from '../../../../helpers/Toast'
+import { browserHistory } from 'react-router'
+import { URL } from '../../../../helpers/constants'
 
 
 class EditDetail extends Component {
@@ -15,7 +18,36 @@ class EditDetail extends Component {
     }
 
     update(e) {
+       
         e.preventDefault();
+
+        this.sendButton.setAttribute("disabled", "disabled");
+
+       const newInstance = ProductService.setJson(this.props.detailState);
+
+        ProductService.update(newInstance).then(response => {
+            Toast.show(response.messages);
+        }).catch(error => {
+              Toast.defaultError();
+         }).then(() => {
+             this.sendButton.removeAttribute("disabled");
+        });
+    }
+
+    remove(e) {
+        e.preventDefault();
+
+        if (confirm('Confirma a exclusão do produto?')) {
+
+            ProductService.remove(this.props.detailState.id).then(response => {
+                Toast.show(response.messages);
+                if (response.isValid) {
+                    browserHistory.push(URL.PRODUCT);
+                }
+            }).catch(error => {
+                Toast.defaultError();
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -26,10 +58,7 @@ class EditDetail extends Component {
         this.props.findById(Base64Service.decode(this.props.params.id));
     }
 
-    remove(e) {
-        e.preventDefault();
-    }
-
+  
     render() {
         return (
             <Detail

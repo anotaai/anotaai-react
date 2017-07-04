@@ -111,7 +111,6 @@ export default function (state = INITIAL_STATE, action) {
                 newState.diasDisponibilidade.push(json.dia.descricao);
             });
 
-            newState.itensReceita = [];
             
             action.entity.itensReceita.forEach(json => {
                 newState.itensReceita.push({ id: json.id , ingrediente: { id: json.ingrediente.id, descricao: json.ingrediente.descricao }, quantidade: json.quantidade });

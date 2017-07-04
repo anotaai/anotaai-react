@@ -23,12 +23,12 @@ class NewDetail extends Component {
         this.props.clearForm();
     }
 
-    
-
 
     save(e) {
 
-        e.preventDefault();
+      e.preventDefault();
+  
+      this.sendButton.setAttribute("disabled", "disabled");
 
        const newInstance = ProductService.setJson(this.props.detailState);
 
