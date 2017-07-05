@@ -175,7 +175,7 @@ footer {
     text-transform: capitalize;
 }
 
-.fixed-action-btn {
+.action-btn {
     position: relative !important;
     bottom: 0px !important;
 }
@@ -194,6 +194,10 @@ footer {
 
 .row-th {
   text-align: center;
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 .row-td {

@@ -59,7 +59,7 @@ class Search extends Component {
 
         e.preventDefault();
 
-        if (confirm('Confirma a exclusão do setor?')) {
+         if (alert('Confirma a exclusão do setor?')) { // eslint-disable-line no-alert
             this.props.remove(id);
         }
     }

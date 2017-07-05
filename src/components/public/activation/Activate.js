@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
 import { URL } from '../../../helpers/constants'
-import Icon from '../../../domain/Icon'
+import { Icon } from '../../../domain/Icon'
 import Toast from '../../../helpers/Toast'
 import  UserService from '../../../services/UserService'
 

@@ -43,7 +43,7 @@ class EditDetail extends Component {
     remove(e) {
         e.preventDefault();
 
-        if (confirm('Confirma a exclusão do setor?')) {
+        if (alert('Confirma a exclusão do setor?')) {  
 
             SectorService.remove(this.props.detailState.id).then(response => {
                 Toast.show(response.messages);

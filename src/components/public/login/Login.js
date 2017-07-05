@@ -72,7 +72,7 @@ class Login extends Component {
                     <label htmlFor="manterConectado">Manter conectado</label>
                   </div>
                   <label className='col s5 right-align' style={{ marginTop: '3px' }}>
-                    <a href="#" onClick={this.showModal.bind(this)} className="pink-text" >Esqueceu a senha?</a>
+                    <a  onClick={this.showModal.bind(this)} className="pink-text clickable" >Esqueceu a senha?</a>
                   </label>
                   <div className='col s12' />
                 </div>

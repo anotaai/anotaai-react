@@ -41,11 +41,11 @@ class Profile extends Component {
                         </div>
                         <div className="row">
                             <div className="col col s11 m11 l11">
-                                <a className="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates={this.props.idDropdown}>{this.props.loginState.login.primeiroNome}<i className="material-icons right">arrow_drop_down</i></a>
+                                <a className="btn-flat dropdown-button waves-effect waves-light white-text profile-btn clickable"   data-activates={this.props.idDropdown}>{this.props.loginState.login.primeiroNome}<i className="material-icons right">arrow_drop_down</i></a>
                                 <ul id={this.props.idDropdown} className="dropdown-content">
-                                    <li><a href="#" onClick={push.bind(this, URL.SETTINGS)}>Settings<i className="material-icons">settings</i></a></li>
+                                    <li><a  onClick={push.bind(this, URL.SETTINGS)} className="clickable">Settings<i className="material-icons">settings</i></a></li>
                                     <li className="divider"></li>
-                                    <li><a href="#!" onClick={this.logout.bind(this)} >Logout<i className="material-icons">power_settings_new</i></a></li>
+                                    <li><a className="clickable" onClick={this.logout.bind(this)} >Logout<i className="material-icons">power_settings_new</i></a></li>
                                 </ul>
                             </div>
                         </div>

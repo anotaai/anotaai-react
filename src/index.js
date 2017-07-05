@@ -1,9 +1,3 @@
-window.jQuery = require('jquery');
-const i18nReactLoader = require("i18n-react-loader");
-require('materialize-css');
-import 'materialize-css/dist/css/materialize.min.css'
-import './styles/css/app.css'
-import './styles/css/material-icons.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, browserHistory } from 'react-router'
@@ -14,6 +8,13 @@ import routes from './main/routes'
 import reducers from './main/reducers'
 import AuthenticationService from './services/app/AuthenticationService'
 import registerFetchInterceptor from './services/app/fetchInterceptor'
+import 'materialize-css/dist/css/materialize.min.css'
+import './styles/css/app.css'
+import './styles/css/material-icons.css'
+window.jQuery = require('jquery');
+const i18nReactLoader = require("i18n-react-loader");
+require('materialize-css');
+
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 AuthenticationService.checkUserCookie(store);

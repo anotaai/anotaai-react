@@ -48,7 +48,7 @@ class EditDetail extends Component {
   remove(e) {
     e.preventDefault();
 
-    if (confirm('Confirma a exclusão do consumidor?')) {
+     if (alert('Confirma a exclusão do consumidor?')) {
 
       ClienteConsumidorService.remove(this.id).then(response => {
         Toast.show(response.messages);

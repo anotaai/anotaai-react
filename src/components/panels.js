@@ -32,7 +32,7 @@ export function PanelFooter(props) {
                     {/* Botões responsivos */}
 
                     <div className="panel-footer hide-on-med-and-up">
-                        <div className="fixed-action-btn click-to-toggle">
+                        <div className="action-btn click-to-toggle">
                             <a className="btn-floating btn-large ERROR" title="Ações">
                                 <i className="large material-icons">mode_edit</i>
                             </a>
@@ -104,7 +104,7 @@ export function PanelFooterDetail(props) {
             {/* Botões responsivos */}
 
             <div className="panel-footer-detail-responsive hide-on-med-and-up">
-                <div className="fixed-action-btn click-to-toggle">
+                <div className="action-btn click-to-toggle">
                     <a className="btn-floating btn-large ERROR" title="Ações">
                         <i className="large material-icons">mode_edit</i>
                     </a>

@@ -60,8 +60,8 @@ class Search extends Component {
     remove(id, e) {
 
         e.preventDefault();
-
-        if (confirm('Confirma a exclusão do produto?')) {
+           
+        if (alert('Confirma a exclusão do produto?')) {
             this.props.remove(id);
         }
     }

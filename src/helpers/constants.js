@@ -62,7 +62,7 @@ export const AUTO_COMPLETE_MENU_STYLE = {
   background: 'rgba(255, 255, 255, 0.9)',
   padding: '2px 0',
   fontSize: '90%',
-  position: 'fixed',
+  position: 'absolute',
   overflow: 'auto',
   maxHeight: '50%',
   zIndex: '999',

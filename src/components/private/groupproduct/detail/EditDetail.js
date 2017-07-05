@@ -41,8 +41,10 @@ class EditDetail extends Component {
 
     remove(e) {
         e.preventDefault();
-
-        if (confirm('Confirma a exclusão do grupo de produto?')) {
+         
+ 
+         if (alert('Confirma a exclusão do grupo de produto?')) {
+ 
 
             GroupProductService.remove(this.props.detailState.id).then(response => {
                 Toast.show(response.messages);

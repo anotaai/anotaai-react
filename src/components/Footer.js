@@ -16,7 +16,7 @@ class Footer extends Component {
             <div>
                 <footer className={greyLighten}>
                     <div>
-                        <p>Powered by <a href="https://goo.gl/93I0At" target="_blank">Aline Solutions</a></p>
+                        <p>Powered by <a href="https://goo.gl/93I0At" target="_blank" rel="noopener noreferrer">Aline Solutions</a></p>
                         <p>Contato: <strong>(31) 9 8774-9131 | Copyright @2017 </strong></p>
                     </div>
                 </footer>

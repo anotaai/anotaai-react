@@ -59,7 +59,7 @@ class Search extends Component {
 
         e.preventDefault();
 
-        if (confirm('Confirma a exclusão do consumidor?')) {
+        if (alert('Confirma a exclusão do consumidor?')) {
             this.props.remove(id);
         }
     }

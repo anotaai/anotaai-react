@@ -58,8 +58,8 @@ class Search extends Component {
     remove(id, e) {
 
         e.preventDefault();
-
-        if (confirm('Confirma a exclusão do setor?')) {
+        
+      if (alert('Confirma a exclusão do setor?')) {
             this.props.remove(id);
         }
     }

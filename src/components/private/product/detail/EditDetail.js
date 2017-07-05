@@ -37,7 +37,7 @@ class EditDetail extends Component {
     remove(e) {
         e.preventDefault();
 
-        if (confirm('Confirma a exclusão do produto?')) {
+       if (alert('Confirma a exclusão do produto?')) {
 
             ProductService.remove(this.props.detailState.id).then(response => {
                 Toast.show(response.messages);

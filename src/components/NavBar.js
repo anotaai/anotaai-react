@@ -15,7 +15,7 @@ class Links extends Component {
     render() {
         return (
             <div>
-                <li className="hide-on-large-only"> <a href="#" onClick={this.hideResponsiveMenu}><span className="right red-text">Fechar</span></a> </li>
+                <li className="hide-on-large-only"> <a   onClick={this.hideResponsiveMenu} className="clickable"><span className="right red-text">Fechar</span></a> </li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
                 <li> <Link to={URL.LOGIN} onClick={this.hideResponsiveMenu} >Acessar</Link> </li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
@@ -56,7 +56,7 @@ class Navbar extends Component {
     render() {
         return (
             <div>
-                <nav className="indigo" role="navigation">
+                <nav className="indigo">
                     <div className="nav-wrapper container">
                         <Link id="logo-container" to={this.props.baseUrl} className="brand-logo">
                             <T.span id="app-name" text={{ key: "app" }} />
@@ -67,7 +67,7 @@ class Navbar extends Component {
                                     <Links />
                                 </ul>
                             </div>}
-                        <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
+                        <a  data-activates="slide-out" className="button-collapse clickable"><i className="material-icons">menu</i></a>
                     </div>
                 </nav>
                 {this.props.loginState == null && <ResponsiveMenu />}

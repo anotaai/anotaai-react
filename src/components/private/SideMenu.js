@@ -31,7 +31,7 @@ export class Links extends Component {
   render() {
     return (
       <div>
-        <li className="hide-on-large-only"> <a href="#" onClick={this.hideResponsiveMenu}><span className="right red-text">Fechar</span></a></li>
+        <li className="hide-on-large-only"> <a   onClick={this.hideResponsiveMenu} className="clickable"><span className="right red-text">Fechar</span></a></li>
         <li className="hide-on-large-only"> <div className="divider"></div> </li>
         {this.props.listMenu.map(itemMenu =>
           (<li key={itemMenu.url} onClick={this.handleBackground.bind(this)} >
