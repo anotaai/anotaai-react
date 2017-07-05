@@ -4,6 +4,7 @@ import { URL, AUTO_COMPLETE_WRAPPER_STYLE, AUTO_COMPLETE_MENU_STYLE } from '../.
 import Toast from '../../../../helpers/Toast'
 import Autocomplete from 'react-autocomplete'
 import { Icon } from '../../../../domain/Icon';
+import ModalConfirm from  '../../../ModalConfirm'
 
 export default class Detail extends Component {
 
@@ -74,10 +75,11 @@ export default class Detail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <PanelFooterDetail  remove={this.props.remove}  searchUrl={URL.GROUP_PRODUCT} submitRef={this.props.submitRef} />
+                            <PanelFooterDetail  remove={this.props.showModal}  searchUrl={URL.GROUP_PRODUCT} submitRef={this.props.submitRef} />
                         </form>
                     </div>
                 </div>
+                 <ModalConfirm text="Confirma a exclusão do grupo de produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
             </div>
         );
     }

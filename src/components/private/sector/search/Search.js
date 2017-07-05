@@ -8,7 +8,7 @@ import DataList from '../../groupproduct/search/DataList'
 import { URL, defaultFilters, USE_CASE } from '../../../../helpers/constants'
 import { connect } from 'react-redux'
 import { getObjectNewState } from '../../../../helpers/jsonHelper'
-import { clearForm, list, remove, handlePageClick } from '../../../../actions/searchActionCreator'
+import { clearForm, list, remove, handlePageClick, showModal, hideModal } from '../../../../actions/searchActionCreator'
 
 class Search extends Component {
 
@@ -55,13 +55,8 @@ class Search extends Component {
         this.setState(newState);
     }
 
-    remove(id, e) {
-
-        e.preventDefault();
-
-         if (alert('Confirma a exclusão do setor?')) { // eslint-disable-line no-alert
-            this.props.remove(id);
-        }
+    remove() {
+        this.props.remove(this.props.searchState.idRemove);
     }
 
 
@@ -74,7 +69,7 @@ class Search extends Component {
                         <form onSubmit={this.search.bind(this)}>
                             <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_SECTOR} label="Pesquisar" />
-                            <DataList filteredResults={this.props.searchState.filteredResults} remove={this.remove.bind(this)} editUrl={URL.SECTOR} />
+                            <DataList filteredResults={this.props.searchState.filteredResults} remove={this.remove.bind(this)} editUrl={URL.SECTOR} showModal={this.props.showModal} hideModal={this.props.hideModal} showModalState={this.props.searchState.showModalState} text="Confirma a exclusão do setor?" />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.props.searchState.pageCount} resultsLength={this.props.searchState.filteredResults.length} />
                         </form>
                     </div>
@@ -111,6 +106,12 @@ const mapDispatchToProps = dispatch => {
         },
         clearForm: () => {
             dispatch(clearForm(USE_CASE.SEARCH_SECTOR));
+        },
+        showModal: (id, e) => {
+            dispatch(showModal(USE_CASE.SEARCH_SECTOR, id));
+        },
+        hideModal: () => {
+            dispatch(hideModal(USE_CASE.SEARCH_SECTOR));
         }
     }
 }

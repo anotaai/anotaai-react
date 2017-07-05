@@ -83,10 +83,20 @@ footer {
 	position:absolute;
 	bottom:0;
 }
+
+.waves-effect {
+   z-index: 0 !important;
+}
+
+.action-btn {
+    z-index: 0 !important;
+}
+
 .private-side-nav {
   top:inherit;
   height: 94%;
   position: absolute !important;
+  z-index: 0 !important;
 }
 .side-nav .divider {
   margin: 0px !important; 

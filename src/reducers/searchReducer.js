@@ -2,7 +2,7 @@ import { PAGE_SIZE } from '../helpers/constants'
 import { createInstance } from '../helpers/jsonHelper'
 
 const INITIAL_STATE = {
-    filteredResults: [], pageCount: 0 , offset: 0
+    filteredResults: [], pageCount: 0 , offset: 0, showModalState: false, idRemove: 0
 }
 
 export default function createSearchReducerByUseCase(useCase = '') {
@@ -22,6 +22,8 @@ export default function createSearchReducerByUseCase(useCase = '') {
                 const newState = createInstance(state);
                 const filtered = newState.filteredResults.filter(item => item.id !== action.id);
                 newState.filteredResults = filtered;
+                newState.showModalState = false;
+                newState.idRemove = 0;
                 return newState;
             }
 
@@ -36,6 +38,20 @@ export default function createSearchReducerByUseCase(useCase = '') {
                 newState.filteredResults = [];
                 newState.offset = 0;
                 newState.pageCount = 0;
+                return newState;
+            }
+
+
+             case `SHOW_MODAL_${useCase}`: {
+                const newState = createInstance(state);
+                newState.showModalState = true;
+                newState.idRemove = action.idRemove;
+                return newState;
+            }
+
+             case `HIDE_MODAL_${useCase}`: {
+                const newState = createInstance(state);
+                newState.showModalState = false;
                 return newState;
             }
 

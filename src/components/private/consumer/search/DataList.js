@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { pushEncoded } from '../../../App'
+import ModalConfirm from  '../../../ModalConfirm'
 
 export default class DataList extends Component {
  
  
-
     render() {
 
         const results = this.props.filteredResults;
@@ -28,11 +28,12 @@ export default class DataList extends Component {
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.nome}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.email}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.telefone.numero}</td>
-                                        <td  className="row-td"><a onClick={this.props.remove.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
+                                        <td  className="row-td"><a onClick={this.props.showModal.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
                         </tbody>
                     </table>
+                    <ModalConfirm text="Confirma a exclusão do consumidor?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
                 </div>
             );
 

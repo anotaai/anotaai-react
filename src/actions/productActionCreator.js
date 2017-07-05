@@ -8,7 +8,10 @@ export const CLEAR_FORM_PRODUCT = 'clear_form_product',
     UPDATE_PRODUCT_AUTO_COMPLETE = 'update_product_auto_complete',
     UPDATE_TABLE_ITENS = 'update_table_itens',
     NEW_DEFAULT_VALUES = 'new_default_values',
-    REMOVE_PRODUCT = 'remove_product'
+    REMOVE_PRODUCT = 'remove_product',
+    SHOW_MODAL_PRODUCT = 'show_modal_product',
+    HIDE_MODAL_PRODUCT = 'hide_modal_product'
+
 
 export function clearForm() {
     return { type: CLEAR_FORM_PRODUCT }
@@ -52,5 +55,13 @@ export function updateTableItens(json) {
 
 export function removeProduct(id) {
     return { type: REMOVE_PRODUCT, id }
+}
+
+export function showModal(id) {
+    return { type: SHOW_MODAL_PRODUCT }
+}
+
+export function hideModal(id) {
+    return { type: HIDE_MODAL_PRODUCT }
 }
 

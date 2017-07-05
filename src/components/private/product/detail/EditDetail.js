@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, updateProduct, updateProductAutoComplete, updateTableItens,removeProduct } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, updateProduct, updateProductAutoComplete, updateTableItens, removeProduct, showModal, hideModal } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
 import Base64Service from '../../../../services/app/Base64Service'
@@ -18,37 +18,35 @@ class EditDetail extends Component {
     }
 
     update(e) {
-       
+
         e.preventDefault();
 
         this.sendButton.setAttribute("disabled", "disabled");
 
-       const newInstance = ProductService.setJson(this.props.detailState);
+        const newInstance = ProductService.setJson(this.props.detailState);
 
         ProductService.update(newInstance).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
-              Toast.defaultError();
-         }).then(() => {
-             this.sendButton.removeAttribute("disabled");
+            Toast.defaultError();
+        }).then(() => {
+            this.sendButton.removeAttribute("disabled");
         });
     }
 
     remove(e) {
-        e.preventDefault();
 
-       if (alert('Confirma a exclusão do produto?')) {
+        ProductService.remove(this.props.detailState.id).then(response => {
+            Toast.show(response.messages);
+            if (response.isValid) {
+                browserHistory.push(URL.PRODUCT);
+            }
+        }).catch(error => {
+            Toast.defaultError();
+        });
 
-            ProductService.remove(this.props.detailState.id).then(response => {
-                Toast.show(response.messages);
-                if (response.isValid) {
-                    browserHistory.push(URL.PRODUCT);
-                }
-            }).catch(error => {
-                Toast.defaultError();
-            });
-        }
     }
+
 
     componentWillUnmount() {
         this.props.clearForm();
@@ -58,9 +56,10 @@ class EditDetail extends Component {
         this.props.findById(Base64Service.decode(this.props.params.id));
     }
 
-  
+
     render() {
         return (
+
             <Detail
                 title="Edição de Produtos"
                 editMode="S"
@@ -80,7 +79,10 @@ class EditDetail extends Component {
                 handleCheckbox={this.props.handleCheckbox}
                 handleNumericChange={this.props.handleNumericChange}
                 updateAvailableDays={this.props.updateAvailableDays}
-                remove={this.remove.bind(this)}  />
+                remove={this.remove.bind(this)}
+                showModal={this.props.showModal}
+                hideModal={this.props.hideModal}
+                showModalState={this.props.detailState.showModalState} />
         )
     }
 
@@ -97,9 +99,9 @@ const mapDispatchToProps = dispatch => {
             dispatch(handleInputChange(e.target.name, e.target.value));
         },
 
-        handleNumericChange: (name,value) => {
-            if(value !== 0) {
-               dispatch(handleInputChange(name, value));
+        handleNumericChange: (name, value) => {
+            if (value !== 0) {
+                dispatch(handleInputChange(name, value));
             }
         },
 
@@ -139,6 +141,12 @@ const mapDispatchToProps = dispatch => {
                 dispatch(EnumService.load('diasemana', updateDayOfWeek));
             });
         },
+        showModal: () => {
+            dispatch(showModal());
+        },
+        hideModal: () => {
+            dispatch(hideModal());
+        }
     }
 }
 

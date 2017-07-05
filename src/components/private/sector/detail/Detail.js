@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { PanelHeader, PanelFooterDetail } from '../../../panels'
 import { URL } from '../../../../helpers/constants'
+import ModalConfirm from  '../../../ModalConfirm'
 
 export default class Detail extends Component {
 
@@ -25,10 +26,11 @@ export default class Detail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <PanelFooterDetail customButtons={this.props.customButtons} remove={this.props.remove} customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.SECTOR} submitRef={this.props.submitRef}   />
+                            <PanelFooterDetail customButtons={this.props.customButtons} remove={this.props.showModal} customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.SECTOR} submitRef={this.props.submitRef}   />
                         </form>
                     </div>
                 </div>
+                  <ModalConfirm text="Confirma a exclusão do setor?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
             </div>
         );
     }

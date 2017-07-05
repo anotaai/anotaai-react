@@ -4,7 +4,7 @@ import Toast from '../../../../helpers/Toast'
 import Detail from './Detail'
 import Base64Service from '../../../../services/app/Base64Service'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
-import { clearForm, handleInputChange, updateState, updateSector } from '../../../../actions/groupProductActionCreator'
+import { clearForm, handleInputChange, updateState, updateSector, showModal, hideModal } from '../../../../actions/groupProductActionCreator'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../../helpers/constants'
 
@@ -39,22 +39,17 @@ class EditDetail extends Component {
     }
 
 
-    remove(e) {
-        e.preventDefault();
-         
- 
-         if (alert('Confirma a exclusão do grupo de produto?')) {
- 
+    remove() {
 
-            GroupProductService.remove(this.props.detailState.id).then(response => {
-                Toast.show(response.messages);
-                if (response.isValid) {
-                    browserHistory.push(URL.GROUP_PRODUCT);
-                }
-            }).catch(error => {
-                Toast.defaultError();
-            });
-        }
+        GroupProductService.remove(this.props.detailState.id).then(response => {
+            Toast.show(response.messages);
+            if (response.isValid) {
+                browserHistory.push(URL.GROUP_PRODUCT);
+            }
+        }).catch(error => {
+            Toast.defaultError();
+        });
+
     }
 
 
@@ -70,6 +65,9 @@ class EditDetail extends Component {
                 submitRef={el => this.sendButton = el}
                 getSector={this.props.getSector}
                 setSector={this.props.setSector}
+                showModal={this.props.showModal}
+                hideModal={this.props.hideModal}
+                showModalState={this.props.detailState.showModalState}
                 remove={this.remove.bind(this)} />
         )
     }
@@ -91,16 +89,21 @@ const mapDispatchToProps = dispatch => {
         findById: (id) => {
             dispatch(GroupProductService.findById(id, updateState));
         },
-        getSector: (name,value) => {
+        getSector: (name, value) => {
             new Promise((resolve) => {
-                resolve(dispatch(handleInputChange(name,value)));
+                resolve(dispatch(handleInputChange(name, value)));
             }).then(() => {
                 dispatch(GroupProductService.getSectors(value));
-            }); 
-           
+            });
         },
         setSector: (sector) => {
-           dispatch(updateSector(sector));
+            dispatch(updateSector(sector));
+        },
+        showModal: () => {
+            dispatch(showModal());
+        },
+        hideModal: () => {
+            dispatch(hideModal());
         }
     }
 }

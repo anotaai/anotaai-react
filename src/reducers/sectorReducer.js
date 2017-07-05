@@ -1,11 +1,12 @@
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
-import { HANDLE_INPUT_CHANGE_SECTOR, CLEAR_FORM_SECTOR, UPDATE_STATE_SECTOR } from '../actions/sectorActionCreator';
+import { HANDLE_INPUT_CHANGE_SECTOR, CLEAR_FORM_SECTOR, UPDATE_STATE_SECTOR, SHOW_MODAL_SECTOR, HIDE_MODAL_SECTOR } from '../actions/sectorActionCreator';
 
 
 const INITIAL_STATE = {
     id: null,
     nome: '',
-    descricao: ''
+    descricao: '',
+    showModalState: false
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -25,6 +26,18 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_STATE_SECTOR: {
             const newState = createInstance(action.entity);
+            return newState;
+        }
+
+        case SHOW_MODAL_SECTOR: {
+            const newState = createInstance(state);
+            newState.showModalState = true;
+            return newState;
+        }
+
+        case HIDE_MODAL_SECTOR: {
+            const newState = createInstance(state);
+            newState.showModalState = false;
             return newState;
         }
 

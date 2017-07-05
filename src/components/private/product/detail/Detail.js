@@ -6,6 +6,7 @@ import Chips from 'react-chips'
 import Autocomplete from 'react-autocomplete'
 import { Icon } from '../../../../domain/Icon';
 import Toast from '../../../../helpers/Toast';
+import ModalConfirm from  '../../../ModalConfirm'
 
 export default class Detail extends Component {
 
@@ -21,6 +22,7 @@ export default class Detail extends Component {
 
     render() {
         return (
+          <div>
             <form onSubmit={this.merge.bind(this)}>
                 <div className="space-container">
                     <div className="container">
@@ -156,11 +158,13 @@ export default class Detail extends Component {
                                         </table>
                                     </div>
                                 </div>}
-                            <PanelFooterDetail remove={this.props.remove} searchUrl={URL.PRODUCT} submitRef={this.props.submitRef} />
+                            <PanelFooterDetail remove={this.props.showModal} searchUrl={URL.PRODUCT} submitRef={this.props.submitRef} />
                         </div>
                     </div>
                 </div>
             </form>
+            <ModalConfirm text="Confirma a exclusão do produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
+          </div>
         );
     }
 }

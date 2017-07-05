@@ -1,10 +1,11 @@
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
-import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, UPDATE_STATE_GROUP_PRODUCT, UPDATE_SECTOR_LIST, UPDATE_SECTOR } from '../actions/groupProductActionCreator';
+import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, UPDATE_STATE_GROUP_PRODUCT, UPDATE_SECTOR_LIST, UPDATE_SECTOR, SHOW_MODAL, HIDE_MODAL } from '../actions/groupProductActionCreator';
 
 const INITIAL_STATE = {
     id: null,
     nome: '',
     descricao: '',
+    showModalState: false,
     setor: { id: null, nome: '', descricao: '' },
     setores: []
 }
@@ -28,10 +29,10 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             newState.id = action.entity.id;
             newState.nome = action.entity.nome;
-            newState.descricao =  action.entity.descricao;
-            newState.setor.id =  action.entity.setor.id;
-            newState.setor.nome =  action.entity.setor.nome;
-            newState.setor.descricao =  action.entity.setor.descricao;
+            newState.descricao = action.entity.descricao;
+            newState.setor.id = action.entity.setor.id;
+            newState.setor.nome = action.entity.setor.nome;
+            newState.setor.descricao = action.entity.setor.descricao;
             newState.setores = [];
             return newState;
         }
@@ -47,6 +48,18 @@ export default function (state = INITIAL_STATE, action) {
             newState.setor.id = action.sector.id;
             newState.setor.nome = action.sector.nome;
             newState.setor.descricao = action.sector.descricao;
+            return newState;
+        }
+
+        case SHOW_MODAL: {
+            const newState = createInstance(state);
+            newState.showModalState = true;
+            return newState;
+        }
+
+        case HIDE_MODAL: {
+            const newState = createInstance(state);
+            newState.showModalState = false;
             return newState;
         }
 

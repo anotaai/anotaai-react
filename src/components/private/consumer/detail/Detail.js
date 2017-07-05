@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { PanelHeader, PanelFooterDetail } from '../../../panels'
+import ModalConfirm from  '../../../ModalConfirm'
 import MaskedInput from 'react-maskedinput';
 
 export default class Detail extends Component {
@@ -31,10 +32,11 @@ export default class Detail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} remove={this.props.remove}  submitRef={this.props.submitRef} />
+                            <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} remove={this.props.showModal}  submitRef={this.props.submitRef} />
                         </form>
                     </div>
                 </div>
+                <ModalConfirm text="Confirma a exclusão do consumidor?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
             </div>
         );
     }

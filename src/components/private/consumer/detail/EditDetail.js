@@ -4,7 +4,7 @@ import { URL } from '../../../../helpers/constants'
 import Detail from './Detail'
 import ClienteConsumidorService from '../../../../services/consumer/ClienteConsumidorService'
 import Base64Service from '../../../../services/app/Base64Service'
-import { clearForm, handleInputChange, updateState } from '../../../../actions/consumerActionCreator'
+import { clearForm, handleInputChange, updateState, showModal, hideModal } from '../../../../actions/consumerActionCreator'
 import { CustomButtons, CustomResponsiveButtons } from './customButtons'
 import Toast from '../../../../helpers/Toast'
 import { browserHistory } from 'react-router'
@@ -15,7 +15,6 @@ class EditDetail extends Component {
     super(props);
     this.sendButton = null;
     this.recommendButton = null;
-    this.id = null;
   }
 
   componentWillUnmount() {
@@ -23,8 +22,7 @@ class EditDetail extends Component {
   }
 
   componentDidMount() {
-    this.id = Base64Service.decode(this.props.params.id);
-    this.props.findById(this.id);
+    this.props.findById(Base64Service.decode(this.props.params.id));
   }
 
   update(e) {
@@ -45,12 +43,9 @@ class EditDetail extends Component {
 
   }
 
-  remove(e) {
-    e.preventDefault();
+  remove() {
 
-     if (alert('Confirma a exclusão do consumidor?')) {
-
-      ClienteConsumidorService.remove(this.id).then(response => {
+      ClienteConsumidorService.remove(this.props.detailState.id).then(response => {
         Toast.show(response.messages);
         if (response.isValid) {
           browserHistory.push(URL.CONSUMER);
@@ -58,7 +53,6 @@ class EditDetail extends Component {
       }).catch(error => {
         Toast.defaultError();
       });
-    }
   }
 
   recommendEdition(e) {
@@ -92,6 +86,9 @@ class EditDetail extends Component {
         handleInputChange={this.props.handleInputChange}
         editMode="S"
         remove={this.remove.bind(this)}
+        showModal={this.props.showModal} 
+        hideModal={this.props.hideModal} 
+        showModalState={this.props.detailState.showModalState} 
         customResponsiveButtons={<CustomResponsiveButtons isRecommendEdition={this.props.detailState.recommendEdition} recommendEdition={this.recommendEdition.bind(this)} />}
         customButtons={<CustomButtons  isRecommendEdition={this.props.detailState.recommendEdition} recommendEdition={this.recommendEdition.bind(this)} submitRef={el => this.recommendButton = el} />}
         submitRef={el => this.sendButton = el} />
@@ -114,6 +111,12 @@ const matDispatchToProps = dispatch => {
     },
     findById: (id) => {
       dispatch(ClienteConsumidorService.findById(id, updateState));
+    },
+    showModal: () => {
+       dispatch(showModal());
+    },
+    hideModal: () => {
+       dispatch(hideModal());
     }
   }
 }

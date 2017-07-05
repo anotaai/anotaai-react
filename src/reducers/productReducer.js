@@ -1,6 +1,6 @@
 import {
     CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK, UPDATE_AVAILABLE_DAYS, UPDATE_PRODUCT, NEW_DEFAULT_VALUES,
-    UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE, UPDATE_TABLE_ITENS, REMOVE_PRODUCT
+    UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE, UPDATE_TABLE_ITENS, REMOVE_PRODUCT, HIDE_MODAL_PRODUCT, SHOW_MODAL_PRODUCT
 } from '../actions/productActionCreator';
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper';
 import { concatZeros } from '../helpers/stringHelper';
@@ -23,7 +23,8 @@ const INITIAL_STATE = {
     diasSemana: [],
     unidadeList: [],
     blockCode: false,
-    qtdProduct: ''
+    qtdProduct: '',
+    showModalState: false
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -104,18 +105,18 @@ export default function (state = INITIAL_STATE, action) {
             newState.descricao = action.entity.descricao;
             newState.descricaoResumida = action.entity.descricaoResumida;
             newState.unidadeMedida = action.entity.unidadeMedida;
-            newState.precoVenda =  concatZeros(action.entity.precoVenda) 
+            newState.precoVenda = concatZeros(action.entity.precoVenda)
             newState.codigoGerado = action.entity.codigoGerado;
 
             action.entity.diasDisponibilidade.forEach(json => {
                 newState.diasDisponibilidade.push(json.dia.descricao);
             });
 
-            
+
             action.entity.itensReceita.forEach(json => {
-                newState.itensReceita.push({ id: json.id , ingrediente: { id: json.ingrediente.id, descricao: json.ingrediente.descricao }, quantidade: json.quantidade });
+                newState.itensReceita.push({ id: json.id, ingrediente: { id: json.ingrediente.id, descricao: json.ingrediente.descricao }, quantidade: json.quantidade });
             });
-            
+
 
             return newState;
         }
@@ -140,7 +141,7 @@ export default function (state = INITIAL_STATE, action) {
             }
 
             const newState = createInstance(state);
-            newState.itensReceita.push({ id: null , ingrediente: { id: newState.produtoSelecionado.id, descricao: newState.produtoSelecionado.descricao }, quantidade: newState.qtdProduct });
+            newState.itensReceita.push({ id: null, ingrediente: { id: newState.produtoSelecionado.id, descricao: newState.produtoSelecionado.descricao }, quantidade: newState.qtdProduct });
             newState.produtoSelecionado.id = null;
             newState.produtoSelecionado.descricao = '';
             newState.qtdProduct = '';
@@ -151,6 +152,18 @@ export default function (state = INITIAL_STATE, action) {
         case REMOVE_PRODUCT: {
             const newState = createInstance(state);
             newState.itensReceita.splice(newState.itensReceita.findIndex((item) => item.ingrediente.id === action.id), 1);
+            return newState;
+        }
+
+        case SHOW_MODAL_PRODUCT: {
+            const newState = createInstance(state);
+            newState.showModalState = true;
+            return newState;
+        }
+
+        case HIDE_MODAL_PRODUCT: {
+            const newState = createInstance(state);
+            newState.showModalState = false;
             return newState;
         }
 
