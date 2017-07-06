@@ -15,15 +15,13 @@ window.jQuery = require('jquery');
 const i18nReactLoader = require("i18n-react-loader");
 require('materialize-css');
 
-
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 AuthenticationService.checkUserCookie(store);
 registerFetchInterceptor(store);
 
-
 i18nReactLoader.default.init({
     useExternalAPI: true,
-    apiURL: `${process.env.REACT_APP_URL_BACKEND}/i18n/locales`,
+    apiURL: `${process.env.REACT_APP_URL_BACKEND}/rest/i18n/locales`,
     defaultLocale: 'en',
   }).then(() => {
     ReactDOM.render(

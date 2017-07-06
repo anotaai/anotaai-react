@@ -1,5 +1,4 @@
 import { DEFAULT_TIME } from './constants';
-import T from 'i18n-react';
 import { Icon } from '../domain/Icon';
 
 
@@ -53,15 +52,8 @@ export default class Toast {
     }
 
     static translateMessage(key, params) {
-        let msg = T.translate(key); 
-        if (params && params.length > 0) {
-            let index = 0;
-            params.forEach(param => {
-                msg = msg.replace('{' + index +'}', param);
-                index++;
-            });
-        }
-        return msg;
+        let T = require('i18n-react');
+        return T.default.translate(key, params);
     }
 
 }
