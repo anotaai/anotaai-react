@@ -22,22 +22,18 @@ registerFetchInterceptor(store);
 
 
 i18nReactLoader.default.init({
-  useExternalAPI: false,
-  defaultLocale: 'pt',
-  localSupportedLocales: require('./resources/i18n/localeSuported.json'),
-  localLocaleMap: {
-    en: require('./resources/i18n/locales/en.json'),
-    pt: require('./resources/i18n/locales/pt.json'),
-  },
-}).then(() => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <Router history={browserHistory}>
-        {routes}
-      </Router>
-    </Provider>,
-    document.getElementById('root')
-  );
+    useExternalAPI: true,
+    apiURL: `${process.env.REACT_APP_URL_BACKEND}/i18n/locales`,
+    defaultLocale: 'en',
+  }).then(() => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <Router history={browserHistory}>
+          {routes}
+        </Router>
+      </Provider>,
+      document.getElementById('root')
+    );
 });
 
 
