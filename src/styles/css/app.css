@@ -88,9 +88,6 @@ footer {
    z-index: 0 !important;
 }
 
-.action-btn {
-    z-index: 0 !important;
-}
 
 .private-side-nav {
   top:inherit;
@@ -185,9 +182,10 @@ footer {
     text-transform: capitalize;
 }
 
-.action-btn {
+.fixed-action-btn {
     position: relative !important;
     bottom: 0px !important;
+    z-index: 0 !important;
 }
 
 .selected {
