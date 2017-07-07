@@ -235,3 +235,24 @@ footer {
   top:6px;
 }
 
+.menu-burger {
+    position: relative;
+    right: 250px;
+    cursor: default;
+} 
+
+.brand-logo {
+   z-index: 1;
+}
+
+.hide-menu {
+   transition: opacity 0.5s ease-out;
+   opacity: 0; 
+   height: 0;
+   overflow: hidden;
+}
+
+.show-menu {
+   transition: opacity 0.5s ease-in;
+   opacity: 1; 
+}

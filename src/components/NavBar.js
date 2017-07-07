@@ -4,7 +4,8 @@ import { URL } from '../helpers/constants'
 import { connect } from 'react-redux'
 import caderneta from "../img/128x128.png"
 import $ from 'jquery'
-import T from 'i18n-react';
+import T from 'i18n-react'
+import { toggleMenu } from '../actions/menuActionCreator'
 
 class Links extends Component {
 
@@ -15,7 +16,7 @@ class Links extends Component {
     render() {
         return (
             <div>
-                <li className="hide-on-large-only"> <a   onClick={this.hideResponsiveMenu} className="clickable"><span className="right red-text">Fechar</span></a> </li>
+                <li className="hide-on-large-only"> <a onClick={this.hideResponsiveMenu} className="clickable"><span className="right red-text">Fechar</span></a> </li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
                 <li> <Link to={URL.LOGIN} onClick={this.hideResponsiveMenu} >Acessar</Link> </li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
@@ -53,12 +54,13 @@ class ResponsiveMenu extends Component {
 
 class Navbar extends Component {
 
+
     render() {
         return (
             <div>
                 <nav className="indigo">
                     <div className="nav-wrapper container">
-                        <Link id="logo-container" to={this.props.baseUrl} className="brand-logo">
+                        <Link id="logo-container" to={this.props.baseUrl} className="brand-logo clickable">
                             <T.span id="app-name" text={{ key: "app" }} />
                         </Link>
                         {this.props.loginState == null &&
@@ -67,7 +69,10 @@ class Navbar extends Component {
                                     <Links />
                                 </ul>
                             </div>}
-                        <a  data-activates="slide-out" className="button-collapse clickable"><i className="material-icons">menu</i></a>
+                        {this.props.loginState != null &&
+                            <a className="hide-on-small-only menu-burger" onClick={this.props.toggleMenu} ><i className="material-icons">menu</i></a>
+                        }
+                        <a data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
                     </div>
                 </nav>
                 {this.props.loginState == null && <ResponsiveMenu />}
@@ -77,11 +82,20 @@ class Navbar extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+
+    return {
+        toggleMenu: () => {
+             dispatch(toggleMenu());
+        }
+    }
+}
+
 const mapStateToProps = state => {
-    return { loginState: state.auth.loginState , baseUrl: state.auth.baseUrl }
+    return { loginState: state.auth.loginState, baseUrl: state.auth.baseUrl }
 }
 
 
-const NavbarContainer = connect(mapStateToProps)(Navbar);
+const NavbarContainer = connect(mapStateToProps,mapDispatchToProps)(Navbar);
 
 export default NavbarContainer;

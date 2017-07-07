@@ -16,10 +16,10 @@ class Authentication extends Component {
     if (this.props.loginState != null) {
       return (
         <div className="row">
-          <div className="col s2 l2">
+          <div className={this.props.menuState.classMenu}>
             <SideMenuContainer loginState={this.props.loginState} />
           </div>
-          <div className="col s12 l10">
+          <div className={this.props.menuState.classContent}>
             {this.props.children}
           </div>
         </div>);
@@ -30,7 +30,7 @@ class Authentication extends Component {
 }
 
 const mapStateToProps = state => {
-  return {loginState: state.auth.loginState}
+  return {loginState: state.auth.loginState , menuState: state.menu}
 }
 
 const AuthenticationContainer = connect(mapStateToProps)(Authentication)
