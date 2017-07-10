@@ -26,6 +26,11 @@ select {
    margin-bottom: 5rem;
  }
 
+ .vendedor-space-container {
+   margin-top: 1rem;
+   margin-bottom: 6rem;
+ }
+
 .panel-header {
   background-color: #ee6e73;
   border: 1px solid #ee6e73;
@@ -235,12 +240,6 @@ footer {
   top:6px;
 }
 
-.menu-burger {
-    position: relative;
-    right: 200px;
-    cursor: default;
-} 
-
 .brand-logo {
    z-index: 1;
 }
@@ -256,3 +255,29 @@ footer {
    transition: opacity 0.5s ease-in;
    opacity: 1; 
 }
+
+ .menu-burger {
+    position: relative;
+    cursor: default;
+ }
+
+@media only screen and (min-width: 1024px) {
+   .menu-burger {
+     right: 100px;
+   } 
+}
+
+@media only screen and (min-width: 1280px) {
+   .menu-burger {
+      right: 150px;
+   } 
+}
+
+@media only screen and (min-width: 1440px) {
+   .menu-burger {
+      right: 250px;
+   } 
+}
+
+
+ 

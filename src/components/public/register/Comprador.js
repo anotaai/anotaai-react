@@ -9,6 +9,8 @@ import UserService from '../../../services/UserService';
 import { handleInputChange, clearForm, handlePhoneChange, clearPassword } from '../../../actions/compradorActionCreator';
 import { Icon } from '../../../domain/Icon';
 
+
+
 class Comprador extends Component {
 
     constructor() {
@@ -77,8 +79,12 @@ class Comprador extends Component {
     render() {
         return (
             <form method="post" onSubmit={this.send.bind(this)}>
-                <FormUser {... this.props.compradorState} handleInputChange={this.props.handleInputChange} handlePhoneChange={this.props.handlePhoneChange} />
-                <PanelFooter submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label={this.props.compradorState.activation === true ? "Ativar" : "Enviar"} isPublic={true} />
+                <FormUser {... this.props.compradorState} 
+                  handleInputChange={this.props.handleInputChange} 
+                  handlePhoneChange={this.props.handlePhoneChange}
+                  panelFooter={<PanelFooter submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label={this.props.compradorState.activation === true ? "Ativar" : "Enviar"} isPublic={true} />}
+                 />
+               
             </form>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { pushEncoded } from '../../../App'
 import ModalConfirm from  '../../../ModalConfirm'
+import NoResults from '../../templatesearch/noResults'
 
 export default class DataList extends Component {
  
@@ -42,7 +43,7 @@ export default class DataList extends Component {
             );
 
         } else {
-            return null;
+            return <NoResults />
         }
     }
 

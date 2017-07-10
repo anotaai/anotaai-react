@@ -76,6 +76,7 @@ export default class FormUser extends Component {
                             <input id="confirmarSenha" className="validate" type="password" minLength="6" required value={this.props.confirmarSenha} name="confirmarSenha" onChange={this.props.handleInputChange} />
                             <label htmlFor="confirmarSenha" data-error="A senha deve conter no mínimo 6 caracteres">Confirmar Senha</label>
                         </div>
+                         {this.props.panelFooter}
                     </div>
                 </div>
             </div>

@@ -74,11 +74,11 @@ import { connect } from 'react-redux';
         const disabled = (this.props.vendedorState.cepRetornado === 'S' ? 'disabled' : '');
 
         return (
-            <form method="post" onSubmit={this.send.bind(this)}>
+            <form  method="post" onSubmit={this.send.bind(this)}>
 
                 <FormUser {... this.props.vendedorState}  handleInputChange={this.props.handleInputChange} handlePhoneChange={this.props.handlePhoneChange} />
 
-                <div className="container">
+                <div className="vendedor-space-container container">
                     
                     <PanelHeader label="Dados Endereço" icon="home" />
 
@@ -116,9 +116,9 @@ import { connect } from 'react-redux';
                             <input id="bairro" type="text" name="cliente.endereco.bairro" onChange={this.props.handleInputChange} disabled={disabled} required value={this.props.vendedorState.cliente.endereco.bairro} />
                             <label htmlFor="bairro" className={active} disabled>Bairro</label>
                         </div>
+                        <PanelFooter submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
                     </div>
                 </div>
-                <PanelFooter submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
             </form>)
     }
 
