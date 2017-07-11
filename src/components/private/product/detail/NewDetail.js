@@ -27,12 +27,10 @@ class NewDetail extends Component {
     save(e) {
 
       e.preventDefault();
-  
-      this.sendButton.setAttribute("disabled", "disabled");
 
        const newInstance = ProductService.setJson(this.props.detailState);
 
-        ProductService.save(newInstance).then(response => {
+        ProductService.save(newInstance,this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
                 const id = Base64Service.encode(response.entity.id.toString());
@@ -40,10 +38,7 @@ class NewDetail extends Component {
             } 
         }).catch(error => {
               Toast.defaultError();
-         }).then(() => {
-              if(this.sendButton != null)
-               this.sendButton.removeAttribute("disabled");
-        });
+         });
     }
 
 

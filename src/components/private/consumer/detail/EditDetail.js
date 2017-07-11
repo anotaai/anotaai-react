@@ -29,16 +29,12 @@ class EditDetail extends Component {
 
     e.preventDefault();
 
-    this.sendButton.setAttribute("disabled", "disabled");
-
     const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
 
-    ClienteConsumidorService.update(newInstance).then(response => {
+    ClienteConsumidorService.update(newInstance,this.sendButton).then(response => {
       Toast.show(response.messages);
     }).catch(error => {
       Toast.defaultError();
-    }).then(() => {
-      this.sendButton.removeAttribute("disabled");
     });
 
   }
@@ -59,26 +55,21 @@ class EditDetail extends Component {
     
     e.preventDefault();
 
-    this.recommendButton.setAttribute("disabled", "disabled");
-
     const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
     
-    ClienteConsumidorService.recommendEdition(newInstance).then(response => {
+    ClienteConsumidorService.recommendEdition(newInstance,this.recommendButton).then(response => {
       Toast.show(response.messages);
        if (response.isValid) {
           browserHistory.push(URL.CONSUMER);
        }
     }).catch(error => {
       Toast.defaultError();
-    }).then(() => {
-      this.recommendButton.removeAttribute("disabled");
     });
   }
 
 
   render() {
     return (
-
       <Detail
         title="Edição de Consumidor"
         {... this.props.detailState}

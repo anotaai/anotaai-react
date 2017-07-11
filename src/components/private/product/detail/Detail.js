@@ -17,6 +17,7 @@ export default class Detail extends Component {
          return;
      }
 
+
      this.props.merge(e);
    } 
 
@@ -53,7 +54,7 @@ export default class Detail extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <select className="browser-default" onChange={this.props.handleInputChange} value={this.props.unidadeMedida.type} name="unidadeMedida.type" >
+                                        <select className="browser-default" required onChange={this.props.handleInputChange} value={this.props.unidadeMedida.type} name="unidadeMedida.type" >
                                             <option value="">Unidade de Medida</option>
                                             {this.props.unidadeList.map(unidade => (<option key={unidade.type} value={unidade.type}>{unidade.descricao}</option>))}
                                         </select>

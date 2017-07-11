@@ -25,19 +25,17 @@ class Login extends Component {
   login(e) {
     e.preventDefault();
 
-    this.refs.loginBtn.setAttribute("disabled", "disabled");
-    UserService.login(this.props.loginState.userLogin, this.keepAlive.checked).then(response => {
+    UserService.login(this.props.loginState.userLogin, this.keepAlive.checked, this.refs.loginBtn).then(response => {
       if (response.isValid) {
         this.props.login(response.login);
       } else {
         Toast.show(response.messages);
         this.clearPassword();
       }
-    }).catch(error => {
+    }).catch((error) => {
       Toast.defaultError();
     }).then(() => {
-       if (this.refs.loginBtn !== undefined) {
-        this.refs.loginBtn.removeAttribute("disabled");
+      if (this.refs.loginBtn !== undefined) {
         this.clearPassword();
       }
     });
@@ -72,7 +70,7 @@ class Login extends Component {
                     <label htmlFor="manterConectado">Manter conectado</label>
                   </div>
                   <label className='col s5 right-align' style={{ marginTop: '3px' }}>
-                    <a  onClick={this.showModal.bind(this)} className="pink-text clickable" >Esqueceu a senha?</a>
+                    <a onClick={this.showModal.bind(this)} className="pink-text clickable" >Esqueceu a senha?</a>
                   </label>
                   <div className='col s12' />
                 </div>

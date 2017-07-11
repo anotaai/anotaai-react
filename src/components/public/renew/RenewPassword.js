@@ -28,15 +28,14 @@ class RenewPassword extends Component {
             this.props.clearPassword();
         } else {
 
-            this.refs.newPassword.setAttribute("disabled", "disabled");
-            UserService.changePassword(this.props.renewState.userLogin.usuario).then(response => {
+      
+            UserService.changePassword(this.props.renewState.userLogin.usuario, this.refs.newPassword).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
                     browserHistory.push(URL.LOGIN);
                 }
             }).catch(error => {
                 Toast.defaultError();
-                this.refs.newPassword.removeAttribute("disabled");
             });
         }
     }

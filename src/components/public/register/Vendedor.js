@@ -33,23 +33,21 @@ import { connect } from 'react-redux';
          this.props.clearForm();
     }
 
-    send(e) {
+    save(e) {
         e.preventDefault();
         
         if (this.props.vendedorState.usuario.senha !== this.props.vendedorState.confirmarSenha) {
              Toast.show('senhas.nao.conferem.warning', Icon.WARNING);
              this.props.clearPassword();
         } else {
-    
-            this.sendButton.setAttribute('disabled','disabled');
-            ClientService.save(this.props.vendedorState.cliente, this.props.vendedorState.usuario, this.props.vendedorState.telefone).then(response => {
+            
+            ClientService.save(this.props.vendedorState.cliente, this.props.vendedorState.usuario, this.props.vendedorState.telefone, this.sendButton).then(response => {
                  Toast.show(response.messages);
                  if (response.isValid) {
                     browserHistory.push(URL.LOGIN);
                  }
             }).catch(error => {
                 Toast.defaultError();
-                this.sendButton.removeAttribute('disabled');
             });
         }
 
@@ -74,7 +72,7 @@ import { connect } from 'react-redux';
         const disabled = (this.props.vendedorState.cepRetornado === 'S' ? 'disabled' : '');
 
         return (
-            <form  method="post" onSubmit={this.send.bind(this)}>
+            <form  method="post" onSubmit={this.save.bind(this)}>
 
                 <FormUser {... this.props.vendedorState}  handleInputChange={this.props.handleInputChange} handlePhoneChange={this.props.handlePhoneChange} />
 

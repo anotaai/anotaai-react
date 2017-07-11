@@ -9,8 +9,6 @@ import UserService from '../../../services/UserService';
 import { handleInputChange, clearForm, handlePhoneChange, clearPassword } from '../../../actions/compradorActionCreator';
 import { Icon } from '../../../domain/Icon';
 
-
-
 class Comprador extends Component {
 
     constructor() {
@@ -33,7 +31,7 @@ class Comprador extends Component {
          this.props.clearForm();
     }
 
-    send(e) {
+    save(e) {
         
         e.preventDefault();
 
@@ -42,21 +40,18 @@ class Comprador extends Component {
              this.props.clearPassword();
         } else {
             
-             this.sendButton.setAttribute("disabled", "disabled");
-
             if (this.props.compradorState.activation) {
                 this.activate();
                 return;
             }
 
-            UserService.save(this.props.compradorState.usuario, this.props.compradorState.telefone).then(response => {
+            UserService.save(this.props.compradorState.usuario, this.props.compradorState.telefone, this.sendButton).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
                     browserHistory.push(URL.LOGIN);
                 }
             }).catch(error => {
                 Toast.defaultError();
-                this.sendButton.removeAttribute("disabled");
             });
         }
 
@@ -64,21 +59,20 @@ class Comprador extends Component {
 
     activate() {
 
-        UserService.activationUser(this.props.compradorState.usuario, this.props.compradorState.telefone).then(response => {
+        UserService.activationUser(this.props.compradorState.usuario, this.props.compradorState.telefone, this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
                 browserHistory.push(URL.LOGIN);
             }
         }).catch(error => {
             Toast.defaultError();
-            this.sendButton.removeAttribute("disabled");
         });
 
     }
 
     render() {
         return (
-            <form method="post" onSubmit={this.send.bind(this)}>
+            <form method="post" onSubmit={this.save.bind(this)}>
                 <FormUser {... this.props.compradorState} 
                   handleInputChange={this.props.handleInputChange} 
                   handlePhoneChange={this.props.handlePhoneChange}

@@ -1,9 +1,11 @@
 import { buildPhone,getNumbers} from '../helpers/stringHelper'
 import {  createInstance  } from '../helpers/jsonHelper'
+import AsyncService from '../services/AsyncService'
+
 
 export default class ClientService {
   
-    static save(client,usuario,telefoneStr) {
+    static save(client,usuario,telefoneStr,component) {
        
         const newUserInstance = createInstance(usuario);
         const newClientInstance = createInstance(client);
@@ -14,19 +16,11 @@ export default class ClientService {
         newClientInstance.usuario = newUserInstance;
         newClientInstance.endereco = newAddressInstance;
 
-      return  fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/clientes/`,{
+       return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/clientes/`,[component], {
             method: 'POST',
             body: JSON.stringify(newClientInstance),
-            headers: new Headers({
-                'Content-type': 'application/json'
-            })
-        })
-        .then(response => {
-           return response.json(); 
-        })
-        .catch(error => {
-           throw Error(error);
-        });
+            headers: { 'Content-type': 'application/json' }
+       });
     }
 
 }

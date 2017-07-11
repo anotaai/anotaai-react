@@ -21,16 +21,14 @@ class EditDetail extends Component {
 
         e.preventDefault();
 
-        this.sendButton.setAttribute("disabled", "disabled");
+        
 
         const newInstance = ProductService.setJson(this.props.detailState);
 
-        ProductService.update(newInstance).then(response => {
+        ProductService.update(newInstance,this.sendButton).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            this.sendButton.removeAttribute("disabled");
         });
     }
 

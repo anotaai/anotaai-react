@@ -10,6 +10,7 @@ import { browserHistory } from 'react-router'
 import { URL } from '../helpers/constants'
 import Base64Service from './app/Base64Service'
 import AuthenticationService from './app/AuthenticationService'
+import AsyncService from '../services/AsyncService'
 
 
 export default class UserService {
@@ -33,7 +34,7 @@ export default class UserService {
 
     }
 
-     static getUserByActivationKey(key) {
+    static getUserByActivationKey(key) {
         return dispatch => {
 
             fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/byactivationcode`, {
@@ -43,12 +44,12 @@ export default class UserService {
             }).then(response => {
                 return response.json();
             }).then(json => {
-                if(json.isValid) {
-                   return dispatch(updateComprador(json.entity));
+                if (json.isValid) {
+                    return dispatch(updateComprador(json.entity));
                 } else {
                     Toast.show(json.messages);
                 }
-               
+
             }).catch(error => {
                 Toast.defaultError();
             })
@@ -56,16 +57,13 @@ export default class UserService {
 
     }
 
-    static changePassword(user) {
+    static changePassword(user, component) {
 
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/alterarSenha`, {
+
+        return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/alterarSenha`, [component] ,  {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(user)
-        }).then(response => {
-            return response.json();
-        }).catch(error => {
-            throw Error(error);
         });
 
     }
@@ -99,39 +97,31 @@ export default class UserService {
         });
     }
 
-    static save(usuario, telefoneStr) {
+    static save(usuario, telefoneStr, component) {
 
         const newUserInstance = createInstance(usuario);
         newUserInstance.telefone = buildPhone(telefoneStr);
 
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios`, {
+        return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios`, [component],  {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: { 'Content-type': 'application/json' }
-        }).then(response => {
-            return response.json();
-        }).catch(error => {
-            throw Error(error);
         });
 
     }
 
 
-    static activationUser(usuario, telefoneStr) {
+    static activationUser(usuario, telefoneStr, component) {
 
         const newUserInstance = createInstance(usuario);
         newUserInstance.telefone = buildPhone(telefoneStr);
 
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/activationuser`, {
+
+         return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/activationuser`, [component],  {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: { 'Content-type': 'application/json' }
-        }).then(response => {
-            return response.json();
-        }).catch(error => {
-            throw Error(error);
         });
-
     }
 
     static logout(login) {
@@ -160,7 +150,7 @@ export default class UserService {
         }
     }
 
-    static login(userLogin, keepAlive) {
+    static login(userLogin, keepAlive, component) {
 
         return new Promise((resolve, reject) => {
 
@@ -176,15 +166,17 @@ export default class UserService {
             newUserInstance.senha = Base64Service.encode(senha);
             newUserLoginInstance.usuario = newUserInstance;
 
-            return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/login`, {
+            AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/login`, [component] , {
                 method: 'POST',
                 body: JSON.stringify(newUserLoginInstance),
                 headers: { 'Content-type': 'application/json' }
             }).then(response => {
-                resolve(response.json());
+                resolve(response);
             }).catch(error => {
-                reject();
-            });
+                reject(error);
+            })
+
+
         });
 
     }

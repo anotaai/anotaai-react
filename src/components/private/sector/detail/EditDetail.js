@@ -28,15 +28,11 @@ class EditDetail extends Component {
     update(e) {
 
         e.preventDefault();
-
-        this.sendButton.setAttribute("disabled", "disabled");
-
-        SectorService.update(this.props.detailState).then(response => {
+    
+        SectorService.update(this.props.detailState, this.sendButton).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            this.sendButton.removeAttribute("disabled");
         });
     }
 

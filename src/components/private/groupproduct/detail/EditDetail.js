@@ -27,14 +27,10 @@ class EditDetail extends Component {
 
         e.preventDefault();
 
-        this.sendButton.setAttribute("disabled", "disabled");
-
-        GroupProductService.update(this.props.detailState).then(response => {
+        GroupProductService.update(this.props.detailState,this.sendButton).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            this.sendButton.removeAttribute("disabled");
         });
     }
 
@@ -49,7 +45,6 @@ class EditDetail extends Component {
         }).catch(error => {
             Toast.defaultError();
         });
-
     }
 
 

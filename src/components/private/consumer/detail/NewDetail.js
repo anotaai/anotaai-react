@@ -19,16 +19,10 @@ class NewDetail extends Component {
         this.props.clearForm();
     }
 
-
     save(e) {
-
-        e.preventDefault();
-    
-        this.sendButton.setAttribute("disabled", "disabled");
-        
+        e.preventDefault();    
         const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
-
-        ClienteConsumidorService.save(newInstance).then(response => {
+        ClienteConsumidorService.save(newInstance, this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
                 const id = Base64Service.encode(response.entity.id.toString());
@@ -36,13 +30,8 @@ class NewDetail extends Component {
             } 
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-              if(this.sendButton != null)
-               this.sendButton.removeAttribute("disabled");
         });
-
     }
-
 
     render() {
         return (

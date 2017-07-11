@@ -18,6 +18,7 @@ class Search extends Component {
         this.filters = defaultFilters;
         this.state = { nome: '' }
     }
+    
 
     componentDidMount() {
         this.search();
@@ -32,16 +33,10 @@ class Search extends Component {
         if (e)
             e.preventDefault();
 
-        this.sendButton.setAttribute("disabled", "disabled");
-
-        SectorService.list(this.props.searchState.offset, this.state.nome).then(response => {
+        SectorService.list(this.props.searchState.offset, this.state.nome, this.sendButton).then(response => {
             this.props.list(response);
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            if (this.sendButton !== undefined) {
-                this.sendButton.removeAttribute("disabled");
-            }
         });
     }
 

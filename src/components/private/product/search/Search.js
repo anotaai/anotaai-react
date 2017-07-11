@@ -34,16 +34,10 @@ class Search extends Component {
         if (e)
             e.preventDefault();
 
-        this.sendButton.setAttribute("disabled", "disabled");
-
-        ProductService.list(this.props.searchState.offset, this.state.descricao).then(response => {
+        ProductService.list(this.props.searchState.offset, this.state.descricao, this.sendButton).then(response => {
             this.props.list(response);
         }).catch(error => {
             Toast.defaultError();
-        }).then(() => {
-            if (this.sendButton !== undefined) {
-                this.sendButton.removeAttribute("disabled");
-            }
         });
     }
 
