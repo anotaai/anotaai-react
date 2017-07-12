@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { pushEncoded } from '../../../App'
 import ModalConfirm from  '../../../ModalConfirm'
 import NoResults from '../../templatesearch/noResults'
+import { TABLE_DEFAULT_CSS } from '../../../../helpers/constants'
 
 export default class DataList extends Component {
  
@@ -13,7 +14,7 @@ export default class DataList extends Component {
         if (results.length > 0) {
             return (
                 <div>
-                    <table className="striped bordered">
+                    <table className={TABLE_DEFAULT_CSS}>
                         <thead>
                             <tr>
                                 <th className="row-th">Nome</th>

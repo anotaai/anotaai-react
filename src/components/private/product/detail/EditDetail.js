@@ -20,9 +20,7 @@ class EditDetail extends Component {
     update(e) {
 
         e.preventDefault();
-
         
-
         const newInstance = ProductService.setJson(this.props.detailState);
 
         ProductService.update(newInstance,this.sendButton).then(response => {

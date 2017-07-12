@@ -132,3 +132,5 @@ export const CHIPS_THEME = {
 
   },
 }
+
+export const TABLE_DEFAULT_CSS = "striped bordered";

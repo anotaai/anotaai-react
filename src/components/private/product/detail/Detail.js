@@ -7,6 +7,7 @@ import Autocomplete from 'react-autocomplete'
 import { Icon } from '../../../../domain/Icon';
 import Toast from '../../../../helpers/Toast';
 import ModalConfirm from  '../../../ModalConfirm'
+import { TABLE_DEFAULT_CSS } from '../../../../helpers/constants'
 
 export default class Detail extends Component {
 
@@ -138,7 +139,7 @@ export default class Detail extends Component {
 
                                 <div className="row">
                                     <div className="col s12 offset-m2 m7 offset-l2 l7">
-                                        <table className="striped bordered">
+                                        <table className={TABLE_DEFAULT_CSS}>
                                             <thead>
                                                 <tr>
                                                     <th className="row-th">Produto</th>
