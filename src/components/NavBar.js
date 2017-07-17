@@ -6,6 +6,7 @@ import caderneta from "../img/128x128.png"
 import $ from 'jquery'
 import T from 'i18n-react'
 import { toggleMenu } from '../actions/menuActionCreator'
+import logo from "../img/logo.png"
 
 class Links extends Component {
 
@@ -61,7 +62,7 @@ class Navbar extends Component {
                 <nav className="indigo">
                     <div className="nav-wrapper container">
                         <Link id="logo-container" to={this.props.baseUrl} className="brand-logo clickable">
-                            <T.span id="app-name" text={{ key: "app" }} />
+                            <img   alt="Anota ai" className="responsive-img" style={{maxHeight:'50px'}} title="Anota ai" src={logo} />
                         </Link>
                         {this.props.loginState == null &&
                             <div id="publico">
@@ -70,9 +71,9 @@ class Navbar extends Component {
                                 </ul>
                             </div>}
                         {this.props.loginState != null &&
-                            <a className="hide-on-small-only menu-burger" onClick={this.props.toggleMenu} ><i className="material-icons">menu</i></a>
+                          <a className="hide-on-small-only menu-burger" onClick={this.props.toggleMenu} ><i className="material-icons">menu</i></a>
                         }
-                        <a data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
+                        <a data-activates="slide-out" className="button-collapse menu-responsive-burger"><i className="material-icons">menu</i></a>
                     </div>
                 </nav>
                 {this.props.loginState == null && <ResponsiveMenu />}
