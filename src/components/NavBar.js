@@ -62,7 +62,7 @@ class Navbar extends Component {
                 <nav className="indigo">
                     <div className="nav-wrapper container">
                         <Link id="logo-container" to={this.props.baseUrl} className="brand-logo clickable">
-                            <img   alt="Anota ai" className="responsive-img" style={{maxHeight:'50px'}} title="Anota ai" src={logo} />
+                            <img   alt="Anota ai" className="responsive-img" style={{maxHeight:'45px', marginTop:'5px'}} title="Anota ai" src={logo} />
                         </Link>
                         {this.props.loginState == null &&
                             <div id="publico">
