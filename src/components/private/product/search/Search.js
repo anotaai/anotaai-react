@@ -11,6 +11,7 @@ import { getObjectNewState } from '../../../../helpers/jsonHelper'
 import { clearForm, list, remove, handlePageClick, showModal, hideModal } from '../../../../actions/searchActionCreator'
 
 
+
 class Search extends Component {
 
 

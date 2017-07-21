@@ -1,12 +1,13 @@
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
-import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, UPDATE_STATE_GROUP_PRODUCT, UPDATE_SECTOR_LIST, UPDATE_SECTOR, SHOW_MODAL, HIDE_MODAL } from '../actions/groupProductActionCreator';
+import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, UPDATE_STATE_GROUP_PRODUCT, SHOW_MODAL, HIDE_MODAL, UPDATE_SECTOR_LIST } from '../actions/groupProductActionCreator';
+
 
 const INITIAL_STATE = {
     id: null,
     nome: '',
     descricao: '',
     showModalState: false,
-    setor: { id: null, nome: '', descricao: '' },
+    setor: { id: '', nome: '', descricao: '' },
     setores: []
 }
 
@@ -33,21 +34,6 @@ export default function (state = INITIAL_STATE, action) {
             newState.setor.id = action.entity.setor.id;
             newState.setor.nome = action.entity.setor.nome;
             newState.setor.descricao = action.entity.setor.descricao;
-            newState.setores = [];
-            return newState;
-        }
-
-        case UPDATE_SECTOR_LIST: {
-            const newState = createInstance(state);
-            newState.setores = action.list;
-            return newState;
-        }
-
-        case UPDATE_SECTOR: {
-            const newState = createInstance(state);
-            newState.setor.id = action.sector.id;
-            newState.setor.nome = action.sector.nome;
-            newState.setor.descricao = action.sector.descricao;
             return newState;
         }
 
@@ -60,6 +46,12 @@ export default function (state = INITIAL_STATE, action) {
         case HIDE_MODAL: {
             const newState = createInstance(state);
             newState.showModalState = false;
+            return newState;
+        }
+
+        case UPDATE_SECTOR_LIST: {
+            const newState = createInstance(state);
+            newState.setores = action.list;
             return newState;
         }
 

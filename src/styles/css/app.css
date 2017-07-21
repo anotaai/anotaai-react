@@ -14,6 +14,7 @@ select {
   border-radius: 15px !important;
   background-color: #f5f5f5 !important;
   border: solid 1px #9e9e9e !important;
+  margin-top: 10px !important;
 }
 
 .title-header {
@@ -90,16 +91,12 @@ footer {
 	bottom:0;
 }
 
-.waves-effect {
-   z-index: 0 !important;
-}
 
 
 .private-side-nav {
   top:inherit;
   height: 94%;
   position: absolute !important;
-  z-index: 0 !important;
 }
 .side-nav .divider {
   margin: 0px !important; 
@@ -191,7 +188,6 @@ footer {
 .fixed-action-btn {
     position: relative !important;
     bottom: 0px !important;
-    z-index: 0 !important;
 }
 
 .selected {

@@ -10,19 +10,6 @@ const INITIAL_STATE = {
     consumidor: { usuario: { id: null, nome: '', email: '', telefone: '' }, type: 'consumidor' }
 }
 
-
-function updateConsumer(state, action, recommendEdition) {
-    const newState = createInstance(state);
-    newState.id = action.entity.id;
-    newState.consumidor.usuario.id = action.entity.consumidor.usuario.id;
-    newState.consumidor.usuario.nome = action.entity.consumidor.usuario.nome;
-    newState.consumidor.usuario.email = action.entity.consumidor.usuario.email;
-    newState.recommendEdition = recommendEdition;
-    let telefoneStr = action.entity.consumidor.usuario.telefone.ddd.toString() + action.entity.consumidor.usuario.telefone.numero.toString();
-    newState.consumidor.usuario.telefone = getPhoneMask(telefoneStr);
-    return newState;
-}
-
 export default function (state = INITIAL_STATE, action) {
 
     switch (action.type) {
@@ -63,4 +50,16 @@ export default function (state = INITIAL_STATE, action) {
         default:
             return state;
     }
+}
+
+function updateConsumer(state, action, recommendEdition) {
+    const newState = createInstance(state);
+    newState.id = action.entity.id;
+    newState.consumidor.usuario.id = action.entity.consumidor.usuario.id;
+    newState.consumidor.usuario.nome = action.entity.consumidor.usuario.nome;
+    newState.consumidor.usuario.email = action.entity.consumidor.usuario.email;
+    newState.recommendEdition = recommendEdition;
+    let telefoneStr = action.entity.consumidor.usuario.telefone.ddd.toString() + action.entity.consumidor.usuario.telefone.numero.toString();
+    newState.consumidor.usuario.telefone = getPhoneMask(telefoneStr);
+    return newState;
 }

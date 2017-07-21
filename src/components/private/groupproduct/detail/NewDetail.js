@@ -4,10 +4,10 @@ import Detail from './Detail'
 import Toast from '../../../../helpers/Toast'
 import Base64Service from '../../../../services/app/Base64Service'
 import { browserHistory } from 'react-router'
-import GroupProductService from '../../../../services/groupproduct/GroupProductService'
-import { clearForm , handleInputChange, updateSector } from '../../../../actions/groupProductActionCreator'
+import SectorService  from '../../../../services/sector/SectorService'
+import GroupProductService  from '../../../../services/groupproduct/GroupProductService'
+import { clearForm , handleInputChange } from '../../../../actions/groupProductActionCreator'
 import { URL } from '../../../../helpers/constants'
-
 
 class NewDetail extends Component {
 
@@ -18,6 +18,10 @@ class NewDetail extends Component {
 
     componentWillUnmount() {
         this.props.clearForm();
+    }
+
+    componentDidMount() {
+       this.props.getSectors();
     }
 
     save(e) {
@@ -42,8 +46,6 @@ class NewDetail extends Component {
                 setores={this.props.detailState.setores}
                 merge={this.save.bind(this)}
                 submitRef={el => this.sendButton = el} 
-                getSector={this.props.getSector}
-                setSector={this.props.setSector}
                 handleInputChange={this.props.handleInputChange}/>
 
         )
@@ -63,16 +65,8 @@ const mapDispatchToProps = dispatch => {
         clearForm: () => {
             dispatch(clearForm());
         },
-        getSector: (name,value) => {
-            new Promise((resolve) => {
-                resolve(dispatch(handleInputChange(name,value)));
-            }).then(() => {
-                 dispatch(GroupProductService.getSectors(value));
-            }); 
-           
-        },
-        setSector: (sector) => {
-           dispatch(updateSector(sector));
+        getSectors: () => {
+            dispatch(SectorService.getSectors());
         }
     }
 }

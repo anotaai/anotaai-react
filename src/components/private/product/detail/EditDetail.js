@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, updateProduct, updateProductAutoComplete, updateTableItens, removeProduct, showModal, hideModal } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, updateProduct, updateProductAutoComplete, updateTableItens, removeProduct, showModal, hideModal, updateProductList } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
 import Base64Service from '../../../../services/app/Base64Service'
@@ -58,7 +58,6 @@ class EditDetail extends Component {
 
             <Detail
                 title="Edição de Produtos"
-                editMode="S"
                 merge={this.update.bind(this)}
                 {... this.props.detailState}
                 unidadeList={this.props.detailState.unidadeList}
@@ -115,7 +114,7 @@ const mapDispatchToProps = dispatch => {
             new Promise((resolve) => {
                 resolve(dispatch(handleInputChange(name, value)));
             }).then(() => {
-                dispatch(ProductService.getProducts(value));
+                dispatch(ProductService.getProducts(value,updateProductList));
             });
         },
 

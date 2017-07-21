@@ -75,7 +75,6 @@ class EditDetail extends Component {
         {... this.props.detailState}
         merge={this.update.bind(this)}
         handleInputChange={this.props.handleInputChange}
-        editMode="S"
         remove={this.remove.bind(this)}
         showModal={this.props.showModal} 
         hideModal={this.props.hideModal} 

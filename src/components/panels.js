@@ -1,25 +1,24 @@
 import React from 'react'
 import { push } from './App'
+import { NEW_USE_CASE_PATH } from '../helpers/constants'
 
 export function PanelFooter(props) {
 
     return (
-        <div className={props.isPublic ? 'col s12 m12 l12' : ''}>
+        <div className={props.public ? 'col s12 m12 l12' : ''}>
 
             {/* Botões normais */}
 
             <div className="panel-footer hide-on-small-only">
 
-                {props.isPublic &&
+                {props.public &&
                     <button type="button" className="btn waves-effect DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}>
                         Limpar <i className="material-icons right">clear</i>
                     </button>
                 }
 
-                {!props.isPublic &&
-                    <button type="button" className="btn waves-effect INFO" formNoValidate onClick={push.bind(this, props.newDetailUrl)}>
-                        Novo <i className="material-icons right">assignment</i>
-                    </button>
+                {!props.public &&
+                    <Novo {...props} />
                 }
 
                 <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" name="action">{props.label}
@@ -36,7 +35,7 @@ export function PanelFooter(props) {
                     </a>
 
                     <ul>
-                        {props.isPublic &&
+                        {props.public &&
                             <li>
                                 <div className="row">
                                     <div className="col col s2 offset-s8">
@@ -47,16 +46,8 @@ export function PanelFooter(props) {
                                 </div>
                             </li>
                         }
-                        {!props.isPublic &&
-                            <li>
-                                <div className="row">
-                                    <div className="col col s2 offset-s8">
-                                        <span className="new badge badge-responsive-align INFO">Novo</span> </div>
-                                    <div className="col col s2">
-                                        <button className="btn-floating INFO" formNoValidate onClick={push.bind(this, props.newDetailUrl)}><i className="material-icons">assignment</i></button>
-                                    </div>
-                                </div>
-                            </li>
+                        {!props.public &&
+                            <Novo {...props} responsive />
                         }
                         <li>
                             <div className="row">
@@ -77,9 +68,7 @@ export function PanelFooter(props) {
 
 export function PanelFooterDetail(props) {
 
-
     return (
-
         <div>
             {/* Botões normais */}
 
@@ -87,10 +76,16 @@ export function PanelFooterDetail(props) {
 
                 {props.customButtons}
 
+
+                {!window.location.pathname.includes(NEW_USE_CASE_PATH) &&
+                    <Novo {...props} />
+                }
+
                 {props.remove !== undefined &&
                     <button type="button" className="btn waves-effect buttons-space ERROR" onClick={props.remove}>
                         Deletar <i className="material-icons right">delete</i>
-                    </button>}
+                    </button>
+                }
 
                 <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">
                     Gravar <i className="material-icons right">send</i>
@@ -106,6 +101,10 @@ export function PanelFooterDetail(props) {
                     </a>
                     <ul>
                         {props.customResponsiveButtons}
+                        
+                        {!window.location.pathname.includes(NEW_USE_CASE_PATH) &&
+                          <Novo {...props} responsive />
+                        }
 
                         {props.remove !== undefined &&
                             <li>
@@ -136,12 +135,36 @@ export function PanelFooterDetail(props) {
     );
 }
 
-
-
 export function PanelHeader(props) {
     return (
         <div className="panel-header">
             <span className="title-header"><i className="material-icons icon-panel">{props.icon}</i>{props.label}</span>
         </div>
+    )
+}
+
+function Novo(props) {
+
+    return (
+
+        <span>
+            {!props.responsive &&
+                <button type="button" className="btn waves-effect buttons-space INFO" formNoValidate onClick={push.bind(this, props.newDetailUrl)}>
+                    Novo <i className="material-icons right">assignment</i>
+                </button>
+            }
+
+            {props.responsive &&
+                <li>
+                    <div className="row">
+                        <div className="col col s2 offset-s8">
+                            <span className="new badge badge-responsive-align INFO">Novo</span> </div>
+                        <div className="col col s2">
+                            <button className="btn-floating INFO" formNoValidate onClick={push.bind(this, props.newDetailUrl)}><i className="material-icons">assignment</i></button>
+                        </div>
+                    </div>
+                </li>
+            }
+        </span>
     )
 }

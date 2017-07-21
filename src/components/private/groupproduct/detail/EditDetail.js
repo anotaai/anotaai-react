@@ -4,7 +4,8 @@ import Toast from '../../../../helpers/Toast'
 import Detail from './Detail'
 import Base64Service from '../../../../services/app/Base64Service'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
-import { clearForm, handleInputChange, updateState, updateSector, showModal, hideModal } from '../../../../actions/groupProductActionCreator'
+import SectorService from '../../../../services/sector/SectorService'
+import { clearForm, handleInputChange, updateState, showModal, hideModal } from '../../../../actions/groupProductActionCreator'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../../helpers/constants'
 
@@ -21,6 +22,7 @@ class EditDetail extends Component {
 
     componentDidMount() {
         this.props.findById(Base64Service.decode(this.props.params.id));
+        this.props.getSectors();
     }
 
     update(e) {
@@ -56,10 +58,7 @@ class EditDetail extends Component {
                 setores={this.props.detailState.setores}
                 merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
-                editMode="S"
                 submitRef={el => this.sendButton = el}
-                getSector={this.props.getSector}
-                setSector={this.props.setSector}
                 showModal={this.props.showModal}
                 hideModal={this.props.hideModal}
                 showModalState={this.props.detailState.showModalState}
@@ -84,21 +83,14 @@ const mapDispatchToProps = dispatch => {
         findById: (id) => {
             dispatch(GroupProductService.findById(id, updateState));
         },
-        getSector: (name, value) => {
-            new Promise((resolve) => {
-                resolve(dispatch(handleInputChange(name, value)));
-            }).then(() => {
-                dispatch(GroupProductService.getSectors(value));
-            });
-        },
-        setSector: (sector) => {
-            dispatch(updateSector(sector));
-        },
         showModal: () => {
             dispatch(showModal());
         },
         hideModal: () => {
             dispatch(hideModal());
+        },
+        getSectors: () => {
+            dispatch(SectorService.getSectors());
         }
     }
 }

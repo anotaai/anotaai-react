@@ -21,6 +21,8 @@ export var clearAllPropertiesObject = (objToClear) => {
                     objToClear[param] = null;
                 } else if (typeof objToClear[param] === 'boolean') {
                     objToClear[param] = false;
+                } else if (typeof objToClear[param] === Date) {
+                    objToClear[param] = new Date();
                 } else {
                     objToClear[param] = '';
                 }

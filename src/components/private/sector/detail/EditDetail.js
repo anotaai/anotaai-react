@@ -55,7 +55,7 @@ class EditDetail extends Component {
                 title="Edição de Setores"
                 customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
                 customButtons={<CustomButtons remove={this.remove.bind(this)} />}
-                editMode="S" merge={this.update.bind(this)}
+                merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
                 showModal={this.props.showModal}
                 hideModal={this.props.hideModal}

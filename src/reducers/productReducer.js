@@ -23,7 +23,7 @@ const INITIAL_STATE = {
     diasSemana: [],
     unidadeList: [],
     blockCode: false,
-    qtdProduct: '',
+    quantidade: '',
     showModalState: false
 }
 
@@ -48,7 +48,7 @@ export default function (state = INITIAL_STATE, action) {
             clearAllPropertiesObject(newState);
             newState.precoVenda = 0;
             newState.codigo = '';
-            newState.qtdProduct = '';
+            newState.quantidade = '';
             newState.itensReceita = [];
             return newState;
         }
@@ -80,21 +80,12 @@ export default function (state = INITIAL_STATE, action) {
         }
 
         case UPDATE_PRODUCT_LIST: {
-            const newState = createInstance(state);
-            newState.produtos = [];
-
-            action.list.forEach(product => {
-                newState.produtos.push({ id: product.id, descricao: product.descricao });
-            });
-            return newState;
+            return pushProducts(state, action);
         }
 
 
         case UPDATE_PRODUCT_AUTO_COMPLETE: {
-            const newState = createInstance(state);
-            newState.produtoSelecionado.id = action.product.id;
-            newState.produtoSelecionado.descricao = action.product.descricao;
-            return newState;
+            return setProduct(state, action);
         }
 
         case UPDATE_PRODUCT: {
@@ -112,18 +103,16 @@ export default function (state = INITIAL_STATE, action) {
                 newState.diasDisponibilidade.push(json.dia.descricao);
             });
 
-
             action.entity.itensReceita.forEach(json => {
                 newState.itensReceita.push({ id: json.id, ingrediente: { id: json.ingrediente.id, descricao: json.ingrediente.descricao }, quantidade: json.quantidade });
             });
-
 
             return newState;
         }
 
         case UPDATE_TABLE_ITENS: {
 
-            if (state.qtdProduct === '') {
+            if (state.quantidade === '') {
                 Toast.show('quantidade.obrigatoria', Icon.WARNING);
                 return state;
             }
@@ -136,15 +125,15 @@ export default function (state = INITIAL_STATE, action) {
             const filtered = state.itensReceita.findIndex((item) => item.ingrediente.id === state.produtoSelecionado.id);
 
             if (filtered !== -1) {
-                Toast.show('ja.adicionado', Icon.WARNING);
-                return state;
+                Toast.show('produto.ja.adicionado', Icon.WARNING);
+                const newState = createInstance(state);
+                clearProduct(newState);
+                return newState;
             }
 
             const newState = createInstance(state);
-            newState.itensReceita.push({ id: null, ingrediente: { id: newState.produtoSelecionado.id, descricao: newState.produtoSelecionado.descricao }, quantidade: newState.qtdProduct });
-            newState.produtoSelecionado.id = null;
-            newState.produtoSelecionado.descricao = '';
-            newState.qtdProduct = '';
+            newState.itensReceita.push({ id: null, ingrediente: { id: newState.produtoSelecionado.id, descricao: newState.produtoSelecionado.descricao }, quantidade: newState.quantidade });
+            clearProduct(newState);
 
             return newState;
         }
@@ -170,4 +159,37 @@ export default function (state = INITIAL_STATE, action) {
         default:
             return state;
     }
+}
+
+export function pushProducts(state, action) {
+    const newState = createInstance(state);
+    newState.produtos = [];
+
+    action.list.forEach(product => {
+        newState.produtos.push({ id: product.id, descricao: product.descricao });
+    });
+
+    return newState;
+}
+
+export function setProduct(state, action) {
+    const newState = createInstance(state);
+    newState.produtoSelecionado.id = action.product.id;
+    newState.produtoSelecionado.descricao = action.product.descricao;
+    return newState;
+}
+
+export function clearProduct(newState) {
+    newState.produtoSelecionado.id = null;
+    newState.produtoSelecionado.descricao = '';
+
+    if (newState.quantidade) {
+        newState.quantidade = '';
+    }
+
+    if (newState.precoCusto) {
+        newState.precoCusto = 0;
+    }
+
+    return newState;
 }

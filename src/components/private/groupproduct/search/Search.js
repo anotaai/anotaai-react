@@ -84,6 +84,7 @@ const mapDispatchToProps = dispatch => {
         },
         remove: (id) => {
             GroupProductService.remove(id).then(response => {
+                Toast.show(response.messages);
                 if (response.isValid) {
                     dispatch(remove(USE_CASE.SEARCH_GROUP_PRODUCT, id));
                 }

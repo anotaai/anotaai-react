@@ -76,7 +76,7 @@ class Comprador extends Component {
                 <FormUser {... this.props.compradorState} 
                   handleInputChange={this.props.handleInputChange} 
                   handlePhoneChange={this.props.handlePhoneChange}
-                  panelFooter={<PanelFooter submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label={this.props.compradorState.activation === true ? "Ativar" : "Enviar"} isPublic={true} />}
+                  panelFooter={<PanelFooter submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label={this.props.compradorState.activation === true ? "Ativar" : "Enviar"} public />}
                  />
                
             </form>

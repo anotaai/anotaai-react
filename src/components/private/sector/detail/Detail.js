@@ -6,6 +6,7 @@ import ModalConfirm from  '../../../ModalConfirm'
 export default class Detail extends Component {
 
     render() {
+
         return (
             <div className="space-container">
                 <div className="container">
@@ -16,17 +17,17 @@ export default class Detail extends Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="nome" ref="nome" value={this.props.nome} name="nome" required onChange={this.props.handleInputChange} type="text" />
-                                        <label htmlFor="nome" className={this.props.editMode === 'S' && this.props.nome != null ? 'active' : ''}>Nome</label>
+                                        <label htmlFor="nome" className={this.props.nome !== ''  ? 'active' : ''}>Nome</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="descricao" type="text" required value={this.props.descricao} name="descricao" onChange={this.props.handleInputChange} />
-                                        <label htmlFor="descricao" className={this.props.editMode === 'S' && this.props.descricao != null ? 'active' : ''} >Descrição</label>
+                                        <label htmlFor="descricao" className={this.props.descricao !== '' ? 'active' : ''} >Descrição</label>
                                     </div>
                                 </div>
                             </div>
-                            <PanelFooterDetail customButtons={this.props.customButtons} remove={this.props.showModal} customResponsiveButtons={this.props.customResponsiveButtons} searchUrl={URL.SECTOR} submitRef={this.props.submitRef}   />
+                            <PanelFooterDetail customButtons={this.props.customButtons} remove={this.props.showModal} customResponsiveButtons={this.props.customResponsiveButtons} newDetailUrl={URL.NEW_SECTOR} submitRef={this.props.submitRef}   />
                         </form>
                     </div>
                 </div>

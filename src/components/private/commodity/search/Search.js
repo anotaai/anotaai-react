@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ClienteConsumidorService from '../../../../services/consumer/ClienteConsumidorService'
+import { clearForm, list, remove, handlePageClick, showModal, hideModal } from '../../../../actions/searchActionCreator'
+import { URL, USE_CASE } from '../../../../helpers/constants'
 import Toast from '../../../../helpers/Toast'
+import CommodityService from '../../../../services/commodity/CommodityService'
+import { PanelHeader, PanelFooter } from '../../../panels'
 import Filters from '../../templatesearch/Filters'
 import Paginator from '../../templatesearch/Paginator'
 import DataList from './DataList'
-import { URL, defaultFilters, USE_CASE } from '../../../../helpers/constants'
-import { PanelHeader, PanelFooter } from '../../../panels'
 import { getObjectNewState } from '../../../../helpers/jsonHelper'
-import { clearForm, list, handlePageClick, remove, showModal, hideModal } from '../../../../actions/searchActionCreator'
+
 
 class Search extends Component {
 
     constructor() {
         super();
         this.sendButton = null;
-        this.filters = defaultFilters;
-        this.state = { nome: '' };
+        this.filters = [{ id: 'nome', label: 'Nome Produto'} , {id:'dataEntrada', label:'Data Entrada', type:'date'}];
+        this.state = { nome: '' , dataEntrada: '' };
     }
 
     componentDidMount() {
@@ -31,8 +32,8 @@ class Search extends Component {
 
         if (e)
             e.preventDefault();
-
-        ClienteConsumidorService.list(this.props.searchState.offset, this.state.nome, this.sendButton).then(response => {
+        
+        CommodityService.list(this.props.searchState.offset, this.state.nome, this.state.dataEntrada, this.sendButton).then(response => {
             this.props.list(response);
         }).catch(error => {
             Toast.defaultError();
@@ -54,38 +55,41 @@ class Search extends Component {
     }
 
     render() {
+
         return (
             <div className="space-container">
                 <div className="container">
-                    <PanelHeader icon="perm_identity" label="Consumidor" />
+                    <PanelHeader icon="list" label="Entrada de Mercadoria" />
                     <div className="panel">
                         <form onSubmit={this.search.bind(this)}>
                             <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />
-                            <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_CONSUMER} label="Pesquisar" />
-                            <DataList filteredResults={this.props.searchState.filteredResults} editUrl={URL.CONSUMER} remove={this.remove.bind(this)} showModal={this.props.showModal} hideModal={this.props.hideModal} showModalState={this.props.searchState.showModalState} />
+                            <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_COMMODITY} label="Pesquisar" />
+                            <DataList filteredResults={this.props.searchState.filteredResults} editUrl={URL.COMMODITY} remove={this.remove.bind(this)} showModal={this.props.showModal} hideModal={this.props.hideModal} showModalState={this.props.searchState.showModalState} text="Confirma a exclusão do entrada de mercadoria?" />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.props.searchState.pageCount} resultsLength={this.props.searchState.filteredResults.length} />
                         </form>
                     </div>
                 </div>
             </div>
         )
+
     }
+
 }
 
 const mapStateToProps = state => {
-    return { searchState: state.searchConsumer }
+    return { searchState: state.searchCommodity }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         list: (filteredResults) => {
-            dispatch(list(USE_CASE.SEARCH_CONSUMER, filteredResults));
+            dispatch(list(USE_CASE.SEARCH_COMMODITY, filteredResults));
         },
         remove: (id) => {
-            ClienteConsumidorService.remove(id).then(response => {
+            CommodityService.remove(id).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
-                    dispatch(remove(USE_CASE.SEARCH_CONSUMER, id));
+                    dispatch(remove(USE_CASE.SEARCH_COMMODITY, id));
                 }
             }).catch(error => {
                 Toast.defaultError();
@@ -93,22 +97,22 @@ const mapDispatchToProps = dispatch => {
         },
         handlePageClick: (offset, reactContext) => {
             new Promise((resolve) => {
-                resolve(dispatch(handlePageClick(USE_CASE.SEARCH_CONSUMER, offset)));
+                resolve(dispatch(handlePageClick(USE_CASE.SEARCH_COMMODITY, offset)));
             }).then(() => {
                 reactContext.search();
             });
         },
         clearForm: () => {
-            dispatch(clearForm(USE_CASE.SEARCH_CONSUMER));
+            dispatch(clearForm(USE_CASE.SEARCH_COMMODITY));
         },
         showModal: (id, e) => {
-            dispatch(showModal(USE_CASE.SEARCH_CONSUMER, id));
+            dispatch(showModal(USE_CASE.SEARCH_COMMODITY, id));
         },
         hideModal: () => {
-            dispatch(hideModal(USE_CASE.SEARCH_CONSUMER));
+            dispatch(hideModal(USE_CASE.SEARCH_COMMODITY));
         }
     }
 }
-const SearchConsumerContainer = connect(mapStateToProps, mapDispatchToProps)(Search);
 
-export default SearchConsumerContainer;
+const SearchContainer = connect(mapStateToProps, mapDispatchToProps)(Search);
+export default SearchContainer;

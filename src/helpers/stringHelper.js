@@ -64,3 +64,7 @@ export function concatDot(number) {
     var output = str.substr(0, str.length - 2) + '.' + str.substr(str.length - 2);
     return Number(output);
 }
+
+export function dateToHtmlString(date) {
+    return date.toISOString().substr(0,10);
+}

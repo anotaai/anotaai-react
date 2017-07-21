@@ -52,7 +52,8 @@ class Login extends Component {
       <main className="space-container">
         <center>
           <div className="hide-on-small-only">
-            <div className="section" />
+             <div className="section" />
+             <div className="section" />
           </div>
           <h5 className="indigo-text">Login</h5>
           <div className="container">

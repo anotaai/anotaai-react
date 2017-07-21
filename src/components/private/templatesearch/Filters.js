@@ -11,7 +11,7 @@ export default class Filters extends Component {
                     <div key={filterObj.id} className="row">
                         <div className="input-field col s12 m12 l12">
                             <input id={filterObj.id} type={filterObj.type == null ? "text" : filterObj.type } value={filterObj.basicField} onChange={this.props.handleInputChange.bind(this)} name={filterObj.id} />
-                            <label htmlFor={filterObj.id}>{filterObj.label}</label>
+                            <label htmlFor={filterObj.id} className={filterObj.type === 'date' ? 'active' : ''} >{filterObj.label}</label>
                         </div>
                     </div>)
                 })}

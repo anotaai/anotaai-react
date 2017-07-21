@@ -16,6 +16,9 @@ import EditConsumerDetailContainer from '../components/private/consumer/detail/E
 import SearchProductContainer from '../components/private/product/search/Search'
 import NewProductDetailContainer from '../components/private/product/detail/NewDetail'
 import EditProductDetailContainer from '../components/private/product/detail/EditDetail'
+import SearchCommodityContainer from '../components/private/commodity/search/Search'
+import NewCommodityDetailContainer from '../components/private/commodity/detail/NewDetail'
+import EditCommodityDetailContainer from '../components/private/commodity/detail/EditDetail'
 
  const privateRoutes = (
     <Route component={AuthenticationContainer}>
@@ -33,6 +36,9 @@ import EditProductDetailContainer from '../components/private/product/detail/Edi
       <Route path={URL.PRODUCT} component={SearchProductContainer} />
       <Route path={URL.NEW_PRODUCT} component={NewProductDetailContainer} />
       <Route path={URL.EDIT_PRODUCT} component={EditProductDetailContainer} />
+      <Route path={URL.COMMODITY} component={SearchCommodityContainer} />
+      <Route path={URL.NEW_COMMODITY} component={NewCommodityDetailContainer} />
+      <Route path={URL.EDIT_COMODDITY} component={EditCommodityDetailContainer} />
     </Route> 
 );
 

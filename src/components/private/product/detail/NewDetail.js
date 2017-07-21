@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
-import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, newDefaultValues, updateProductAutoComplete, updateTableItens,removeProduct } from '../../../../actions/productActionCreator'
+import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, newDefaultValues, updateProductAutoComplete, updateTableItens,removeProduct, updateProductList } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
 import { URL } from '../../../../helpers/constants'
@@ -105,7 +105,7 @@ const mapDispatchToProps = dispatch => {
             new Promise((resolve) => {
                 resolve(dispatch(handleInputChange(name, value)));
             }).then(() => {
-                dispatch(ProductService.getProducts(value));
+                dispatch(ProductService.getProducts(value,updateProductList));
             });
         },
         updateTableItens: () => {

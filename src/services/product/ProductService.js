@@ -1,5 +1,4 @@
 import CrudService from '../CrudService';
-import { updateProductList } from '../../actions/productActionCreator';
 import { createInstance } from '../../helpers/jsonHelper';
 import { getDayForEnum, concatDot } from '../../helpers/stringHelper';
 
@@ -9,9 +8,8 @@ export default class ProductService extends CrudService {
         return '/rest/produto';
     }
 
-    static getProducts(name) {
+    static getProducts(name,updateProductList) {
         return dispatch => {
-         
 
             return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/searchProdutosParaReceita?query=${name}`
             ).then(response => {

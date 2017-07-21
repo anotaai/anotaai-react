@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { PanelHeader, PanelFooterDetail } from '../../../panels'
 import ModalConfirm from  '../../../ModalConfirm'
 import MaskedInput from 'react-maskedinput';
+import { URL } from '../../../../helpers/constants'
 
 export default class Detail extends Component {
 
@@ -17,13 +18,13 @@ export default class Detail extends Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="nome" ref="nome" disabled={this.props.recommendEdition} value={this.props.consumidor.usuario.nome} name="consumidor.usuario.nome" required onChange={this.props.handleInputChange} type="text" />
-                                        <label htmlFor="nome" className={this.props.editMode === 'S' && this.props.consumidor.usuario.nome != null ? 'active' : ''}>Nome</label>
+                                        <label htmlFor="nome" className={this.props.consumidor.usuario.nome !== '' ? 'active' : ''}>Nome</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="email" disabled={this.props.recommendEdition} value={this.props.consumidor.usuario.email} name="consumidor.usuario.email" className="validate" onChange={this.props.handleInputChange} type="email" />
-                                        <label htmlFor="email" data-error="Email inválido" className={this.props.editMode === 'S' && this.props.consumidor.usuario.email != null ? 'active' : ''}>Email</label>
+                                        <label htmlFor="email" data-error="Email inválido" className={this.props.consumidor.usuario.email !== '' ? 'active' : ''}>Email</label>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -32,7 +33,7 @@ export default class Detail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} remove={this.props.showModal}  submitRef={this.props.submitRef} />
+                            <PanelFooterDetail customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} remove={this.props.showModal} newDetailUrl={URL.NEW_CONSUMER} submitRef={this.props.submitRef} />
                         </form>
                     </div>
                 </div>

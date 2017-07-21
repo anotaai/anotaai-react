@@ -98,9 +98,10 @@ import { connect } from 'react-redux';
                             <label htmlFor="complemento" className={active}>Complemento</label>
                         </div>
 
-                        <div id="estadosDiv" className="input-field col s12 m6 l6">
-                            <select className="browser-default" disabled={disabled} onChange={this.props.handleInputChange} value={this.props.vendedorState.cliente.endereco.estado} name="cliente.endereco.estado"   >
-                                <option value="">Estado</option>
+                        <div className="input-field col s12 m6 l6">
+                            <label htmlFor="estado" className="active">Estado</label>
+                            <select id="estado" className="browser-default" disabled={disabled} onChange={this.props.handleInputChange} value={this.props.vendedorState.cliente.endereco.estado} name="cliente.endereco.estado"   >
+                                <option value=""></option>
                                 {this.props.vendedorState.estadoList.map(estado => (<option key={estado.type} value={estado.type}>{estado.descricao}</option>))}
                             </select>
                         </div>
@@ -114,7 +115,7 @@ import { connect } from 'react-redux';
                             <input id="bairro" type="text" name="cliente.endereco.bairro" onChange={this.props.handleInputChange} disabled={disabled} required value={this.props.vendedorState.cliente.endereco.bairro} />
                             <label htmlFor="bairro" className={active} disabled>Bairro</label>
                         </div>
-                        <PanelFooter submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" isPublic={true} />
+                        <PanelFooter submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" public />
                     </div>
                 </div>
             </form>)

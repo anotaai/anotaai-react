@@ -1,3 +1,9 @@
+export const NEW_USE_CASE_PATH = '/new';
+export const TABLE_DEFAULT_CSS = "striped bordered";
+export const DEFAULT_TIME = 3000;
+export const COOKIE_USER = 'globals';
+export const PAGE_SIZE = 5;
+
 export const URL = {
   ACTIVATE: '/activate(/:key)',
   LOGIN: '/login',
@@ -6,20 +12,24 @@ export const URL = {
   COMPRADOR_ACTIVATE: '/comprador(/:key)',
   VENDEDOR: '/vendedor',
   GROUP_PRODUCT: '/grupoproduto',
-  NEW_GROUP_PRODUCT: '/new/grupoproduto',
+  NEW_GROUP_PRODUCT: `${NEW_USE_CASE_PATH}/grupoproduto`,
   EDIT_GROUP_PRODUCT: '/grupoproduto(/:id)',
   SECTOR: '/setor',
-  NEW_SECTOR: '/new/setor',
+  NEW_SECTOR: `${NEW_USE_CASE_PATH}/setor`,
   EDIT_SECTOR: '/setor(/:id)',
   RENEW_PASSWORD: '/renew(/:activation)',
   SETTINGS: '/settings',
   DASHBOARD: '/dashboard',
   CONSUMER: '/consumidor',
-  NEW_CONSUMER: '/new/consumidor',
+  NEW_CONSUMER: `${NEW_USE_CASE_PATH}/consumidor`,
   EDIT_CONSUMER: '/consumidor(/:id)',
   PRODUCT: '/produto',
-  NEW_PRODUCT: '/new/produto',
-  EDIT_PRODUCT: '/produto(/:id)'
+  NEW_PRODUCT: `${NEW_USE_CASE_PATH}/produto`,
+  EDIT_PRODUCT: '/produto(/:id)',
+  COMMODITY: '/entradamercadoria' ,
+  NEW_COMMODITY: `${NEW_USE_CASE_PATH}/entradamercadoria` ,
+  EDIT_COMODDITY: '/entradamercadoria(/:id)'
+
 }
 
 export const USE_CASE = {
@@ -27,15 +37,11 @@ export const USE_CASE = {
   SEARCH_GROUP_PRODUCT: 'SEARCH_GROUP_PRODUCT',
   SEARCH_CONSUMER: 'SEARCH_CONSUMER',
   SEARCH_PRODUCT: 'SEARCH_PRODUCT',
+  SEARCH_COMMODITY: 'SEARCH_COMMODITY',
   LOGIN: 'LOGIN',
   MODAL_RENEW: 'MODAL_RENEW',
   RENEW: 'RENEW'
 }
-
-
-export const DEFAULT_TIME = 3000;
-export const COOKIE_USER = 'globals';
-export const PAGE_SIZE = 5;
 
 
 export const customModalStyles = {
@@ -47,14 +53,15 @@ export const customModalStyles = {
     marginRight: '-50%',
     padding: '30px',
     transform: 'translate(-50%, -50%)'
+  },
+  overlay: {
+      zIndex: 99999
   }
 }
-
 
 export const defaultFilters = (
   [{ id: 'nome', label: 'Nome' }]
 )
-
 
 export const AUTO_COMPLETE_MENU_STYLE = {
   borderRadius: '3px',
@@ -65,7 +72,7 @@ export const AUTO_COMPLETE_MENU_STYLE = {
   position: 'absolute',
   overflow: 'auto',
   maxHeight: '50%',
-  zIndex: '999',
+  zIndex: 999,
   cursor: 'pointer'
 }
 
@@ -132,5 +139,3 @@ export const CHIPS_THEME = {
 
   },
 }
-
-export const TABLE_DEFAULT_CSS = "striped bordered";
