@@ -53,7 +53,6 @@ class Login extends Component {
         <center>
           <div className="hide-on-small-only">
              <div className="section" />
-             <div className="section" />
           </div>
           <h5 className="indigo-text">Login</h5>
           <div className="container">

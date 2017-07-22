@@ -47,7 +47,7 @@ export default class Detail extends Component {
                                     values={
                                       <div>
                                        <div className="input-field col s12 m2 l2">
-                                         <label htmlFor="precoCusto" className="active">Preço Custo</label>
+                                         <label htmlFor="precoCusto" className="active">Custo</label>
                                          <SimpleCurrencyInput id="precoCusto" value={this.props.precoCusto} unit='R$' name="precoCusto" onInputChange={this.props.handleNumericChange.bind(this, 'precoCusto')} />
                                        </div>
                                        <div className="input-field col s12 m2 l2">
@@ -66,7 +66,7 @@ export default class Detail extends Component {
                                                 <thead>
                                                     <tr>
                                                         <th className="row-th">Produto</th>
-                                                        <th className="row-th">R$ Preço Custo</th>
+                                                        <th className="row-th">R$Custo</th>
                                                         <th className="row-th">Quantidade</th>
                                                         <th className="row-th">Excluir</th>
                                                     </tr>
