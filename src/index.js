@@ -11,6 +11,7 @@ import registerFetchInterceptor from './services/app/fetchInterceptor'
 import 'materialize-css/dist/css/materialize.min.css'
 import './styles/css/app.css'
 import './styles/css/material-icons.css'
+import 'rc-collapse/assets/index.css';
 window.jQuery = require('jquery');
 const i18nReactLoader = require("i18n-react-loader");
 require('materialize-css');
@@ -21,7 +22,7 @@ registerFetchInterceptor(store);
 
 i18nReactLoader.default.init({
     useExternalAPI: true,
-    apiURL: `${process.env.REACT_APP_URL_BACKEND}/rest/i18n/locales`,
+    apiURL: `${process.env.REACT_APP_URL_BACKEND}/i18n/locales`,
     defaultLocale: 'en',
   }).then(() => {
     ReactDOM.render(

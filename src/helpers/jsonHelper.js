@@ -12,12 +12,12 @@ export var clearAllPropertiesObject = (objToClear) => {
     Object.keys(objToClear).forEach((param) => {
         if (objToClear[param] != null) {
 
-            if ((objToClear[param]).toString() === "[object Object]") {
+            if (Array.isArray(objToClear[param])) {
+                objToClear[param] = [];
+            } else if ((objToClear[param]).toString() === "[object Object]") {
                 clearAllPropertiesObject(objToClear[param]);
             } else {
-                if (Array.isArray(objToClear[param])) {
-                    objToClear[param] = [];
-                } else if (Number.isInteger(objToClear[param])) {
+                if (Number.isInteger(objToClear[param])) {
                     objToClear[param] = null;
                 } else if (typeof objToClear[param] === 'boolean') {
                     objToClear[param] = false;
@@ -27,7 +27,6 @@ export var clearAllPropertiesObject = (objToClear) => {
                     objToClear[param] = '';
                 }
             }
-
         }
 
     })

@@ -5,13 +5,19 @@ export const CLEAR_FORM_PRODUCT = 'clear_form_product',
     UPDATE_AVAILABLE_DAYS = 'update_available_days',
     UPDATE_PRODUCT = 'update_product',
     UPDATE_PRODUCT_LIST = 'update_product_list',
+    UPDATE_GROUP_PRODUCT_LIST = 'update_group_product_list',
     UPDATE_PRODUCT_AUTO_COMPLETE = 'update_product_auto_complete',
     UPDATE_TABLE_ITENS = 'update_table_itens',
+    UPDATE_GROUP_PRODUCT_TABLE_ITENS = 'update_group_product_table_itens',
     NEW_DEFAULT_VALUES = 'new_default_values',
     REMOVE_PRODUCT = 'remove_product',
+    REMOVE_GROUP_PRODUCT = 'remove_group_product',
     SHOW_MODAL_PRODUCT = 'show_modal_product',
-    HIDE_MODAL_PRODUCT = 'hide_modal_product'
-
+    HIDE_MODAL_PRODUCT = 'hide_modal_product',
+    TOGGLE_GROUP_PRODUCT_ACCORDION = 'toggle_group_product_accordion',
+    TOGGLE_COMMODITY_ACCORDION = 'toggle_commodity_accordion',
+    UPDATE_GROUP_PRODUCT_AUTO_COMPLETE = 'update_group_product_auto_complete',
+    CHANGE_GROUP_PRODUCT_RADIO = 'change_group_product_radio'
 
 export function clearForm() {
     return { type: CLEAR_FORM_PRODUCT }
@@ -41,8 +47,16 @@ export function updateProductList(list) {
     return { type: UPDATE_PRODUCT_LIST, list }
 }
 
+export function updateGroupProductList(list) {
+    return { type: UPDATE_GROUP_PRODUCT_LIST, list }
+}
+
 export function updateProductAutoComplete(product) {
     return { type: UPDATE_PRODUCT_AUTO_COMPLETE, product }
+}
+
+export function updateGroupProductAutoComplete(groupProduct) {
+    return { type: UPDATE_GROUP_PRODUCT_AUTO_COMPLETE, groupProduct }
 }
 
 export function newDefaultValues(json) {
@@ -53,8 +67,16 @@ export function updateTableItens(json) {
     return { type: UPDATE_TABLE_ITENS }
 }
 
+export function updateGroupProductTableItens(json) {
+    return { type: UPDATE_GROUP_PRODUCT_TABLE_ITENS }
+}
+
 export function removeProduct(id) {
     return { type: REMOVE_PRODUCT, id }
+}
+
+export function removeGroupProduct(id) {
+    return { type: REMOVE_GROUP_PRODUCT, id }
 }
 
 export function showModal(id) {
@@ -64,4 +86,20 @@ export function showModal(id) {
 export function hideModal(id) {
     return { type: HIDE_MODAL_PRODUCT }
 }
+
+export function toggleGroupProductAccordion() {
+    return { type: TOGGLE_GROUP_PRODUCT_ACCORDION }
+}
+
+export function toggleCommodityAccordion() {
+    return { type: TOGGLE_COMMODITY_ACCORDION }
+}
+
+export function changeGroupProductRadio(id) {
+    return { type: CHANGE_GROUP_PRODUCT_RADIO, id }
+}
+
+
+
+
 

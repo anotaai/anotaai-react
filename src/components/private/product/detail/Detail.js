@@ -7,7 +7,9 @@ import { Icon } from '../../../../domain/Icon';
 import Toast from '../../../../helpers/Toast';
 import ModalConfirm from '../../../ModalConfirm'
 import AutoCompleteProduct from './AutoCompleteProduct'
+import AutoCompleteGroupProduct from './AutoCompleteGroupProduct'
 import { TABLE_DEFAULT_CSS } from '../../../../helpers/constants'
+import Collapse, { Panel } from 'rc-collapse';
 
 export default class Detail extends Component {
 
@@ -18,7 +20,6 @@ export default class Detail extends Component {
             Toast.show('codigo.required', Icon.WARNING);
             return;
         }
-
         this.props.merge(e);
     }
 
@@ -28,7 +29,7 @@ export default class Detail extends Component {
                 <form onSubmit={this.merge.bind(this)}>
                     <div className="space-container">
                         <div className="container">
-                            <PanelHeader icon="business_center" label={this.props.title} />
+                            <PanelHeader icon="shopping_cart" label={this.props.title} />
                             <div className="panel">
                                 <div className="container">
                                     <div className="row center-align">
@@ -64,7 +65,7 @@ export default class Detail extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
-                                            <input id="descricaoResumida" value={this.props.descricaoResumida} name="descricaoResumida" onChange={this.props.handleInputChange} type="text"/>
+                                            <input id="descricaoResumida" value={this.props.descricaoResumida} name="descricaoResumida" onChange={this.props.handleInputChange} type="text" />
                                             <label htmlFor="descricaoResumida" className={this.props.descricaoResumida !== '' ? 'active' : ''}>Descrição Resumida</label>
                                         </div>
                                     </div>
@@ -87,54 +88,71 @@ export default class Detail extends Component {
                             </div>
                         </div>
                     </div>
-
                     <div className="space-container">
                         <div className="container">
-                            <PanelHeader icon="library_books" label="Itens Receita" />
-                            <div className="panel">
-                                <div className="container">
-                                    <AutoCompleteProduct
-                                        descricao={this.props.produtoSelecionado.descricao}
-                                        produtos={this.props.produtos}
-                                        getProduct={this.props.getProduct}
-                                        setProduct={this.props.setProduct}
-                                        handleInputChange={this.props.handleInputChange}
-                                        updateTableItens={this.props.updateTableItens}
-                                        autoCompleteSize="input-field col s12 m8 l8"
-                                        values={
-                                          <div className="input-field col s12 m2 l2">
-                                            <label htmlFor="quantidade" className="active">Quantidade</label>
-                                            <input type="number" value={this.props.quantidade} placeholder="Valor" name="quantidade" onChange={this.props.handleInputChange} />
-                                           </div> } />
-                                        
-                                     {this.props.itensReceita.length > 0 &&
+                            <Collapse onChange={this.props.toggleGroupProductAccordion} accordion={this.props.groupProductAccordionState === '1' ? true : false} activeKey={this.props.groupProductAccordionState}>
+                                <Panel header={`Grupo Produto`} key="1">
+                                    <div className="container">
+                                        <AutoCompleteGroupProduct 
+                                            nome={this.props.grupoProdutoSelecionado.nome}
+                                            grupos={this.props.grupos} 
+                                            gruposTableList={this.props.gruposTableList}
+                                            updateGroupProductTableItens={this.props.updateGroupProductTableItens}
+                                            removeGroupProduct={this.props.removeGroupProduct}
+                                            changeGroupProductRadio={this.props.changeGroupProductRadio}
+                                            getGroupProduct={this.props.getGroupProduct}
+                                            setGroupProduct={this.props.setGroupProduct} />    
+                                    </div>
+                                </Panel>
+                            </Collapse>
+                        </div>
+                    </div>
+                    <div className="space-container">
+                        <div className="container">
+                            <Collapse onChange={this.props.toggleCommodityAccordion} accordion={this.props.commodityAccordionState === '1' ? true : false} activeKey={this.props.commodityAccordionState}>
+                                <Panel header={`Itens Receita`} key="1" >
+                                    <div className="container">
+                                        <AutoCompleteProduct
+                                            descricao={this.props.produtoSelecionado.descricao}
+                                            produtos={this.props.produtos}
+                                            getProduct={this.props.getProduct}
+                                            setProduct={this.props.setProduct}
+                                            updateTableItens={this.props.updateTableItens}
+                                            autoCompleteSize="input-field col s12 m8 l8"
+                                            values={
+                                                <div className="input-field col s12 m2 l2">
+                                                    <label htmlFor="quantidade" className="active">Quantidade</label>
+                                                    <input type="number" value={this.props.quantidade} placeholder="Valor" name="quantidade" onChange={this.props.handleInputChange} />
+                                                </div>} />
+                                            {this.props.itensReceita.length > 0 &&
 
-                                        <div className="row">
-                                            <div className="col s12 offset-m1 m9 offset-l1 l9">
-                                                <table className={TABLE_DEFAULT_CSS}>
-                                                    <thead>
-                                                        <tr>
-                                                            <th className="row-th">Produto</th>
-                                                            <th className="row-th">Quantidade</th>
-                                                            <th className="row-th">Excluir</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {this.props.itensReceita.map(item => {
-                                                            return (
-                                                                <tr key={item.ingrediente.id}>
-                                                                    <td className="row-td-detail">{item.ingrediente.descricao}</td>
-                                                                    <td className="row-td-detail">{item.quantidade}</td>
-                                                                    <td className="row-td"><a onClick={this.props.removeProduct.bind(this, item.ingrediente.id)} style={{ color: 'black' }}><i className="material-icons">delete</i></a></td>
-                                                                </tr>)
-                                                        })}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>}
-                                </div>
-                               <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_PRODUCT} submitRef={this.props.submitRef} />
-                            </div>
+                                            <div className="row">
+                                                <div className="col s12 offset-m1 m9 offset-l1 l9">
+                                                    <table className={TABLE_DEFAULT_CSS}>
+                                                        <thead>
+                                                            <tr>
+                                                                <th className="row-th">Produto</th>
+                                                                <th className="row-th">Quantidade</th>
+                                                                <th className="row-th">Excluir</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {this.props.itensReceita.map(item => {
+                                                                return (
+                                                                    <tr key={item.ingrediente.id}>
+                                                                        <td className="row-td-detail">{item.ingrediente.descricao}</td>
+                                                                        <td className="row-td-detail">{item.quantidade}</td>
+                                                                        <td className="row-td"><a onClick={this.props.removeProduct.bind(this, item.ingrediente.id)} style={{ color: 'black' }}><i className="material-icons">delete</i></a></td>
+                                                                    </tr>)
+                                                            })}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>}
+                                    </div>
+                                    <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_PRODUCT} submitRef={this.props.submitRef} />
+                                </Panel>
+                            </Collapse>
                         </div>
                     </div>
                 </form>

@@ -61,7 +61,7 @@ class Search extends Component {
         return (
             <div className="space-container">
                 <div className="container">
-                    <PanelHeader icon="business_center" label="Produto" />
+                    <PanelHeader icon="shopping_cart" label="Produto" />
                     <div className="panel">
                         <form onSubmit={this.search.bind(this)}>
                             <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />

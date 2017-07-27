@@ -91,11 +91,9 @@ footer {
 	bottom:0;
 }
 
-
-
 .private-side-nav {
   top:inherit;
-  height: 94%;
+  height: calc(100% - 56px) !important;
   position: absolute !important;
 }
 .side-nav .divider {
@@ -291,4 +289,43 @@ footer {
 }
 
 
- 
+.rc-collapse-header { 
+  background-color: #ee6e73 !important; 
+  border: 1px solid #ee6e73 !important;
+  color: #EEE !important;
+  font-size: 1.6rem !important; 
+}
+
+ .rc-collapse-content {
+  padding: 10px 30px 0px 30px !important;;
+  background-color: #f5f5f5 !important;;
+  border: 1px solid #EEE !important;;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2) !important;
+ }
+
+.rc-collapse > .rc-collapse-item > .rc-collapse-header .arrow {
+    display: inline-block !important; 
+    content: ' ' !important; 
+    width: 0 !important; 
+    height: 0 !important; 
+    font-size: 0 !important; 
+    line-height: 0 !important; 
+    border-top: 3px solid transparent !important; 
+    border-bottom: 3px solid transparent !important; 
+    border-left: 4px solid white !important; 
+    vertical-align: middle !important; 
+    margin-right: 8px !important; 
+}
+
+.rc-collapse > .rc-collapse-item-active > .rc-collapse-header .arrow {
+    border-left: 3px solid transparent !important;
+    border-right: 3px solid transparent !important;
+    border-top: 4px solid white !important;
+    margin-right: 6px !important;
+}
+
+.rc-collapse-anim-active {
+  transition: height 0.2s ease-out !important;
+}

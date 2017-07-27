@@ -3,7 +3,8 @@ import { PanelHeader, PanelFooterDetail } from '../../../panels'
 import { URL } from '../../../../helpers/constants'
 import Toast from '../../../../helpers/Toast'
 import { Icon } from '../../../../domain/Icon';
-import ModalConfirm from '../../../ModalConfirm'
+import ModalConfirm from '../../../ModalConfirm';
+
 
 export default class Detail extends Component {
 
@@ -16,6 +17,7 @@ export default class Detail extends Component {
         } else {
             this.props.merge(e);
         }
+        
 
     }
 

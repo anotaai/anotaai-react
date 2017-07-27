@@ -4,11 +4,15 @@ import { updateMenu } from '../../actions/menuActionCreator'
 
 export default class MenuService {
 
+    static getEndpoint() {
+        return '/menu';
+    }
+
     static getMenu() {
 
         return dispatch => {
 
-            fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/menu/principal`).then(response => {
+            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/principal`).then(response => {
                 return response.json();
             }).then(json => {
                 if(Array.isArray(json)) {

@@ -16,10 +16,15 @@ import AsyncService from '../services/AsyncService'
 export default class UserService {
 
 
+      static getEndpoint() {
+        return '/usuarios';
+    }
+
+
     static getUser(activationCode) {
         return dispatch => {
 
-            fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/recuperarUsuarioAlteracaoSenha`, {
+            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/recuperarUsuarioAlteracaoSenha`, {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: activationCode
@@ -37,7 +42,7 @@ export default class UserService {
     static getUserByActivationKey(key) {
         return dispatch => {
 
-            fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/byactivationcode`, {
+            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/byactivationcode`, {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: key
@@ -60,7 +65,7 @@ export default class UserService {
     static changePassword(user, component) {
 
 
-        return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/alterarSenha`, [component] ,  {
+        return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/alterarSenha`, [component] ,  {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(user)
@@ -73,7 +78,7 @@ export default class UserService {
         const newUserInstance = createInstance(user);
         newUserInstance.telefone = buildPhone(telefone);
 
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/solicitarMensagemAlteracaoSenha`, {
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/solicitarMensagemAlteracaoSenha`, {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: { 'Content-type': 'application/json' }
@@ -86,7 +91,7 @@ export default class UserService {
 
 
     static activation(code) {
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/activation`, {
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/activation`, {
             headers: { 'Content-type': 'application/json' },
             body: code,
             method: 'POST'
@@ -102,7 +107,7 @@ export default class UserService {
         const newUserInstance = createInstance(usuario);
         newUserInstance.telefone = buildPhone(telefoneStr);
 
-        return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios`, [component],  {
+        return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}`, [component],  {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: { 'Content-type': 'application/json' }
@@ -117,7 +122,7 @@ export default class UserService {
         newUserInstance.telefone = buildPhone(telefoneStr);
 
 
-         return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/activationuser`, [component],  {
+         return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/activationuser`, [component],  {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: { 'Content-type': 'application/json' }
@@ -128,7 +133,7 @@ export default class UserService {
 
         return new Promise((resolve, reject) => {
 
-            return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/logout`, {
+            return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/logout`, {
                 method: 'POST',
                 body: JSON.stringify(login),
                 headers: { 'Content-type': 'application/json' }
@@ -166,7 +171,7 @@ export default class UserService {
             newUserInstance.senha = Base64Service.encode(senha);
             newUserLoginInstance.usuario = newUserInstance;
 
-            AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/login`, [component] , {
+            AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/login`, [component] , {
                 method: 'POST',
                 body: JSON.stringify(newUserLoginInstance),
                 headers: { 'Content-type': 'application/json' }
@@ -193,7 +198,7 @@ export default class UserService {
     static loadProfileImage() {
         return dispatch => {
 
-            fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/usuarios/profilePhoto`, {
+            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/profilePhoto`, {
                 method: 'GET',
                 headers: { 'Content-type': 'application/json' }
             }).then(response => {
@@ -214,7 +219,7 @@ export default class UserService {
 
         const telefone = buildPhone(telefoneStr);
 
-        return fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/${endpoint}/findby/telefone`, {
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}/${endpoint}/findby/telefone`, {
             method: 'POST',
             body: JSON.stringify(telefone),
             headers: new Headers({

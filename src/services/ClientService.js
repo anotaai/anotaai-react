@@ -4,6 +4,10 @@ import AsyncService from '../services/AsyncService'
 
 
 export default class ClientService {
+
+    static getEndpoint() {
+        return '/clientes';
+    }
   
     static save(client,usuario,telefoneStr,component) {
        
@@ -16,7 +20,7 @@ export default class ClientService {
         newClientInstance.usuario = newUserInstance;
         newClientInstance.endereco = newAddressInstance;
 
-       return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/clientes/`,[component], {
+       return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/`,[component], {
             method: 'POST',
             body: JSON.stringify(newClientInstance),
             headers: { 'Content-type': 'application/json' }

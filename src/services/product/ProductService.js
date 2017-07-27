@@ -5,7 +5,7 @@ import { getDayForEnum, concatDot } from '../../helpers/stringHelper';
 export default class ProductService extends CrudService {
 
     static getEndpoint() {
-        return '/rest/produto';
+        return '/produto';
     }
 
     static getProducts(name,updateProductList) {
@@ -19,7 +19,6 @@ export default class ProductService extends CrudService {
             }).catch(error => {
                 throw Error(error);
             });
-
         }
     }
 

@@ -9,7 +9,7 @@ export default class ClienteConsumidorService extends CrudService {
 
 
     static getEndpoint() {
-        return '/rest/clienteconsumidor';
+        return '/clienteconsumidor';
     }
 
     static getPhone(clienteConsumidor) {

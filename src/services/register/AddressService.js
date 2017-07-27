@@ -4,10 +4,14 @@ import Toast from '../..//helpers/Toast';
 
 export default class AddressService {
 
+    static getEndpoint() {
+        return '/enderecos';
+    }
+
     static findCep(cep) {
 
         return dispatch => {
-            fetch(`${process.env.REACT_APP_URL_BACKEND}/rest/enderecos/findcep/${cep}`)
+            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/findcep/${cep}`)
                 .then(response => {
                     return response.json();
                 }).then(address => {

@@ -1,6 +1,8 @@
 import {
     CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK, UPDATE_AVAILABLE_DAYS, UPDATE_PRODUCT, NEW_DEFAULT_VALUES,
-    UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE, UPDATE_TABLE_ITENS, REMOVE_PRODUCT, HIDE_MODAL_PRODUCT, SHOW_MODAL_PRODUCT
+    UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE, UPDATE_TABLE_ITENS, REMOVE_PRODUCT, HIDE_MODAL_PRODUCT, SHOW_MODAL_PRODUCT,
+    TOGGLE_GROUP_PRODUCT_ACCORDION, TOGGLE_COMMODITY_ACCORDION, UPDATE_GROUP_PRODUCT_LIST, UPDATE_GROUP_PRODUCT_AUTO_COMPLETE, REMOVE_GROUP_PRODUCT,
+    UPDATE_GROUP_PRODUCT_TABLE_ITENS, CHANGE_GROUP_PRODUCT_RADIO
 } from '../actions/productActionCreator';
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper';
 import { concatZeros } from '../helpers/stringHelper';
@@ -13,18 +15,24 @@ const INITIAL_STATE = {
     descricao: '',
     descricaoResumida: '',
     unidadeMedida: { type: '', descricao: '' },
-    produtoSelecionado: { id: null, descricao: '' },
+    grupoProduto: { id: '', nome: '' },
     precoVenda: 0,
     codigoGerado: false,
     ehInsumo: false,
+    grupos: [],
     diasDisponibilidade: [],
     itensReceita: [],
     produtos: [],
+    gruposTableList: [],
     diasSemana: [],
     unidadeList: [],
     blockCode: false,
     quantidade: '',
-    showModalState: false
+    showModalState: false,
+    groupProductAccordionState: '1',
+    commodityAccordionState: '1',
+    produtoSelecionado: { id: null, descricao: '' },
+    grupoProdutoSelecionado: { id: null, nome: '' }
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -43,13 +51,39 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
+        case TOGGLE_GROUP_PRODUCT_ACCORDION: {
+            const newState = createInstance(state);
+
+            if (newState.groupProductAccordionState === '1') {
+                newState.groupProductAccordionState = null;
+            } else {
+                newState.groupProductAccordionState = '1';
+            }
+
+            return newState;
+        }
+
+        case TOGGLE_COMMODITY_ACCORDION: {
+
+            const newState = createInstance(state);
+
+            if (newState.commodityAccordionState === '1') {
+                newState.commodityAccordionState = null;
+            } else {
+                newState.commodityAccordionState = '1';
+            }
+
+            return newState;
+        }
+
         case CLEAR_FORM_PRODUCT: {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
             newState.precoVenda = 0;
             newState.codigo = '';
             newState.quantidade = '';
-            newState.itensReceita = [];
+            newState.groupProductAccordionState = '1';
+            newState.commodityAccordionState = '1';
             return newState;
         }
 
@@ -83,13 +117,30 @@ export default function (state = INITIAL_STATE, action) {
             return pushProducts(state, action);
         }
 
+        case UPDATE_GROUP_PRODUCT_LIST: {
+
+            const newState = createInstance(state);
+            newState.gruposTableList = [];
+
+            action.list.forEach(groupProduct => {
+                newState.gruposTableList.push({ id: groupProduct.id, nome: groupProduct.nome });
+            });
+
+            return newState;
+        }
 
         case UPDATE_PRODUCT_AUTO_COMPLETE: {
             return setProduct(state, action);
         }
 
-        case UPDATE_PRODUCT: {
+        case UPDATE_GROUP_PRODUCT_AUTO_COMPLETE: {
+            const newState = createInstance(state);
+            newState.grupoProdutoSelecionado.id = action.groupProduct.id;
+            newState.grupoProdutoSelecionado.nome = action.groupProduct.nome;
+            return newState;
+        }
 
+        case UPDATE_PRODUCT: {
             const newState = createInstance(state);
             newState.id = action.entity.id;
             newState.codigo = action.entity.codigo;
@@ -106,6 +157,41 @@ export default function (state = INITIAL_STATE, action) {
             action.entity.itensReceita.forEach(json => {
                 newState.itensReceita.push({ id: json.id, ingrediente: { id: json.ingrediente.id, descricao: json.ingrediente.descricao }, quantidade: json.quantidade });
             });
+
+            action.entity.grupos.forEach(json => {
+                newState.grupos.push({ id: json.id, grupoProduto: { id: json.grupoProduto.id, nome: json.grupoProduto.nome }, ehPrincipal: json.ehPrincipal });
+            });
+
+            return newState;
+        }
+
+        case UPDATE_GROUP_PRODUCT_TABLE_ITENS: {
+
+            if(state.grupoProdutoSelecionado.id === null) {
+                Toast.show('grupo.required', Icon.WARNING);
+                return state;
+            }
+            
+            const filtered = state.grupos.findIndex((item) => item.grupoProduto.id === state.grupoProdutoSelecionado.id);
+
+            if (filtered !== -1) {
+                Toast.show('grupo.ja.adicionado', Icon.WARNING);
+                const newState = createInstance(state);
+                newState.grupoProdutoSelecionado.id = null;
+                newState.grupoProdutoSelecionado.nome = '';
+                return newState;
+            }
+
+            const newState = createInstance(state);
+            
+            let ehPrincipal = false;
+            if(newState.grupos.length === 0) {
+                ehPrincipal = true;
+            } 
+
+            newState.grupos.push( { id: null, grupoProduto: { id: state.grupoProdutoSelecionado.id, nome: state.grupoProdutoSelecionado.nome } , ehPrincipal: ehPrincipal});
+            newState.grupoProdutoSelecionado.id = null;
+            newState.grupoProdutoSelecionado.nome = '';
 
             return newState;
         }
@@ -144,6 +230,12 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
+        case REMOVE_GROUP_PRODUCT: {
+            const newState = createInstance(state);
+            newState.grupos.splice(newState.grupos.findIndex((item) => item.grupoProduto.id === action.id), 1);
+            return newState;
+        }
+
         case SHOW_MODAL_PRODUCT: {
             const newState = createInstance(state);
             newState.showModalState = true;
@@ -156,6 +248,19 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
+        case CHANGE_GROUP_PRODUCT_RADIO: {
+            const newState = createInstance(state);
+           
+            newState.grupos.forEach(json => {
+                if(json.grupoProduto.id === action.id) {
+                    json.ehPrincipal = true;
+                } else {
+                    json.ehPrincipal = false;
+                }
+            });
+            return newState;
+        }
+        
         default:
             return state;
     }

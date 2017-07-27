@@ -5,7 +5,7 @@ import AsyncService from '../AsyncService'
 export default class  CommodityService extends CrudService {
 
      static getEndpoint() {
-        return '/rest/entradamercadoria';
+        return '/entradamercadoria';
      }
 
 

@@ -32,7 +32,6 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
             newState.precoCusto = 0;
-            newState.itens = [];
             newState.dataEntrada = dateToHtmlString(new Date());
             return newState;
         } 
