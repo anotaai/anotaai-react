@@ -15,7 +15,6 @@ import 'rc-collapse/assets/index.css';
 import 'react-simple-dropdown/styles/Dropdown.css';
 
 const i18nReactLoader = require("i18n-react-loader");
-
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 AuthenticationService.checkUserCookie(store);
 registerFetchInterceptor(store);
