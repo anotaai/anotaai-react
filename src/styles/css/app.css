@@ -91,34 +91,6 @@ footer {
 	bottom:0;
 }
 
-.private-side-nav {
-  top:inherit;
-  height: calc(100% - 56px) !important;
-  position: absolute !important;
-}
-.side-nav .divider {
-  margin: 0px !important; 
-}
-
-.side-nav::-webkit-scrollbar-track
-{
-	background-color: #F5F5F5;
-	border-radius: 10px;
-  height: 10px;
-}
-
-.side-nav::-webkit-scrollbar
-{
-  width: 10px;
-	background-color: #F5F5F5;
-}
-
-.side-nav::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	background-color: #3f51b5;
-}
-
 .INFO {
   background-color: #3f51b5 !important;
 }
@@ -175,12 +147,14 @@ footer {
 
 .profile-btn {
     margin: 0;
+    top: 15px;
     padding: 0;
     display: block;
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: capitalize;
+    position: relative;
 }
 
 .fixed-action-btn {
@@ -239,6 +213,36 @@ footer {
    z-index: 1;
 }
 
+/** menu **/
+
+.private-side-nav {
+  top:inherit;
+  height: calc(100% - 56px) !important;
+  position: absolute !important;
+}
+.side-nav .divider {
+  margin: 0px !important; 
+}
+
+.side-nav::-webkit-scrollbar-track
+{
+	background-color: #F5F5F5;
+	border-radius: 10px;
+  height: 10px;
+}
+
+.side-nav::-webkit-scrollbar
+{
+  width: 10px;
+	background-color: #F5F5F5;
+}
+
+.side-nav::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #3f51b5;
+}
+
 .hide-menu {
    transition: opacity 0.5s ease-out;
    opacity: 0; 
@@ -289,6 +293,8 @@ footer {
 }
 
 
+/** collapse  **/
+
 .rc-collapse-header { 
   background-color: #ee6e73 !important; 
   border: 1px solid #ee6e73 !important;
@@ -328,4 +334,23 @@ footer {
 
 .rc-collapse-anim-active {
   transition: height 0.2s ease-out !important;
+}
+
+/** dropdown  **/
+
+.dropdown__trigger:after {
+  content: '\25BE';
+  margin: 0 0 0 10px;
+}
+
+.dropdown__content {
+   background-color: #fff;
+   opacity: 1;
+   z-index: 999999;
+   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+   width: 200px;
+}
+
+.dropdown__trigger {
+  color: #fff;
 }

@@ -24,9 +24,7 @@ export class Links extends Component {
 
     }
     this.element = e.target;
-
   }
-
 
   render() {
     return (
@@ -46,26 +44,21 @@ export class Links extends Component {
 
 class SideMenu extends Component {
 
-  
-
   componentDidMount() {
-
     this.props.getMenu();
     this.props.loadProfileImage();
-
     $(".button-collapse").sideNav();
-    $(".dropdown-button").dropdown({});
   }
   render() {
 
     return (
       <div>
         <ul className="side-nav fixed private-side-nav">
-          <ProfileContainer idDropdown="dropdownDefault" />
+          <ProfileContainer />
           <Links listMenu={this.props.menuState} />
         </ul>
         <ul id="slide-out" className="side-nav">
-          <ProfileContainer idDropdown="dropdownResponsive" />
+          <ProfileContainer />
           <Links listMenu={this.props.menuState} />
         </ul>
       </div>
@@ -94,7 +87,3 @@ const mapDispatchToProps = dispatch => {
 const SideMenuContainer = connect(mapStateToProps, mapDispatchToProps)(SideMenu);
 
 export default SideMenuContainer;
-
-
-
-

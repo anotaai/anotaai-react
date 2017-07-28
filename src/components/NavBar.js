@@ -17,7 +17,7 @@ class Links extends Component {
     render() {
         return (
             <div>
-                <li className="hide-on-large-only"> <a onClick={this.hideResponsiveMenu} className="clickable"><span className="right red-text">Fechar</span></a> </li>
+                <li className="hide-on-large-only" style={{height:'48px'}}><a onClick={this.hideResponsiveMenu} className="clickable"><span className="right red-text">Fechar</span></a> </li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
                 <li> <Link to={URL.LOGIN} onClick={this.hideResponsiveMenu} >Acessar</Link> </li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>

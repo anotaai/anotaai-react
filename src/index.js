@@ -12,9 +12,11 @@ import 'materialize-css/dist/css/materialize.min.css'
 import './styles/css/app.css'
 import './styles/css/material-icons.css'
 import 'rc-collapse/assets/index.css';
+import 'react-simple-dropdown/styles/Dropdown.css';
 window.jQuery = require('jquery');
+require('materialize-css')
+
 const i18nReactLoader = require("i18n-react-loader");
-require('materialize-css');
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 AuthenticationService.checkUserCookie(store);
@@ -34,5 +36,3 @@ i18nReactLoader.default.init({
       document.getElementById('root')
     );
 });
-
-
