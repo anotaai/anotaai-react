@@ -13,8 +13,6 @@ import './styles/css/app.css'
 import './styles/css/material-icons.css'
 import 'rc-collapse/assets/index.css';
 import 'react-simple-dropdown/styles/Dropdown.css';
-window.jQuery = require('jquery');
-require('materialize-css')
 
 const i18nReactLoader = require("i18n-react-loader");
 

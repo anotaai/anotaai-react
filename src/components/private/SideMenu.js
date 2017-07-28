@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import { ProfileContainer } from './profile/Profile'
 import UserService from '../../services/UserService'
 import { connect } from 'react-redux'
-import $ from 'jquery'
+import { toggleResponsiveMenu } from  '../../actions/menuActionCreator';
 
 export class Links extends Component {
 
@@ -13,9 +13,11 @@ export class Links extends Component {
     this.element = null;
   }
 
-  hideResponsiveMenu() {
-    $('.button-collapse').sideNav('hide');
-  }
+   hideResponsiveMenu() {
+       if(this.props.menuState.showResponsiveMenu){
+           this.props.toggleResponsiveMenu();
+       }
+    }
 
   handleBackground(e) {
     e.target.className = 'selected';
@@ -29,25 +31,41 @@ export class Links extends Component {
   render() {
     return (
       <div>
-        <li className="hide-on-large-only" style={{height:'48px'}}> <a   onClick={this.hideResponsiveMenu} className="clickable"><span className="right red-text">Fechar</span></a></li>
+        {this.props.menuState.showResponsiveMenu &&
+           <li style={{height:'48px'}}> <a onClick={this.hideResponsiveMenu.bind(this)} className="clickable"><span className="right red-text">Fechar</span></a></li> 
+        }
         <li className="hide-on-large-only"> <div className="divider"></div> </li>
         {this.props.listMenu.map(itemMenu =>
           (<li key={itemMenu.url} onClick={this.handleBackground.bind(this)} >
-            <Link to={itemMenu.url} onClick={this.hideResponsiveMenu}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link>
+            <Link to={itemMenu.url} onClick={this.hideResponsiveMenu.bind(this)}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link>
             <div className="divider"> </div>
           </li>
-          ))}
+         ))}
       </div>
     )
   }
+  
 }
+
+const mapLinksStateToProps = state => {
+     return { menuState: state.menu }
+}
+
+const mapLinksDispatchToProps = dispatch =>  {
+     return {
+        toggleResponsiveMenu: () => {
+           dispatch(toggleResponsiveMenu());
+        }
+     }
+}
+
+const LinksContainer = connect(mapLinksStateToProps,mapLinksDispatchToProps)(Links);
 
 class SideMenu extends Component {
 
   componentDidMount() {
     this.props.getMenu();
     this.props.loadProfileImage();
-    $(".button-collapse").sideNav();
   }
   render() {
 
@@ -55,11 +73,11 @@ class SideMenu extends Component {
       <div>
         <ul className="side-nav fixed private-side-nav">
           <ProfileContainer />
-          <Links listMenu={this.props.menuState} />
+          <LinksContainer listMenu={this.props.menuState.listMenu} />
         </ul>
-        <ul id="slide-out" className="side-nav">
+        <ul className={"side-nav " + this.props.menuState.classResponsiveMenu}>
           <ProfileContainer />
-          <Links listMenu={this.props.menuState} />
+          <LinksContainer listMenu={this.props.menuState.listMenu} />
         </ul>
       </div>
     )
@@ -68,7 +86,7 @@ class SideMenu extends Component {
 
 const mapStateToProps = state => {
     return  {
-       menuState:state.menu.listMenu
+       menuState:state.menu 
     }
 }
 

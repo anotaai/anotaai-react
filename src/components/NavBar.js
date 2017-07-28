@@ -3,42 +3,59 @@ import { Link } from 'react-router'
 import { URL } from '../helpers/constants'
 import { connect } from 'react-redux'
 import caderneta from "../img/128x128.png"
-import $ from 'jquery'
 import T from 'i18n-react'
-import { toggleMenu } from '../actions/menuActionCreator'
+import { toggleMenu, toggleResponsiveMenu } from '../actions/menuActionCreator'
 import logo from "../img/logo.png"
 
 class Links extends Component {
 
     hideResponsiveMenu() {
-        $('.button-collapse').sideNav('hide');
+       if(this.props.menuState.showResponsiveMenu){
+           this.props.toggleResponsiveMenu();
+       }
     }
 
     render() {
         return (
             <div>
-                <li className="hide-on-large-only" style={{height:'48px'}}><a onClick={this.hideResponsiveMenu} className="clickable"><span className="right red-text">Fechar</span></a> </li>
+                {this.props.menuState.showResponsiveMenu &&
+                   <li style={{height:'48px'}}><a onClick={this.hideResponsiveMenu.bind(this)} className="clickable"><span className="right red-text">Fechar</span></a> </li>
+                }
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
-                <li> <Link to={URL.LOGIN} onClick={this.hideResponsiveMenu} >Acessar</Link> </li>
+                <li> <Link to={URL.LOGIN} onClick={this.hideResponsiveMenu.bind(this)} >Acessar</Link></li>
                 <li className="hide-on-large-only"> <div className="divider"></div> </li>
-                <li> <Link to={URL.REGISTER} onClick={this.hideResponsiveMenu} >Registrar</Link></li>
+                <li> <Link to={URL.REGISTER} onClick={this.hideResponsiveMenu.bind(this)} >Registrar</Link></li>
             </div>
         )
     }
 }
 
+const mapLinksStateToProps = state => {
+    return { menuState : state.menu }
+}
+
+const mapLinksDispatchToProps = dispatch => {
+
+    return {
+         
+         toggleResponsiveMenu: () => {
+             dispatch(toggleResponsiveMenu());
+         }
+    }
+}
+
+const LinksContainer = connect(mapLinksStateToProps,mapLinksDispatchToProps)(Links); 
+
 
 class ResponsiveMenu extends Component {
 
-    componentDidMount() {
-        $(".button-collapse").sideNav();
-    }
+   
 
     render() {
 
         return (
             <div>
-                <ul id="slide-out" className="side-nav">
+                <ul className={"side-nav " + this.props.menuState.classResponsiveMenu}>
                     <li>
                         <div className="userView">
                             <div className="background indigo" />
@@ -46,7 +63,7 @@ class ResponsiveMenu extends Component {
                             <span className="white-text name"><T.span text={{ key: "app" }} /></span>
                         </div>
                     </li>
-                    <Links />
+                    <LinksContainer />
                 </ul>
             </div>
         )
@@ -57,26 +74,30 @@ class Navbar extends Component {
 
 
     render() {
+
         return (
             <div>
                 <nav className="indigo">
                     <div className="nav-wrapper container">
                         <Link id="logo-container" to={this.props.baseUrl} className="brand-logo clickable">
-                            <img   alt="Anota ai" className="responsive-img" style={{maxHeight:'45px', marginTop:'5px'}} title="Anota ai" src={logo} />
+                            <img alt="Anota ai" className="responsive-img" style={{maxHeight:'45px', marginTop:'5px'}} title="Anota ai" src={logo} />
                         </Link>
                         {this.props.loginState == null &&
                             <div id="publico">
                                 <ul className="right hide-on-med-and-down">
-                                    <Links />
+                                    <LinksContainer />
                                 </ul>
                             </div>}
+                        
+                         {/* Menu burger normal */}
                         {this.props.loginState != null &&
-                          <a className="hide-on-small-only menu-burger" onClick={this.props.toggleMenu} ><i className="material-icons">menu</i></a>
+                          <a className="hide-on-med-and-down menu-burger" onClick={this.props.toggleMenu} ><i className="material-icons">menu</i></a>
                         }
-                        <a data-activates="slide-out" className="button-collapse menu-responsive-burger"><i className="material-icons">menu</i></a>
+                        {/* Menu burger responsivo */}
+                        <a className="hide-on-large-only menu-responsive-burger" onClick={this.props.toggleResponsiveMenu} ><i className="material-icons">menu</i></a>
                     </div>
                 </nav>
-                {this.props.loginState == null && <ResponsiveMenu />}
+                {this.props.loginState == null && <ResponsiveMenu menuState={this.props.menuState}  />}
             </div>
 
         );
@@ -88,12 +109,15 @@ const mapDispatchToProps = dispatch => {
     return {
         toggleMenu: () => {
              dispatch(toggleMenu());
+        },
+        toggleResponsiveMenu: () => {
+            dispatch(toggleResponsiveMenu());
         }
     }
 }
 
 const mapStateToProps = state => {
-    return { loginState: state.auth.loginState, baseUrl: state.auth.baseUrl }
+    return { loginState: state.auth.loginState, baseUrl: state.auth.baseUrl , menuState: state.menu }
 }
 
 

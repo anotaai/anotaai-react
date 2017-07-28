@@ -255,6 +255,16 @@ footer {
    opacity: 1; 
 }
 
+ .show-responsive-menu {
+  transform: translateX(0px);
+  transition-duration: 0.5s;
+ }
+
+ .hide-responsive-menu {
+   transform: translateX(-300px);
+   transition-duration: 0.5s;
+ }
+
  .menu-burger {
     position: relative;
     cursor: default;

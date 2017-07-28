@@ -6,7 +6,6 @@
     "fetch-intercept": "^2.2.3",
     "i18n-react": "^0.3.0-ts1",
     "i18n-react-loader": "^0.1.0",
-    "jquery": "^2.1.1",
     "materialize-css": "^0.98.2",
     "rc-collapse": "^1.7.6",
     "react": "^15.6.1",

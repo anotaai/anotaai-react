@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import $ from 'jquery'
-import UserService from '../../../services/UserService'
-import Toast from '../../../helpers/Toast'
-import { URL } from '../../../helpers/constants'
+import UserService from '../../../services/UserService';
+import Toast from '../../../helpers/Toast';
+import { URL } from '../../../helpers/constants';
+import { toggleResponsiveMenu }  from '../../../actions/menuActionCreator';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { push } from '../../App'
@@ -14,17 +14,25 @@ class Profile extends Component {
     logout(e) {
         e.preventDefault();
         UserService.logout(this.props.loginState).then(response => {
-           $('.button-collapse').sideNav('hide');
+            this.hideResponsiveMenu();
             this.props.logout();
         }).catch(error => {
             Toast.defaultError();
         });
     }
-
+    
     pushDropdown(url) {
        this.refs.dropdownProfile.hide();
-       $('.button-collapse').sideNav('hide');
+       this.hideResponsiveMenu();
        push(url);
+    }
+
+    hideResponsiveMenu() {
+
+        if(this.props.menuState.showResponsiveMenu) {
+            this.props.toggleResponsiveMenu();
+        }
+
     }
 
     render() {
@@ -66,7 +74,7 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => {
-    return { loginState: state.auth.loginState, pictureState: state.profilePicture.pictureState }
+    return { loginState: state.auth.loginState, pictureState: state.profilePicture.pictureState , menuState: state.menu }
 }
 
 const mapDispatchToPros = dispatch => {
@@ -79,6 +87,9 @@ const mapDispatchToPros = dispatch => {
         },
         hideLoading: () => {
             dispatch(hideLoading());
+        },
+        toggleResponsiveMenu: () => {
+            dispatch(toggleResponsiveMenu());
         }
     }
 }
