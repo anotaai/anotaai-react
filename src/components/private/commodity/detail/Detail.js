@@ -28,6 +28,7 @@ export default class Detail extends Component {
                     <div className="panel">
                         <form onSubmit={this.merge.bind(this)}>
                             <div className="container">
+
                                 {this.props.codigo !== ''  &&
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
@@ -95,7 +96,9 @@ export default class Detail extends Component {
                                         </div>
                                     </div>}
                             </div>
-                            <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_COMMODITY} submitRef={this.props.submitRef} />
+                            {this.props.editMode !== 'S' &&
+                              <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_COMMODITY} submitRef={this.props.submitRef} />
+                            }
                         </form>
                     </div>
                 </div>

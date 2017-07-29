@@ -51,6 +51,7 @@ class EditDetail extends Component {
             <Detail
                 title="Edição de Entrada de Mercadoria"
                 {... this.props.detailState}
+                editMode="S"
                 merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
                 handleNumericChange={this.props.handleNumericChange}

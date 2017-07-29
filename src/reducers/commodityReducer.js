@@ -100,6 +100,7 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             newState.id = action.entity.id;
             newState.dataEntrada = dateToHtmlString(new Date(action.entity.dataEntrada));
+            newState.codigo= action.entity.codigo;
 
             action.entity.itens.forEach(json => {
                 newState.itens.push({ id: json.id, type: 'entrada', movimentacaoProduto: { id: json.movimentacaoProduto.id, produto: {id: json.movimentacaoProduto.produto.id, descricao: json.movimentacaoProduto.produto.descricao} , quantidade: json.movimentacaoProduto.quantidade }, precoCusto: json.precoCusto });

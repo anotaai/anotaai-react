@@ -17,17 +17,17 @@ export default class DataList extends Component {
                     <table className={TABLE_DEFAULT_CSS}>
                         <thead>
                             <tr>
+                                <th className="row-th">Código</th>
                                 <th className="row-th">Data entrada</th>
-                                <th className="row-th">R$ Quantitativo Custo da Entrada</th>
-                                <th className="row-th">Excluir</th>
+                                <th className="row-th">Estornar</th>
                             </tr>
                         </thead>
                         <tbody>
                             {results.map(result => {
                                 return (
                                      <tr key={result.id}>
+                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.codigo}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{new Date(result.dataEntrada).toLocaleDateString()}</td>
-                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.quantitativoCusto}</td>
                                         <td  className="row-td"><a onClick={this.props.showModal.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
