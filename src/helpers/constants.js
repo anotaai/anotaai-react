@@ -29,9 +29,10 @@ export const URL = {
   COMMODITY: '/entradamercadoria' ,
   NEW_COMMODITY: `${NEW_USE_CASE_PATH}/entradamercadoria` ,
   EDIT_COMODDITY: '/entradamercadoria(/:id)',
+  MAIN_DELETE_COMMODITY: '/estornarmercadoria',
   DELETE_COMMODITY: '/estornarmercadoria(/:id)'
-
 }
+
 
 export const USE_CASE = {
   SEARCH_SECTOR: 'SEARCH_SECTOR',

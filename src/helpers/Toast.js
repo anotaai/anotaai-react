@@ -51,11 +51,7 @@ export default class Toast {
             toast.warn(<div><font className="toast-text">{messageStr}</font></div>);
             break;
         }
-        case 'SUCCESS' : {
-            toast.success(<div><font className="toast-text">{messageStr}</font></div>);
-            break;
-        }
-
+       
          default:  toast.info(<div><font className="toast-text">{messageStr}</font></div>);;
        }
        

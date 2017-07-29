@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ModalConfirm from  '../../../ModalConfirm'
 import NoResults from '../../templatesearch/noResults'
 import { TABLE_DEFAULT_CSS } from '../../../../helpers/constants'
+import { URL } from '../../../../helpers/constants'
 import { pushEncoded } from '../../../App'
 
 export default class DataList extends Component {
@@ -24,11 +25,12 @@ export default class DataList extends Component {
                         </thead>
                         <tbody>
                             {results.map(result => {
+
                                 return (
                                      <tr key={result.id}>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.codigo}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{new Date(result.dataEntrada).toLocaleDateString()}</td>
-                                        <td  className="row-td"><a onClick={this.props.showModal.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
+                                        <td  className="row-td"><a onClick={pushEncoded.bind(this,URL.MAIN_DELETE_COMMODITY,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
                         </tbody>

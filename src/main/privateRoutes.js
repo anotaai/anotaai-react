@@ -19,6 +19,7 @@ import EditProductDetailContainer from '../components/private/product/detail/Edi
 import SearchCommodityContainer from '../components/private/commodity/search/Search'
 import NewCommodityDetailContainer from '../components/private/commodity/detail/NewDetail'
 import EditCommodityDetailContainer from '../components/private/commodity/detail/EditDetail'
+import DeleteCommodityContainer from '../components/private/commodity/DeleteCommodity'
 
  const privateRoutes = (
     <Route component={AuthenticationContainer}>
@@ -39,6 +40,7 @@ import EditCommodityDetailContainer from '../components/private/commodity/detail
       <Route path={URL.COMMODITY} component={SearchCommodityContainer} />
       <Route path={URL.NEW_COMMODITY} component={NewCommodityDetailContainer} />
       <Route path={URL.EDIT_COMODDITY} component={EditCommodityDetailContainer} />
+      <Route path={URL.DELETE_COMMODITY} component={DeleteCommodityContainer} />
     </Route> 
 );
 
