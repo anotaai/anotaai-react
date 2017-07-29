@@ -28,7 +28,8 @@ export const URL = {
   EDIT_PRODUCT: '/produto(/:id)',
   COMMODITY: '/entradamercadoria' ,
   NEW_COMMODITY: `${NEW_USE_CASE_PATH}/entradamercadoria` ,
-  EDIT_COMODDITY: '/entradamercadoria(/:id)'
+  EDIT_COMODDITY: '/entradamercadoria(/:id)',
+  DELETE_COMMODITY: '/estornarmercadoria(/:id)'
 
 }
 
