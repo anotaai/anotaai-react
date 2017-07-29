@@ -10,6 +10,7 @@ import Toast from '../helpers/Toast';
 
 const INITIAL_STATE = {
     id: null,
+    codigo: '',
     showModalState: false,
     dataEntrada: dateToHtmlString(new Date()),
     itens: [],

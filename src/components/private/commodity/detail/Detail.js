@@ -28,6 +28,15 @@ export default class Detail extends Component {
                     <div className="panel">
                         <form onSubmit={this.merge.bind(this)}>
                             <div className="container">
+                                {this.props.codigo !== ''  &&
+                                <div className="row">
+                                    <div className="input-field col s12 m12 l12">
+                                        <input  value={this.props.codigo}   disabled  />
+                                        <label htmlFor="nome" className="active">Código</label>
+                                    </div>
+                                </div>
+
+                                 }
                                 
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
