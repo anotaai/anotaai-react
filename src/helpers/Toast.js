@@ -1,6 +1,7 @@
-import { DEFAULT_TIME } from './constants';
+import React from 'react';
 import { Icon } from '../domain/Icon';
-
+import { toast } from 'react-toastify';
+ 
 
 export default class Toast {
 
@@ -32,8 +33,33 @@ export default class Toast {
     static buildMessage(message) {
         //var messageStr = message.isKey ? translateMessage(message.key, message.params) : message.text;
         const messageStr = this.translateMessage(message.key, message.params);
-        const tipoMensagem = message.type;
-        window.Materialize.toast(`<i class="material-icons left">${tipoMensagem.icon.className}</i>${messageStr}`, DEFAULT_TIME, tipoMensagem.type);
+
+       switch(message.type.type) {
+        case 'ERROR' : {
+            toast.error(<div><font className="toast-text">{messageStr}</font></div>);
+            break;
+        }
+        case 'INFO' : {
+            toast.info(<div><font className="toast-text">{messageStr}</font></div>);
+            break;
+        }
+        case 'SUCCESS' : {
+            toast.success(<div><font className="toast-text">`${messageStr}`</font></div>);
+            break;
+        }
+        case 'WARNING' : {
+            toast.warn(<div><font className="toast-text">{messageStr}</font></div>);
+            break;
+        }
+        case 'SUCCESS' : {
+            toast.success(<div><font className="toast-text">{messageStr}</font></div>);
+            break;
+        }
+
+         default:  toast.info(<div><font className="toast-text">{messageStr}</font></div>);;
+       }
+       
+    
     }
 
     static build(key, icon, params) {

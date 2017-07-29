@@ -13,6 +13,7 @@ import './styles/css/app.css'
 import './styles/css/material-icons.css'
 import 'rc-collapse/assets/index.css';
 import 'react-simple-dropdown/styles/Dropdown.css';
+import 'react-toastify/dist/ReactToastify.min.css'
 
 const i18nReactLoader = require("i18n-react-loader");
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));

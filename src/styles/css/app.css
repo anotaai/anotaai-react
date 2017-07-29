@@ -364,3 +364,36 @@ footer {
 .dropdown__trigger {
   color: #fff;
 }
+
+/* Toast */
+
+.toastify-content--success {
+  background-color:#26a69a !important; 
+  border-left: none !important;
+}
+
+.toastify-content--error {
+  background-color:#d32f2f !important; 
+  border-left: none !important;
+}
+
+.toastify-content--warning {
+  background-color:#e65100 !important; 
+  border-left: none !important;
+}
+
+.toastify-content--info {
+  background-color:#3f51b5 !important; 
+  border-left: none !important;
+}
+
+.toastify {
+   word-wrap: break-word !important;
+   z-index: 999999 !important;
+}
+
+.toast-text {
+  color: #f5f5f5;
+  font-size: 18px;
+  
+}
