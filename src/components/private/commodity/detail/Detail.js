@@ -68,11 +68,13 @@ export default class Detail extends Component {
                                     }
                                     onChange={this.props.handleInputChange} /> 
 
+
                                    {this.props.itens.length > 0 &&
 
                                     <div className="row">
-                                        <div className="col s12 offset-m1 m9 offset-l1 l9">
+                                        <div className="col s12 m12 l12">
                                             <table className={TABLE_DEFAULT_CSS}>
+                                                
                                                 <thead>
                                                     <tr>
                                                         <th className="row-th">Produto</th>

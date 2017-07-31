@@ -34,6 +34,7 @@ export default function (state = INITIAL_STATE, action) {
             clearAllPropertiesObject(newState);
             newState.precoCusto = 0;
             newState.dataEntrada = dateToHtmlString(new Date());
+            newState.codigo = '';
             return newState;
         } 
 
