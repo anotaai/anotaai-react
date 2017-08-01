@@ -68,3 +68,8 @@ export function concatDot(number) {
 export function dateToHtmlString(date) {
     return date.toISOString().substr(0,10);
 }
+
+export function simpleDateFormat(date) {
+    const dateArray = date.toString().split('-');
+    return dateArray[2] +'/'+ dateArray[1] + '/' + dateArray[0];
+}

@@ -15,11 +15,11 @@ export default class  CommodityService extends CrudService {
     }
 
 
-     static deleteCommodity(id, updateState) {
+     static getCommodityForDelete(id, updateState) {
 
         return dispatch => {
 
-            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/deleteCommodity/${id}`
+            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/getCommodityForDelete/${id}`
             ).then(response => {
                 return response.json();
             }).then(json => {

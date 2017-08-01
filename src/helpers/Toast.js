@@ -41,6 +41,7 @@ export default class Toast {
         //var messageStr = message.isKey ? translateMessage(message.key, message.params) : message.text;
         const messageStr = this.translateMessage(message.key, message.params);
 
+        
        switch(message.type.type) {
         case 'ERROR': {
             toast.error(this.showTag(messageStr));

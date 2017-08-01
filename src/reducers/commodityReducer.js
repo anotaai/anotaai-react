@@ -4,7 +4,7 @@ UPDATE_PRODUCT_AUTO_COMPLETE_COMMODITY, UPDATE_TABLE_ITENS_COMMODITY,
 REMOVE_PRODUCT_COMMODITY, CLEAR_FORM_COMMODITY, UPDATE_COMMODITY, SHOW_MODAL_COMMODITY, HIDE_MODAL_COMMODITY  } from '../actions/commodityActionCreator'
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper';
 import { pushProducts, setProduct, clearProduct } from './productReducer'
-import { concatDot, dateToHtmlString } from '../helpers/stringHelper';
+import { concatDot, dateToHtmlString, simpleDateFormat } from '../helpers/stringHelper';
 import { Icon } from '../domain/Icon';
 import Toast from '../helpers/Toast';
 
@@ -17,7 +17,8 @@ const INITIAL_STATE = {
     produtos: [],
     produtoSelecionado: { id: null, descricao: '' },
     precoCusto: 0,
-    quantidade: ''
+    quantidade: '',
+    dataEntradaJson: ''
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -73,7 +74,7 @@ export default function (state = INITIAL_STATE, action) {
             }
 
             const newState = createInstance(state);
-            newState.itens.push({ id: null, type: 'entrada', movimentacaoProduto:{ id: null, produto: {id:  state.produtoSelecionado.id , descricao: state.produtoSelecionado.descricao} , quantidade: newState.quantidade }, precoCusto: concatDot(newState.precoCusto) });
+            newState.itens.push({ id: null, type: 'entrada', movimentacaoProduto:{ id: null, produto: {id:  state.produtoSelecionado.id , descricao: state.produtoSelecionado.descricao} , quantidade: newState.quantidade }, precoCusto: concatDot(newState.precoCusto) , estornar: false });
             clearProduct(newState);
 
             return newState;
@@ -101,10 +102,11 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             newState.id = action.entity.id;
             newState.dataEntrada = dateToHtmlString(new Date(action.entity.dataEntrada));
+            newState.dataEntradaJson = simpleDateFormat(newState.dataEntrada);
             newState.codigo= action.entity.codigo;
 
             action.entity.itens.forEach(json => {
-                newState.itens.push({ id: json.id, type: 'entrada', movimentacaoProduto: { id: json.movimentacaoProduto.id, produto: {id: json.movimentacaoProduto.produto.id, descricao: json.movimentacaoProduto.produto.descricao} , quantidade: json.movimentacaoProduto.quantidade }, precoCusto: json.precoCusto });
+                newState.itens.push({ id: json.id, type: 'entrada', movimentacaoProduto: { id: json.movimentacaoProduto.id, produto: {id: json.movimentacaoProduto.produto.id, descricao: json.movimentacaoProduto.produto.descricao} , quantidade: json.movimentacaoProduto.quantidade }, precoCusto: json.precoCusto, estornar: false });
             });
 
             return newState;

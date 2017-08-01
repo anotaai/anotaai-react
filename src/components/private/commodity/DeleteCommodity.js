@@ -2,19 +2,21 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Base64Service from '../../../services/app/Base64Service'
 import CommodityService from '../../../services/commodity/CommodityService'
-import { updateState } from '../../../actions/commodityActionCreator'
+import { updateState, clearForm } from '../../../actions/commodityActionCreator'
 import { PanelHeader } from '../../panels'
 import { TABLE_DEFAULT_CSS } from '../../../helpers/constants'
 import { PanelFooterDetail } from '../../panels'
+import { URL } from '../../../helpers/constants'
 
 
 class DeleteCommodity extends Component {
 
     componentDidMount() {
-        this.props.deleteCommodity(Base64Service.decode(this.props.params.id));
+        this.props.getCommodityForDelete(Base64Service.decode(this.props.params.id));
     }
 
     componentWillUnmount() {
+        this.props.clearForm();
     }
 
     render() {
@@ -25,12 +27,12 @@ class DeleteCommodity extends Component {
                         <PanelHeader icon="list" label="Estorno Mercadoria" />
                         <div className="panel row">
                             <div className="col s12 m12 l12">
-                                <label style={{ fontWeight: 'bold' }}> Código </label>
+                                <label className="label-detail"> Código </label>
                                 <label> {this.props.detailState.codigo} </label>
                             </div>
                             <div className="col s12 m12 l12">
-                                <label style={{ fontWeight: 'bold' }}> Data entrada </label>
-                                <label> {this.props.detailState.dataEntrada} </label>
+                                <label className="label-detail"> Data entrada </label>
+                                <label> {this.props.detailState.dataEntradaJson} </label>
                             </div>
                             <div className="row">
                                 <div className="col s12 m12 l12">
@@ -46,8 +48,8 @@ class DeleteCommodity extends Component {
                                                 return (
                                                     <tr key={item.movimentacaoProduto.produto.id}>
                                                         <td className="row-td-detail">
-                                                            <input type="checkbox" id="estonar" name="estonar" onClick={this.props.delete} />
-                                                            <label htmlFor="estonar">Estornar</label>
+                                                            <input type="checkbox" id={"estornar_"+item.movimentacaoProduto.produto.id}  name="estornar" onClick={this.props.estornar} />
+                                                            <label htmlFor={"estornar_"+item.movimentacaoProduto.produto.id}>Estornar</label>
                                                         </td>
                                                         <td className="row-td-detail">{item.movimentacaoProduto.produto.descricao}</td>
                                                     </tr>)
@@ -56,7 +58,7 @@ class DeleteCommodity extends Component {
                                     </table>
                                 </div>
                             </div>
-                            <PanelFooterDetail />
+                            <PanelFooterDetail newDetailUrl={URL.NEW_COMMODITY}  />
                         </div>
                     </div>
                 </div>
@@ -71,8 +73,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        deleteCommodity: (id) => {
-            dispatch(CommodityService.deleteCommodity(id, updateState));
+        clearForm: ()  => {
+           dispatch(clearForm());
+        },
+        getCommodityForDelete: (id) => {
+            dispatch(CommodityService.getCommodityForDelete(id, updateState));
         }
     }
 }

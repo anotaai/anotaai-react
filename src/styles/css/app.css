@@ -172,6 +172,11 @@ footer {
    z-index: 1;
 }
 
+.label-detail {
+  font-weight: bold;
+  font-size: .9rem;
+}
+
 /** panel **/
 
 .panel-header {
