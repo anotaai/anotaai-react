@@ -2,6 +2,9 @@ import React from 'react';
 import { Icon } from '../domain/Icon';
 import { toast } from 'react-toastify';
  
+function createMarkup(e) {
+  return {__html: e};
+}
 
 export default class Toast {
 
@@ -30,32 +33,35 @@ export default class Toast {
         }
     }
 
+    static showTag(messageStr) {
+        return <font className="toast-text"><div dangerouslySetInnerHTML={createMarkup(messageStr)}/></font>;
+    }
+
     static buildMessage(message) {
         //var messageStr = message.isKey ? translateMessage(message.key, message.params) : message.text;
         const messageStr = this.translateMessage(message.key, message.params);
 
        switch(message.type.type) {
-        case 'ERROR' : {
-            toast.error(<div><font className="toast-text">{messageStr}</font></div>);
+        case 'ERROR': {
+            toast.error(this.showTag(messageStr));
             break;
         }
-        case 'INFO' : {
-            toast.info(<div><font className="toast-text">{messageStr}</font></div>);
+        case 'INFO': {
+            toast.info(this.showTag(messageStr));
             break;
         }
-        case 'SUCCESS' : {
-            toast.success(<div><font className="toast-text">${messageStr}</font></div>);
+        case 'SUCCESS': {
+            toast.success(this.showTag(messageStr));
             break;
         }
-        case 'WARNING' : {
-            toast.warn(<div><font className="toast-text">{messageStr}</font></div>);
+        case 'WARNING': {
+            toast.warn(this.showTag(messageStr));
             break;
         }
        
-         default:  toast.error(<div><font className="toast-text">{messageStr}</font></div>);;
+         default:  
+            toast.error(this.showTag(messageStr));;
        }
-       
-    
     }
 
     static build(key, icon, params) {
