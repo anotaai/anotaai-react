@@ -2,14 +2,21 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Base64Service from '../../../services/app/Base64Service'
 import CommodityService from '../../../services/commodity/CommodityService'
-import { updateState, clearForm } from '../../../actions/commodityActionCreator'
+import { updateState, clearForm, rejectCommodity, updateRejectCommodity} from '../../../actions/commodityActionCreator'
 import { PanelHeader } from '../../panels'
 import { TABLE_DEFAULT_CSS } from '../../../helpers/constants'
 import { PanelFooterDetail } from '../../panels'
 import { URL } from '../../../helpers/constants'
-
+import Toast from '../../../helpers/Toast'
+import { Icon } from '../../../domain/Icon';
 
 class DeleteCommodity extends Component {
+
+    constructor() {
+        super();
+        this.sendButton = null;
+
+    }
 
     componentDidMount() {
         this.props.getCommodityForDelete(Base64Service.decode(this.props.params.id));
@@ -19,9 +26,24 @@ class DeleteCommodity extends Component {
         this.props.clearForm();
     }
 
+    rejectCommodity(e) {
+
+        e.preventDefault();
+        
+        CommodityService.rejectCommodity(this.props.detailState, this.sendButton).then(response => {
+            Toast.show(response.messages);
+            if (response.isValid) {
+                this.props.updateRejectCommodity();
+            } 
+        }).catch(error => {
+            Toast.show(error, Icon.WARNING);
+        });
+         
+    }
+
     render() {
         return (
-            <form>
+            <form  onSubmit={this.rejectCommodity.bind(this)} >
                 <div className="space-container">
                     <div className="container">
                         <PanelHeader icon="list" label="Estorno Mercadoria" />
@@ -48,7 +70,7 @@ class DeleteCommodity extends Component {
                                                 return (
                                                     <tr key={item.movimentacaoProduto.produto.id}>
                                                         <td className="row-td-detail">
-                                                            <input type="checkbox" id={"estornar_"+item.movimentacaoProduto.produto.id}  name="estornar" onClick={this.props.estornar} />
+                                                            <input type="checkbox" id={"estornar_"+item.movimentacaoProduto.produto.id}  name="estornar" onClick={this.props.rejectCommodity.bind(this,item.id)} />
                                                             <label htmlFor={"estornar_"+item.movimentacaoProduto.produto.id}>Estornar</label>
                                                         </td>
                                                         <td className="row-td-detail">{item.movimentacaoProduto.produto.descricao}</td>
@@ -58,7 +80,7 @@ class DeleteCommodity extends Component {
                                     </table>
                                 </div>
                             </div>
-                            <PanelFooterDetail newDetailUrl={URL.NEW_COMMODITY}  />
+                            <PanelFooterDetail newDetailUrl={URL.NEW_COMMODITY}   submitRef={el => this.sendButton = el}  />
                         </div>
                     </div>
                 </div>
@@ -73,11 +95,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        rejectCommodity: (id) => {
+           dispatch(rejectCommodity(id));
+        },
         clearForm: ()  => {
            dispatch(clearForm());
         },
         getCommodityForDelete: (id) => {
             dispatch(CommodityService.getCommodityForDelete(id, updateState));
+        },
+        updateRejectCommodity:() => {
+            dispatch(updateRejectCommodity());
         }
     }
 }

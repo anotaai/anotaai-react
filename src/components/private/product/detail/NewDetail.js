@@ -4,7 +4,7 @@ import Detail from './Detail'
 import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, newDefaultValues, 
     updateProductAutoComplete, updateTableItens,removeProduct, updateProductList, updateGroupProductList,
     toggleGroupProductAccordion, toggleCommodityAccordion, updateGroupProductAutoComplete, 
-    updateGroupProductTableItens, removeGroupProduct, changeGroupProductRadio } from '../../../../actions/productActionCreator'
+    updateGroupProductTableItens, removeGroupProduct, changeGroupProductRadio, updateStorageProduct } from '../../../../actions/productActionCreator'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
@@ -16,10 +16,10 @@ import { browserHistory } from 'react-router'
 class NewDetail extends Component {
 
 
-
     componentDidMount() {
         this.props.loadEnum('unidadesmedida',updateUnit);
         this.props.loadEnum('diasemana',updateDayOfWeek);
+        this.props.loadEnum('tiposArmazenamento',updateStorageProduct);
         this.props.newDefaultValues();
     }
 
@@ -45,6 +45,7 @@ class NewDetail extends Component {
     }
 
     render() {
+
         
         return (
             <Detail
@@ -52,6 +53,7 @@ class NewDetail extends Component {
                 title="Cadastro de Produtos"
                 merge={this.save.bind(this)}
                 unidadeList={this.props.detailState.unidadeList}
+                armazenamentoList={this.props.detailState.armazenamentoList}
                 diasDisponibilidade={this.props.detailState.diasDisponibilidade}
                 diasSemana={this.props.detailState.diasSemana}
                 produtos={this.props.detailState.produtos}

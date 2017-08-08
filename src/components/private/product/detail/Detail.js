@@ -75,6 +75,15 @@ export default class Detail extends Component {
                                             <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$' name="precoVenda" onInputChange={this.props.handleNumericChange.bind(this, 'precoVenda')} />
                                         </div>
                                     </div>
+                                     <div className="row">
+                                        <div className="input-field col s12 m12 l12">
+                                            <label htmlFor="tipoArmazenamento" className="active">Tipo Armazenamento</label>
+                                            <select id="tipoArmazenamento" className="browser-default" required onChange={this.props.handleInputChange} value={this.props.tipoArmazenamento.type} name="tipoArmazenamento.type" >
+                                                <option value=""></option>
+                                                {this.props.armazenamentoList.map(armazenamento => (<option key={armazenamento.type} value={armazenamento.type}>{armazenamento.descricao}</option>))}
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
                                             <label htmlFor="dias" className="active" style={{ paddingBottom: '8px' }} >Disponibilidade</label>

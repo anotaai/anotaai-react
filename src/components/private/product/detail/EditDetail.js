@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import Detail from './Detail'
 import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, updateProduct, updateGroupProductAutoComplete,
     updateProductAutoComplete, updateTableItens, removeProduct, showModal, hideModal, updateProductList, changeGroupProductRadio,
-    toggleGroupProductAccordion, toggleCommodityAccordion, updateGroupProductList, removeGroupProduct, updateGroupProductTableItens
+    toggleGroupProductAccordion, toggleCommodityAccordion, updateGroupProductList, removeGroupProduct, updateGroupProductTableItens,
+    updateStorageProduct
 } from '../../../../actions/productActionCreator'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
 import EnumService from '../../../../services/util/EnumService'
@@ -20,7 +21,7 @@ class EditDetail extends Component {
         super();
         this.sendButton = null;
     }
-
+    
     update(e) {
 
         e.preventDefault();
@@ -44,18 +45,13 @@ class EditDetail extends Component {
         }).catch(error => {
             Toast.defaultError();
         });
-
     }
-
-
     componentWillUnmount() {
         this.props.clearForm();
     }
-
     componentDidMount() {
         this.props.findById(Base64Service.decode(this.props.params.id));
     }
-
 
     render() {
         return (
@@ -65,6 +61,7 @@ class EditDetail extends Component {
                 title="Edição de Produtos"
                 merge={this.update.bind(this)}
                 unidadeList={this.props.detailState.unidadeList}
+                armazenamentoList={this.props.detailState.armazenamentoList}
                 diasDisponibilidade={this.props.detailState.diasDisponibilidade}
                 diasSemana={this.props.detailState.diasSemana}
                 produtos={this.props.detailState.produtos}
@@ -157,6 +154,7 @@ const mapDispatchToProps = dispatch => {
                 resolve(dispatch(ProductService.findById(id, updateProduct)));
             }).then(() => {
                 dispatch(EnumService.load('unidadesmedida', updateUnit));
+                dispatch(EnumService.load('tiposArmazenamento', updateStorageProduct));
                 dispatch(EnumService.load('diasemana', updateDayOfWeek));
             });
         },

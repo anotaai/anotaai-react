@@ -6,7 +6,9 @@ CLEAR_FORM_COMMODITY = 'clear_form_commodity',
 UPDATE_COMMODITY = 'update_commodity',
 SHOW_MODAL_COMMODITY = 'show_modal_commodity',
 HIDE_MODAL_COMMODITY = 'hide_modal_commodity',
-REMOVE_PRODUCT_COMMODITY = 'remove_product_commodity';
+REJECT_COMMODITY = 'reject_commodity',
+REMOVE_PRODUCT_COMMODITY = 'remove_product_commodity',
+UPDATE_REJECT_COMMODITY = 'update_reject_commodity';
 
 export function handleInputChange(name, value,index) {
     return { type: HANDLE_INPUT_CHANGE_COMMODITY, name, value, index }
@@ -39,7 +41,14 @@ export function showModal() {
     return { type: SHOW_MODAL_COMMODITY  }
 }
 
-
 export function hideModal() {
     return { type: HIDE_MODAL_COMMODITY  }
+}
+
+export function rejectCommodity(id) {
+    return  { type: REJECT_COMMODITY , id }
+}
+
+export function updateRejectCommodity() {
+     return  { type: UPDATE_REJECT_COMMODITY  }
 }

@@ -2,7 +2,7 @@ import {
     CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK, UPDATE_AVAILABLE_DAYS, UPDATE_PRODUCT, NEW_DEFAULT_VALUES,
     UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE, UPDATE_TABLE_ITENS, REMOVE_PRODUCT, HIDE_MODAL_PRODUCT, SHOW_MODAL_PRODUCT,
     TOGGLE_GROUP_PRODUCT_ACCORDION, TOGGLE_COMMODITY_ACCORDION, UPDATE_GROUP_PRODUCT_LIST, UPDATE_GROUP_PRODUCT_AUTO_COMPLETE, REMOVE_GROUP_PRODUCT,
-    UPDATE_GROUP_PRODUCT_TABLE_ITENS, CHANGE_GROUP_PRODUCT_RADIO
+    UPDATE_GROUP_PRODUCT_TABLE_ITENS, CHANGE_GROUP_PRODUCT_RADIO, UPDATE_STORAGE_PRODUCT
 } from '../actions/productActionCreator';
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper';
 import { concatZeros } from '../helpers/stringHelper';
@@ -15,6 +15,7 @@ const INITIAL_STATE = {
     descricao: '',
     descricaoResumida: '',
     unidadeMedida: { type: '', descricao: '' },
+    tipoArmazenamento: { type: '', descricao: '' },
     grupoProduto: { id: '', nome: '' },
     precoVenda: 0,
     codigoGerado: false,
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
     gruposTableList: [],
     diasSemana: [],
     unidadeList: [],
+    armazenamentoList: [],
     blockCode: false,
     quantidade: '',
     showModalState: false,
@@ -100,6 +102,13 @@ export default function (state = INITIAL_STATE, action) {
             });
             return newState;
         }
+        
+
+        case UPDATE_STORAGE_PRODUCT: {
+            const newState = createInstance(state);
+            newState.armazenamentoList = action.json;
+            return newState;
+        }
 
         case NEW_DEFAULT_VALUES: {
             const newState = createInstance(state);
@@ -146,9 +155,10 @@ export default function (state = INITIAL_STATE, action) {
             newState.codigo = action.entity.codigo;
             newState.descricao = action.entity.descricao;
             newState.descricaoResumida = action.entity.descricaoResumida;
-            newState.unidadeMedida = action.entity.unidadeMedida;
+            newState.unidadeMedida = action.entity.unidadeMedida === undefined || null ? { type: '', descricao: '' } : action.entity.unidadeMedida;
             newState.precoVenda = concatZeros(action.entity.precoVenda)
             newState.codigoGerado = action.entity.codigoGerado;
+            newState.tipoArmazenamento = action.entity.tipoArmazenamento === undefined || null ? { type: '', descricao: '' } : action.entity.tipoArmazenamento;
 
             action.entity.diasDisponibilidade.forEach(json => {
                 newState.diasDisponibilidade.push(json.dia.descricao);

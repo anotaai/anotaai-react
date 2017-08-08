@@ -17,6 +17,7 @@ export const CLEAR_FORM_PRODUCT = 'clear_form_product',
     TOGGLE_GROUP_PRODUCT_ACCORDION = 'toggle_group_product_accordion',
     TOGGLE_COMMODITY_ACCORDION = 'toggle_commodity_accordion',
     UPDATE_GROUP_PRODUCT_AUTO_COMPLETE = 'update_group_product_auto_complete',
+    UPDATE_STORAGE_PRODUCT = 'update_storage_product',
     CHANGE_GROUP_PRODUCT_RADIO = 'change_group_product_radio'
 
 export function clearForm() {
@@ -59,15 +60,15 @@ export function updateGroupProductAutoComplete(groupProduct) {
     return { type: UPDATE_GROUP_PRODUCT_AUTO_COMPLETE, groupProduct }
 }
 
-export function newDefaultValues(json) {
+export function newDefaultValues() {
     return { type: NEW_DEFAULT_VALUES }
 }
 
-export function updateTableItens(json) {
+export function updateTableItens() {
     return { type: UPDATE_TABLE_ITENS }
 }
 
-export function updateGroupProductTableItens(json) {
+export function updateGroupProductTableItens() {
     return { type: UPDATE_GROUP_PRODUCT_TABLE_ITENS }
 }
 
@@ -97,6 +98,10 @@ export function toggleCommodityAccordion() {
 
 export function changeGroupProductRadio(id) {
     return { type: CHANGE_GROUP_PRODUCT_RADIO, id }
+}
+
+export function updateStorageProduct(json) {
+   return { type: UPDATE_STORAGE_PRODUCT, json}
 }
 
 
