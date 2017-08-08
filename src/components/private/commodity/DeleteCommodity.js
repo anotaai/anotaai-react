@@ -15,7 +15,6 @@ class DeleteCommodity extends Component {
     constructor() {
         super();
         this.sendButton = null;
-
     }
 
     componentDidMount() {

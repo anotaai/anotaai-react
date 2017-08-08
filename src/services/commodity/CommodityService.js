@@ -44,7 +44,7 @@ export default class CommodityService extends CrudService {
                 reject('at.least.one.reject.commodity');
 
             } else {
-                return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/rejectCommodity`, [component], {
+                AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/rejectCommodity`, [component], {
                     method: 'PUT',
                     headers: { 'Content-type': 'application/json' },
                     body: JSON.stringify(entity)
