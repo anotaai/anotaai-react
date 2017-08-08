@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import { URL } from '../../../../helpers/constants'
 import Toast from '../../../../helpers/Toast'
 import Detail from './Detail'
-import Base64Service from '../../../../services/app/Base64Service'
-import { browserHistory } from 'react-router'
 import ClienteConsumidorService from '../../../../services/consumer/ClienteConsumidorService'
 import { clearForm, handleInputChange } from '../../../../actions/consumerActionCreator'
+import { pushEncoded } from '../../../App'
 
 class NewDetail extends Component {
 
@@ -25,8 +24,7 @@ class NewDetail extends Component {
         ClienteConsumidorService.save(newInstance, this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
-                const id = Base64Service.encode(response.entity.id.toString());
-                browserHistory.push(`${URL.CONSUMER}/${id}`);
+                pushEncoded(URL.CONSUMER,response.entity.id);
             } 
         }).catch(error => {
             Toast.defaultError();

@@ -10,8 +10,7 @@ import ProductService from '../../../../services/product/ProductService'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
 import { URL } from '../../../../helpers/constants'
 import Toast from '../../../../helpers/Toast'
-import Base64Service from '../../../../services/app/Base64Service'
-import { browserHistory } from 'react-router'
+import { pushEncoded } from '../../../App'
 
 class NewDetail extends Component {
 
@@ -36,8 +35,7 @@ class NewDetail extends Component {
         ProductService.save(newInstance,this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
-                const id = Base64Service.encode(response.entity.id.toString());
-                browserHistory.push(`${URL.PRODUCT}/${id}`);
+                pushEncoded(URL.PRODUCT,response.entity.id);
             } 
         }).catch(error => {
               Toast.defaultError();

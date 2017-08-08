@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { URL } from '../../../../helpers/constants'
-import { browserHistory } from 'react-router'
 import SectorService from '../../../../services/sector/SectorService'
-import Base64Service from '../../../../services/app/Base64Service'
 import Toast from '../../../../helpers/Toast'
 import Detail from './Detail'
 import { clearForm, handleInputChange } from '../../../../actions/sectorActionCreator'
+import { pushEncoded } from '../../../App'
 
 class NewDetail extends Component {
 
@@ -27,8 +26,7 @@ class NewDetail extends Component {
         SectorService.save(this.props.detailState, this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
-                const id = Base64Service.encode(response.entity.id.toString());
-                browserHistory.push(`${URL.SECTOR}/${id}`);
+               pushEncoded(URL.SECTOR,response.entity.id);
             }
         }).catch(error => {
             Toast.defaultError();

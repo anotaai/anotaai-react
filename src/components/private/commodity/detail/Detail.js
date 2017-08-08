@@ -7,6 +7,7 @@ import { TABLE_DEFAULT_CSS } from '../../../../helpers/constants'
 import SimpleCurrencyInput from 'react-simple-currency'
 import { Icon } from '../../../../domain/Icon';
 import Toast from '../../../../helpers/Toast';
+import { pushEncoded } from '../../../App';
 
 export default class Detail extends Component {
 
@@ -30,13 +31,12 @@ export default class Detail extends Component {
                             <div className="container">
 
                                 {this.props.codigo !== ''  &&
-                                <div className="row">
+                                  <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input  value={this.props.codigo}   disabled  />
                                         <label htmlFor="nome" className="active">Código</label>
                                     </div>
-                                </div>
-
+                                   </div>
                                  }
                                 
                                 <div className="row">
@@ -80,17 +80,18 @@ export default class Detail extends Component {
                                                         <th className="row-th">Produto</th>
                                                         <th className="row-th">R$Custo</th>
                                                         <th className="row-th">Quantidade</th>
-                                                        <th className="row-th">Excluir</th>
+                                                        <th className="row-th">{this.props.editMode !== 'S' ? 'Excluir' : 'Estornar'}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {this.props.itens.map(item => {
                                                         return (
                                                             <tr key={item.movimentacaoProduto.produto.id}>
+                                                                
                                                                 <td className="row-td-detail">{item.movimentacaoProduto.produto.descricao}</td>
                                                                 <td className="row-td-detail">{item.precoCusto}</td>
                                                                 <td className="row-td-detail">{item.movimentacaoProduto.quantidade}</td>
-                                                                <td className="row-td"><a onClick={this.props.removeProduct.bind(this, item.movimentacaoProduto.produto.id)} style={{ color: 'black' }}><i className="material-icons">delete</i></a></td>
+                                                                <td className="row-td"><a onClick={this.props.editMode !== 'S' ? this.props.removeProduct.bind(this, item.movimentacaoProduto.produto.id) : pushEncoded.bind(this,URL.MAIN_DELETE_COMMODITY,this.props.id)} style={{ color: 'black' }}><i className="material-icons">delete</i></a></td>
                                                             </tr>)
                                                     })}
                                                 </tbody>

@@ -5,9 +5,8 @@ import { handleInputChange, updateTableItens, updateProductAutoComplete, removeP
 import ProductService from '../../../../services/product/ProductService'
 import CommodityService from '../../../../services/commodity/CommodityService'
 import Toast from '../../../../helpers/Toast'
-import Base64Service from '../../../../services/app/Base64Service'
 import { URL } from '../../../../helpers/constants'
-import { browserHistory } from 'react-router'
+import { pushEncoded } from '../../../App'
 
 class NewDetail extends Component {
 
@@ -28,8 +27,7 @@ class NewDetail extends Component {
         CommodityService.save(this.props.detailState, this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
-                const id = Base64Service.encode(response.entity.id.toString());
-                browserHistory.push(`${URL.COMMODITY}/${id}`);
+                pushEncoded(URL.COMMODITY,response.entity.id);
             }
         }).catch(error => {
             Toast.defaultError();

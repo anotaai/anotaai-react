@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
 import Toast from '../../../../helpers/Toast'
-import Base64Service from '../../../../services/app/Base64Service'
-import { browserHistory } from 'react-router'
 import SectorService  from '../../../../services/sector/SectorService'
 import GroupProductService  from '../../../../services/groupproduct/GroupProductService'
 import { clearForm , handleInputChange } from '../../../../actions/groupProductActionCreator'
 import { URL } from '../../../../helpers/constants'
+import { pushEncoded } from '../../../App'
 
 class NewDetail extends Component {
 
@@ -31,8 +30,7 @@ class NewDetail extends Component {
         GroupProductService.save(this.props.detailState,this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
-                const id = Base64Service.encode(response.entity.id.toString());
-                browserHistory.push(`${URL.GROUP_PRODUCT}/${id}`);
+                pushEncoded(URL.GROUP_PRODUCT,response.entity.id);
             } 
         }).catch(error => {
             Toast.defaultError();
