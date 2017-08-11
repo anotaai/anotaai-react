@@ -1,27 +1,97 @@
-import React , { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { PanelHeader, PanelFooter } from '../../../panels'
+import Paginator from '../../templatesearch/Paginator'
+import { URL, USE_CASE } from '../../../../helpers/constants'
+import Filters from '../../templatesearch/Filters'
+import Toast from '../../../../helpers/Toast'
+import { getObjectNewState } from '../../../../helpers/jsonHelper'
+import AppointmentBookService from '../../../../services/appointmentbook/AppointmentBookService'
+import { clearForm, list, remove, handlePageClick, showModal, hideModal } from '../../../../actions/searchActionCreator'
 
 
 class Search extends Component {
-      
+
+    constructor() {
+        super();
+        this.sendButton = null;
+        this.filters = [];
+        this.state = {  };
+    }
+
+
+    search() {
+
+    }
+
+    handlePageClick(offset) {
+        this.props.handlePageClick(offset, this);
+    }
+
+
+    handleInputChange(e) {
+        const newState = getObjectNewState(e.target.name, e.target.value, this.state);
+        this.setState(newState);
+    }
+
     render() {
-        return(
-            <div>Grande Olinda!</div>
+        return (
+            <div className="space-container">
+                <div className="container">
+                    <PanelHeader icon="library_books" label="Caderneta" />
+                    <div className="panel">
+                        <form onSubmit={this.search.bind(this)}>
+                            <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />
+                            <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_APPOINTMENT_BOOK} label="Pesquisar" />
+                          
+                            <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.props.searchState.pageCount} resultsLength={this.props.searchState.filteredResults.length} />
+                        </form>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
 
 
 const mapStateToProps = state => {
-    return { searchState : state.searchAppointmentBook  }
+    return { searchState: state.searchAppointmentBook }
 }
 
 const mapDispatchToProps = dispatch => {
-   return {
-
-   }
+    return {
+        list: (filteredResults) => {
+            dispatch(list(USE_CASE.SEARCH_APPOINTMENT_BOOK, filteredResults));
+        },
+        remove: (id) => {
+            AppointmentBookService.remove(id).then(response => {
+                Toast.show(response.messages);
+                if (response.isValid) {
+                    dispatch(remove(USE_CASE.SEARCH_APPOINTMENT_BOOK, id));
+                }
+            }).catch(error => {
+                Toast.defaultError();
+            });
+        },
+        handlePageClick: (offset, reactContext) => {
+            new Promise((resolve) => {
+                resolve(dispatch(handlePageClick(USE_CASE.SEARCH_APPOINTMENT_BOOK, offset)));
+            }).then(() => {
+                reactContext.search();
+            });
+        },
+        clearForm: () => {
+            dispatch(clearForm(USE_CASE.SEARCH_APPOINTMENT_BOOK));
+        },
+        showModal: (id, e) => {
+            dispatch(showModal(USE_CASE.SEARCH_APPOINTMENT_BOOK, id));
+        },
+        hideModal: () => {
+            dispatch(hideModal(USE_CASE.SEARCH_APPOINTMENT_BOOK));
+        }
+    }
 }
 
 
-const SearchAppointmentBookContainer = connect(mapStateToProps,mapDispatchToProps)(Search);
+const SearchAppointmentBookContainer = connect(mapStateToProps, mapDispatchToProps)(Search);
 export default SearchAppointmentBookContainer;
