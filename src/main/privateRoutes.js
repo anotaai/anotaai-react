@@ -20,9 +20,9 @@ import SearchCommodityContainer from '../components/private/commodity/search/Sea
 import NewCommodityDetailContainer from '../components/private/commodity/detail/NewDetail'
 import EditCommodityDetailContainer from '../components/private/commodity/detail/EditDetail'
 import DeleteCommodityContainer from '../components/private/commodity/DeleteCommodity'
-import SearchAppointmentBookContainer from '../components/private/appointmentBook/search/Search'
-import NewAppointmentBookDetailContainer from '../components/private/appointmentBook/detail/NewDetail'
-import EditAppointmentBookDetailContainer from '../components/private/appointmentBook/detail/EditDetail'
+import SearchAppointmentBookContainer from '../components/private/appointmentbook/search/Search'
+import NewAppointmentBookDetailContainer from '../components/private/appointmentbook/detail/NewDetail'
+import EditAppointmentBookDetailContainer from '../components/private/appointmentbook/detail/EditDetail'
 
  const privateRoutes = (
     <Route component={AuthenticationContainer}>
