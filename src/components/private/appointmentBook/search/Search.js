@@ -8,6 +8,7 @@ import Toast from '../../../../helpers/Toast'
 import { getObjectNewState } from '../../../../helpers/jsonHelper'
 import AppointmentBookService from '../../../../services/appointmentbook/AppointmentBookService'
 import { clearForm, list, remove, handlePageClick, showModal, hideModal } from '../../../../actions/searchActionCreator'
+import DataList from './DataList'
 
 
 class Search extends Component {
@@ -19,8 +20,11 @@ class Search extends Component {
         this.state = {  };
     }
 
-
     search() {
+
+    }
+
+    remove() {
 
     }
 
@@ -43,7 +47,7 @@ class Search extends Component {
                         <form onSubmit={this.search.bind(this)}>
                             <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_APPOINTMENT_BOOK} label="Pesquisar" />
-                          
+                            <DataList filteredResults={this.props.searchState.filteredResults} editUrl={URL.APPOINTMENT_BOOK} remove={this.remove.bind(this)} showModal={this.props.showModal} hideModal={this.props.hideModal} showModalState={this.props.searchState.showModalState} text="Confirma a exclusão da caderneta?" />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.props.searchState.pageCount} resultsLength={this.props.searchState.filteredResults.length} />
                         </form>
                     </div>

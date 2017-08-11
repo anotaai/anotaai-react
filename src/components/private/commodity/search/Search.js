@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { clearForm, list, remove, handlePageClick, showModal, hideModal } from '../../../../actions/searchActionCreator'
+import { clearForm, list, handlePageClick } from '../../../../actions/searchActionCreator'
 import { URL, USE_CASE } from '../../../../helpers/constants'
 import Toast from '../../../../helpers/Toast'
 import CommodityService from '../../../../services/commodity/CommodityService'
@@ -50,10 +50,6 @@ class Search extends Component {
         this.setState(newState);
     }
 
-    remove() {
-        this.props.remove(this.props.searchState.idRemove);
-    }
-
     render() {
 
         return (
@@ -64,7 +60,7 @@ class Search extends Component {
                         <form onSubmit={this.search.bind(this)}>
                             <Filters handleInputChange={this.handleInputChange.bind(this)} filters={this.filters} />
                             <PanelFooter submitRef={el => this.sendButton = el} newDetailUrl={URL.NEW_COMMODITY} label="Pesquisar" />
-                            <DataList filteredResults={this.props.searchState.filteredResults} editUrl={URL.COMMODITY} remove={this.remove.bind(this)} showModal={this.props.showModal} hideModal={this.props.hideModal} showModalState={this.props.searchState.showModalState} text="Confirma a exclusão do entrada de mercadoria?" />
+                            <DataList filteredResults={this.props.searchState.filteredResults} editUrl={URL.COMMODITY}  />
                             <Paginator handlePageClick={this.handlePageClick.bind(this)} pageCount={this.props.searchState.pageCount} resultsLength={this.props.searchState.filteredResults.length} />
                         </form>
                     </div>
@@ -85,16 +81,6 @@ const mapDispatchToProps = dispatch => {
         list: (filteredResults) => {
             dispatch(list(USE_CASE.SEARCH_COMMODITY, filteredResults));
         },
-        remove: (id) => {
-            CommodityService.remove(id).then(response => {
-                Toast.show(response.messages);
-                if (response.isValid) {
-                    dispatch(remove(USE_CASE.SEARCH_COMMODITY, id));
-                }
-            }).catch(error => {
-                Toast.defaultError();
-            });
-        },
         handlePageClick: (offset, reactContext) => {
             new Promise((resolve) => {
                 resolve(dispatch(handlePageClick(USE_CASE.SEARCH_COMMODITY, offset)));
@@ -104,12 +90,6 @@ const mapDispatchToProps = dispatch => {
         },
         clearForm: () => {
             dispatch(clearForm(USE_CASE.SEARCH_COMMODITY));
-        },
-        showModal: (id, e) => {
-            dispatch(showModal(USE_CASE.SEARCH_COMMODITY, id));
-        },
-        hideModal: () => {
-            dispatch(hideModal(USE_CASE.SEARCH_COMMODITY));
         }
     }
 }
