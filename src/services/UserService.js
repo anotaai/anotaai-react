@@ -12,14 +12,11 @@ import Base64Service from './app/Base64Service'
 import AuthenticationService from './app/AuthenticationService'
 import AsyncService from '../services/AsyncService'
 
-
 export default class UserService {
 
-
-      static getEndpoint() {
+    static getEndpoint() {
         return '/usuarios';
     }
-
 
     static getUser(activationCode) {
         return dispatch => {
@@ -63,8 +60,7 @@ export default class UserService {
     }
 
     static changePassword(user, component) {
-
-
+        
         return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/alterarSenha`, [component] ,  {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
@@ -121,8 +117,7 @@ export default class UserService {
         const newUserInstance = createInstance(usuario);
         newUserInstance.telefone = buildPhone(telefoneStr);
 
-
-         return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/activationuser`, [component],  {
+        return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/activationuser`, [component],  {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: { 'Content-type': 'application/json' }
@@ -161,8 +156,6 @@ export default class UserService {
 
             const newUserLoginInstance = createInstance(userLogin);
             const newUserInstance = createInstance(userLogin.usuario);
-
-
             const telefone = userLogin.usuario.telefone;
             const senha = userLogin.usuario.senha;
 
@@ -180,10 +173,7 @@ export default class UserService {
             }).catch(error => {
                 reject(error);
             })
-
-
         });
-
     }
 
 
