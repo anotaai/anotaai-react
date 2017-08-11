@@ -10,6 +10,7 @@ import groupProductReducer from '../reducers/groupProductReducer'
 import consumerReducer from '../reducers/consumerReducer'
 import productReducer from '../reducers/productReducer'
 import commodityReducer from '../reducers/commodityReducer'
+import appointmentBookReducer from '../reducers/appointmentBookReducer'
 import { loadingBarReducer } from 'react-redux-loading-bar'
 import { combineReducers } from 'redux'
 import { USE_CASE } from '../helpers/constants'
@@ -23,11 +24,13 @@ const reducers = combineReducers(
      detailGroupProduct: groupProductReducer,
      detailProduct: productReducer,
      detailCommodity: commodityReducer,
+     detailAppointmentBook: appointmentBookReducer,
      searchSector: createSearchReducerByUseCase(USE_CASE.SEARCH_SECTOR),
      searchGroupProduct: createSearchReducerByUseCase(USE_CASE.SEARCH_GROUP_PRODUCT),
      searchConsumer: createSearchReducerByUseCase(USE_CASE.SEARCH_CONSUMER),
      searchProduct: createSearchReducerByUseCase(USE_CASE.SEARCH_PRODUCT),
      searchCommodity: createSearchReducerByUseCase(USE_CASE.SEARCH_COMMODITY),
+     searchAppointmentBook: createSearchReducerByUseCase(USE_CASE.SEARCH_APPOINTMENT_BOOK),
      login: createUserReducerByUseCase(USE_CASE.LOGIN),
      modalRenew: createUserReducerByUseCase(USE_CASE.MODAL_RENEW),
      renew: createUserReducerByUseCase(USE_CASE.RENEW),

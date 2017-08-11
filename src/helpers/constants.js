@@ -30,7 +30,10 @@ export const URL = {
   NEW_COMMODITY: `${NEW_USE_CASE_PATH}/entradamercadoria` ,
   EDIT_COMODDITY: '/entradamercadoria(/:id)',
   MAIN_DELETE_COMMODITY: '/estornarmercadoria',
-  DELETE_COMMODITY: '/estornarmercadoria(/:id)'
+  DELETE_COMMODITY: '/estornarmercadoria(/:id)',
+  APPOINTMENT_BOOK: '/caderneta',
+  NEW_APPOINTMENT_BOOK: `${NEW_USE_CASE_PATH}/caderneta`,
+  EDIT_APPOINTMENT_BOOK: '/caderneta(/:id)',
 }
 
 
@@ -40,6 +43,7 @@ export const USE_CASE = {
   SEARCH_CONSUMER: 'SEARCH_CONSUMER',
   SEARCH_PRODUCT: 'SEARCH_PRODUCT',
   SEARCH_COMMODITY: 'SEARCH_COMMODITY',
+  SEARCH_APPOINTMENT_BOOK: 'SEARCH_APPOINTMENT_BOOK',
   LOGIN: 'LOGIN',
   MODAL_RENEW: 'MODAL_RENEW',
   RENEW: 'RENEW'

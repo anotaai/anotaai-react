@@ -133,7 +133,8 @@ export default class Detail extends Component {
                                                     <label htmlFor="quantidade" className="active">Quantidade</label>
                                                     <input type="number" value={this.props.quantidade} placeholder="Valor" name="quantidade" onChange={this.props.handleInputChange} />
                                                 </div>} />
-                                            {this.props.itensReceita.length > 0 &&
+
+                                        {this.props.itensReceita.length > 0 &&
 
                                             <div className="row">
                                                 <div className="col s12 m12 l12">
@@ -157,7 +158,8 @@ export default class Detail extends Component {
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                            </div>}
+                                            </div>
+                                        }
                                     </div>
                                     <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_PRODUCT} submitRef={this.props.submitRef} />
                                 </Panel>
