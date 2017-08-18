@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Detail from './Detail'
+import { handleInputChange, addBook,  clearForm } from '../../../../actions/appointmentBookActionCreator'
 
 class NewDetail extends Component {
 
@@ -11,7 +12,7 @@ class NewDetail extends Component {
 
     
     componentWillUnmount() {
-
+       this.props.clearForm();
     }
 
     save(e) {
@@ -24,6 +25,9 @@ class NewDetail extends Component {
             <Detail 
              {... this.props.detailState}
              title="Cadastro da Caderneta" 
+             cadernetas={this.props.detailState.cadernetas}
+             handleInputChange={this.props.handleInputChange}
+             addBook={this.props.addBook}
              merge={this.save.bind(this)}
              submitRef={el => this.sendButton = el} />
        )
@@ -36,7 +40,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        handleInputChange: (e) => {
+            dispatch(handleInputChange(e.target.name,e.target.value));
+        } ,
+        addBook: () => {
+            dispatch(addBook());
+        },
+        clearForm: () => {
+            dispatch(clearForm());
+        }
     }
 }
 
