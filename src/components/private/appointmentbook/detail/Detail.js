@@ -27,14 +27,14 @@ export default class Detail extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="qtdDiasDuracaoFolha" value={this.props.qtdDiasDuracaoFolha} name="qtdDiasDuracaoFolha" required onChange={this.props.handleInputChange} type="number" />
-                                        <label htmlFor="qtdDiasDuracaoFolha" className={this.props.qtdDiasDuracaoFolha !== '' ? 'active' : ''}>Quantidade dias duração folha</label>
+                                        <input id="diaBase" value={this.props.diaBase} name="diaBase" required onChange={this.props.handleInputChange} type="number" />
+                                        <label htmlFor="diaBase" className={this.props.diaBase !== '' ? 'active' : ''}>Dia Base</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="diaBase" value={this.props.diaBase} name="diaBase" required onChange={this.props.handleInputChange} type="number" />
-                                        <label htmlFor="diaBase" className={this.props.diaBase !== '' ? 'active' : ''}>Dia Base</label>
+                                        <input id="qtdDiasDuracaoFolha" value={this.props.qtdDiasDuracaoFolha} name="qtdDiasDuracaoFolha" required onChange={this.props.handleInputChange} type="number" />
+                                        <label htmlFor="qtdDiasDuracaoFolha" className={this.props.qtdDiasDuracaoFolha !== '' ? 'active' : ''}>Quantidade dias duração folha</label>
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@ export default class Detail extends Component {
                                 <div className="row">
                                     <div className="input-field col s12 m11 l11">
                                         <input id={`cadernetas.descricao_${i}`} value={caderneta.descricao} name={`cadernetas.descricao_${i}`}  onChange={this.props.handleInputChange} required type="text" />
-                                        <label htmlFor={`cadernetasdescricao_${i}`} className={caderneta.descricao !== '' ? 'active' : ''}>Nome Caderneta</label>
+                                        <label htmlFor={`cadernetasdescricao_${i}`} className={caderneta.descricao !== '' ? 'active' : ''}>Descrição Caderneta</label>
                                     </div>
                                     <div className="input-field col s12 m1 l1">
                                        <a className="btn-floating btn-small ERROR" style={{positio: 'relative',top:'10px'}} title="Excluir" onClick={this.props.removeBook.bind(this,i)} ><i className="material-icons">delete</i></a>
