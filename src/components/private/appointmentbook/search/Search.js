@@ -16,17 +16,31 @@ class Search extends Component {
     constructor() {
         super();
         this.sendButton = null;
-        this.filters = [];
-        this.state = {  };
+        this.filters = [{ id: 'descricao', label: 'Descricao' }];
+        this.state = { descricao: '' };
+    }
+
+    componentDidMount() {
+        this.search();
+    }
+
+    componentWillUnmount() {
+        this.props.clearForm();
     }
 
     search(e) {
         if (e)
             e.preventDefault();
+
+        AppointmentBookService.list(this.props.searchState.offset, this.state.descricao, this.sendButton).then(response => {
+            this.props.list(response);
+        }).catch(error => {
+            Toast.defaultError();
+        });
     }
 
     remove() {
-
+        this.props.remove(this.props.searchState.idRemove);
     }
 
     handlePageClick(offset) {

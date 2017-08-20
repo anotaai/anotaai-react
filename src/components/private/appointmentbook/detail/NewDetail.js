@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import Detail from './Detail'
-import { handleInputChange, addBook,  clearForm } from '../../../../actions/appointmentBookActionCreator'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Detail from './Detail';
+import { handleInputChange, addBook,  clearForm, removeBook } from '../../../../actions/appointmentBookActionCreator';
+import AppointmentBookService from '../../../../services/appointmentbook/AppointmentBookService';
+import { URL } from '../../../../helpers/constants'
+import Toast from '../../../../helpers/Toast'
+import { pushEncoded } from '../../../App'
 
 class NewDetail extends Component {
 
@@ -17,6 +21,15 @@ class NewDetail extends Component {
 
     save(e) {
        e.preventDefault();
+
+        AppointmentBookService.save(this.props.detailState, this.sendButton).then(response => {
+            Toast.show(response.messages);
+            if (response.isValid) {
+                pushEncoded(URL.APPOINTMENT_BOOK,response.entity.id);
+            } 
+        }).catch(error => {
+            Toast.defaultError();
+        });
     }
 
     render() {
@@ -28,6 +41,7 @@ class NewDetail extends Component {
              cadernetas={this.props.detailState.cadernetas}
              handleInputChange={this.props.handleInputChange}
              addBook={this.props.addBook}
+             removeBook={this.props.removeBook}
              merge={this.save.bind(this)}
              submitRef={el => this.sendButton = el} />
        )
@@ -42,12 +56,15 @@ const mapDispatchToProps = dispatch => {
     return {
         handleInputChange: (e) => {
             dispatch(handleInputChange(e.target.name,e.target.value));
-        } ,
+        },
         addBook: () => {
             dispatch(addBook());
         },
         clearForm: () => {
             dispatch(clearForm());
+        },
+        removeBook: (i,e) => {
+            dispatch(removeBook(i));
         }
     }
 }

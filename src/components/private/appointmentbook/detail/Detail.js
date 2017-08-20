@@ -1,10 +1,21 @@
-import React, { Component } from 'react'
-import { PanelHeader, PanelFooterDetail } from '../../../panels'
-import ModalConfirm from '../../../ModalConfirm'
-import { URL } from '../../../../helpers/constants'
+import React, { Component } from 'react';
+import { PanelHeader, PanelFooterDetail } from '../../../panels';
+import ModalConfirm from '../../../ModalConfirm';
+import { URL } from '../../../../helpers/constants';
+import { Icon } from '../../../../domain/Icon';
+import Toast from '../../../../helpers/Toast';
 
 export default class Detail extends Component {
 
+    merge(e) {
+         
+        if (!this.props.cadernetas == null || this.props.cadernetas.length === 0) {
+            e.preventDefault();
+            Toast.show('cadernetas.required', Icon.WARNING);
+            return;
+        }
+        this.props.merge(e);
+    }
 
     render() {
         return (
@@ -12,7 +23,7 @@ export default class Detail extends Component {
                 <div className="container">
                     <PanelHeader icon="library_books" label={this.props.title} />
                     <div className="panel">
-                        <form onSubmit={this.props.merge.bind(this)}>
+                        <form onSubmit={this.merge.bind(this)}>
                             <div className="container">
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
@@ -29,10 +40,8 @@ export default class Detail extends Component {
                             </div>
                             <div className="row">
                                 <div className="col s12 m11 l11">
-                                    
                                     <div className="right-align">
-                                        <a className="btn-floating btn-large ERROR" title="Deletar" onClick={this.props.removeBook} ><i className="material-icons">delete</i></a>
-                                        <a className="btn-floating btn-large INFO" style={{marginLeft: '10px' }} title="Adicionar" onClick={this.props.addBook} ><i className="material-icons">add</i></a>
+                                        <a className="btn-floating btn-large INFO" style={{marginLeft: '10px' }} title="Adicionar Caderneta" onClick={this.props.addBook} ><i className="material-icons">add</i></a>
                                     </div>
                                 </div>
                             </div>
@@ -40,9 +49,12 @@ export default class Detail extends Component {
                             {this.props.cadernetas.map((caderneta,i) => (
                               <div key={i} className="container">
                                 <div className="row">
-                                    <div className="input-field col s12 m12 l12">
-                                        <input id={`cadernetas.descricao_${i}`} value={caderneta.descricao} name={`cadernetas.descricao_${i}`} required onChange={this.props.handleInputChange} type="text" />
+                                    <div className="input-field col s12 m11 l11">
+                                        <input id={`cadernetas.descricao_${i}`} value={caderneta.descricao} name={`cadernetas.descricao_${i}`}  onChange={this.props.handleInputChange} required type="text" />
                                         <label htmlFor={`cadernetasdescricao_${i}`} className={caderneta.descricao !== '' ? 'active' : ''}>Nome Caderneta</label>
+                                    </div>
+                                    <div className="input-field col s12 m1 l1">
+                                       <a className="btn-floating btn-small ERROR" style={{positio: 'relative',top:'10px'}} title="Excluir" onClick={this.props.removeBook.bind(this,i)} ><i className="material-icons">delete</i></a>
                                     </div>
                                 </div>
                                </div>
