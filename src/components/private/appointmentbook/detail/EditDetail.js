@@ -7,6 +7,7 @@ import { URL } from '../../../../helpers/constants';
 import Toast from '../../../../helpers/Toast';
 import { browserHistory } from 'react-router';
 import Base64Service from '../../../../services/app/Base64Service';
+import { pushEncoded } from '../../../App'
 
 
 class EditDetail extends Component {
@@ -49,7 +50,6 @@ class EditDetail extends Component {
 
     }
 
-
     render() {
         return (
             <Detail
@@ -64,6 +64,7 @@ class EditDetail extends Component {
                 showModal={this.props.showModal} 
                 hideModal={this.props.hideModal} 
                 showModalState={this.props.detailState.showModalState} 
+                checkSameConfiguration={this.props.checkSameConfiguration}
                 submitRef={el => this.sendButton = el} />
         )
     }
@@ -89,12 +90,25 @@ const mapDispatchToProps = dispatch => {
         },
         showModal: () => {
           dispatch(showModal());
+
         },
         findById: (id) => {
             dispatch(AppointmentBookService.findById(id, updateState));
         },
         hideModal: () => {
           dispatch(hideModal());
+        },
+        checkSameConfiguration: (diaBase,qtdDiasDuracaoFolha,id) => {
+            AppointmentBookService.checkSameConfiguration(diaBase,qtdDiasDuracaoFolha,id).then(response => {
+                if (response.entity !== undefined) {
+                    Toast.show(response.messages);
+                    pushEncoded(URL.APPOINTMENT_BOOK,response.entity.id);
+                    dispatch(AppointmentBookService.findById(response.entity.id, updateState));
+                    
+                } 
+            }).catch(error => {
+                Toast.defaultError();
+            });
         }
     }
 }

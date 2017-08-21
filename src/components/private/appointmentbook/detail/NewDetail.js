@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Detail from './Detail';
-import { handleInputChange, addBook,  clearForm, removeBook } from '../../../../actions/appointmentBookActionCreator';
+import { handleInputChange, addBook,  clearForm, removeBook, updateState } from '../../../../actions/appointmentBookActionCreator';
 import AppointmentBookService from '../../../../services/appointmentbook/AppointmentBookService';
 import { URL } from '../../../../helpers/constants'
 import Toast from '../../../../helpers/Toast'
@@ -42,6 +42,7 @@ class NewDetail extends Component {
              handleInputChange={this.props.handleInputChange}
              addBook={this.props.addBook}
              removeBook={this.props.removeBook}
+             checkSameConfiguration={this.props.checkSameConfiguration}
              merge={this.save.bind(this)}
              submitRef={el => this.sendButton = el} />
        )
@@ -65,7 +66,21 @@ const mapDispatchToProps = dispatch => {
         },
         removeBook: (i,e) => {
             dispatch(removeBook(i));
+        },
+        findById: (id) => {
+            dispatch(AppointmentBookService.findById(id, updateState));
+        },
+        checkSameConfiguration: (diaBase,qtdDiasDuracaoFolha) => {
+            AppointmentBookService.checkSameConfiguration(diaBase,qtdDiasDuracaoFolha).then(response => {
+                if (response.entity !== undefined) {
+                    Toast.show(response.messages);
+                    pushEncoded(URL.APPOINTMENT_BOOK,response.entity.id);
+                } 
+            }).catch(error => {
+                Toast.defaultError();
+            });
         }
+        
     }
 }
 

@@ -7,6 +7,7 @@ import Toast from '../../../../helpers/Toast';
 
 export default class Detail extends Component {
 
+
     merge(e) {
          
         if (!this.props.cadernetas == null || this.props.cadernetas.length === 0) {
@@ -16,6 +17,14 @@ export default class Detail extends Component {
         }
         this.props.merge(e);
     }
+
+    checkSameConfiguration() {
+
+        if(this.props.diaBase !== '' && this.props.qtdDiasDuracaoFolha !== '') {
+            this.props.checkSameConfiguration(this.props.diaBase,this.props.qtdDiasDuracaoFolha,this.props.id);
+        }
+
+    }    
 
     render() {
         return (
@@ -27,13 +36,13 @@ export default class Detail extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="diaBase" value={this.props.diaBase} name="diaBase" required onChange={this.props.handleInputChange} type="number" />
+                                        <input id="diaBase" value={this.props.diaBase} name="diaBase" required onChange={this.props.handleInputChange} onBlur={this.checkSameConfiguration.bind(this)}   type="number" />
                                         <label htmlFor="diaBase" className={this.props.diaBase !== '' ? 'active' : ''}>Dia Base</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="qtdDiasDuracaoFolha" value={this.props.qtdDiasDuracaoFolha} name="qtdDiasDuracaoFolha" required onChange={this.props.handleInputChange} type="number" />
+                                        <input id="qtdDiasDuracaoFolha" value={this.props.qtdDiasDuracaoFolha} name="qtdDiasDuracaoFolha" required onBlur={this.checkSameConfiguration.bind(this)}  onChange={this.props.handleInputChange} type="number" />
                                         <label htmlFor="qtdDiasDuracaoFolha" className={this.props.qtdDiasDuracaoFolha !== '' ? 'active' : ''}>Quantidade dias duração folha</label>
                                     </div>
                                 </div>
