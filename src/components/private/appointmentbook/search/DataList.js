@@ -21,6 +21,7 @@ export default class DataList extends Component {
                                 <th className="row-th">Dia Base</th>
                                 <th className="row-th">Duração Folha</th>
                                 <th className="row-th">Excluir</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -30,7 +31,7 @@ export default class DataList extends Component {
                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.configuracao.id)}  className="row-td">{result.descricao}</td>
                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.configuracao.id)}  className="row-td">{result.configuracao.diaBase}</td>
                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.configuracao.id)}  className="row-td">{result.configuracao.qtdDiasDuracaoFolha}</td>
-                                       <td  className="row-td"><a onClick={this.props.showModal.bind(this,result.configuracao.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
+                                       <td  className="row-td"><a onClick={this.props.showModal.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
                         </tbody>

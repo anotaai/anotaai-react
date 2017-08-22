@@ -39,6 +39,7 @@ class Search extends Component {
         });
     }
 
+
     remove() {
         this.props.remove(this.props.searchState.idRemove);
     }
@@ -83,7 +84,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(list(USE_CASE.SEARCH_APPOINTMENT_BOOK, filteredResults));
         },
         remove: (id) => {
-            AppointmentBookService.remove(id).then(response => {
+            AppointmentBookService.removeByBookId(id).then(response => {
                 Toast.show(response.messages);
                 if (response.isValid) {
                     dispatch(remove(USE_CASE.SEARCH_APPOINTMENT_BOOK, id));

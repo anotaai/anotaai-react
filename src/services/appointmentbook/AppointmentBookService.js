@@ -20,6 +20,15 @@ export default class AppointmentBookService extends CrudService {
         });
     }
 
-    
+    static removeByBookId(id) {
+        return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/removeByBookId/${id}`, {
+            method: 'DELETE'
+        }).then(response => {
+            return response.json();
+        }).catch(error => {
+            throw Error(error);
+        });
+    }
+
 
 }
