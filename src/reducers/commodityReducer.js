@@ -2,7 +2,7 @@ import {
     HANDLE_INPUT_CHANGE_COMMODITY, UPDATE_PRODUCT_LIST_COMMODITY,
     UPDATE_PRODUCT_AUTO_COMPLETE_COMMODITY, UPDATE_TABLE_ITENS_COMMODITY,
     REMOVE_PRODUCT_COMMODITY, CLEAR_FORM_COMMODITY, UPDATE_COMMODITY, SHOW_MODAL_COMMODITY,
-    HIDE_MODAL_COMMODITY, REJECT_COMMODITY, UPDATE_REJECT_COMMODITY
+    HIDE_MODAL_COMMODITY, REJECT_COMMODITY, UPDATE_REJECT_COMMODITY, UPDATE_COMMODITY_BY_PRODUCT
 } from '../actions/commodityActionCreator'
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper';
 import { pushProducts, setProduct, clearProduct } from './productReducer'
@@ -47,6 +47,12 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_PRODUCT_AUTO_COMPLETE_COMMODITY: {
             return setProduct(state, action);
+        }
+
+        case UPDATE_COMMODITY_BY_PRODUCT: {
+            const newState = createInstance(state);
+            newState.itens.push({ id: null, type: 'entrada', movimentacaoProduto: { id: null, produto: { id: action.id, descricao: action.descricao }, quantidade: action.quantidade }, precoCusto: concatDot(action.precoCusto), estornar: false });
+            return newState;
         }
 
         case UPDATE_TABLE_ITENS_COMMODITY: {

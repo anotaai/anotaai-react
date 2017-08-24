@@ -2,7 +2,8 @@ import {
     CLEAR_FORM_PRODUCT, HANDLE_INPUT_CHANGE_PRODUCT, UPDATE_UNIT, UPDATE_DAY_OF_WEEK, UPDATE_AVAILABLE_DAYS, UPDATE_PRODUCT, NEW_DEFAULT_VALUES,
     UPDATE_PRODUCT_LIST, UPDATE_PRODUCT_AUTO_COMPLETE, UPDATE_TABLE_ITENS, REMOVE_PRODUCT, HIDE_MODAL_PRODUCT, SHOW_MODAL_PRODUCT,
     TOGGLE_GROUP_PRODUCT_ACCORDION, TOGGLE_COMMODITY_ACCORDION, UPDATE_GROUP_PRODUCT_LIST, UPDATE_GROUP_PRODUCT_AUTO_COMPLETE, REMOVE_GROUP_PRODUCT,
-    UPDATE_GROUP_PRODUCT_TABLE_ITENS, CHANGE_GROUP_PRODUCT_RADIO, UPDATE_STORAGE_PRODUCT
+    UPDATE_GROUP_PRODUCT_TABLE_ITENS, CHANGE_GROUP_PRODUCT_RADIO, UPDATE_STORAGE_PRODUCT, SHOW_MODAL_TO_COMMODITY, HIDE_MODAL_TO_COMMODITY,
+    UPDATE_PRODUCT_BY_GROUP
 } from '../actions/productActionCreator';
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper';
 import { concatZeros } from '../helpers/stringHelper';
@@ -34,7 +35,10 @@ const INITIAL_STATE = {
     groupProductAccordionState: '1',
     commodityAccordionState: '1',
     produtoSelecionado: { id: null, descricao: '' },
-    grupoProdutoSelecionado: { id: null, nome: '' }
+    grupoProdutoSelecionado: { id: null, nome: '' },
+    quantidadeCommodity: '',
+    precoCustoCommodity: 0,
+    showModalCommodityState: false
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -82,6 +86,7 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
             newState.precoVenda = 0;
+            newState.precoCustoCommodity = 0;
             newState.codigo = '';
             newState.quantidade = '';
             newState.groupProductAccordionState = '1';
@@ -258,6 +263,18 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
+        case SHOW_MODAL_TO_COMMODITY: {
+            const newState = createInstance(state);
+            newState.showModalCommodityState = true;
+            return newState;
+        }
+
+        case HIDE_MODAL_TO_COMMODITY: {
+            const newState = createInstance(state);
+            newState.showModalCommodityState = false;
+            return newState;
+        }
+
         case CHANGE_GROUP_PRODUCT_RADIO: {
             const newState = createInstance(state);
            
@@ -268,6 +285,13 @@ export default function (state = INITIAL_STATE, action) {
                     json.ehPrincipal = false;
                 }
             });
+            return newState;
+        }
+
+        case UPDATE_PRODUCT_BY_GROUP: {
+            const newState = createInstance(state);
+            newState.grupos.push( { id: null, grupoProduto: { id: action.id, nome: action.nome } , ehPrincipal: true});
+
             return newState;
         }
         

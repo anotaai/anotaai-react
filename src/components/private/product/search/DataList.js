@@ -39,7 +39,7 @@ export default class DataList extends Component {
                             })}
                         </tbody>
                     </table>
-                    <ModalConfirm text="Confirma a exclusão do produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
+                    <ModalConfirm content="Confirma a exclusão do produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
                 </div>
             );
 

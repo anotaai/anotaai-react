@@ -8,6 +8,7 @@ import Detail from './Detail'
 import { CustomButtons, CustomResponsiveButtons } from './customButtons'
 import { URL } from '../../../../helpers/constants'
 import { clearForm, handleInputChange, updateState, showModal, hideModal } from '../../../../actions/sectorActionCreator'
+import { updateGroupProductBySector } from '../../../../actions/groupProductActionCreator'
 
 
 class EditDetail extends Component {
@@ -49,12 +50,17 @@ class EditDetail extends Component {
 
     }
 
+    sendSector() {
+        browserHistory.push(URL.NEW_GROUP_PRODUCT);
+        this.props.sendSector(this.props.detailState.id, this.props.detailState.nome);
+    }
+    
     render() {
         return (
             <Detail {... this.props.detailState}
                 title="Edição de Setores"
-                customResponsiveButtons={<CustomResponsiveButtons remove={this.remove.bind(this)} />}
-                customButtons={<CustomButtons remove={this.remove.bind(this)} />}
+                customResponsiveButtons={<CustomResponsiveButtons sendSector={this.sendSector.bind(this)}  />}
+                customButtons={<CustomButtons sendSector={this.sendSector.bind(this)}  />}
                 merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
                 showModal={this.props.showModal}
@@ -87,6 +93,9 @@ const mapDispatchToProps = dispatch => {
         hideModal: () => {
             dispatch(hideModal());
         },
+        sendSector: (id,nome) => {
+            dispatch(updateGroupProductBySector(id,nome));
+        }
     }
 }
 

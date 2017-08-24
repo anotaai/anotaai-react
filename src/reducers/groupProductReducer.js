@@ -1,5 +1,7 @@
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
-import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, UPDATE_STATE_GROUP_PRODUCT, SHOW_MODAL, HIDE_MODAL, UPDATE_SECTOR_LIST } from '../actions/groupProductActionCreator';
+import { HANDLE_INPUT_CHANGE_GROUP_PRODUCT, CLEAR_FORM_GROUP_PRODUCT, 
+    UPDATE_STATE_GROUP_PRODUCT, SHOW_MODAL, HIDE_MODAL, UPDATE_SECTOR_LIST,
+    UPDATE_GROUP_PRODUCT_BY_SECTOR } from '../actions/groupProductActionCreator';
 
 
 const INITIAL_STATE = {
@@ -12,6 +14,7 @@ const INITIAL_STATE = {
 }
 
 export default function (state = INITIAL_STATE, action) {
+
 
     switch (action.type) {
 
@@ -52,6 +55,12 @@ export default function (state = INITIAL_STATE, action) {
         case UPDATE_SECTOR_LIST: {
             const newState = createInstance(state);
             newState.setores = action.list;
+            return newState;
+        }
+
+        case UPDATE_GROUP_PRODUCT_BY_SECTOR: {
+            const newState = createInstance(state);
+            newState.setor = {id: action.id,nome:action.nome}
             return newState;
         }
 

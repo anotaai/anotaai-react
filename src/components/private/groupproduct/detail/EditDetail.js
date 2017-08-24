@@ -6,8 +6,11 @@ import Base64Service from '../../../../services/app/Base64Service'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
 import SectorService from '../../../../services/sector/SectorService'
 import { clearForm, handleInputChange, updateState, showModal, hideModal } from '../../../../actions/groupProductActionCreator'
+import { updateProductByGroup } from '../../../../actions/productActionCreator'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../../helpers/constants'
+import { CustomButtons, CustomResponsiveButtons } from './customButtons'
+
 
 class EditDetail extends Component {
 
@@ -49,12 +52,19 @@ class EditDetail extends Component {
         });
     }
 
+    sendGroupProduct() {
+        browserHistory.push(URL.NEW_PRODUCT);
+        this.props.sendGroupProduct(this.props.detailState.id,this.props.detailState.nome);
+    }
+
 
     render() {
         return (
             <Detail
                 title="Edição de Grupos de Produtos"
                 {... this.props.detailState}
+                customResponsiveButtons={<CustomResponsiveButtons sendGroupProduct={this.sendGroupProduct.bind(this)}/>}
+                customButtons={<CustomButtons sendGroupProduct={this.sendGroupProduct.bind(this)}  />}
                 setores={this.props.detailState.setores}
                 merge={this.update.bind(this)}
                 handleInputChange={this.props.handleInputChange}
@@ -91,6 +101,9 @@ const mapDispatchToProps = dispatch => {
         },
         getSectors: () => {
             dispatch(SectorService.getSectors());
+        },
+        sendGroupProduct: (id,nome) => {
+            dispatch(updateProductByGroup(id,nome))
         }
     }
 }

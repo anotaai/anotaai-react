@@ -8,7 +8,9 @@ SHOW_MODAL_COMMODITY = 'show_modal_commodity',
 HIDE_MODAL_COMMODITY = 'hide_modal_commodity',
 REJECT_COMMODITY = 'reject_commodity',
 REMOVE_PRODUCT_COMMODITY = 'remove_product_commodity',
-UPDATE_REJECT_COMMODITY = 'update_reject_commodity';
+UPDATE_REJECT_COMMODITY = 'update_reject_commodity',
+UPDATE_COMMODITY_BY_PRODUCT = 'update_commodity_by_product';
+
 
 export function handleInputChange(name, value,index) {
     return { type: HANDLE_INPUT_CHANGE_COMMODITY, name, value, index }
@@ -51,4 +53,8 @@ export function rejectCommodity(id) {
 
 export function updateRejectCommodity() {
      return  { type: UPDATE_REJECT_COMMODITY  }
+}
+
+export function updateCommodityByProduct(id,descricao,quantidade,precoCusto) {
+    return  { type: UPDATE_COMMODITY_BY_PRODUCT, id, descricao, quantidade, precoCusto }
 }

@@ -9,11 +9,11 @@ export default class ModalConfirm extends Component {
             return (
                   <Modal isOpen={this.props.showModalState} style={customModalStyles} contentLabel="Anota ai">
 
-                        <h5 className="center-align">Anota ai</h5>
+                        <h5 className="center-align">{this.props.title !== undefined ? this.props.title :  "Anota ai"} </h5>
 
                         <div className="section"></div>
 
-                        <div className="row center-align">{this.props.text}</div>
+                        <div className="row center-align">{this.props.content}</div>
 
                         <div className="section"></div>
 

@@ -3,7 +3,9 @@ export const CLEAR_FORM_GROUP_PRODUCT = 'clear_form_group_product',
     UPDATE_STATE_GROUP_PRODUCT = 'update_state_group_product',
     UPDATE_SECTOR_LIST = 'update_sector_list',
     SHOW_MODAL = 'show_modal',
-    HIDE_MODAL = 'hide_modal'
+    HIDE_MODAL = 'hide_modal',
+    UPDATE_GROUP_PRODUCT_BY_SECTOR = 'update_group_product_by_sector'
+
 
 
 export function clearForm() {
@@ -29,3 +31,8 @@ export function hideModal() {
 export function updateSectorList(list) {
     return { type: UPDATE_SECTOR_LIST, list }
 }
+
+export function updateGroupProductBySector(id,nome) {
+    return { type: UPDATE_GROUP_PRODUCT_BY_SECTOR, id, nome }
+}
+

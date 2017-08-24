@@ -18,7 +18,11 @@ export const CLEAR_FORM_PRODUCT = 'clear_form_product',
     TOGGLE_COMMODITY_ACCORDION = 'toggle_commodity_accordion',
     UPDATE_GROUP_PRODUCT_AUTO_COMPLETE = 'update_group_product_auto_complete',
     UPDATE_STORAGE_PRODUCT = 'update_storage_product',
-    CHANGE_GROUP_PRODUCT_RADIO = 'change_group_product_radio'
+    CHANGE_GROUP_PRODUCT_RADIO = 'change_group_product_radio',
+    SHOW_MODAL_TO_COMMODITY = 'show_modal_to_commodity',
+    HIDE_MODAL_TO_COMMODITY = 'hide_modal_to_commodity',
+    UPDATE_PRODUCT_BY_GROUP = 'update_product_by_group'
+
 
 export function clearForm() {
     return { type: CLEAR_FORM_PRODUCT }
@@ -103,6 +107,18 @@ export function changeGroupProductRadio(id) {
 export function updateStorageProduct(json) {
    return { type: UPDATE_STORAGE_PRODUCT, json}
 }
+
+export function showModalCommodity(json) {
+    return { type: SHOW_MODAL_TO_COMMODITY }
+ }
+
+ export function hideModalCommodity(json) {
+    return { type: HIDE_MODAL_TO_COMMODITY }
+ }
+
+ export function updateProductByGroup(id,nome) {
+     return { type: UPDATE_PRODUCT_BY_GROUP, id, nome }
+ }
 
 
 

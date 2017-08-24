@@ -4,8 +4,9 @@ import Detail from './Detail'
 import { clearForm, handleInputChange, updateUnit, updateDayOfWeek, updateAvailableDays, updateProduct, updateGroupProductAutoComplete,
     updateProductAutoComplete, updateTableItens, removeProduct, showModal, hideModal, updateProductList, changeGroupProductRadio,
     toggleGroupProductAccordion, toggleCommodityAccordion, updateGroupProductList, removeGroupProduct, updateGroupProductTableItens,
-    updateStorageProduct
+    updateStorageProduct, showModalCommodity, hideModalCommodity
 } from '../../../../actions/productActionCreator'
+import { updateCommodityByProduct } from '../../../../actions/commodityActionCreator'
 import GroupProductService from '../../../../services/groupproduct/GroupProductService'
 import EnumService from '../../../../services/util/EnumService'
 import ProductService from '../../../../services/product/ProductService'
@@ -13,6 +14,8 @@ import Base64Service from '../../../../services/app/Base64Service'
 import Toast from '../../../../helpers/Toast'
 import { browserHistory } from 'react-router'
 import { URL } from '../../../../helpers/constants'
+import { CustomButtons, CustomResponsiveButtons } from './customButtons'
+import { Icon } from '../../../../domain/Icon';
 
 
 class EditDetail extends Component {
@@ -53,6 +56,22 @@ class EditDetail extends Component {
         this.props.findById(Base64Service.decode(this.props.params.id));
     }
 
+    enterCommodity() {
+    
+        if (this.props.detailState.quantidadeCommodity === '') {
+            Toast.show('quantidade.obrigatorio', Icon.WARNING);
+            return;
+        }
+
+        if (this.props.detailState.precoCustoCommodity === 0) {
+            Toast.show('preco.custo.obrigatorio', Icon.WARNING);
+            return;
+        }
+        
+        browserHistory.push(URL.NEW_COMMODITY);
+        this.props.sendProduct(this.props.detailState.id,this.props.detailState.descricao,this.props.detailState.quantidadeCommodity,this.props.detailState.precoCustoCommodity);
+    }
+
     render() {
         return (
 
@@ -87,7 +106,10 @@ class EditDetail extends Component {
                 remove={this.remove.bind(this)}
                 showModal={this.props.showModal}
                 hideModal={this.props.hideModal}
-                showModalState={this.props.detailState.showModalState} />
+                customResponsiveButtons={<CustomResponsiveButtons showModalCommodity={this.props.showModalCommodity}  />}
+                customButtons={<CustomButtons  showModalCommodity={this.props.showModalCommodity}   />}
+                enterCommodity={this.enterCommodity.bind(this)}
+                hideModalCommodity={this.props.hideModalCommodity}  />
         )
     }
 
@@ -172,6 +194,15 @@ const mapDispatchToProps = dispatch => {
         },
         toggleCommodityAccordion: () => {
             dispatch(toggleCommodityAccordion());
+        },
+        showModalCommodity: () => {
+            dispatch(showModalCommodity());
+        },
+        hideModalCommodity: () => {
+            dispatch(hideModalCommodity());
+        },
+        sendProduct: (id,descricao,quantidade,precoCusto) => {
+            dispatch(updateCommodityByProduct(id,descricao,quantidade,precoCusto));
         }
     }
 }

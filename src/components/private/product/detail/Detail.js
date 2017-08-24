@@ -34,18 +34,18 @@ export default class Detail extends Component {
                                 <div className="container">
                                     <div className="row center-align">
                                         <div className="input-field col s6 m6 l6">
-                                            <input type="checkbox" id="codigoProduto" name="codigoGerado" value={this.props.codigoGerado} onClick={this.props.handleCheckbox} />
+                                            <input type="checkbox" id="codigoProduto" name="codigoGerado" value={this.props.codigoGerado} disabled={this.props.id !== null} onClick={this.props.handleCheckbox} />
                                             <label htmlFor="codigoProduto">Gerar código Produto</label>
                                         </div>
                                         <div className="input-field col s6 m6 l6">
-                                            <input type="checkbox" id="insumo" value={this.props.ehInsumo} name="insumo" onClick={this.props.handleCheckbox} />
+                                            <input type="checkbox" id="insumo" value={this.props.ehInsumo} name="insumo"  onClick={this.props.handleCheckbox} />
                                             <label htmlFor="insumo">Insumo</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
-                                            <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode} type="number" />
-                                            <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''}>Código</label>
+                                            <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode || this.props.id !== null } type="number" />
+                                            <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''} >Código</label>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -75,7 +75,7 @@ export default class Detail extends Component {
                                             <SimpleCurrencyInput id="precoVenda" value={this.props.precoVenda} unit='R$' name="precoVenda" onInputChange={this.props.handleNumericChange.bind(this, 'precoVenda')} />
                                         </div>
                                     </div>
-                                     <div className="row">
+                                    <div className="row">
                                         <div className="input-field col s12 m12 l12">
                                             <label htmlFor="tipoArmazenamento" className="active">Tipo Armazenamento</label>
                                             <select id="tipoArmazenamento" className="browser-default" required onChange={this.props.handleInputChange} value={this.props.tipoArmazenamento.type} name="tipoArmazenamento.type" >
@@ -102,15 +102,15 @@ export default class Detail extends Component {
                             <Collapse onChange={this.props.toggleGroupProductAccordion} accordion={this.props.groupProductAccordionState === '1' ? true : false} activeKey={this.props.groupProductAccordionState}>
                                 <Panel header={`Grupo Produto`} key="1">
                                     <div className="container">
-                                        <AutoCompleteGroupProduct 
+                                        <AutoCompleteGroupProduct
                                             nome={this.props.grupoProdutoSelecionado.nome}
-                                            grupos={this.props.grupos} 
+                                            grupos={this.props.grupos}
                                             gruposTableList={this.props.gruposTableList}
                                             updateGroupProductTableItens={this.props.updateGroupProductTableItens}
                                             removeGroupProduct={this.props.removeGroupProduct}
                                             changeGroupProductRadio={this.props.changeGroupProductRadio}
                                             getGroupProduct={this.props.getGroupProduct}
-                                            setGroupProduct={this.props.setGroupProduct} />    
+                                            setGroupProduct={this.props.setGroupProduct} />
                                     </div>
                                 </Panel>
                             </Collapse>
@@ -161,14 +161,38 @@ export default class Detail extends Component {
                                             </div>
                                         }
                                     </div>
-                                    <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_PRODUCT} submitRef={this.props.submitRef} />
+                                    <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_PRODUCT} submitRef={this.props.submitRef} customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} />
                                 </Panel>
                             </Collapse>
                         </div>
                     </div>
                 </form>
-                <ModalConfirm text="Confirma a exclusão do produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
+                <ModalConfirm title="Dados Mercadoria" 
+                              confirm={this.props.enterCommodity !== undefined ? this.props.enterCommodity.bind(this) : undefined} 
+                              hideModal={this.props.hideModalCommodity} 
+                              showModalState={this.props.showModalCommodityState}
+                              content={ <FormIncludeCommodity 
+                                         quantidadeCommodity={this.props.quantidadeCommodity}  
+                                         precoCustoCommodity={this.props.precoCustoCommodity} 
+                                         handleNumericChange={this.props.handleNumericChange} 
+                                         handleInputChange={this.props.handleInputChange} />} />
+                <ModalConfirm content="Confirma a exclusão do produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
             </div>
         );
     }
+}
+
+export function FormIncludeCommodity(props) {
+    return (
+        <span>
+            <div className="input-field col s12 m12 l12">
+                <label htmlFor="quantidade" className="active">Quantidade</label>
+                <input type="number"  value={props.quantidadeCommodity} placeholder="Valor" name="quantidadeCommodity" onChange={props.handleInputChange} />
+            </div>
+            <div className="input-field col s12 m12 l12">
+                <label htmlFor="precoCusto" className="active">Custo</label>
+                <SimpleCurrencyInput id="precoCusto" value={props.precoCustoCommodity} unit="R$" name="precoCustoCommodity" onInputChange={props.handleNumericChange.bind(this, 'precoCustoCommodity')} />
+            </div>
+        </span>
+    )
 }

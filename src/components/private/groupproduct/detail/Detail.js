@@ -17,8 +17,6 @@ export default class Detail extends Component {
         } else {
             this.props.merge(e);
         }
-        
-
     }
 
     render() {
@@ -51,11 +49,11 @@ export default class Detail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_GROUP_PRODUCT} submitRef={this.props.submitRef} />
+                            <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_GROUP_PRODUCT} submitRef={this.props.submitRef} customButtons={this.props.customButtons} customResponsiveButtons={this.props.customResponsiveButtons} />
                         </form>
                     </div>
                 </div>
-                <ModalConfirm text="Confirma a exclusão do grupo de produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
+                <ModalConfirm content="Confirma a exclusão do grupo de produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
             </div>
         );
     }

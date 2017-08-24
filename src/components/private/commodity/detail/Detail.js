@@ -105,7 +105,7 @@ export default class Detail extends Component {
                         </form>
                     </div>
                 </div>
-                <ModalConfirm text="Confirma a exclusão da entrada de mercadoria?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
+                <ModalConfirm content="Confirma a exclusão da entrada de mercadoria?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
             </div>
         );
     }

@@ -1,5 +1,5 @@
 export const NEW_USE_CASE_PATH = '/new';
-export const TABLE_DEFAULT_CSS = "striped bordered";
+export const TABLE_DEFAULT_CSS = "striped bordered ";
 export const DEFAULT_TIME = 3000;
 export const COOKIE_USER = 'globals';
 export const PAGE_SIZE = 5;

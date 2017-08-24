@@ -34,7 +34,7 @@ export default class DataList extends Component {
                             })}
                         </tbody>
                     </table>
-                    <ModalConfirm  text={this.props.text} confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
+                    <ModalConfirm  content={this.props.text} confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
                 </div>
             );
 
