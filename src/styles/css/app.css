@@ -403,3 +403,21 @@ footer {
  color: #fff !important;
  opacity: 1 !important;
 }
+
+.sales-table {  
+  border-radius:10px !important;
+  -moz-border-radius:10px !important;
+  -webkit-border-radius:10px !important;
+  border: 3px solid #D3D3D3 !important;
+}
+
+.sales-total {
+  padding: 0 7px;
+  background-color:#26a69a; 
+  color: #fff;
+  text-align: center;
+  border-radius:10px;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px ;
+  border: 1px solid #26a69a;
+}

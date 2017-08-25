@@ -66,6 +66,60 @@ export function PanelFooter(props) {
 
 }
 
+export function PanelSale(props) {
+
+    return (
+        <div>
+            {/* Botões normais */}
+
+            <div className="panel-footer-detail hide-on-small-only">
+                <button className="btn waves-effect buttons-space INFO">
+                    Incluir Produto <i className="material-icons right">shopping_cart</i>
+                </button>
+                <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">
+                    Finalizar Venda <i className="material-icons right">send</i>
+                </button>
+            </div>
+
+            {/* Botões responsivos */}
+
+            <div className="panel-footer-detail-responsive hide-on-med-and-up">
+                <div className="fixed-action-btn click-to-toggle">
+                    <a className="btn-floating btn-large ERROR" title="Ações">
+                        <i className="large material-icons">mode_edit</i>
+                    </a>
+                    <ul>
+                        <li>
+                            <div className="row">
+                                <div className="col col s2 offset-s8">
+                                    <span className="new badge badge-responsive-align INFO">Incluir Produto</span>
+                                </div>
+                                <div className="col col s2">
+                                    <button type="button" className="btn-floating INFO" onClick={props.remove}><i className="material-icons">shopping_cart</i></button>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="row">
+                                <div className="col col s2 offset-s8">
+                                    <span className="new badge badge-responsive-align SUCCESS">Finalizar Venda</span>
+                                </div>
+                                <div className="col col s2">
+                                    <button type="button" className="btn-floating SUCCESS" onClick={props.remove}><i className="material-icons">send</i></button>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    )
+
+
+
+}
+
 export function PanelFooterDetail(props) {
 
     return (
@@ -101,9 +155,9 @@ export function PanelFooterDetail(props) {
                     </a>
                     <ul>
                         {props.customResponsiveButtons}
-                        
+
                         {!window.location.pathname.includes(NEW_USE_CASE_PATH) &&
-                          <Novo {...props} responsive />
+                            <Novo {...props} responsive />
                         }
 
                         {props.remove !== undefined &&
