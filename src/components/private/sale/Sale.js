@@ -19,7 +19,6 @@ class Sale extends Component {
                     <PanelHeader icon="mode_edit" label="Venda" />
                     <div className="panel">
                         <form onSubmit={this.save.bind(this)}>
-                            <div className="containesar">
                                 <div className="row">
                                     <div className="col l4">
                                         <div className="row">
@@ -67,7 +66,6 @@ class Sale extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             <PanelSale />
                         </form>
                     </div>
