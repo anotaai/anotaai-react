@@ -36,7 +36,7 @@ class Comprador extends Component {
         e.preventDefault();
 
         if (this.props.compradorState.usuario.senha !== this.props.compradorState.confirmarSenha) {
-             Toast.show('senhas.nao.conferem.warning', Icon.WARNING);
+             Toast.show('usuario.senha.naoconfere', Icon.WARNING);
              this.props.clearPassword();
         } else {
             

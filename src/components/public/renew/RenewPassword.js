@@ -24,7 +24,7 @@ class RenewPassword extends Component {
     renew(e) {
         e.preventDefault();
         if (this.props.renewState.userLogin.usuario.senha !== this.props.renewState.confirmarSenha) {
-            Toast.show('senhas.nao.conferem.warning', Icon.ERROR);
+            Toast.show('usuario.senha.naoconfere', Icon.ERROR);
             this.props.clearPassword();
         } else {
 

@@ -37,7 +37,7 @@ import { connect } from 'react-redux';
         e.preventDefault();
         
         if (this.props.vendedorState.usuario.senha !== this.props.vendedorState.confirmarSenha) {
-             Toast.show('senhas.nao.conferem.warning', Icon.WARNING);
+             Toast.show('usuario.senha.naoconfere', Icon.WARNING);
              this.props.clearPassword();
         } else {
             
