@@ -28,10 +28,6 @@ import { connect } from 'react-redux';
         this.props.clearForm();
     }
 
-     clearForm(e) {
-         e.preventDefault();
-         this.props.clearForm();
-    }
 
     save(e) {
         e.preventDefault();
@@ -115,7 +111,7 @@ import { connect } from 'react-redux';
                             <input id="bairro" type="text" name="cliente.endereco.bairro" onChange={this.props.handleInputChange} disabled={disabled} required value={this.props.vendedorState.cliente.endereco.bairro} />
                             <label htmlFor="bairro" className={active} disabled>Bairro</label>
                         </div>
-                        <PanelFooter submitRef={el => this.sendButton = el}  clearForm={this.clearForm.bind(this)} label="Enviar" public />
+                        <PanelFooter submitRef={el => this.sendButton = el}  clearForm={this.props.clearForm} label="Enviar" public />
                     </div>
                 </div>
             </form>)

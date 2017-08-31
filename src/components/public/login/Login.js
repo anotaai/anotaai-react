@@ -13,14 +13,6 @@ class Login extends Component {
     this.props.clearForm();
   }
 
-  showModal(e) {
-    e.preventDefault();
-    this.props.showModal();
-  }
-
-  hideModal() {
-    this.props.hideModal();
-  }
 
   login(e) {
     e.preventDefault();
@@ -70,7 +62,7 @@ class Login extends Component {
                     <label htmlFor="manterConectado">Manter conectado</label>
                   </div>
                   <label className='col s5 right-align' style={{ marginTop: '3px' }}>
-                    <a onClick={this.showModal.bind(this)} className="pink-text clickable" >Esqueceu a senha?</a>
+                    <a onClick={this.props.showModal} className="pink-text clickable" >Esqueceu a senha?</a>
                   </label>
                   <div className='col s12' />
                 </div>
@@ -84,7 +76,7 @@ class Login extends Component {
             </div>
           </div>
         </center>
-        <ModalRenewPasswordContainer showModal={this.props.loginState.showModal} callbackHideModal={this.hideModal.bind(this)} />
+        <ModalRenewPasswordContainer showModal={this.props.loginState.showModal} callbackHideModal={this.props.hideModal} />
       </main>
 
     );

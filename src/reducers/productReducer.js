@@ -50,7 +50,7 @@ export default function (state = INITIAL_STATE, action) {
             if (action.name === 'codigoGerado' && action.value === true) {
                 newState.blockCode = true;
                 newState.codigo = '';
-            } else {
+            } else if (action.name === 'codigoGerado' && action.value === false) {
                 newState.blockCode = false;
             }
 

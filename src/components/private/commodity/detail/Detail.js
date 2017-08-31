@@ -11,8 +11,8 @@ import { pushEncoded } from '../../../App';
 
 export default class Detail extends Component {
 
-     merge(e) {
-         
+    merge(e) {
+
         if (!this.props.itens == null || this.props.itens.length === 0) {
             e.preventDefault();
             Toast.show('produto.required', Icon.WARNING);
@@ -30,15 +30,15 @@ export default class Detail extends Component {
                         <form onSubmit={this.merge.bind(this)}>
                             <div className="container">
 
-                                {this.props.codigo !== ''  &&
-                                  <div className="row">
-                                    <div className="input-field col s12 m12 l12">
-                                        <input  value={this.props.codigo}   disabled  />
-                                        <label htmlFor="nome" className="active">Código</label>
+                                {this.props.codigo !== '' &&
+                                    <div className="row">
+                                        <div className="input-field col s12 m12 l12">
+                                            <input value={this.props.codigo} disabled />
+                                            <label htmlFor="nome" className="active">Código</label>
+                                        </div>
                                     </div>
-                                   </div>
-                                 }
-                                
+                                }
+
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <input id="date" ref="date" value={this.props.dataEntrada} name="dataEntrada" required onChange={this.props.handleInputChange} type="date" />
@@ -55,26 +55,31 @@ export default class Detail extends Component {
                                     updateTableItens={this.props.updateTableItens}
                                     autoCompleteSize="input-field col s12 m6 l6"
                                     values={
-                                      <div>
-                                       <div className="input-field col s12 m2 l2">
-                                         <label htmlFor="precoCusto" className="active">Custo</label>
-                                         <SimpleCurrencyInput id="precoCusto" value={this.props.precoCusto} unit='R$' name="precoCusto" onInputChange={this.props.handleNumericChange.bind(this, 'precoCusto')} />
-                                       </div>
-                                       <div className="input-field col s12 m2 l2">
-                                         <label htmlFor="quantidade" className="active">Quantidade</label>
-                                         <input type="number" value={this.props.quantidade} placeholder="Valor" name="quantidade" onChange={this.props.handleInputChange} />
-                                       </div> 
-                                     </div>
+                                        <div>
+                                            <div className="input-field col s12 m2 l2">
+                                                <label htmlFor="precoCusto" className="active">Custo</label>
+                                                <SimpleCurrencyInput id="precoCusto" value={this.props.precoCusto} unit='R$' name="precoCusto" onInputChange={this.props.handleNumericChange.bind(this, 'precoCusto')} />
+                                            </div>
+                                            <div className="input-field col s12 m2 l2">
+                                                <label htmlFor="quantidade" className="active">Quantidade</label>
+                                                <input type="number" value={this.props.quantidade} placeholder="Valor" name="quantidade" onChange={this.props.handleInputChange} />
+                                            </div>
+                                            <div className="input-field col s12 m2 l2" style={{ paddingTop: '10px' }}>
+                                                <button type="button" className="btn  waves-effect INFO" title="Adicionar" onClick={this.props.updateTableItens} >
+                                                    <i className="material-icons center">file_download</i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     }
-                                    onChange={this.props.handleInputChange} /> 
+                                    onChange={this.props.handleInputChange} />
 
 
-                                   {this.props.itens.length > 0 &&
+                                {this.props.itens.length > 0 &&
 
                                     <div className="row">
                                         <div className="col s12 m12 l12">
                                             <table className={TABLE_DEFAULT_CSS}>
-                                                
+
                                                 <thead>
                                                     <tr>
                                                         <th className="row-th">Produto</th>
@@ -87,11 +92,11 @@ export default class Detail extends Component {
                                                     {this.props.itens.map(item => {
                                                         return (
                                                             <tr key={item.movimentacaoProduto.produto.id}>
-                                                                
+
                                                                 <td className="row-td-detail">{item.movimentacaoProduto.produto.descricao}</td>
                                                                 <td className="row-td-detail">{item.precoCusto}</td>
                                                                 <td className="row-td-detail">{item.movimentacaoProduto.quantidade}</td>
-                                                                <td className="row-td"><a onClick={this.props.editMode !== 'S' ? this.props.removeProduct.bind(this, item.movimentacaoProduto.produto.id) : pushEncoded.bind(this,URL.MAIN_DELETE_COMMODITY,this.props.id)} style={{ color: 'black' }}><i className="material-icons">delete</i></a></td>
+                                                                <td className="row-td"><a onClick={this.props.editMode !== 'S' ? this.props.removeProduct.bind(this, item.movimentacaoProduto.produto.id) : pushEncoded.bind(this, URL.MAIN_DELETE_COMMODITY, this.props.id)} style={{ color: 'black' }}><i className="material-icons">delete</i></a></td>
                                                             </tr>)
                                                     })}
                                                 </tbody>
@@ -100,7 +105,7 @@ export default class Detail extends Component {
                                     </div>}
                             </div>
                             {this.props.editMode !== 'S' &&
-                              <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_COMMODITY} submitRef={this.props.submitRef} />
+                                <PanelFooterDetail remove={this.props.showModal} newDetailUrl={URL.NEW_COMMODITY} submitRef={this.props.submitRef} />
                             }
                         </form>
                     </div>

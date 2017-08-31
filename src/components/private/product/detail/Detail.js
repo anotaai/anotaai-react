@@ -38,13 +38,13 @@ export default class Detail extends Component {
                                             <label htmlFor="codigoProduto">Gerar código Produto</label>
                                         </div>
                                         <div className="input-field col s6 m6 l6">
-                                            <input type="checkbox" id="insumo" value={this.props.ehInsumo} name="insumo"  onClick={this.props.handleCheckbox} />
+                                            <input type="checkbox" id="insumo" value={this.props.ehInsumo} name="insumo" onClick={this.props.handleCheckbox} />
                                             <label htmlFor="insumo">Insumo</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
-                                            <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode || this.props.id !== null } type="number" />
+                                            <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode || this.props.id !== null} type="number" />
                                             <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''} >Código</label>
                                         </div>
                                     </div>
@@ -129,9 +129,16 @@ export default class Detail extends Component {
                                             updateTableItens={this.props.updateTableItens}
                                             autoCompleteSize="input-field col s12 m8 l8"
                                             values={
-                                                <div className="input-field col s12 m2 l2">
-                                                    <label htmlFor="quantidade" className="active">Quantidade</label>
-                                                    <input type="number" value={this.props.quantidade} placeholder="Valor" name="quantidade" onChange={this.props.handleInputChange} />
+                                                <div>
+                                                    <div className="input-field col s12 m2 l2">
+                                                        <label htmlFor="quantidade" className="active">Quantidade</label>
+                                                        <input type="number" value={this.props.quantidade} placeholder="Valor" name="quantidade" onChange={this.props.handleInputChange} />
+                                                    </div>
+                                                    <div className="input-field col s12 m2 l2" style={{ paddingTop: '10px' }}>
+                                                        <button type="button" className="btn  waves-effect INFO" title="Adicionar" onClick={this.props.updateTableItens} >
+                                                            <i className="material-icons center">file_download</i>
+                                                        </button>
+                                                    </div>
                                                 </div>} />
 
                                         {this.props.itensReceita.length > 0 &&
@@ -167,15 +174,15 @@ export default class Detail extends Component {
                         </div>
                     </div>
                 </form>
-                <ModalConfirm title="Dados Mercadoria" 
-                              confirm={this.props.enterCommodity !== undefined ? this.props.enterCommodity.bind(this) : undefined} 
-                              hideModal={this.props.hideModalCommodity} 
-                              showModalState={this.props.showModalCommodityState}
-                              content={ <FormIncludeCommodity 
-                                         quantidadeCommodity={this.props.quantidadeCommodity}  
-                                         precoCustoCommodity={this.props.precoCustoCommodity} 
-                                         handleNumericChange={this.props.handleNumericChange} 
-                                         handleInputChange={this.props.handleInputChange} />} />
+                <ModalConfirm title="Dados Mercadoria"
+                    confirm={this.props.enterCommodity !== undefined ? this.props.enterCommodity.bind(this) : undefined}
+                    hideModal={this.props.hideModalCommodity}
+                    showModalState={this.props.showModalCommodityState}
+                    content={<FormIncludeCommodity
+                        quantidadeCommodity={this.props.quantidadeCommodity}
+                        precoCustoCommodity={this.props.precoCustoCommodity}
+                        handleNumericChange={this.props.handleNumericChange}
+                        handleInputChange={this.props.handleInputChange} />} />
                 <ModalConfirm content="Confirma a exclusão do produto?" confirm={this.props.remove !== undefined ? this.props.remove.bind(this) : undefined} hideModal={this.props.hideModal} showModalState={this.props.showModalState} />
             </div>
         );
@@ -187,7 +194,7 @@ export function FormIncludeCommodity(props) {
         <span>
             <div className="input-field col s12 m12 l12">
                 <label htmlFor="quantidade" className="active">Quantidade</label>
-                <input type="number"  value={props.quantidadeCommodity} placeholder="Valor" name="quantidadeCommodity" onChange={props.handleInputChange} />
+                <input type="number" value={props.quantidadeCommodity} placeholder="Valor" name="quantidadeCommodity" onChange={props.handleInputChange} />
             </div>
             <div className="input-field col s12 m12 l12">
                 <label htmlFor="precoCusto" className="active">Custo</label>

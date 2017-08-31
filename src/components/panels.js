@@ -12,7 +12,7 @@ export function PanelFooter(props) {
             <div className="panel-footer hide-on-small-only">
 
                 {props.public &&
-                    <button type="button" className="btn waves-effect DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}>
+                    <button type="button" className="btn waves-effect DEFAULT" onClick={props.clearForm}>
                         Limpar <i className="material-icons right">clear</i>
                     </button>
                 }
@@ -41,7 +41,7 @@ export function PanelFooter(props) {
                                     <div className="col col s2 offset-s8">
                                         <span className="new badge badge-responsive-align DEFAULT">Limpar</span> </div>
                                     <div className="col col s2">
-                                        <button className="btn-floating DEFAULT" formNoValidate onClick={props.clearForm.bind(this)}><i className="material-icons">clear</i></button>
+                                        <button className="btn-floating DEFAULT" type="buttom" onClick={props.clearForm}><i className="material-icons">clear</i></button>
                                     </div>
                                 </div>
                             </li>
@@ -63,7 +63,6 @@ export function PanelFooter(props) {
             </div>
         </div>
     );
-
 }
 
 export function PanelSale(props) {
@@ -73,7 +72,7 @@ export function PanelSale(props) {
             {/* Botões normais */}
 
             <div className="panel-footer-detail hide-on-small-only">
-                <button className="btn waves-effect buttons-space INFO">
+                <button className="btn waves-effect buttons-space INFO" type="button" onClick={props.addProduct} >
                     Incluir Produto <i className="material-icons right">shopping_cart</i>
                 </button>
                 <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">
@@ -95,7 +94,7 @@ export function PanelSale(props) {
                                     <span className="new badge badge-responsive-align INFO">Incluir Produto</span>
                                 </div>
                                 <div className="col col s2">
-                                    <button type="button" className="btn-floating INFO" onClick={props.remove}><i className="material-icons">shopping_cart</i></button>
+                                    <button type="button" ref={props.submitRef} className="btn-floating INFO" onClick={props.addProduct}><i className="material-icons">shopping_cart</i></button>
                                 </div>
                             </div>
                         </li>
@@ -115,9 +114,6 @@ export function PanelSale(props) {
             </div>
         </div>
     )
-
-
-
 }
 
 export function PanelFooterDetail(props) {
@@ -129,7 +125,6 @@ export function PanelFooterDetail(props) {
             <div className="panel-footer-detail hide-on-small-only">
 
                 {props.customButtons}
-
 
                 {!window.location.pathname.includes(NEW_USE_CASE_PATH) &&
                     <Novo {...props} />

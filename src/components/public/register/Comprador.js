@@ -26,11 +26,6 @@ class Comprador extends Component {
          this.props.clearForm();
     }
 
-     clearForm(e) {
-         e.preventDefault();
-         this.props.clearForm();
-    }
-
     save(e) {
         
         e.preventDefault();
@@ -76,7 +71,7 @@ class Comprador extends Component {
                 <FormUser {... this.props.compradorState} 
                   handleInputChange={this.props.handleInputChange} 
                   handlePhoneChange={this.props.handlePhoneChange}
-                  panelFooter={<PanelFooter submitRef={el => this.sendButton = el} clearForm={this.clearForm.bind(this)} label={this.props.compradorState.activation === true ? "Ativar" : "Enviar"} public />}
+                  panelFooter={<PanelFooter submitRef={el => this.sendButton = el} clearForm={this.props.clearForm} label={this.props.compradorState.activation === true ? "Ativar" : "Enviar"} public />}
                  />
                
             </form>
