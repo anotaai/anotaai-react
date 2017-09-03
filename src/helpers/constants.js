@@ -146,3 +146,15 @@ export const CHIPS_THEME = {
 
   },
 }
+
+export const TYPE_SALE = {
+  A_VISTA_ANONIMA: 'A_VISTA_ANONIMA',
+  A_VISTA_CONSUMIDOR: 'A_VISTA_CONSUMIDOR',
+  ANOTADA: 'ANOTADA'
+}
+
+
+export const MAP_SALE_URLS =  new Map([
+  [TYPE_SALE.A_VISTA_ANONIMA, "/createanonymoussale"], 
+  [TYPE_SALE.A_VISTA_CONSUMIDOR, "/creatconsumersale"], 
+  [TYPE_SALE.ANOTADA, "/createappointmentbooksale"]]);

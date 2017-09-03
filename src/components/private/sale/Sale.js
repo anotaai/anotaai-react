@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { handleInputChange, clearForm, updateProductAutoComplete, updateProductList,
     updateConsumerAutoComplete, updateConsumerList, changeRadio, updateTypeSale,  addProduct } from '../../../actions/saleActionCreator'
 import { PanelHeader, PanelSale } from '../../panels'
-import { TABLE_DEFAULT_CSS } from '../../../helpers/constants'
+import { TABLE_DEFAULT_CSS, TYPE_SALE } from '../../../helpers/constants'
 import ProductService from '../../../services/product/ProductService'
 import ClienteConsumidorService from '../../../services/consumer/ClienteConsumidorService'
 import AutoCompleteProduct from '../product/detail/AutoCompleteProduct'
@@ -29,9 +29,8 @@ class Sale extends Component {
             Toast.show('sales.required', Icon.WARNING);
             return;
         }
-        const sale = SaleService.setSaleType(this.props.saleState);
-        
-        SaleService.save(sale,this.sendButton).then(response => {
+   
+        SaleService.save(this.props.saleState,this.sendButton).then(response => {
             Toast.show(response.messages);
             this.props.clearForm();
         }).catch(erro => {
@@ -70,7 +69,7 @@ class Sale extends Component {
                                         </div>
                                     </div>
                                     <AutoCompleteConsumer
-                                        nome={this.props.saleState.consumidor.nome}
+                                        nome={this.props.saleState.folhaCaderneta.folhaCaderneta.consumidor.consumidor.nome}
                                         consumidores={this.props.saleState.consumidores}
                                         getConsumer={this.props.getConsumer}
                                         setConsumer={this.props.setConsumer}
@@ -80,7 +79,7 @@ class Sale extends Component {
                                             
                                             {this.props.saleState.typeSaleList.map(typeSale =>
                                                 (<span key={typeSale.type}>
-                                                    {typeSale.type !== 'A_VISTA_CONSUMIDOR' &&
+                                                    {typeSale.type !== TYPE_SALE.A_VISTA_CONSUMIDOR &&
                                                         <span>
                                                             <input type="radio" id={typeSale.type} name="tipoVenda" checked={typeSale.checked} value={typeSale.type}  onChange={this.props.changeRadio.bind(this)} />
                                                             <label htmlFor={typeSale.type} style={{ paddingRight: '20px' }}><T.span text={{ key:typeSale.propertieKey}} /></label>

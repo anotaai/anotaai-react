@@ -1,5 +1,6 @@
 import CrudService from '../CrudService'
-import { createInstance } from '../../helpers/jsonHelper'
+import { MAP_SALE_URLS, TYPE_SALE } from '../../helpers/constants'
+import AsyncService from '../AsyncService'
 
 export default class SaleService extends CrudService {
 
@@ -7,19 +8,21 @@ export default class SaleService extends CrudService {
         return '/venda'
     }
 
-    static setSaleType(sale) {
-        const newInstance = createInstance(sale);
+    static save(entity,component) {
 
-        if(newInstance.consumidor.id !== null) {
-            newInstance.type = 'A_VISTA_CONSUMIDOR';
-        } else {
-            newInstance.typeSaleList.forEach(typeSale => {
-                 if(typeSale.checked) {
-                    newInstance.type =  typeSale.type;
-                 }
-            });
+        if(entity.folhaCaderneta.folhaCaderneta.consumidor.consumidor.nome !== '' &&  
+           entity.type === TYPE_SALE.A_VISTA_ANONIMA) {
+             entity.type = TYPE_SALE.A_VISTA_CONSUMIDOR;
         }
 
-        return newInstance;
+        const saleUrl = MAP_SALE_URLS.get(entity.type);
+
+        return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}${saleUrl}`, [component], {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(entity)
+        });
     }
+
+    
 }

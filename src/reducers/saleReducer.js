@@ -4,20 +4,20 @@ UPDATE_TYPE_SALE } from '../actions/saleActionCreator'
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
 import { Icon } from '../domain/Icon'
 import Toast from '../helpers/Toast'
+import { TYPE_SALE } from '../helpers/constants'
 
 const INITIAL_STATE = {
-    venda : {
-        produtos: []
-    },
+    venda : { produtos: [] },
+    folhaCaderneta: { folhaCaderneta: { consumidor: { consumidor: {id: null, nome: '', type:'consumidor'} } } },
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
-    consumidor: { id: null, nome: '' },
     produtosList: [],
     consumidores: [],
     typeSaleList: [],
     valorTotal: 0,
-    type: ''
+    type: TYPE_SALE.A_VISTA_ANONIMA
 }
+
 
 export default function (state = INITIAL_STATE, action) {
 
@@ -32,6 +32,8 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
             newState.quantidade = '';
+            newState.type = TYPE_SALE.A_VISTA_ANONIMA;
+            newState.folhaCaderneta.folhaCaderneta.consumidor.consumidor.type = 'consumidor';
             return newState;
         }
 
@@ -68,8 +70,8 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_CONSUMER_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
-            newState.consumidor.id = action.consumer.id;
-            newState.consumidor.nome = action.consumer.nome;
+            newState.folhaCaderneta.folhaCaderneta.consumidor.consumidor.id = action.consumer.id;
+            newState.folhaCaderneta.folhaCaderneta.consumidor.consumidor.nome =  action.consumer.nome;
             return newState;
         }
 
@@ -119,6 +121,7 @@ export default function (state = INITIAL_STATE, action) {
 
 function setSaleRadio(newState,value) {
     
+    newState.type = value;
     newState.typeSaleList.forEach(typeSale => {
         if(typeSale.type === value) {
             typeSale.checked = true;
