@@ -12,6 +12,7 @@ import Toast from '../helpers/Toast';
 
 const INITIAL_STATE = {
     id: null,
+    codigoBarras: '',
     codigo: '',
     descricao: '',
     descricaoResumida: '',
@@ -19,7 +20,6 @@ const INITIAL_STATE = {
     tipoArmazenamento: { type: '', descricao: '' },
     grupoProduto: { id: '', nome: '' },
     precoVenda: 0,
-    codigoGerado: false,
     ehInsumo: false,
     grupos: [],
     diasDisponibilidade: [],
@@ -29,7 +29,6 @@ const INITIAL_STATE = {
     diasSemana: [],
     unidadeList: [],
     armazenamentoList: [],
-    blockCode: false,
     quantidade: '',
     showModalState: false,
     groupProductAccordionState: '1',
@@ -46,14 +45,6 @@ export default function (state = INITIAL_STATE, action) {
 
         case HANDLE_INPUT_CHANGE_PRODUCT: {
             const newState = getObjectNewState(action.name, action.value, state);
-
-            if (action.name === 'codigoGerado' && action.value === true) {
-                newState.blockCode = true;
-                newState.codigo = '';
-            } else if (action.name === 'codigoGerado' && action.value === false) {
-                newState.blockCode = false;
-            }
-
             return newState;
         }
 
@@ -88,6 +79,7 @@ export default function (state = INITIAL_STATE, action) {
             newState.precoVenda = 0;
             newState.precoCustoCommodity = 0;
             newState.codigo = '';
+            newState.codigoBarras = '';
             newState.quantidade = '';
             newState.groupProductAccordionState = '1';
             newState.commodityAccordionState = '1';
@@ -158,11 +150,11 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             newState.id = action.entity.id;
             newState.codigo = action.entity.codigo;
+            newState.codigoBarras = action.entity.codigoBarras;
             newState.descricao = action.entity.descricao;
             newState.descricaoResumida = action.entity.descricaoResumida;
             newState.unidadeMedida = action.entity.unidadeMedida === undefined || null ? { type: '', descricao: '' } : action.entity.unidadeMedida;
-            newState.precoVenda = concatZeros(action.entity.precoVenda)
-            newState.codigoGerado = action.entity.codigoGerado;
+            newState.precoVenda = concatZeros(action.entity.precoVenda);
             newState.tipoArmazenamento = action.entity.tipoArmazenamento === undefined || null ? { type: '', descricao: '' } : action.entity.tipoArmazenamento;
 
             action.entity.diasDisponibilidade.forEach(json => {

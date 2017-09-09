@@ -94,8 +94,10 @@ export default function (state = INITIAL_STATE, action) {
                 return state;
             }
 
+            const total = newState.quantidade * newState.produtoSelecionado.precoVenda;
+
             newState.venda.produtos.push( { type: 'venda',  movimentacaoProduto: { produto: { id: newState.produtoSelecionado.id,  descricao: newState.produtoSelecionado.descricao, 
-                quantidade: newState.quantidade, codigo: newState.produtoSelecionado.codigo, precoVenda : newState.produtoSelecionado.precoVenda } } } );
+                quantidade: newState.quantidade, codigo: newState.produtoSelecionado.codigo, precoVenda : newState.produtoSelecionado.precoVenda, precoTotal: total } } } );
             
             newState.valorTotal += (newState.produtoSelecionado.precoVenda * newState.quantidade );
             newState.produtoSelecionado.id = '';

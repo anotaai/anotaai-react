@@ -3,8 +3,6 @@ import { PanelHeader, PanelFooterDetail } from '../../../panels'
 import { URL, CHIPS_THEME } from '../../../../helpers/constants'
 import SimpleCurrencyInput from 'react-simple-currency'
 import Chips from 'react-chips'
-import { Icon } from '../../../../domain/Icon';
-import Toast from '../../../../helpers/Toast';
 import ModalConfirm from '../../../ModalConfirm'
 import AutoCompleteProduct from './AutoCompleteProduct'
 import AutoCompleteGroupProduct from './AutoCompleteGroupProduct'
@@ -13,39 +11,33 @@ import Collapse, { Panel } from 'rc-collapse';
 
 export default class Detail extends Component {
 
-    merge(e) {
-
-        if (!this.props.codigoGerado && this.props.codigo === '') {
-            e.preventDefault();
-            Toast.show('codigo.required', Icon.WARNING);
-            return;
-        }
-        this.props.merge(e);
-    }
+    
 
     render() {
         return (
             <div>
-                <form onSubmit={this.merge.bind(this)}>
+                <form onSubmit={this.props.merge.bind(this)}>
                     <div className="space-container">
                         <div className="container">
                             <PanelHeader icon="shopping_cart" label={this.props.title} />
                             <div className="panel">
                                 <div className="container">
-                                    <div className="row center-align">
-                                        <div className="input-field col s6 m6 l6">
-                                            <input type="checkbox" id="codigoProduto" name="codigoGerado" value={this.props.codigoGerado} disabled={this.props.id !== null} onClick={this.props.handleCheckbox} />
-                                            <label htmlFor="codigoProduto">Gerar código Produto</label>
-                                        </div>
-                                        <div className="input-field col s6 m6 l6">
+                                    <div className="row">
+                                        <div className="input-field col s12 m12 l12">
                                             <input type="checkbox" id="insumo" value={this.props.ehInsumo} name="insumo" onClick={this.props.handleCheckbox} />
                                             <label htmlFor="insumo">Insumo</label>
                                         </div>
                                     </div>
+                                     <div className="row">
+                                        <div className="input-field col s12 m12 l12">
+                                            <input id="codigo"  value={this.props.codigo} name="codigo" disabled="true"  type="number" />
+                                            <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''} >Código</label>
+                                        </div>
+                                    </div>
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
-                                            <input id="codigo" ref="codigo" value={this.props.codigo} name="codigo" onChange={this.props.handleInputChange} disabled={this.props.blockCode || this.props.id !== null} type="number" />
-                                            <label htmlFor="codigo" className={this.props.codigo !== '' ? 'active' : ''} >Código</label>
+                                            <input id="codigoBarras" ref="codigoBarras" value={this.props.codigoBarras} required name="codigoBarras" onChange={this.props.handleInputChange}  type="number" />
+                                            <label htmlFor="codigoBarras" className={this.props.codigoBarras !== '' ? 'active' : ''} >Código de Barras</label>
                                         </div>
                                     </div>
                                     <div className="row">

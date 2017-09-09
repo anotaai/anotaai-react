@@ -98,9 +98,10 @@ class Sale extends Component {
                                                 <thead>
                                                     <tr>
                                                         <th className="row-th">Código</th>
-                                                        <th className="row-th">Descrição do Produto</th>
+                                                        <th className="row-th">Produto</th>
                                                         <th className="row-th">Quantidade</th>
-                                                        <th className="row-th">Valor Unitário</th>
+                                                        <th className="row-th">Valor</th>
+                                                        <th className="row-th">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -110,6 +111,7 @@ class Sale extends Component {
                                                            <td className="row-td-detail">{item.movimentacaoProduto.produto.descricao}</td>
                                                            <td className="row-td-detail">{item.movimentacaoProduto.produto.quantidade}</td>
                                                            <td className="row-td-detail">{item.movimentacaoProduto.produto.precoVenda} R$</td>
+                                                           <td className="row-td-detail">{item.movimentacaoProduto.produto.precoTotal} R$</td>
                                                        </tr>)
                                                     })}
 
