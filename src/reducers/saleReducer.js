@@ -8,7 +8,7 @@ import { TYPE_SALE } from '../helpers/constants'
 
 const INITIAL_STATE = {
     venda : { produtos: [] },
-    folhaCaderneta: { consumidor: { usuario: { id: null, nome: '' } , type:'CONSUMIDOR'} } ,
+    folhaCaderneta: { id: null , consumidor: { id: null , type:'CONSUMIDOR' , usuario: { id: null, nome: '' } } } ,
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
     produtosList: [],
@@ -62,7 +62,7 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             
             action.list.forEach(consumer => {
-                newState.consumidores.push({id: consumer.usuario.id, nome: consumer.usuario.nome});
+                newState.consumidores.push({id: consumer.id,userId: consumer.usuario.id, userName: consumer.usuario.nome});
             });
 
             return newState;
@@ -70,8 +70,9 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_CONSUMER_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
-            newState.folhaCaderneta.consumidor.usuario.id = action.consumer.id;
-            newState.folhaCaderneta.consumidor.usuario.nome =  action.consumer.nome;
+            newState.folhaCaderneta.consumidor.id  = action.consumer.id;
+            newState.folhaCaderneta.consumidor.usuario.id = action.consumer.userId;
+            newState.folhaCaderneta.consumidor.usuario.nome =  action.consumer.userName;
             return newState;
         }
 

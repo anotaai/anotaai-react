@@ -69,7 +69,7 @@ class Sale extends Component {
                                         </div>
                                     </div>
                                     <AutoCompleteConsumer
-                                        nome={this.props.saleState.folhaCaderneta.consumidor.usuario.nome}
+                                        userName={this.props.saleState.folhaCaderneta.consumidor.usuario.nome}
                                         consumidores={this.props.saleState.consumidores}
                                         getConsumer={this.props.getConsumer}
                                         setConsumer={this.props.setConsumer}

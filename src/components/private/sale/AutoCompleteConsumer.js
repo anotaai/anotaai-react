@@ -13,12 +13,12 @@ export default class AutoCompleteConsumer extends Component {
 
                     <Autocomplete
                         inputProps={{ id: 'consumer-autocomplete', placeholder: 'Nome' }}
-                        value={this.props.nome}
+                        value={this.props.userName}
                         wrapperStyle={AUTO_COMPLETE_WRAPPER_STYLE}
                         menuStyle={AUTO_COMPLETE_MENU_STYLE}
                         renderItem={(item, isHighlighted) =>
                             <div id={item.id} key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white', cursor: 'pointer' }}>
-                                {item.nome}
+                                {item.userName}
                             </div>
                         }
 
@@ -28,13 +28,13 @@ export default class AutoCompleteConsumer extends Component {
                             </div>
                         )}
                         items={this.props.consumidores}
-                        getItemValue={(item) => item.nome}
+                        getItemValue={(item) => item.userName}
                         onSelect={(value, item) => {
                             this.props.setConsumer(item);
                         }}
 
                         onChange={(event, value) => {
-                            this.props.getConsumer('consumidorSelecionado.nome', value);
+                            this.props.getConsumer('consumidorSelecionado.userName', value);
                         }} />
                 </div>
                 
