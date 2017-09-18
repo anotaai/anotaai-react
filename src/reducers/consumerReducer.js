@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     id: null,
     recommendEdition: false,
     showModalState: false,
-    consumidor: { usuario: { id: null, nome: '', email: '', telefone: '' }, type: 'consumidor' }
+    consumidor: { usuario: { id: null, nome: '', email: '', telefone: '' }, type: 'CONSUMIDOR' }
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -22,7 +22,7 @@ export default function (state = INITIAL_STATE, action) {
         case CLEAR_FORM_CONSUMER: {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
-            newState.consumidor.type = 'consumidor';
+            newState.consumidor.type = 'CONSUMIDOR';
             newState.consumidor.usuario.telefone = '';
             return newState;
         }

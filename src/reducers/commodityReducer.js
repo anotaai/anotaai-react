@@ -51,7 +51,7 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_COMMODITY_BY_PRODUCT: {
             const newState = createInstance(state);
-            newState.itens.push({ id: null, type: 'entrada', movimentacaoProduto: { id: null, produto: { id: action.id, descricao: action.descricao }, quantidade: action.quantidade }, precoCusto: concatDot(action.precoCusto), estornar: false });
+            newState.itens.push({ id: null, type: 'ITEM_ENTRADA', movimentacaoProduto: { id: null, produto: { id: action.id, descricao: action.descricao }, quantidade: action.quantidade }, precoCusto: concatDot(action.precoCusto), estornar: false });
             return newState;
         }
 
@@ -82,7 +82,7 @@ export default function (state = INITIAL_STATE, action) {
             }
 
             const newState = createInstance(state);
-            newState.itens.push({ id: null, type: 'entrada', movimentacaoProduto: { id: null, produto: { id: state.produtoSelecionado.id, descricao: state.produtoSelecionado.descricao }, quantidade: newState.quantidade }, precoCusto: concatDot(newState.precoCusto), estornar: false });
+            newState.itens.push({ id: null, type: 'ITEM_ENTRADA', movimentacaoProduto: { id: null, produto: { id: state.produtoSelecionado.id, descricao: state.produtoSelecionado.descricao }, quantidade: newState.quantidade }, precoCusto: concatDot(newState.precoCusto), estornar: false });
             clearProduct(newState);
 
             return newState;
@@ -114,7 +114,7 @@ export default function (state = INITIAL_STATE, action) {
             newState.codigo = action.entity.codigo;
 
             action.entity.itens.forEach(json => {
-                newState.itens.push({ id: json.id, type: 'entrada', movimentacaoProduto: { id: json.movimentacaoProduto.id, produto: { id: json.movimentacaoProduto.produto.id, descricao: json.movimentacaoProduto.produto.descricao }, quantidade: json.movimentacaoProduto.quantidade }, precoCusto: json.precoCusto, estornar: false });
+                newState.itens.push({ id: json.id, type: 'ITEM_ENTRADA', movimentacaoProduto: { id: json.movimentacaoProduto.id, produto: { id: json.movimentacaoProduto.produto.id, descricao: json.movimentacaoProduto.produto.descricao }, quantidade: json.movimentacaoProduto.quantidade }, precoCusto: json.precoCusto, estornar: false });
             });
 
             return newState;

@@ -3,7 +3,7 @@ import { createInstance, getObjectNewState, clearAllPropertiesObject } from '../
 
 const INITIAL_STATE = {
     usuario: { nome: '', email: '', senha: '' },
-    cliente: { nomeComercial: '', cpf: '', type: 'cliente' , endereco: { cep: '', logradouro: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '' } },
+    cliente: { nomeComercial: '', cpf: '', type: 'CLIENTE' , endereco: { cep: '', logradouro: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '' } },
     estadoList: [],
     confirmarSenha: '',
     telefone: '',
@@ -22,7 +22,7 @@ export default function (state = INITIAL_STATE, action) {
         case CLEAR_FORM_VENDEDOR: {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
-            newState.cliente.type = 'cliente';
+            newState.cliente.type = 'CLIENTE';
             return newState;
         }
         case CLEAR_PASSWORD_VENDEDOR: {

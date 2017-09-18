@@ -8,7 +8,7 @@ import { TYPE_SALE } from '../helpers/constants'
 
 const INITIAL_STATE = {
     venda : { produtos: [] },
-    folhaCaderneta: { folhaCaderneta: { consumidor: { consumidor: {id: null, nome: '', type:'consumidor'} } } },
+    folhaCaderneta: { consumidor: { usuario: { id: null, nome: '' } , type:'CONSUMIDOR'} } ,
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
     produtosList: [],
@@ -33,7 +33,7 @@ export default function (state = INITIAL_STATE, action) {
             clearAllPropertiesObject(newState);
             newState.quantidade = '';
             newState.type = TYPE_SALE.A_VISTA_ANONIMA;
-            newState.folhaCaderneta.folhaCaderneta.consumidor.consumidor.type = 'consumidor';
+            newState.folhaCaderneta.consumidor.type = 'CONSUMIDOR';
             return newState;
         }
 
@@ -70,8 +70,8 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_CONSUMER_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
-            newState.folhaCaderneta.folhaCaderneta.consumidor.consumidor.id = action.consumer.id;
-            newState.folhaCaderneta.folhaCaderneta.consumidor.consumidor.nome =  action.consumer.nome;
+            newState.folhaCaderneta.consumidor.usuario.id = action.consumer.id;
+            newState.folhaCaderneta.consumidor.usuario.nome =  action.consumer.nome;
             return newState;
         }
 
@@ -96,7 +96,7 @@ export default function (state = INITIAL_STATE, action) {
 
             const total = newState.quantidade * newState.produtoSelecionado.precoVenda;
 
-            newState.venda.produtos.push( { type: 'venda',  movimentacaoProduto: { produto: { id: newState.produtoSelecionado.id,  descricao: newState.produtoSelecionado.descricao, 
+            newState.venda.produtos.push( { type: 'ITEM_VENDA',  movimentacaoProduto: { produto: { id: newState.produtoSelecionado.id,  descricao: newState.produtoSelecionado.descricao, 
                 quantidade: newState.quantidade, codigo: newState.produtoSelecionado.codigo, precoVenda : newState.produtoSelecionado.precoVenda, precoTotal: total } } } );
             
             newState.valorTotal += (newState.produtoSelecionado.precoVenda * newState.quantidade );
