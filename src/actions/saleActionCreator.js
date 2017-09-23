@@ -6,7 +6,9 @@ UPDATE_CONSUMER_AUTO_COMPLETE_SALE = 'update_consumer_auto_complete_sale',
 UPDATE_CONSUMER_LIST_SALE = 'update_consumer_list_sale',
 ADD_PRODUCT = 'add_product',
 UPDATE_TYPE_SALE = 'update_type_sale',
-CHANGE_RADIO_SALE = 'change_radio_sale'
+CHANGE_RADIO_SALE = 'change_radio_sale',
+UPDATE_APPOINTMENT_BOOKS = 'update_appointment_books',
+REDIRECT_SALE_PRODUCT = 'redirect_sale_product'
 
 export function handleInputChange(name,value) {
     return { type: HANDLE_INPUT_CHANGE_SALE , name , value }
@@ -43,3 +45,11 @@ export function addProduct() {
 export function updateTypeSale(list) {
     return { type: UPDATE_TYPE_SALE , list }
 } 
+
+export function updateAppointmentBooks(list) {
+    return { type: UPDATE_APPOINTMENT_BOOKS, list }
+}
+
+export function redirectSaleProduct(id) {
+    return { type: REDIRECT_SALE_PRODUCT, id }
+}

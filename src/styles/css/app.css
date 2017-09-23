@@ -439,3 +439,7 @@ footer {
   -webkit-border-radius:10px ;
   border: 1px solid #26a69a;
 }
+
+.center-align {
+  text-align: center;
+}

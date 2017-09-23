@@ -156,5 +156,5 @@ export const TYPE_SALE = {
 
 export const MAP_SALE_URLS =  new Map([
   [TYPE_SALE.A_VISTA_ANONIMA, "/createanonymoussale"], 
-  [TYPE_SALE.A_VISTA_CONSUMIDOR, "/creatconsumersale"], 
+  [TYPE_SALE.A_VISTA_CONSUMIDOR, "/createconsumersale"], 
   [TYPE_SALE.ANOTADA, "/createappointmentbooksale"]]);

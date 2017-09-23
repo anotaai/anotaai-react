@@ -1,6 +1,6 @@
 import { HANDLE_INPUT_CHANGE_SALE, CLEAR_FORM_SALE, UPDATE_PRODUCT_LIST_SALE, UPDATE_PRODUCT_AUTO_COMPLETE_SALE,
 UPDATE_CONSUMER_AUTO_COMPLETE_SALE, UPDATE_CONSUMER_LIST_SALE, CHANGE_RADIO_SALE, ADD_PRODUCT,
-UPDATE_TYPE_SALE } from '../actions/saleActionCreator'
+UPDATE_TYPE_SALE, UPDATE_APPOINTMENT_BOOKS, REDIRECT_SALE_PRODUCT } from '../actions/saleActionCreator'
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
 import { Icon } from '../domain/Icon'
 import Toast from '../helpers/Toast'
@@ -8,13 +8,15 @@ import { TYPE_SALE } from '../helpers/constants'
 
 const INITIAL_STATE = {
     venda : { produtos: [] },
-    folhaCaderneta: { id: null , consumidor: { id: null , type:'CONSUMIDOR' , usuario: { id: null, nome: '' } } } ,
+    folhaCaderneta: { id: null , caderneta: {id: null} , consumidor: { id: null , type:'CONSUMIDOR' , usuario: { id: null, nome: '' } } } ,
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
     produtosList: [],
     consumidores: [],
     typeSaleList: [],
+    cadernetas: [],
     valorTotal: 0,
+    currentPage: 1,
     type: TYPE_SALE.A_VISTA_ANONIMA
 }
 
@@ -32,6 +34,7 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
             newState.quantidade = '';
+            newState.currentPage = 1;
             newState.type = TYPE_SALE.A_VISTA_ANONIMA;
             newState.folhaCaderneta.consumidor.type = 'CONSUMIDOR';
             return newState;
@@ -98,7 +101,7 @@ export default function (state = INITIAL_STATE, action) {
             const total = newState.quantidade * newState.produtoSelecionado.precoVenda;
 
             newState.venda.produtos.push( { type: 'ITEM_VENDA',  movimentacaoProduto: { produto: { id: newState.produtoSelecionado.id,  descricao: newState.produtoSelecionado.descricao, 
-                quantidade: newState.quantidade, codigo: newState.produtoSelecionado.codigo, precoVenda : newState.produtoSelecionado.precoVenda, precoTotal: total } } } );
+                 codigo: newState.produtoSelecionado.codigo, precoVenda : newState.produtoSelecionado.precoVenda, precoTotal: total } , quantidade: newState.quantidade}});
             
             newState.valorTotal += (newState.produtoSelecionado.precoVenda * newState.quantidade );
             newState.produtoSelecionado.id = '';
@@ -112,6 +115,19 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state); 
             newState.typeSaleList = action.list;
             setSaleRadio(newState,'A_VISTA_ANONIMA');
+            return newState;
+        }
+
+        case UPDATE_APPOINTMENT_BOOKS: {
+            const newState = createInstance(state); 
+            newState.cadernetas = action.list;
+            return newState;
+        }
+
+        case REDIRECT_SALE_PRODUCT: {
+            const newState = createInstance(state);
+            newState.folhaCaderneta.caderneta.id = action.id;
+            newState.currentPage = 2;
             return newState;
         }
 
