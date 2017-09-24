@@ -12,6 +12,7 @@ import Toast from '../../../helpers/Toast';
 import SaleService from '../../../services/sale/SaleService'
 import SaleProductContainer from  './SaleProduct'
 import AppointmentBook from  './AppointmentBook'
+import { TYPE_SALE } from '../../../helpers/constants';
 
 class Sale extends Component {
 
@@ -35,6 +36,11 @@ class Sale extends Component {
 
         if(this.props.saleState.venda.produtos.length === 0) {
             Toast.show('sales.required', Icon.WARNING);
+            return;
+        }
+
+        if(this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.folhaCaderneta.consumidor.usuario.nome === ''){
+            Toast.show('consumer.required', Icon.WARNING);
             return;
         }
    

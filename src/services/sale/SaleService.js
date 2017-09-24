@@ -10,7 +10,7 @@ export default class SaleService extends CrudService {
 
     static save(entity,component) {
 
-        if(entity.folhaCaderneta.consumidor.nome !== '' &&  
+        if(entity.folhaCaderneta.consumidor.usuario.nome !== '' &&  
            entity.type === TYPE_SALE.A_VISTA_ANONIMA) {
              entity.type = TYPE_SALE.A_VISTA_CONSUMIDOR;
         }
