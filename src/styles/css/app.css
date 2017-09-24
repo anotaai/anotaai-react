@@ -152,6 +152,11 @@ footer {
 
 .buttons-space {
    margin-left: 5px;
+   margin-top: 5px;
+}
+
+.buttons-space-top {
+  margin-top: 5px;
 }
 
 .anotaai-appear {
