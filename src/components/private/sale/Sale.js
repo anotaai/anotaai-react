@@ -2,17 +2,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleInputChange, clearForm, updateProductAutoComplete, updateProductList,
 updateConsumerAutoComplete, updateConsumerList, changeRadio, updateTypeSale, 
-addProduct, updateAppointmentBooks, redirectSaleProduct } from '../../../actions/saleActionCreator'
+addProduct, updateAppointmentBooks, redirectSaleProduct, showModalToSale, hideModalToSale } from '../../../actions/saleActionCreator'
 import ProductService from '../../../services/product/ProductService'
 import ClienteConsumidorService from '../../../services/consumer/ClienteConsumidorService'
 import EnumService from '../../../services/util/EnumService'
 import AppointmentBookService from '../../../services/appointmentbook/AppointmentBookService'
-import { Icon } from '../../../domain/Icon';
-import Toast from '../../../helpers/Toast';
+import { Icon } from '../../../domain/Icon'
+import Toast from '../../../helpers/Toast'
 import SaleService from '../../../services/sale/SaleService'
 import SaleProductContainer from  './SaleProduct'
 import AppointmentBook from  './AppointmentBook'
-import { TYPE_SALE } from '../../../helpers/constants';
+import { TYPE_SALE } from '../../../helpers/constants'
+import { concatDot } from '../../../helpers/stringHelper'
+
 
 class Sale extends Component {
 
@@ -43,7 +45,23 @@ class Sale extends Component {
             Toast.show('consumer.required', Icon.WARNING);
             return;
         }
+
+        if(this.props.saleState.showModalState === true && this.props.saleState.valorPagamento === 0) {
+            Toast.show('total.payment.required', Icon.WARNING);
+            return;
+        }
    
+        if(this.props.saleState.type !== TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.valorPagamento === 0) {
+            this.props.showModalToSale();
+            return;
+        }
+
+
+        if(this.props.saleState.showModalState === true && this.props.saleState.valorTotal < concatDot(this.props.saleState.valorPagamento)) {
+            Toast.show('lower.values', Icon.WARNING);
+            return;
+        }
+
         SaleService.save(this.props.saleState,this.sendButton).then(response => {
             Toast.show(response.messages);
             this.props.clearForm();
@@ -71,12 +89,14 @@ class Sale extends Component {
                     {... this.props.saleState} 
                     save={this.save.bind(this)} 
                     handleInputChange={this.props.handleInputChange}
+                    handleNumericChange={this.props.handleNumericChange}
                     getProduct={this.props.getProduct}
                     setProduct={this.props.setProduct}
                     getConsumer={this.props.getConsumer}
                     setConsumer={this.props.setConsumer}
                     changeRadio={this.props.changeRadio}
                     addProduct={this.props.addProduct}
+                    hideModalToSale={this.props.hideModalToSale}
                     produtosList={this.props.saleState.produtosList}
                     consumidores={this.props.saleState.consumidores}
                     typeSaleList={this.props.saleState.typeSaleList}
@@ -138,7 +158,18 @@ const mapDispatchToProps = dispatch => {
         },
         redirectSaleProduct: (id,e) => {
             dispatch(redirectSaleProduct(id));
-        } 
+        },
+        hideModalToSale: () => {
+            dispatch(hideModalToSale());
+        },
+        showModalToSale: () => {
+            dispatch(showModalToSale());
+        },
+        handleNumericChange: (name, value) => {
+            if (value !== 0) {
+                dispatch(handleInputChange(name, value));
+            }
+        }
     }
 }
 

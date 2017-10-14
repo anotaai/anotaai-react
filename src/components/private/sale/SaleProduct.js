@@ -3,7 +3,9 @@ import { PanelHeader, PanelSale } from '../../panels'
 import { TABLE_DEFAULT_CSS, TYPE_SALE } from '../../../helpers/constants'
 import AutoCompleteProduct from '../product/detail/AutoCompleteProduct'
 import AutoCompleteConsumer from './AutoCompleteConsumer'
-import T from 'i18n-react';
+import SimpleCurrencyInput from 'react-simple-currency'
+import T from 'i18n-react'
+import ModalConfirm from '../../ModalConfirm'
 
 
 export default class SaleProduct extends Component {
@@ -25,7 +27,7 @@ export default class SaleProduct extends Component {
                                         autoCompleteSize="input-field col s12 m12 l12" />
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
-                                            <input id="quantidade" value={this.props.quantidade} name="quantidade"  onChange={this.props.handleInputChange} type="number" />
+                                            <input id="quantidade" value={this.props.quantidade} name="quantidade" onChange={this.props.handleInputChange} type="number" />
                                             <label htmlFor="quantidade" className={this.props.quantidade !== "" ? "active" : ""}>Quantidade</label>
                                         </div>
                                     </div>
@@ -37,13 +39,13 @@ export default class SaleProduct extends Component {
                                         autoCompleteSize="input-field col s12 m12 l12" />
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
-                                            
+
                                             {this.props.typeSaleList.map(typeSale =>
                                                 (<span key={typeSale.type}>
                                                     {typeSale.type !== TYPE_SALE.A_VISTA_CONSUMIDOR &&
                                                         <span>
-                                                            <input type="radio" id={typeSale.type} name="tipoVenda" checked={typeSale.checked} value={typeSale.type}  onChange={this.props.changeRadio.bind(this)} />
-                                                            <label htmlFor={typeSale.type} style={{ paddingRight: '20px' }}><T.span text={{ key:typeSale.propertieKey}} /></label>
+                                                            <input type="radio" id={typeSale.type} name="tipoVenda" checked={typeSale.checked} value={typeSale.type} onChange={this.props.changeRadio.bind(this)} />
+                                                            <label htmlFor={typeSale.type} style={{ paddingRight: '20px' }}><T.span text={{ key: typeSale.propertieKey }} /></label>
                                                         </span>
                                                     }
                                                 </span>)
@@ -58,22 +60,24 @@ export default class SaleProduct extends Component {
                                             <table className={TABLE_DEFAULT_CSS}>
                                                 <thead>
                                                     <tr>
+                                                        <th className="row-th">Item</th>
                                                         <th className="row-th">Código</th>
                                                         <th className="row-th">Produto</th>
                                                         <th className="row-th">Quantidade</th>
-                                                        <th className="row-th">Valor</th>
-                                                        <th className="row-th">Total</th>
+                                                        <th className="row-th">Valor R$</th>
+                                                        <th className="row-th">Total R$</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {this.props.produtos.map((item,i) => {
-                                                      return (<tr key={i}>
-                                                           <td className="row-td-detail">{item.movimentacaoProduto.produto.codigo}</td>
-                                                           <td className="row-td-detail">{item.movimentacaoProduto.produto.descricao}</td>
-                                                           <td className="row-td-detail">{item.movimentacaoProduto.produto.quantidade}</td>
-                                                           <td className="row-td-detail">{item.movimentacaoProduto.produto.precoVenda} R$</td>
-                                                           <td className="row-td-detail">{item.movimentacaoProduto.produto.precoTotal} R$</td>
-                                                       </tr>)
+                                                    {this.props.produtos.map((item, i) => {
+                                                        return (<tr key={i}>
+                                                            <td className="row-td-detail">{i + 1}</td>
+                                                            <td className="row-td-detail">{item.movimentacaoProduto.produto.codigo}</td>
+                                                            <td className="row-td-detail">{item.movimentacaoProduto.produto.descricaoResumida}</td>
+                                                            <td className="row-td-detail">{item.movimentacaoProduto.quantidade}</td>
+                                                            <td className="row-td-detail">{item.movimentacaoProduto.produto.precoVenda}</td>
+                                                            <td className="row-td-detail">{item.movimentacaoProduto.produto.precoTotal}</td>
+                                                        </tr>)
                                                     })}
 
                                                 </tbody>
@@ -88,6 +92,21 @@ export default class SaleProduct extends Component {
                                 </div>
                             </div>
                             <PanelSale addProduct={this.props.addProduct} submitRef={this.props.submitRef} />
+
+                            <ModalConfirm
+                                title="Dados Pagamento"
+                                confirm={this.props.save}
+                                labelOk="Pagar"
+                                normalAlign="row"
+                                hideModal={this.props.hideModalToSale}
+                                showModalState={this.props.showModalState}
+                                content={
+                                  <FormPayment
+                                    quantidadeTotal={this.props.quantidadeTotal}
+                                    valorPagamento={this.props.valorPagamento}
+                                    valorTotal={this.props.valorTotal}
+                                    handleNumericChange={this.props.handleNumericChange} />} 
+                            />
                         </form>
                     </div>
                 </div>
@@ -96,4 +115,26 @@ export default class SaleProduct extends Component {
     }
 
 
+}
+
+export function FormPayment(props) {
+    return (
+         
+            <span>
+                <div className="col s12 m12 l12">
+                  <label className="label-detail"> Valor Total </label>
+                  <label>{props.valorTotal} </label>   
+                </div>
+                <div className="col s12 m12 l12">
+                   <label className="label-detail"> Qtd Itens </label>
+                   <label>{props.quantidadeTotal} </label> 
+                </div>
+                <div className="input-field col s12 m12 l12" style={{marginTop:'30px'}}>
+                    <label htmlFor="valorPagamento" className="active">Valor Pago</label>
+                    <SimpleCurrencyInput id="valorPagamento" value={props.valorPagamento} unit="R$" name="valorPagamento" onInputChange={props.handleNumericChange.bind(this, 'valorPagamento')} />
+                </div>
+
+            </span>
+        
+    )
 }

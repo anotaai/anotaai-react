@@ -1,14 +1,16 @@
 import { HANDLE_INPUT_CHANGE_SALE, CLEAR_FORM_SALE, UPDATE_PRODUCT_LIST_SALE, UPDATE_PRODUCT_AUTO_COMPLETE_SALE,
 UPDATE_CONSUMER_AUTO_COMPLETE_SALE, UPDATE_CONSUMER_LIST_SALE, CHANGE_RADIO_SALE, ADD_PRODUCT,
-UPDATE_TYPE_SALE, UPDATE_APPOINTMENT_BOOKS, REDIRECT_SALE_PRODUCT } from '../actions/saleActionCreator'
+SHOW_MODAL_TO_SALE, HIDE_MODAL_TO_SALE,  UPDATE_TYPE_SALE, UPDATE_APPOINTMENT_BOOKS,
+REDIRECT_SALE_PRODUCT } from '../actions/saleActionCreator'
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
 import { Icon } from '../domain/Icon'
 import Toast from '../helpers/Toast'
+import { concatDot } from '../helpers/stringHelper'
 import { TYPE_SALE } from '../helpers/constants'
 
 const INITIAL_STATE = {
-    venda : { produtos: [] },
-    folhaCaderneta: { id: null , caderneta: {id: null} , consumidor: { id: null , type:'CONSUMIDOR' , usuario: { id: null, nome: '' } } } ,
+    venda : { produtos: [] ,  pagamentos: [] },
+    folhaCaderneta: { id: null , caderneta: {id: null} , consumidor: { id: null , type:'ANOTADO' , usuario: { id: null, nome: '' } } } ,
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
     produtosList: [],
@@ -16,8 +18,11 @@ const INITIAL_STATE = {
     typeSaleList: [],
     cadernetas: [],
     valorTotal: 0,
+    quantidadeTotal: 0,
     currentPage: 1,
-    type: TYPE_SALE.A_VISTA_ANONIMA
+    valorPagamento: 0,
+    type: TYPE_SALE.A_VISTA_ANONIMA,
+    showModalState: false
 }
 
 
@@ -27,6 +32,11 @@ export default function (state = INITIAL_STATE, action) {
 
         case HANDLE_INPUT_CHANGE_SALE: {
             const newState = getObjectNewState(action.name, action.value, state);
+            
+            if(action.name === 'valorPagamento') {
+              updatePayment(newState,action.value);
+            }
+           
             return newState;
         }
 
@@ -35,8 +45,9 @@ export default function (state = INITIAL_STATE, action) {
             clearAllPropertiesObject(newState);
             newState.quantidade = '';
             newState.currentPage = 1;
+            newState.valorPagamento = 0;
             newState.type = TYPE_SALE.A_VISTA_ANONIMA;
-            newState.folhaCaderneta.consumidor.type = 'CONSUMIDOR';
+            newState.folhaCaderneta.consumidor.type = 'ANOTADO';
             return newState;
         }
 
@@ -45,7 +56,7 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             
             action.list.forEach(product => {
-                newState.produtosList.push({id: product.id, descricao: product.descricao, codigo: product.codigo, precoVenda: product.precoVenda, quantidade: ''});
+                newState.produtosList.push({id: product.id, descricao: product.descricao, descricaoResumida: product.descricaoResumida , codigo: product.codigo, precoVenda: product.precoVenda, quantidade: ''});
             });
 
             return newState;
@@ -57,6 +68,7 @@ export default function (state = INITIAL_STATE, action) {
             newState.produtoSelecionado.descricao = action.product.descricao;
             newState.produtoSelecionado.codigo = action.product.codigo;
             newState.produtoSelecionado.precoVenda = action.product.precoVenda;
+            newState.produtoSelecionado.descricaoResumida = action.product.descricaoResumida; 
             return newState;
         }
 
@@ -101,9 +113,10 @@ export default function (state = INITIAL_STATE, action) {
             const total = newState.quantidade * newState.produtoSelecionado.precoVenda;
 
             newState.venda.produtos.push( { type: 'ITEM_VENDA',  movimentacaoProduto: { produto: { id: newState.produtoSelecionado.id,  descricao: newState.produtoSelecionado.descricao, 
-                 codigo: newState.produtoSelecionado.codigo, precoVenda : newState.produtoSelecionado.precoVenda, precoTotal: total } , quantidade: newState.quantidade}});
+                 codigo: newState.produtoSelecionado.codigo, precoVenda : (newState.produtoSelecionado.precoVenda).toFixed(2), precoTotal: (total).toFixed(2), descricaoResumida: newState.produtoSelecionado.descricaoResumida  } , quantidade: newState.quantidade}});
             
             newState.valorTotal += (newState.produtoSelecionado.precoVenda * newState.quantidade );
+            newState.quantidadeTotal += Number(newState.quantidade);
             newState.produtoSelecionado.id = '';
             newState.produtoSelecionado.descricao = '';
             newState.quantidade = '';
@@ -131,11 +144,28 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
+        case SHOW_MODAL_TO_SALE: {
+            const newState = createInstance(state);
+            newState.showModalState = true;
+            return newState;
+        }
+
+        case HIDE_MODAL_TO_SALE: {
+            const newState = createInstance(state);
+            newState.showModalState = false;
+            return newState;
+        }
+
         default: {
             return state;
         }
 
     }
+}
+
+function updatePayment(newState,value) {
+    newState.venda.pagamentos = [];
+    newState.venda.pagamentos.push({id: null , pagamento: { id: null , type: 'AVISTA', pagamento: { id: null, valorPagamento:concatDot(value)} } });
 }
 
 function setSaleRadio(newState,value) {

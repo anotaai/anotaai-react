@@ -8,7 +8,9 @@ ADD_PRODUCT = 'add_product',
 UPDATE_TYPE_SALE = 'update_type_sale',
 CHANGE_RADIO_SALE = 'change_radio_sale',
 UPDATE_APPOINTMENT_BOOKS = 'update_appointment_books',
-REDIRECT_SALE_PRODUCT = 'redirect_sale_product'
+REDIRECT_SALE_PRODUCT = 'redirect_sale_product',
+SHOW_MODAL_TO_SALE = 'show_modal_to_sale',
+HIDE_MODAL_TO_SALE = 'hide_modal_to_sale'
 
 export function handleInputChange(name,value) {
     return { type: HANDLE_INPUT_CHANGE_SALE , name , value }
@@ -52,4 +54,12 @@ export function updateAppointmentBooks(list) {
 
 export function redirectSaleProduct(id) {
     return { type: REDIRECT_SALE_PRODUCT, id }
+}
+
+export function showModalToSale() {
+    return { type: SHOW_MODAL_TO_SALE  }
+}
+
+export function hideModalToSale() {
+    return { type: HIDE_MODAL_TO_SALE  }
 }
