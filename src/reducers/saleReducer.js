@@ -10,7 +10,7 @@ import { TYPE_SALE } from '../helpers/constants'
 
 const INITIAL_STATE = {
     venda : { produtos: [] ,  pagamentos: [] },
-    folhaCaderneta: { id: null , caderneta: {id: null} , consumidor: { id: null , type:'ANOTADO' , usuario: { id: null, nome: '' } } } ,
+    folhaCaderneta: { id: null , caderneta: {id: null} , consumidor: { id: null , type:'CONSUMIDOR' , usuario: { id: null, nome: '' } } } ,
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
     produtosList: [],
@@ -47,7 +47,7 @@ export default function (state = INITIAL_STATE, action) {
             newState.currentPage = 1;
             newState.valorPagamento = 0;
             newState.type = TYPE_SALE.A_VISTA_ANONIMA;
-            newState.folhaCaderneta.consumidor.type = 'ANOTADO';
+            newState.folhaCaderneta.consumidor.type = 'CONSUMIDOR';
             return newState;
         }
 
