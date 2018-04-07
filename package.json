@@ -29,11 +29,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "react-scripts": "1.1.4"
-=======
-    "react-scripts": "1.1.1"
->>>>>>> 4ddddc51b23abd8e3fe329c3a6cadf03c59eff0b
   },
   "scripts": {
     "start": "set REACT_APP_URL_BACKEND=http://localhost:8080/rest&& react-scripts start",
