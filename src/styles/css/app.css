@@ -134,7 +134,7 @@ footer {
 }
 
 .row-th {
-  text-align: center;
+  text-align: left;
 }
 
 .clickable {
@@ -142,12 +142,12 @@ footer {
 }
 
 .row-td {
-  text-align: center;
+  text-align: left;
   cursor: pointer;
 }
 
 .row-td-detail {
-  text-align: center;
+  text-align: left;
 }
 
 .buttons-space {
