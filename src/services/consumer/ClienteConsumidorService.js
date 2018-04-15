@@ -56,7 +56,6 @@ export default class ClienteConsumidorService extends CrudService {
 
     static getConsumers(name,updateConsumerList) {
         return dispatch => {
-
             return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/getconsumersbyname?query=${name}`
             ).then(response => {
                 return response.json();
@@ -67,7 +66,4 @@ export default class ClienteConsumidorService extends CrudService {
             });
         }
     }
-
-
- 
 }

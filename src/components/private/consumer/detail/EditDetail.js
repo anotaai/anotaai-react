@@ -29,7 +29,7 @@ class EditDetail extends Component {
 
     e.preventDefault();
 
-    const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
+    const newInstance = ClienteConsumidorService.getPhone(this.props.detailState.clienteConsumidor);
 
     ClienteConsumidorService.update(newInstance,this.sendButton).then(response => {
       Toast.show(response.messages);
@@ -55,7 +55,7 @@ class EditDetail extends Component {
     
     e.preventDefault();
 
-    const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
+    const newInstance = ClienteConsumidorService.getPhone(this.props.detailState.clienteConsumidor);
     
     ClienteConsumidorService.recommendEdition(newInstance,this.recommendButton).then(response => {
       Toast.show(response.messages);

@@ -20,7 +20,7 @@ class NewDetail extends Component {
 
     save(e) {
         e.preventDefault();    
-        const newInstance = ClienteConsumidorService.getPhone(this.props.detailState);
+        const newInstance = ClienteConsumidorService.getPhone(this.props.detailState.clienteConsumidor);
         ClienteConsumidorService.save(newInstance, this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {

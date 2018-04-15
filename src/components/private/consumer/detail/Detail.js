@@ -23,7 +23,7 @@ export default class Detail extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <MaskedInput  disabled={this.props.recommendEdition} value={this.props.consumidor.usuario.telefone} name="clienteConsumidor.consumidor.usuario.telefone" onChange={this.props.handleInputChange} mask="(11) 11111-1111" required placeholder="Telefone" />
+                                        <MaskedInput  disabled={this.props.recommendEdition} value={this.props.clienteConsumidor.consumidor.usuario.telefone} name="clienteConsumidor.consumidor.usuario.telefone" onChange={this.props.handleInputChange} mask="(11) 11111-1111" required placeholder="Telefone" />
                                     </div>
                                 </div>
                             </div>

@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     id: null,
     recommendEdition: false,
     showModalState: false,
-    consumidor: { usuario: { id: null, nome: '', email: '', telefone: '' }, type: 'CONSUMIDOR' }
+    clienteConsumidor: { consumidor: { usuario: { id: null, telefone: '' }, type: 'CONSUMIDOR' } }
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -22,8 +22,8 @@ export default function (state = INITIAL_STATE, action) {
         case CLEAR_FORM_CONSUMER: {
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
-            newState.consumidor.type = 'CONSUMIDOR';
-            newState.consumidor.usuario.telefone = '';
+            newState.clienteConsumidor.consumidor.type = 'CONSUMIDOR';
+            newState.clienteConsumidor.consumidor.usuario.telefone = '';
             return newState;
         }
 
@@ -55,11 +55,10 @@ export default function (state = INITIAL_STATE, action) {
 function updateConsumer(state, action, recommendEdition) {
     const newState = createInstance(state);
     newState.id = action.entity.id;
-    newState.consumidor.usuario.id = action.entity.consumidor.usuario.id;
-    newState.consumidor.usuario.nome = action.entity.consumidor.usuario.nome;
-    newState.consumidor.usuario.email = action.entity.consumidor.usuario.email;
+    newState.clienteConsumidor.consumidor.usuario.id = action.entity.clienteConsumidor.consumidor.usuario.id;
+    newState.clienteConsumidor.nomeConsumidor = action.entity.clienteConsumidor.nomeconsumidor;
     newState.recommendEdition = recommendEdition;
-    let telefoneStr = action.entity.consumidor.usuario.telefone.ddd.toString() + action.entity.consumidor.usuario.telefone.numero.toString();
-    newState.consumidor.usuario.telefone = getPhoneMask(telefoneStr);
+    let telefoneStr = action.entity.clienteConsumidor.consumidor.usuario.telefone.ddd.toString() + action.entity.clienteConsumidor.consumidor.usuario.telefone.numero.toString();
+    newState.clienteConsumidor.consumidor.usuario.telefone = getPhoneMask(telefoneStr);
     return newState;
 }
