@@ -18,7 +18,6 @@ export default class DataList extends Component {
                         <thead>
                             <tr>
                                 <th className="row-th">Nome</th>
-                                <th className="row-th">Email</th>
                                 <th className="row-th">Telefone</th>
                                 <th className="row-th">Excluir</th>
                             </tr>
@@ -27,9 +26,8 @@ export default class DataList extends Component {
                             {results.map(result => {
                                 return (
                                     <tr key={result.id}>
-                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.nome}</td>
-                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.email}</td>
-                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.usuario.telefone.numero}</td>
+                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.consumidor.usuario.nome}</td>
+                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.consumidor.usuario.telefone.numero}</td>
                                         <td  className="row-td"><a onClick={this.props.showModal.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)
                             })}
