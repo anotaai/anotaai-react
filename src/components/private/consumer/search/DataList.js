@@ -26,7 +26,7 @@ export default class DataList extends Component {
                             {results.map(result => {
                                 return (
                                     <tr key={result.id}>
-                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.consumidor.usuario.nome}</td>
+                                        <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.nomeConsumidor}</td>
                                         <td  onClick={pushEncoded.bind(this,this.props.editUrl,result.id)}  className="row-td">{result.consumidor.usuario.telefone.numero}</td>
                                         <td  className="row-td"><a onClick={this.props.showModal.bind(this,result.id)} style={{color:'black'}}><i className="material-icons">delete</i></a></td>
                                     </tr>)

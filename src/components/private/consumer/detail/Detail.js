@@ -17,13 +17,13 @@ export default class Detail extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <input id="nome" ref="nome" disabled={this.props.recommendEdition} value={this.props.clienteConsumidor.consumidor.usuario.nome} name="consumidor.usuario.nome" required onChange={this.props.handleInputChange} type="text" />
-                                        <label htmlFor="nome" className={this.props.clienteConsumidor.consumidor.usuario.nome !== '' ? 'active' : ''}>Nome</label>
+                                        <input id="nome" ref="nomeConsumidor" disabled={this.props.recommendEdition} value={this.props.nomeConsumidor} name="clienteConsumidor.nomeConsumidor" required onChange={this.props.handleInputChange} type="text" />
+                                        <label htmlFor="nome" className={this.props.nomeConsumidor !== '' ? 'active' : ''}>Nome</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
-                                        <MaskedInput  disabled={this.props.recommendEdition} value={this.props.clienteConsumidor.consumidor.usuario.telefone} name="consumidor.usuario.telefone" onChange={this.props.handleInputChange} mask="(11) 11111-1111" required placeholder="Telefone" />
+                                        <MaskedInput  disabled={this.props.recommendEdition} value={this.props.consumidor.usuario.telefone} name="clienteConsumidor.consumidor.usuario.telefone" onChange={this.props.handleInputChange} mask="(11) 11111-1111" required placeholder="Telefone" />
                                     </div>
                                 </div>
                             </div>
