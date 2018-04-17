@@ -14,7 +14,6 @@ class NewDetail extends Component {
         this.sendButton = null;
     }
 
-    
     componentWillUnmount() {
        this.props.clearForm();
     }

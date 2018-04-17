@@ -12,6 +12,7 @@ import productReducer from '../reducers/productReducer'
 import commodityReducer from '../reducers/commodityReducer'
 import appointmentBookReducer from '../reducers/appointmentBookReducer'
 import saleReducer from '../reducers/saleReducer'
+import renewLoginReducer from '../reducers/renewLoginReducer'
 import { loadingBarReducer } from 'react-redux-loading-bar'
 import { combineReducers } from 'redux'
 import { USE_CASE } from '../helpers/constants'
@@ -38,7 +39,8 @@ const reducers = combineReducers(
      vendedor: vendedorReducer,
      comprador: compradorReducer,
      sale: saleReducer,
-     menu: menuReducer
+     menu: menuReducer,
+     fetchInterceptor: renewLoginReducer
     });
 
 export default reducers;

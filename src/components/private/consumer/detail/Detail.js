@@ -5,8 +5,7 @@ import MaskedInput from 'react-maskedinput';
 import { URL } from '../../../../helpers/constants'
 
 export default class Detail extends Component {
-
-
+    
     render() {
         return (
             <div className="space-container">

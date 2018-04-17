@@ -9,7 +9,7 @@ function createMarkup(e) {
 export default class Toast {
 
     static show(message, icon, params) {
-        let errorMessage = this.build('message.defaulterror', Icon.ERROR);
+        let errorMessage = this.build('erro.naoidentificado', Icon.ERROR);
         if (message && Array.isArray(message)) {
             if (message.length > 0) {
                 var _this = this;
@@ -43,26 +43,25 @@ export default class Toast {
 
         
        switch(message.type.type) {
-        case 'ERROR': {
-            toast.error(this.showTag(messageStr));
-            break;
+            case 'ERROR': {
+                toast.error(this.showTag(messageStr));
+                break;
+            }
+            case 'INFO': {
+                toast.info(this.showTag(messageStr));
+                break;
+            }
+            case 'SUCCESS': {
+                toast.success(this.showTag(messageStr));
+                break;
+            }
+            case 'WARNING': {
+                toast.warn(this.showTag(messageStr));
+                break;
+            }
+            default:  
+                toast.error(this.showTag(messageStr));;
         }
-        case 'INFO': {
-            toast.info(this.showTag(messageStr));
-            break;
-        }
-        case 'SUCCESS': {
-            toast.success(this.showTag(messageStr));
-            break;
-        }
-        case 'WARNING': {
-            toast.warn(this.showTag(messageStr));
-            break;
-        }
-       
-         default:  
-            toast.error(this.showTag(messageStr));;
-       }
     }
 
     static build(key, icon, params) {
