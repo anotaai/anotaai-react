@@ -5,6 +5,7 @@ import Toast from '../../helpers/Toast';
 import { Icon } from '../../domain/Icon';
 import UserService from '../../services/UserService';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import hideModalRenewLogin from '../../components/RenewLogin'
 
 export default function registerFetchInterceptor(store) {
 
@@ -36,7 +37,8 @@ export default function registerFetchInterceptor(store) {
                 case 200:
                     break;
                 case 401:
-                    return Promise.reject(new Error(response));
+                    store.dispatch(hideModalRenewLogin());
+                    break;
                 case 403:
                     Toast.show('message.login.forbidden', Icon.WARNING);
                     store.dispatch(UserService.dispatchLogout());

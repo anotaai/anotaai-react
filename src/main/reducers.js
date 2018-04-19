@@ -40,7 +40,7 @@ const reducers = combineReducers(
      comprador: compradorReducer,
      sale: saleReducer,
      menu: menuReducer,
-     fetchInterceptor: renewLoginReducer
+     renewLogin: renewLoginReducer
     });
 
 export default reducers;

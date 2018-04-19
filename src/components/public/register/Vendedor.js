@@ -139,7 +139,7 @@ const mapStateToProps = state => {
             dispatch(clearAddress());
         },
         loadEnum: () => {
-           dispatch(EnumService.load('estados',updateEnum));
+           dispatch(EnumService.load('estados', updateEnum));
         },
         findCep: (cep) => {
            dispatch(AddressService.findCep(cep));

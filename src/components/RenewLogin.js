@@ -24,6 +24,10 @@ class RenewLogin extends Component {
     }
 }
 
+export function hideModalRenewLogin() {
+    console.log("blah...");
+}
+
 const RenewLoginContainer = connect()(RenewLogin);
 
 export default RenewLoginContainer;
