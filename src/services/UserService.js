@@ -124,8 +124,6 @@ export default class UserService {
                 method: 'POST',
                 body: JSON.stringify(login),
                 headers: { 'Content-type': 'application/json' }
-            }).then(response => {
-                resolve(response.json());
             }).catch(error => {
                 reject(error);
             })
@@ -206,8 +204,7 @@ export default class UserService {
                 'Content-type': 'application/json'
             })
         }).then(json => {
-            var t = json;
-            console.log(t);
+            console.log(json, 'telefone jah cadastrado')
         }).catch(error => {
             throw Error(error);
         })

@@ -10,7 +10,7 @@ export default class AsyncService {
 
             fetch(url, config).then(response => {
                 this.enableComponents(components);
-                resolve(response.json());
+                resolve(response);
             }).catch(error => {
                 this.enableComponents(components);
                 reject(error);

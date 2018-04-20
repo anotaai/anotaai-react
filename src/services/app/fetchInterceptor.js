@@ -38,15 +38,14 @@ export default function registerFetchInterceptor(store) {
                     return response.json();
                 case 401:
                     store.dispatch(hideModalRenewLogin());
-                    break;
+                    return Promise.reject(new Error(response));
                 case 403:
                     Toast.show('message.login.forbidden', Icon.WARNING);
                     store.dispatch(UserService.dispatchLogout());
-                    break;
+                    return Promise.reject(new Error(response));
                 default:
                     return Promise.reject(new Error(response));
             }
-            return response;
         },
 
         requestError: function (error) {
