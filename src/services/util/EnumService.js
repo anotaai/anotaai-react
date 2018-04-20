@@ -10,10 +10,7 @@ export default class EnumService {
 
     return dispatch => {
 
-      return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/${enumName}`)
-        .then(response => {
-          return response.json();
-        }).then((json) => {
+      return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/${enumName}`).then((json) => {
           dispatch(updateEnum(json))
         }).catch(error => {
            Toast.defaultError();
