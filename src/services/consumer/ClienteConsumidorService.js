@@ -25,9 +25,7 @@ export default class ClienteConsumidorService extends CrudService {
         return dispatch => {
 
             fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/${id}`
-            ).then(response => {
-              return response.json();
-            }).then(json => {
+            ).then(json => {
                 if(json.isValid) {
                   dispatch(updateState(json.entity));
                } else {
@@ -47,8 +45,6 @@ export default class ClienteConsumidorService extends CrudService {
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(clienteConsumidor),
             method: 'POST'
-        }).then(response => {
-            return response.json();
         }).catch(error => {
             throw Error(error);
         });
@@ -57,9 +53,7 @@ export default class ClienteConsumidorService extends CrudService {
     static getConsumers(name,updateConsumerList) {
         return dispatch => {
             return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/getconsumersbyname?query=${name}`
-            ).then(response => {
-                return response.json();
-            }).then(json => {
+            ).then(json => {
                 dispatch(updateConsumerList(json));
             }).catch(error => {
                 throw Error(error);

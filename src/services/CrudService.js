@@ -11,9 +11,7 @@ export default class CrudService {
         return dispatch => {
 
             fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/${id}`
-            ).then(response => {
-                return response.json();
-            }).then(json => {
+            ).then(json => {
                 dispatch(updateState(json.entity));
             }).catch(error => {
                 Toast.defaultError();
@@ -24,8 +22,6 @@ export default class CrudService {
     static remove(id) {
         return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/${id}`, {
             method: 'DELETE'
-        }).then(response => {
-            return response.json();
         }).catch(error => {
             throw Error(error);
         });

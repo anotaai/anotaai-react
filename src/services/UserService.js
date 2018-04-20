@@ -25,8 +25,6 @@ export default class UserService {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: activationCode
-            }).then(response => {
-                return response.json();
             }).then(json => {
                 return dispatch(updateUser(USE_CASE.RENEW, json.entity, activationCode));
             }).catch(error => {
@@ -43,8 +41,6 @@ export default class UserService {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: key
-            }).then(response => {
-                return response.json();
             }).then(json => {
                 if (json.isValid) {
                     return dispatch(updateComprador(json.entity));
@@ -78,8 +74,6 @@ export default class UserService {
             method: 'POST',
             body: JSON.stringify(newUserInstance),
             headers: { 'Content-type': 'application/json' }
-        }).then(response => {
-            return response.json();
         }).catch(error => {
             throw Error(error);
         });
@@ -91,8 +85,6 @@ export default class UserService {
             headers: { 'Content-type': 'application/json' },
             body: code,
             method: 'POST'
-        }).then(response => {
-            return response.json();
         }).catch(error => {
             throw Error(error);
         });
@@ -191,8 +183,6 @@ export default class UserService {
             fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/profilePhoto`, {
                 method: 'GET',
                 headers: { 'Content-type': 'application/json' }
-            }).then(response => {
-                return response.json();
             }).then(json => {
                 if (json.entity != null) {
                     const mediaType = json.entity.tipoArquivo.mediaType;
@@ -215,8 +205,9 @@ export default class UserService {
             headers: new Headers({
                 'Content-type': 'application/json'
             })
-        }).then(response => {
-            return response.json();
+        }).then(json => {
+            var t = json;
+            console.log(t);
         }).catch(error => {
             throw Error(error);
         })

@@ -13,8 +13,6 @@ export default class AppointmentBookService extends CrudService {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(entity)
-        }).then(response => {
-            return response.json();
         }).catch(error => {
             throw Error(error);
         });
@@ -23,8 +21,6 @@ export default class AppointmentBookService extends CrudService {
     static removeByBookId(id) {
         return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/removeByBookId/${id}`, {
             method: 'DELETE'
-        }).then(response => {
-            return response.json();
         }).catch(error => {
             throw Error(error);
         });
@@ -34,9 +30,7 @@ export default class AppointmentBookService extends CrudService {
         return dispatch => {
 
             fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/getappointmentbooks`
-            ).then(response => {
-                return response.json();
-            }).then(json => {
+            ).then(json => {
                 dispatch(updateAppointmentBooks(json));
             }).catch(error => {
                 Toast.defaultError();

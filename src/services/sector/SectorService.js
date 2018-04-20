@@ -14,9 +14,7 @@ export default class SectorService extends CrudService {
         return dispatch => {
 
             return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/recuperarSetor`
-            ).then(response => {
-                return response.json();
-            }).then(json => {
+            ).then(json => {
                 dispatch(updateSectorList(json));
             }).catch(error => {
                 throw Error(error);

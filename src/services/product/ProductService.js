@@ -11,10 +11,7 @@ export default class ProductService extends CrudService {
     static getProducts(name,updateProductList,insumoFilter) {
         return dispatch => {
 
-            return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/searchProdutosParaReceita?query=${name}&insumoFilter=${insumoFilter}`
-            ).then(response => {
-                return response.json();
-            }).then(json => {
+            return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/searchProdutosParaReceita?query=${name}&insumoFilter=${insumoFilter}`).then(json => {
                 dispatch(updateProductList(json));
             }).catch(error => {
                 throw Error(error);

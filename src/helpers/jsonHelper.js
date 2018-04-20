@@ -11,7 +11,6 @@ export function createInstance(currentState) {
 export var clearAllPropertiesObject = (objToClear) => {
     Object.keys(objToClear).forEach((param) => {
         if (objToClear[param] != null) {
-
             if (Array.isArray(objToClear[param])) {
                 objToClear[param] = [];
             } else if ((objToClear[param]).toString() === "[object Object]") {

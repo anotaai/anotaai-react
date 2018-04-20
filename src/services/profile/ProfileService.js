@@ -15,9 +15,6 @@ export default class ProfileService {
       {
         method: 'POST',
         body: formData
-      })
-      .then(response => {
-        return response.json();
       }).catch(error => {
         throw Error(error);
       });

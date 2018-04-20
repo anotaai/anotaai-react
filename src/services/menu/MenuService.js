@@ -12,9 +12,7 @@ export default class MenuService {
 
         return dispatch => {
 
-            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/principal`).then(response => {
-                return response.json();
-            }).then(json => {
+            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/principal`).then(json => {
                 if(Array.isArray(json)) {
                     dispatch(updateMenu(json));
                 }

@@ -11,10 +11,7 @@ export default class AddressService {
     static findCep(cep) {
 
         return dispatch => {
-            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/findcep/${cep}`)
-                .then(response => {
-                    return response.json();
-                }).then(address => {
+            fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/findcep/${cep}`).then(address => {
                     if (address.logradouro == null) {
                         Toast.show('cep.nao.localizado', Icon.WARNING);
                     } else {

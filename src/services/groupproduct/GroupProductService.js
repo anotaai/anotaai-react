@@ -12,9 +12,7 @@ export default class GroupProductService extends CrudService {
         return dispatch => {
 
             return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/recuperarPorNome?nome=${name}`
-            ).then(response => {
-                return response.json();
-            }).then(json => {
+            ).then(json => {
                 dispatch(updateGroupProductList(json));
             }).catch(error => {
                 throw Error(error);

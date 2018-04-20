@@ -35,7 +35,7 @@ export default function registerFetchInterceptor(store) {
             store.dispatch(hideLoading());
             switch (response.status) {
                 case 200:
-                    break;
+                    return response.json();
                 case 401:
                     store.dispatch(hideModalRenewLogin());
                     break;

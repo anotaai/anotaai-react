@@ -20,9 +20,7 @@ export default class CommodityService extends CrudService {
         return dispatch => {
 
             fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/getCommodityForDelete/${id}`
-            ).then(response => {
-                return response.json();
-            }).then(json => {
+            ).then(json => {
                 dispatch(updateState(json.entity));
             }).catch(error => {
                 Toast.defaultError();
