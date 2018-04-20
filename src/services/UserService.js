@@ -143,7 +143,6 @@ export default class UserService {
     static login(userLogin, keepAlive, component) {
 
         return new Promise((resolve, reject) => {
-
             const newUserLoginInstance = createInstance(userLogin);
             const newUserInstance = createInstance(userLogin.usuario);
             const telefone = userLogin.usuario.telefone;
