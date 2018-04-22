@@ -10,6 +10,7 @@
     "rc-collapse": "^1.7.6",
     "react": "^15.6.2",
     "react-autocomplete": "^1.5.6",
+    "react-big-calendar": "^0.19.0",
     "react-chips": "^0.6.1",
     "react-cookie": "^2.0.6",
     "react-dom": "^15.6.2",
