@@ -9,14 +9,16 @@ import { concatDot } from '../helpers/stringHelper'
 import { TYPE_SALE } from '../helpers/constants'
 
 const INITIAL_STATE = {
-    venda : { produtos: [] ,  pagamentos: [] },
-    folhaCaderneta: { id: null , caderneta: {id: null} , consumidor: { id: null , type:'CONSUMIDOR' , usuario: { id: null, nome: '' } } } ,
+    venda : { },
+    folhaCaderneta: { id: null , caderneta: { id: null } , clienteConsumidor: { id: null ,  nomeConsumidor: ''  } } ,
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
     produtosList: [],
+    produtosSelecionados: [],
     consumidores: [],
     typeSaleList: [],
     cadernetas: [],
+    pagamentos: [],
     valorTotal: 0,
     quantidadeTotal: 0,
     currentPage: 1,
@@ -47,7 +49,6 @@ export default function (state = INITIAL_STATE, action) {
             newState.currentPage = 1;
             newState.valorPagamento = 0;
             newState.type = TYPE_SALE.A_VISTA_ANONIMA;
-            newState.folhaCaderneta.consumidor.type = 'CONSUMIDOR';
             return newState;
         }
 
@@ -76,8 +77,8 @@ export default function (state = INITIAL_STATE, action) {
             
             const newState = createInstance(state);
             
-            action.list.forEach(consumer => {
-                newState.consumidores.push({id: consumer.id,userId: consumer.usuario.id, userName: consumer.usuario.nome});
+            action.list.forEach(clienteConsumidor => {
+                newState.consumidores.push({id: clienteConsumidor.id, nomeConsumidor: clienteConsumidor.nomeConsumidor});
             });
 
             return newState;
@@ -85,9 +86,8 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_CONSUMER_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
-            newState.folhaCaderneta.consumidor.id  = action.consumer.id;
-            newState.folhaCaderneta.consumidor.usuario.id = action.consumer.userId;
-            newState.folhaCaderneta.consumidor.usuario.nome =  action.consumer.userName;
+            newState.folhaCaderneta.clienteConsumidor.id  = action.clienteConsumidor.id;
+            newState.folhaCaderneta.clienteConsumidor.nomeConsumidor =  action.clienteConsumidor.nomeConsumidor;
             return newState;
         }
 
@@ -112,7 +112,7 @@ export default function (state = INITIAL_STATE, action) {
 
             const total = newState.quantidade * newState.produtoSelecionado.precoVenda;
 
-            newState.venda.produtos.push( { type: 'ITEM_VENDA',  movimentacaoProduto: { produto: { id: newState.produtoSelecionado.id,  descricao: newState.produtoSelecionado.descricao, 
+            newState.produtosSelecionados.push( { type: 'ITEM_VENDA',  movimentacaoProduto: { produto: { id: newState.produtoSelecionado.id,  descricao: newState.produtoSelecionado.descricao, 
                  codigo: newState.produtoSelecionado.codigo, precoVenda : (newState.produtoSelecionado.precoVenda).toFixed(2), precoTotal: (total).toFixed(2), descricaoResumida: newState.produtoSelecionado.descricaoResumida  } , quantidade: newState.quantidade}});
             
             newState.valorTotal += (newState.produtoSelecionado.precoVenda * newState.quantidade );
@@ -163,9 +163,9 @@ export default function (state = INITIAL_STATE, action) {
     }
 }
 
-function updatePayment(newState,value) {
-    newState.venda.pagamentos = [];
-    newState.venda.pagamentos.push({id: null , pagamento: { id: null , type: 'AVISTA', pagamento: { id: null, valorPagamento:concatDot(value)} } });
+function updatePayment(newState, value) {
+    newState.pagamentos = [];
+    newState.pagamentos.push({id: null , pagamento: { id: null , type: 'AVISTA', pagamento: { id: null, valorPagamento:concatDot(value)} } });
 }
 
 function setSaleRadio(newState,value) {

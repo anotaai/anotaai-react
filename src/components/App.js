@@ -14,7 +14,7 @@ export function push(url,e) {
    
 }
 
-export function pushEncoded(url,id) {
+export function pushEncoded(url, id) {
   const encodedId = Base64Service.encode(id.toString());
   browserHistory.push(`${url}/${encodedId}`);
 }

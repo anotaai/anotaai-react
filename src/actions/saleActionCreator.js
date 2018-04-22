@@ -32,8 +32,8 @@ export function updateConsumerList(list) {
     return { type: UPDATE_CONSUMER_LIST_SALE, list }
 }
 
-export function updateConsumerAutoComplete(consumer) {
-    return { type: UPDATE_CONSUMER_AUTO_COMPLETE_SALE, consumer }
+export function updateConsumerAutoComplete(clienteConsumidor) {
+    return { type: UPDATE_CONSUMER_AUTO_COMPLETE_SALE, clienteConsumidor }
 } 
 
 export function changeRadio(value) {

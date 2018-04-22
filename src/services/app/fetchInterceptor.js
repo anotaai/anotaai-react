@@ -35,7 +35,11 @@ export default function registerFetchInterceptor(store) {
             store.dispatch(hideLoading());
             switch (response.status) {
                 case 200:
-                    return response.json();
+                    if (response.url.indexOf('rest/i18n/locales') === -1) {
+                        return response.json();
+                    } else {
+                        return response;
+                    }
                 case 401:
                     store.dispatch(hideModalRenewLogin());
                     return Promise.reject(new Error(response));

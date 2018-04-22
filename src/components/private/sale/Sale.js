@@ -13,7 +13,6 @@ import SaleService from '../../../services/sale/SaleService'
 import SaleProductContainer from  './SaleProduct'
 import AppointmentBook from  './AppointmentBook'
 import { TYPE_SALE } from '../../../helpers/constants'
-import { concatDot } from '../../../helpers/stringHelper'
 
 
 class Sale extends Component {
@@ -33,42 +32,30 @@ class Sale extends Component {
     }
 
     save(e) {
-        
         e.preventDefault();
-
-        if(this.props.saleState.venda.produtos.length === 0) {
-            Toast.show('sales.required', Icon.WARNING);
+        if (this.props.saleState.produtosSelecionados.length === 0) {
+            Toast.show('venda.obrigatorio.venda', Icon.WARNING);
             return;
         }
-
-        if(this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.folhaCaderneta.consumidor.usuario.nome === ''){
-            Toast.show('consumer.required', Icon.WARNING);
+        if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.folhaCaderneta.clienteConsumidor.id === '') {
+            Toast.show('venda.obrigatorio.consumidor', Icon.WARNING);
             return;
         }
-
-        if(this.props.saleState.showModalState === true && this.props.saleState.valorPagamento === 0) {
-            Toast.show('total.payment.required', Icon.WARNING);
+        if (this.props.saleState.showModalState === true && this.props.saleState.valorPagamento === 0) {
+            Toast.show('venda.obrigatorio.valorpagamento', Icon.WARNING);
             return;
         }
-   
-        if(this.props.saleState.type !== TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.valorPagamento === 0) {
+        if (this.props.saleState.type !== TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.valorPagamento === 0) {
             this.props.showModalToSale();
             return;
         }
-
-
-        if(this.props.saleState.showModalState === true && this.props.saleState.valorTotal < concatDot(this.props.saleState.valorPagamento)) {
-            Toast.show('lower.values', Icon.WARNING);
-            return;
-        }
-
-        SaleService.save(this.props.saleState,this.sendButton).then(response => {
+        SaleService.save(this.props.saleState, this.sendButton).then(response => {
             Toast.show(response.messages);
             this.props.clearForm();
         }).catch(erro => {
             Toast.defaultError();
         });
-    }
+    }   
 
     
     render() {
@@ -100,7 +87,7 @@ class Sale extends Component {
                     produtosList={this.props.saleState.produtosList}
                     consumidores={this.props.saleState.consumidores}
                     typeSaleList={this.props.saleState.typeSaleList}
-                    produtos={this.props.saleState.venda.produtos}
+                    produtos={this.props.saleState.produtosSelecionados}
                     submitRef={el => this.sendButton = el} />
                 )
             }
@@ -141,8 +128,8 @@ const mapDispatchToProps = dispatch => {
                 dispatch(ClienteConsumidorService.getConsumers(value, updateConsumerList));
             });
         },
-        setConsumer: (consumer) => {
-            dispatch(updateConsumerAutoComplete(consumer));
+        setConsumer: (clienteConsumidor) => {
+            dispatch(updateConsumerAutoComplete(clienteConsumidor));
         },
         changeRadio: (e) => {
             dispatch(changeRadio(e.target.value));

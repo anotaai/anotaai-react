@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { PanelHeader } from '../../panels'
 
-
-
-
 export default class AppointmentBook extends Component {
 
     render() {
@@ -24,9 +21,6 @@ export default class AppointmentBook extends Component {
                     </div>
                 </div>
             </div>
-
-
         )
     }
-
 }
