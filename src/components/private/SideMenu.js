@@ -5,6 +5,7 @@ import { ProfileContainer } from './profile/Profile'
 import UserService from '../../services/UserService'
 import { connect } from 'react-redux'
 import { toggleResponsiveMenu } from  '../../actions/menuActionCreator';
+import T from 'i18n-react';
 
 export class Links extends Component {
 
@@ -37,7 +38,7 @@ export class Links extends Component {
         <li className="hide-on-large-only"> <div className="divider"></div> </li>
         {this.props.listMenu.map(itemMenu =>
           (<li key={itemMenu.url} onClick={this.handleBackground.bind(this)} >
-            <Link to={itemMenu.url} onClick={this.hideResponsiveMenu.bind(this)}><i className="material-icons">{itemMenu.iconeMaterial.className}</i>{itemMenu.descricao}</Link>
+            <Link to={itemMenu.url} onClick={this.hideResponsiveMenu.bind(this)}><i className="material-icons">{itemMenu.icone.className}</i>{T.translate(itemMenu.key)}</Link>
             <div className="divider"> </div>
           </li>
          ))}
