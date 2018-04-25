@@ -11,11 +11,11 @@ export function handleInputChange(name,value) {
 }
 
 export function addBook() {
-    return { type: ADD_BOOK  }
+    return { type: ADD_BOOK }
 }
 
 export function clearForm() {
-    return { type: CLEAR_FORM_APPOINTMENT_BOOK  }
+    return { type: CLEAR_FORM_APPOINTMENT_BOOK }
 }
 
 export function removeBook(position) {

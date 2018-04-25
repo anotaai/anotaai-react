@@ -23,6 +23,9 @@ import DeleteCommodityContainer from '../components/private/commodity/DeleteComm
 import SearchAppointmentBookContainer from '../components/private/appointmentbook/search/Search'
 import NewAppointmentBookDetailContainer from '../components/private/appointmentbook/detail/NewDetail'
 import EditAppointmentBookDetailContainer from '../components/private/appointmentbook/detail/EditDetail'
+import SearchAppointmentBookConfigurationContainer from '../components/private/appointmentbookconfiguration/search/Search'
+import NewAppointmentBookDetailConfigurationContainer from '../components/private/appointmentbook/detail/NewDetail'
+import EditAppointmentBookDetailConfigurationContainer from '../components/private/appointmentbook/detail/EditDetail'
 import SaleContainer from '../components/private/sale/Sale'
 
 
@@ -50,6 +53,9 @@ import SaleContainer from '../components/private/sale/Sale'
       <Route path={URL.NEW_APPOINTMENT_BOOK} component={NewAppointmentBookDetailContainer} />
       <Route path={URL.EDIT_APPOINTMENT_BOOK} component={EditAppointmentBookDetailContainer} />
       <Route path={URL.SALE} component={SaleContainer} />
+      <Route path={URL.APPOINTMENT_BOOK_CONFIGURATION} component={SearchAppointmentBookConfigurationContainer} />
+      <Route path={URL.NEW_APPOINTMENT_BOOK_CONFIGURATION} component={NewAppointmentBookDetailConfigurationContainer} />
+      <Route path={URL.EDIT_APPOINTMENT_BOOK_CONFIGURATION} component={EditAppointmentBookDetailConfigurationContainer} />
     </Route> 
 );
 
