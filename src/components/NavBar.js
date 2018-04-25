@@ -10,7 +10,7 @@ import logo from "../img/logo.png"
 class Links extends Component {
 
     hideResponsiveMenu() {
-       if(this.props.menuState.showResponsiveMenu){
+       if (this.props.menuState.showResponsiveMenu) {
            this.props.toggleResponsiveMenu();
        }
     }
@@ -49,8 +49,6 @@ const LinksContainer = connect(mapLinksStateToProps,mapLinksDispatchToProps)(Lin
 
 class ResponsiveMenu extends Component {
 
-   
-
     render() {
 
         return (
@@ -72,9 +70,7 @@ class ResponsiveMenu extends Component {
 
 class Navbar extends Component {
 
-
     render() {
-
         return (
             <div>
                 <nav className="indigo">
