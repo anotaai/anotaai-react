@@ -1,5 +1,4 @@
 import UserService from '../UserService'
-import Toast from '../../helpers/Toast'
 import { updateMenu } from '../../actions/menuActionCreator'
 
 export default class MenuService {
