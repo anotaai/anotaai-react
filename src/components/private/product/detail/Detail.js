@@ -11,8 +11,6 @@ import Collapse, { Panel } from 'rc-collapse';
 
 export default class Detail extends Component {
 
-    
-
     render() {
         return (
             <div>

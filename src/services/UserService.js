@@ -117,22 +117,21 @@ export default class UserService {
     }
 
     static logout(login) {
-
         return new Promise((resolve, reject) => {
-
             return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/logout`, {
                 method: 'POST',
                 body: JSON.stringify(login),
                 headers: { 'Content-type': 'application/json' }
-            }).catch(error => {
+            }).then(response => {
+                resolve(response);
+            })
+            .catch(error => {
                 reject(error);
             })
-
         });
     }
 
     static dispatchLogout() {
-
         return dispatch => {
             AuthenticationService.clearCredentials();
             dispatch(unauthUser());

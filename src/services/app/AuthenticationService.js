@@ -1,7 +1,6 @@
 import Base64Service from './Base64Service'
-import {COOKIE_USER} from '../../helpers/constants'
-import Cookies from 'universal-cookie';
-import {getPhoneMask} from '../../helpers/stringHelper'
+import { CREDENCIAL } from '../../helpers/constants'
+import { getPhoneMask } from '../../helpers/stringHelper'
 import { browserHistory } from 'react-router'
 import { authUser } from '../../actions/authActionCreator'
 import { URL } from '../../helpers/constants'
@@ -18,36 +17,36 @@ export default class AuthenticationService {
 
         telefoneStr = getPhoneMask(telefoneStr);
         
-         const loginState = {};
-         loginState.login = login;
-         loginState.login.telefoneStr = telefoneStr;
-         loginState.login.authdata = authdata;
-         loginState.login.primeiroNome = primeiroNome;
-         loginState.login.email = login.usuario.email;
-         loginState.login.endereco = 'Rua da Paz';
+        const loginState = {};
+        loginState.login = login;
+        loginState.login.telefoneStr = telefoneStr;
+        loginState.login.authdata = authdata;
+        loginState.login.primeiroNome = primeiroNome;
+        loginState.login.email = login.usuario.email;
+        loginState.login.endereco = 'Rua da Paz';
 
-        let d = new Date();
-        let expireDate = new Date();
-        expireDate.setMinutes(d.getMinutes() + login.sessionTime);
-        if (login.keepAlive) {
-            expireDate.setFullYear(d.getFullYear() + 1);
+        let data = JSON.stringify(loginState);
+
+        localStorage.setItem(CREDENCIAL, data);
+
+        return loginState;
+    }
+
+    static getCredentials() {
+        let data = localStorage.getItem(CREDENCIAL);
+        var credencial = null;
+        if (data) {
+            credencial = JSON.parse(data);
         }
-        
-         const cookies = new Cookies();
-         cookies.set(COOKIE_USER, JSON.stringify(loginState), { 'expires': expireDate });
-
-         return loginState;
-
+        return credencial;
     }
 
     static clearCredentials() {
-        const cookies = new Cookies();
-        cookies.remove(COOKIE_USER)
+        localStorage.removeItem(CREDENCIAL);
     }
 
-    static checkUserCookie(store) {
-        const cookies = new Cookies();
-        const cookieLoginState = cookies.get(COOKIE_USER);
+    static checkUser(store) {
+        let cookieLoginState = this.getCredentials();
         if (cookieLoginState) {
             store.dispatch(authUser(cookieLoginState));
             browserHistory.push(URL.DASHBOARD);

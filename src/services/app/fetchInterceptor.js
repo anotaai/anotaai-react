@@ -1,20 +1,18 @@
 import fetchIntercept from 'fetch-intercept';
-import Cookies from 'universal-cookie';
-import { COOKIE_USER } from '../../helpers/constants';
 import Toast from '../../helpers/Toast';
 import { Icon } from '../../domain/Icon';
 import UserService from '../../services/UserService';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import hideModalRenewLogin from '../../components/RenewLogin'
+import hideModalRenewLogin from '../../components/RenewLogin';
+import AuthenticationService from '../app/AuthenticationService';
 
 export default function registerFetchInterceptor(store) {
 
     fetchIntercept.register({
         request(url, config) {
             store.dispatch(showLoading());
-            const cookies = new Cookies();
-            const cookieLoginState = cookies.get(COOKIE_USER);
-            if(cookieLoginState != null) {
+            const cookieLoginState = AuthenticationService.getCredentials();
+            if (cookieLoginState != null) {
                const headerName =   'Authorization';
                const headerValue = 'Basic ' + cookieLoginState.login.authdata;
                if (config !== undefined) {
@@ -41,11 +39,11 @@ export default function registerFetchInterceptor(store) {
                         return response;
                     }
                 case 401:
-                    store.dispatch(hideModalRenewLogin());
-                    return Promise.reject(new Error(response));
-                case 403:
                     Toast.show('message.login.forbidden', Icon.WARNING);
+                    return Promise.reject(new Error(response));
+                    case 403:
                     store.dispatch(UserService.dispatchLogout());
+                    store.dispatch(hideModalRenewLogin());
                     return Promise.reject(new Error(response));
                 default:
                     return Promise.reject(new Error(response));
@@ -53,14 +51,16 @@ export default function registerFetchInterceptor(store) {
         },
 
         requestError: function (error) {
+            store.dispatch(hideLoading());
             console.log(error);
             return Promise.reject(error);
         },
 
         responseError: function (error) {
+            store.dispatch(hideLoading());
             console.log(error);
             return Promise.reject(error);
         }
-
     });
+
 }

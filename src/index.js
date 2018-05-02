@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 const i18nReactLoader = require("i18n-react-loader");
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
-AuthenticationService.checkUserCookie(store);
+AuthenticationService.checkUser(store);
 registerFetchInterceptor(store);
 
 i18nReactLoader.default.init({

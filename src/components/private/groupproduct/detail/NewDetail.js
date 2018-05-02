@@ -30,7 +30,7 @@ class NewDetail extends Component {
         GroupProductService.save(this.props.detailState,this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
-                pushEncoded(URL.GROUP_PRODUCT,response.entity.id);
+                pushEncoded(URL.GROUP_PRODUCT, response.entity.id);
             } 
         }).catch(error => {
             Toast.defaultError();

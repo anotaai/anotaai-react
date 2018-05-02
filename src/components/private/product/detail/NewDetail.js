@@ -13,8 +13,7 @@ import Toast from '../../../../helpers/Toast'
 import { pushEncoded } from '../../../App'
 
 class NewDetail extends Component {
-
-
+    
     componentDidMount() {
         this.props.loadEnum('unidadesmedida',updateUnit);
         this.props.loadEnum('diasemana',updateDayOfWeek);
