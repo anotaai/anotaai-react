@@ -28,7 +28,7 @@ export default class UserService {
             }).then(json => {
                 return dispatch(updateUser(USE_CASE.RENEW, json.entity, activationCode));
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [services\\UserService.js 31]');
             })
         }
 
@@ -47,9 +47,8 @@ export default class UserService {
                 } else {
                     Toast.show(json.messages);
                 }
-
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [services\\UserService.js 51]');
             })
         }
 
@@ -185,7 +184,7 @@ export default class UserService {
                     dispatch(updatePicture(picture));
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [services\\UserService.js 187]');
             })
         };
     }

@@ -17,7 +17,7 @@ export default class MenuService {
                     dispatch(updateMenu(json));
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [services\\menu\\MenuService.js 20]');
                 dispatch(UserService.dispatchLogout());
             });
         }

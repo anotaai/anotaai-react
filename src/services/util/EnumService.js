@@ -13,7 +13,7 @@ export default class EnumService {
       return fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/${enumName}`).then((json) => {
           dispatch(updateEnum(json))
         }).catch(error => {
-           Toast.defaultError();
+          console.log('ERRO [services\\util\\EnumService.js 16]');
         });
     }
   }

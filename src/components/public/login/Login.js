@@ -25,7 +25,7 @@ class Login extends Component {
         this.clearPassword();
       }
     }).catch((error) => {
-      Toast.defaultError();
+      console.log('ERRO [components\\public\\login\\Login.js]');
     }).then(() => {
       if (this.refs.loginBtn !== undefined) {
         this.clearPassword();
@@ -83,7 +83,6 @@ class Login extends Component {
 
   }
 }
-
 
 const mapStateToProps = state => {
   return { loginState: state.login }

@@ -33,7 +33,7 @@ export default class ClienteConsumidorService extends CrudService {
                   dispatch(activateRecommendEdition(json.entity));
                }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [services\\consumer\\ClienteConsumidorService.js 36]');
             });
         }
 

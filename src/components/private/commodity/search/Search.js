@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { clearForm, list, handlePageClick } from '../../../../actions/searchActionCreator'
 import { URL, USE_CASE } from '../../../../helpers/constants'
-import Toast from '../../../../helpers/Toast'
 import CommodityService from '../../../../services/commodity/CommodityService'
 import { PanelHeader, PanelFooter } from '../../../panels'
 import Filters from '../../templatesearch/Filters'
@@ -36,7 +35,7 @@ class Search extends Component {
         CommodityService.list(this.props.searchState.offset, this.state.nome, this.state.dataEntrada, this.sendButton).then(response => {
             this.props.list(response);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\commodity\\search\\Search.js 39]');
         });
     }
 

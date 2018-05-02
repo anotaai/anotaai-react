@@ -46,7 +46,7 @@ class Comprador extends Component {
                     browserHistory.push(URL.LOGIN);
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\public\\register\\Comprador.js 49]');
             });
         }
 
@@ -60,7 +60,7 @@ class Comprador extends Component {
                 browserHistory.push(URL.LOGIN);
             }
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\public\\register\\Comprador.js 63]');
         });
 
     }

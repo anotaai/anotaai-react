@@ -43,7 +43,7 @@ import { connect } from 'react-redux';
                     browserHistory.push(URL.LOGIN);
                  }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\public\\register\\Vendedor.js 46]');
             });
         }
 

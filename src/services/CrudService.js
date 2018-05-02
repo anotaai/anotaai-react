@@ -1,5 +1,4 @@
 import { PAGE_SIZE } from '../helpers/constants'
-import Toast from '../helpers/Toast'
 import AsyncService from './AsyncService'
 
 export default class CrudService {
@@ -14,7 +13,7 @@ export default class CrudService {
             ).then(json => {
                 dispatch(updateState(json.entity));
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [services\\CrudService.js 17]');
             });
         }
     }

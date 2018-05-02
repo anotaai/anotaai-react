@@ -35,7 +35,7 @@ class Search extends Component {
         ClienteConsumidorService.list(this.props.searchState.offset, this.state.nome, this.sendButton).then(response => {
             this.props.list(response);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\consumer\\search\\Search.js 38]');
         });
     }
 
@@ -88,7 +88,7 @@ const mapDispatchToProps = dispatch => {
                     dispatch(remove(USE_CASE.SEARCH_CONSUMER, id));
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\private\\consumer\\search\\Search.js 91]');
             });
         },
         handlePageClick: (offset, reactContext) => {

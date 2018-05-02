@@ -1,5 +1,4 @@
-import CrudService from '../CrudService'
-import Toast from '../../helpers/Toast'
+import CrudService from '../CrudService';
 
 export default class AppointmentBookService extends CrudService {
 
@@ -33,7 +32,7 @@ export default class AppointmentBookService extends CrudService {
             ).then(json => {
                 dispatch(updateAppointmentBooks(json));
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [services\\appointmentbook\\AppointmentBookService.js 36]');
             });
         }
     }

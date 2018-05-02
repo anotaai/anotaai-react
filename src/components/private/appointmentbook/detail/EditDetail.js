@@ -33,7 +33,7 @@ class EditDetail extends Component {
         AppointmentBookService.update(this.props.detailState, this.sendButton).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\appointmentbook\\detail\\EditDetail.js 36]');
         });
     }
 
@@ -45,7 +45,7 @@ class EditDetail extends Component {
                 browserHistory.push(URL.APPOINTMENT_BOOK);
             }
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\appointmentbook\\detail\\EditDetail.js 48]');
         });
 
     }
@@ -107,7 +107,7 @@ const mapDispatchToProps = dispatch => {
                     
                 } 
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\private\\appointmentbook\\detail\\EditDetail.js 110]');
             });
         }
     }

@@ -35,7 +35,7 @@ class RenewPassword extends Component {
                     browserHistory.push(URL.LOGIN);
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\public\\renew\\RenewPassword.js 38]');
             });
         }
     }

@@ -36,7 +36,7 @@ class Search extends Component {
         SectorService.list(this.props.searchState.offset, this.state.nome, this.sendButton).then(response => {
             this.props.list(response);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\sector\\search\\Search.js 39]');
         });
     }
 
@@ -89,7 +89,7 @@ const mapDispatchToProps = dispatch => {
                     dispatch(remove(USE_CASE.SEARCH_SECTOR, id));
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\private\\sector\\search\\Search.js 92]');
             });
         },
         handlePageClick: (offset, reactContext) => {

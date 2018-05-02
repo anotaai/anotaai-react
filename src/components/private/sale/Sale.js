@@ -53,7 +53,7 @@ class Sale extends Component {
             Toast.show(response.messages);
             this.props.clearForm();
         }).catch(erro => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\sale\\Sale.js 56]');
         });
     }   
 

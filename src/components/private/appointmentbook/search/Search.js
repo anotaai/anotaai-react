@@ -35,7 +35,7 @@ class Search extends Component {
         AppointmentBookService.list(this.props.searchState.offset, this.state.descricao, this.sendButton).then(response => {
             this.props.list(response);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\appointmentbook\\search\\Search.js 38]');
         });
     }
 
@@ -90,7 +90,7 @@ const mapDispatchToProps = dispatch => {
                     dispatch(remove(USE_CASE.SEARCH_APPOINTMENT_BOOK, id));
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\private\\appointmentbook\\search\\Search.js 93]');
             });
         },
         handlePageClick: (offset, reactContext) => {

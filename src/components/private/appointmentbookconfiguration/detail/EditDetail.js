@@ -35,7 +35,7 @@ class EditDetail extends Component {
         GroupProductService.update(this.props.detailState,this.sendButton).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\appointmentbookconfiguration\\detail\\EditDetail.js 38]');
         });
     }
 
@@ -48,7 +48,7 @@ class EditDetail extends Component {
                 browserHistory.push(URL.GROUP_PRODUCT);
             }
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\appointmentbookconfiguration\\detail\\EditDetail.js 51]');
         });
     }
 

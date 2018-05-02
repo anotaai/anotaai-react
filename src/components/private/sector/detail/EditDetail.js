@@ -33,7 +33,7 @@ class EditDetail extends Component {
         SectorService.update(this.props.detailState, this.sendButton).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\sector\\detail\\EditDetail.js 36]');
         });
     }
 
@@ -45,7 +45,7 @@ class EditDetail extends Component {
                 browserHistory.push(URL.SECTOR);
             }
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\sector\\detail\\EditDetail.js 48]');
         });
 
     }

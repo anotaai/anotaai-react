@@ -24,7 +24,7 @@ class Settings extends Component {
                     this.props.updatePicture(picture.preview);
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\private\\profile\\Settings.js 27]');
             });
         }
     }

@@ -18,7 +18,7 @@ export default class AddressService {
                         dispatch(updateAddress(address));
                     }
                 }).catch(error => {
-                    Toast.defaultError();
+                    console.log('ERRO [services\\register\\AddressService.js 21]');
                 });
         }
 

@@ -34,7 +34,7 @@ class EditDetail extends Component {
         ProductService.update(newInstance, this.sendButton).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\product\\detail\\EditDetail.js 37]');
         });
     }
 
@@ -46,7 +46,7 @@ class EditDetail extends Component {
                 browserHistory.push(URL.PRODUCT);
             }
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\product\\detail\\EditDetail.js 49]');
         });
     }
     componentWillUnmount() {

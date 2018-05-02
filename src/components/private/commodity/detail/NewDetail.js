@@ -30,7 +30,7 @@ class NewDetail extends Component {
                 pushEncoded(URL.COMMODITY,response.entity.id);
             }
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\commodity\\detail\\NewDetail.js 33]');
         });
     }
 

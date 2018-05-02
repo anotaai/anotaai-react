@@ -30,7 +30,7 @@ class EditDetail extends Component {
         CommodityService.update(this.props.detailState,this.sendButton).then(response => {
             Toast.show(response.messages);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\commodity\\detail\\EditDetail.js 33]');
         });
     }
 
@@ -42,7 +42,7 @@ class EditDetail extends Component {
                 browserHistory.push(URL.COMMODITY);
             }
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\commodity\\detail\\EditDetail.js 45]');
         });
     }
 

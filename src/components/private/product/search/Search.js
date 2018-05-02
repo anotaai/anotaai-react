@@ -38,7 +38,7 @@ class Search extends Component {
         ProductService.list(this.props.searchState.offset, this.state.descricao, this.sendButton).then(response => {
             this.props.list(response);
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\product\\search\\Search.js 40]');
         });
     }
 
@@ -79,7 +79,6 @@ class Search extends Component {
 
 const mapStateToProps = state => {
     return { searchState: state.searchProduct };
-
 }
 
 const mapDispatchToProps = dispatch => {
@@ -94,7 +93,7 @@ const mapDispatchToProps = dispatch => {
                     dispatch(remove(USE_CASE.SEARCH_PRODUCT, id));
                 }
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\private\\product\\search\\Search.js 96]');
             });
         },
         handlePageClick: (offset, reactContext) => {

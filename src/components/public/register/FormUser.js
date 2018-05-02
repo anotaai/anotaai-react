@@ -25,7 +25,7 @@ export default class FormUser extends Component {
                      }
                 })
                 .catch(error => {
-                    Toast.defaultError();
+                    console.log('ERRO [components\\public\\register\\FormUser.js 28]');
                 })
         }
     }

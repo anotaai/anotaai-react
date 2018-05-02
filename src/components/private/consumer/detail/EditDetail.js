@@ -34,7 +34,7 @@ class EditDetail extends Component {
     ClienteConsumidorService.update(newInstance,this.sendButton).then(response => {
       Toast.show(response.messages);
     }).catch(error => {
-      Toast.defaultError();
+      console.log('ERRO [components\\private\\consumer\\detail\\EditDetail.js 37]');
     });
 
   }
@@ -47,7 +47,7 @@ class EditDetail extends Component {
           browserHistory.push(URL.CONSUMER);
         }
       }).catch(error => {
-        Toast.defaultError();
+        console.log('ERRO [components\\private\\consumer\\detail\\EditDetail.js 50]');
       });
   }
 
@@ -63,7 +63,7 @@ class EditDetail extends Component {
           browserHistory.push(URL.CONSUMER);
        }
     }).catch(error => {
-      Toast.defaultError();
+      console.log('ERRO [components\\private\\consumer\\detail\\EditDetail.js 66]');
     });
   }
 

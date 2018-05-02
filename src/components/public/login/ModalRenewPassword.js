@@ -24,7 +24,7 @@ class ModalRenewPassword extends Component {
         this.hideModal();
       }
     }).catch(error => {
-      Toast.defaultError();
+      console.log('ERRO [components\\public\\login\\ModalRenewPassword.js 27]');
     });
   }
 

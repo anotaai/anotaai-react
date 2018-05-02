@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import UserService from '../../../services/UserService';
-import Toast from '../../../helpers/Toast';
 import { URL } from '../../../helpers/constants';
 import { toggleResponsiveMenu }  from '../../../actions/menuActionCreator';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
@@ -17,7 +16,7 @@ class Profile extends Component {
             this.hideResponsiveMenu();
             this.props.logout();
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\profile\\Profile.js 40]');
         });
     }
     

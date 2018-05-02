@@ -27,7 +27,7 @@ class NewDetail extends Component {
                 pushEncoded(URL.APPOINTMENT_BOOK,response.entity.id);
             } 
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\private\\appointmentbook\\detail\\EditDetail.js 30]');
         });
     }
 
@@ -76,7 +76,7 @@ const mapDispatchToProps = dispatch => {
                     pushEncoded(URL.APPOINTMENT_BOOK,response.entity.id);
                 } 
             }).catch(error => {
-                Toast.defaultError();
+                console.log('ERRO [components\\private\\appointmentbook\\detail\\EditDetail.js 79]');
             });
         }
         

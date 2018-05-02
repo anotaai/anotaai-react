@@ -16,7 +16,7 @@ export default class Activate extends Component {
                  browserHistory.push(URL.LOGIN);
             }  
         }).catch(error => {
-            Toast.defaultError();
+            console.log('ERRO [components\\public\\activation\\Activate.js 19]');
             browserHistory.push(URL.LOGIN);
         });
     }
