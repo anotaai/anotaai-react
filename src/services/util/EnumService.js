@@ -1,5 +1,3 @@
-import Toast from '../../helpers/Toast'
-
 export default class EnumService {
 
   static getEndpoint() {
