@@ -36,7 +36,6 @@ class Search extends Component {
             this.props.list(response);
         }).catch(error => {
             console.log('ERRO [components\\private\\commodity\\search\\Search.js 39]');
-            
         });
     }
 
