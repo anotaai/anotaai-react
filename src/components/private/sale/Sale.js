@@ -37,7 +37,7 @@ class Sale extends Component {
             Toast.show('venda.obrigatorio.venda', Icon.WARNING);
             return;
         }
-        if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.folhaCaderneta.clienteConsumidor.id === '') {
+        if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && !this.props.saleState.folhaCaderneta.clienteConsumidor.id) {
             Toast.show('venda.obrigatorio.consumidor', Icon.WARNING);
             return;
         }
