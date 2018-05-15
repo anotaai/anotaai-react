@@ -33,28 +33,29 @@ class Sale extends Component {
 
     save(e) {
         e.preventDefault();
+        let erros = [];
         if (this.props.saleState.produtosSelecionados.length === 0) {
-            Toast.show('venda.obrigatorio.venda', Icon.WARNING);
-            return;
+            erros.push(Toast.build('venda.obrigatorio.venda', Icon.WARNING));
         }
         if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && !this.props.saleState.folhaCaderneta.clienteConsumidor.id) {
-            Toast.show('venda.obrigatorio.consumidor', Icon.WARNING);
-            return;
+            erros.push(Toast.build('venda.obrigatorio.consumidor', Icon.WARNING));
         }
         if (this.props.saleState.showModalState === true && this.props.saleState.valorPagamento === 0) {
-            Toast.show('venda.obrigatorio.valorpagamento', Icon.WARNING);
-            return;
+            erros.push(Toast.build('venda.obrigatorio.valorpagamento', Icon.WARNING));
         }
         if (this.props.saleState.type !== TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.valorPagamento === 0) {
             this.props.showModalToSale();
-            return;
         }
-        SaleService.save(this.props.saleState, this.sendButton).then(response => {
-            Toast.show(response.messages);
-            this.props.clearForm();
-        }).catch(erro => {
-            console.log('ERRO [components\\private\\sale\\Sale.js 56]');
-        });
+        if (erros.length > 0) {
+            SaleService.save(this.props.saleState, this.sendButton).then(response => {
+                Toast.show(response.messages);
+                this.props.clearForm();
+            }).catch(erro => {
+                console.log('ERRO [components\\private\\sale\\Sale.js 56]');
+            });
+        } else {
+            Toast.show(erros);
+        }
     }   
 
     
@@ -91,18 +92,15 @@ class Sale extends Component {
                     submitRef={el => this.sendButton = el} />
                 )
             }
-
             default: return null;
         }
-        
     }
-
-
 }
 
 const mapStateToProps = state => {
     return { saleState: state.sale }
 }
+
 const mapDispatchToProps = dispatch => {
     return {
         handleInputChange: (e) => {
@@ -143,8 +141,8 @@ const mapDispatchToProps = dispatch => {
         getAppointmentBooks: () => {
             dispatch(AppointmentBookService.getAppointmentBooks(updateAppointmentBooks));
         },
-        redirectSaleProduct: (id,e) => {
-            dispatch(redirectSaleProduct(id));
+        redirectSaleProduct: (id, e) => {
+            dispatch(SaleService.initSale(id, redirectSaleProduct));
         },
         hideModalToSale: () => {
             dispatch(hideModalToSale());

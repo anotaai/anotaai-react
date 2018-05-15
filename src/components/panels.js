@@ -72,9 +72,6 @@ export function PanelSale(props) {
             {/* Botões normais */}
 
             <div className="panel-footer-detail hide-on-small-only">
-                <button className="btn waves-effect buttons-space INFO" type="button" onClick={props.addProduct} >
-                    Incluir Produto <i className="material-icons right">shopping_cart</i>
-                </button>
                 <button ref={props.submitRef} className="btn waves-effect buttons-space SUCCESS" type="submit" name="action">
                     Finalizar Venda <i className="material-icons right">send</i>
                 </button>

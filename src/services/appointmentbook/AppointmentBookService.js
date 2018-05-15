@@ -27,7 +27,6 @@ export default class AppointmentBookService extends CrudService {
 
     static getAppointmentBooks(updateAppointmentBooks) {
         return dispatch => {
-
             fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/getappointmentbooks`
             ).then(json => {
                 dispatch(updateAppointmentBooks(json));

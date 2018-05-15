@@ -3,11 +3,8 @@ export default class AsyncService {
 
 
     static fetch(url, components, config) {
-        
         return new Promise((resolve, reject) => {
-
             this.disableComponents(components);
-
             fetch(url, config).then(response => {
                 this.enableComponents(components);
                 resolve(response);
@@ -19,15 +16,19 @@ export default class AsyncService {
     }
 
     static disableComponents(components) {
-        components.forEach(i => {
-            i.setAttribute("disabled", "disabled");
-        });
+        if (components) {
+            components.forEach(i => {
+                i.setAttribute("disabled", "disabled");
+            });
+        }
     }
 
     static enableComponents(components) {
-        components.forEach(i => {
-            i.removeAttribute("disabled", "disabled");
-        });
+        if (components) {
+            components.forEach(i => {
+                i.removeAttribute("disabled", "disabled");
+            });
+        }
     }
 
 }

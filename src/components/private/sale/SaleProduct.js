@@ -26,9 +26,14 @@ export default class SaleProduct extends Component {
                                         setProduct={this.props.setProduct}
                                         autoCompleteSize="input-field col s12 m12 l12" />
                                     <div className="row">
-                                        <div className="input-field col s12 m12 l12">
+                                        <div className="input-field col s6 m6 l6">
                                             <input id="quantidade" value={this.props.quantidade} name="quantidade" onChange={this.props.handleInputChange} type="number" />
                                             <label htmlFor="quantidade" className={this.props.quantidade !== "" ? "active" : ""}>Quantidade</label>
+                                        </div>
+                                        <div className="input-field col s6 m6 l6">
+                                        <button className="btn waves-effect buttons-space INFO" type="button" onClick={this.props.addProduct} >
+                                            Incluir<i className="material-icons right">shopping_cart</i>
+                                        </button>
                                         </div>
                                     </div>
                                     <AutoCompleteConsumer

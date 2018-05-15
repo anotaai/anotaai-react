@@ -8,6 +8,18 @@ export default class SaleService extends CrudService {
         return '/venda'
     }
 
+    static initSale(caderneta, redirectSaleProduct, components) {
+        return dispatch => {
+            AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/initsale`, components, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(caderneta)
+            }).catch(response => {
+                redirectSaleProduct(response);
+            });
+        }
+    }
+
     static save(entity, component) {
         const saleUrl = MAP_SALE_URLS.get(entity.type);
         let tipoVenda = entity.venda;

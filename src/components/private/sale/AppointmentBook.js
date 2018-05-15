@@ -12,8 +12,8 @@ export default class AppointmentBook extends Component {
                         <div className="row center-align">
                         {this.props.cadernetas.map(caderneta =>
                             (<span key={caderneta.id}>
-                                <button className="btn-large waves-effect buttons-space buttons-space-top SUCCESS" type="button" onClick={this.props.redirectSaleProduct.bind(this,caderneta.id)} >
-                                   {caderneta.descricao}   <i className="material-icons right">library_books</i> 
+                                <button className="btn-large waves-effect buttons-space buttons-space-top SUCCESS" type="button" onClick={this.props.redirectSaleProduct.bind(this, caderneta)} >
+                                   {caderneta.descricao}<i className="material-icons right">library_books</i> 
                                  </button>
                              </span> 
                             ))}

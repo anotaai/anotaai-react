@@ -105,7 +105,7 @@ export default function (state = INITIAL_STATE, action) {
                 return state;
             }
 
-            if(newState.produtoSelecionado.id === null) {
+            if (newState.produtoSelecionado.id === null) {
                 Toast.show('produto.required', Icon.WARNING);
                 return state;
             }
@@ -168,15 +168,13 @@ function updatePayment(newState, value) {
     newState.pagamentos.push({id: null , pagamento: { id: null , type: 'AVISTA', pagamento: { id: null, valorPagamento:concatDot(value)} } });
 }
 
-function setSaleRadio(newState,value) {
-    
+function setSaleRadio(newState, value) {
     newState.type = value;
     newState.typeSaleList.forEach(typeSale => {
-        if(typeSale.type === value) {
+        if (typeSale.type === value) {
             typeSale.checked = true;
         } else {
             typeSale.checked = false;
         }
-            
     });
 }
