@@ -149,6 +149,7 @@ export default class UserService {
             newUserInstance.telefone = buildPhone(telefone);
             newUserInstance.senha = Base64Service.encode(senha);
             newUserLoginInstance.usuario = newUserInstance;
+            newUserLoginInstance.keepAlive = keepAlive;
 
             AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/login`, [component] , {
                 method: 'POST',

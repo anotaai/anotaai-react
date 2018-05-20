@@ -14,15 +14,15 @@ export default class SaleService extends CrudService {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(caderneta)
-            }).catch(response => {
-                redirectSaleProduct(response);
+            }).then(venda => {
+                dispatch(redirectSaleProduct(venda.entity))
             });
         }
     }
 
     static save(entity, component) {
         const saleUrl = MAP_SALE_URLS.get(entity.type);
-        let tipoVenda = entity.venda;
+        let tipoVenda = { type: entity.type };
         switch (entity.type) {
             case TYPE_SALE.A_VISTA_ANONIMA:
                 
@@ -34,11 +34,10 @@ export default class SaleService extends CrudService {
                 tipoVenda.folhaCadernetaVenda = {}
                 tipoVenda.folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
                 tipoVenda.folhaCadernetaVenda.folhaCaderneta = entity.folhaCaderneta;
-                tipoVenda.folhaCadernetaVenda.venda = {};
+                tipoVenda.folhaCadernetaVenda.venda = entity.venda;
                 tipoVenda.folhaCadernetaVenda.venda.produtos = entity.produtosSelecionados;
-                tipoVenda.type = entity.type;
                 break;
-        
+                
             default:
                 break;
         }

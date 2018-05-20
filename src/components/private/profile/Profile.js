@@ -12,7 +12,7 @@ class Profile extends Component {
 
     logout(e) {
         e.preventDefault();
-        UserService.logout(this.props.loginState).then(response => {
+        UserService.logout(this.props.loginState.login).then(response => {
             this.hideResponsiveMenu();
             this.props.logout();
         }).catch(error => {

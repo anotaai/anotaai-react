@@ -46,7 +46,7 @@ class Sale extends Component {
         if (this.props.saleState.type !== TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.valorPagamento === 0) {
             this.props.showModalToSale();
         }
-        if (erros.length > 0) {
+        if (erros.length === 0) {
             SaleService.save(this.props.saleState, this.sendButton).then(response => {
                 Toast.show(response.messages);
                 this.props.clearForm();
@@ -141,8 +141,8 @@ const mapDispatchToProps = dispatch => {
         getAppointmentBooks: () => {
             dispatch(AppointmentBookService.getAppointmentBooks(updateAppointmentBooks));
         },
-        redirectSaleProduct: (id, e) => {
-            dispatch(SaleService.initSale(id, redirectSaleProduct));
+        redirectSaleProduct: (caderneta, e) => {
+            dispatch(SaleService.initSale(caderneta, redirectSaleProduct));
         },
         hideModalToSale: () => {
             dispatch(hideModalToSale());

@@ -139,7 +139,8 @@ export default function (state = INITIAL_STATE, action) {
 
         case REDIRECT_SALE_PRODUCT: {
             const newState = createInstance(state);
-            newState.folhaCaderneta.caderneta.id = action.id;
+            newState.folhaCaderneta.caderneta = action.cadernetaVenda.caderneta;
+            newState.venda = action.cadernetaVenda.venda;
             newState.currentPage = 2;
             return newState;
         }

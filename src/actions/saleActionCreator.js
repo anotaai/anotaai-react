@@ -52,8 +52,8 @@ export function updateAppointmentBooks(list) {
     return { type: UPDATE_APPOINTMENT_BOOKS, list }
 }
 
-export function redirectSaleProduct(id) {
-    return { type: REDIRECT_SALE_PRODUCT, id }
+export function redirectSaleProduct(cadernetaVenda) {
+    return { type: REDIRECT_SALE_PRODUCT, cadernetaVenda }
 }
 
 export function showModalToSale() {
