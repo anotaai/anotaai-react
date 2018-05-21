@@ -12,7 +12,8 @@ import Toast from '../../../helpers/Toast'
 import SaleService from '../../../services/sale/SaleService'
 import SaleProductContainer from  './SaleProduct'
 import AppointmentBook from  './AppointmentBook'
-import { TYPE_SALE } from '../../../helpers/constants'
+import { TYPE_SALE, ITEM_MOVIMENTACAO, LOCAL_SALE } from '../../../helpers/constants'
+
 
 
 class Sale extends Component {
@@ -33,32 +34,84 @@ class Sale extends Component {
 
     save(e) {
         e.preventDefault();
-        let erros = [];
-        if (this.props.saleState.produtosSelecionados.length === 0) {
-            erros.push(Toast.build('venda.obrigatorio.venda', Icon.WARNING));
-        }
-        if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && !this.props.saleState.folhaCaderneta.clienteConsumidor.id) {
-            erros.push(Toast.build('venda.obrigatorio.consumidor', Icon.WARNING));
-        }
-        if (this.props.saleState.showModalState === true && this.props.saleState.valorPagamento === 0) {
-            erros.push(Toast.build('venda.obrigatorio.valorpagamento', Icon.WARNING));
-        }
-        if (this.props.saleState.type !== TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.valorPagamento === 0) {
-            this.props.showModalToSale();
-        }
-        if (erros.length === 0) {
+        try {
+            this.validateSale();
+            if (this.props.saleState.type !== TYPE_SALE.ANOTADA_CONSUMIDOR && this.props.saleState.valorPagamento === 0) {
+                this.props.showModalToSale();
+            }
             SaleService.save(this.props.saleState, this.sendButton).then(response => {
                 Toast.show(response.messages);
                 this.props.clearForm();
             }).catch(erro => {
                 console.log('ERRO [components\\private\\sale\\Sale.js 56]');
             });
-        } else {
-            Toast.show(erros);
+        } catch(e) {
+            Toast.show(e);
         }
-    }   
+    }
 
-    
+    validateSale() {
+        let erros = [];
+        if (this.props.saleState.produtosSelecionados.length === 0) {
+            erros.push(Toast.build('venda.obrigatorio.venda', Icon.WARNING));
+        }
+        if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && !this.props.saleState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor.id) {
+            erros.push(Toast.build('venda.obrigatorio.consumidor', Icon.WARNING));
+        }
+        if (this.props.saleState.showModalState === true && this.props.saleState.valorPagamento === 0) {
+            erros.push(Toast.build('venda.obrigatorio.valorpagamento', Icon.WARNING));
+        }
+        if (erros.length > 0) {
+            throw erros;
+        }
+    }
+
+    addItemVenda() {
+        if (this.props.saleState.quantidade === '' || this.props.saleState.quantidade === 0) {
+            Toast.show('quantidade.required', Icon.WARNING);
+            return;
+        }
+        if (this.props.saleState.produtoSelecionado.id === null) {
+            Toast.show('produto.required', Icon.WARNING);
+            return;
+        }
+        const total = this.props.saleState.quantidade * this.props.saleState.produtoSelecionado.precoVenda;
+        let itemVenda = {
+            type: ITEM_MOVIMENTACAO.ITEM_VENDA,
+            venda: this.props.saleState.venda,
+            movimentacaoProduto: { 
+                produto: { 
+                    id: this.props.saleState.produtoSelecionado.id,
+                    descricao: this.props.saleState.produtoSelecionado.descricao, 
+                    codigo: this.props.saleState.produtoSelecionado.codigo,
+                    precoVenda : (this.props.saleState.produtoSelecionado.precoVenda).toFixed(2),
+                    precoTotal: (total).toFixed(2),
+                    descricaoResumida: this.props.saleState.produtoSelecionado.descricaoResumida
+                } , quantidade: this.props.saleState.quantidade
+            }
+        }
+        SaleService.addItemVenda(itemVenda).then(response => {
+            if (response.isValid) {
+                this.props.addProduct(response.entity);
+            } else {
+                Toast.show(response.messages);
+            }
+        });
+    }
+
+    addConsumer(clienteConsumidor) {
+        let folhaCadernetaVenda = {
+            type: LOCAL_SALE.FOLHA_CADERNETA,
+            venda: this.props.saleState.venda,
+            folhaCaderneta: {
+                clienteConsumidor: clienteConsumidor
+            }
+        };
+        SaleService.addConsumer(folhaCadernetaVenda).then(response => {
+            this.props.setConsumer(response.entity);
+        });
+    }
+
     render() {
         switch(this.props.saleState.currentPage) {
             case 1: {
@@ -67,7 +120,6 @@ class Sale extends Component {
                     {... this.props.saleState}
                     cadernetas={this.props.saleState.cadernetas}
                     redirectSaleProduct={this.props.redirectSaleProduct} /> 
-                
                 )
             }
 
@@ -81,9 +133,9 @@ class Sale extends Component {
                     getProduct={this.props.getProduct}
                     setProduct={this.props.setProduct}
                     getConsumer={this.props.getConsumer}
-                    setConsumer={this.props.setConsumer}
+                    setConsumer={this.addConsumer.bind(this)}
                     changeRadio={this.props.changeRadio}
-                    addProduct={this.props.addProduct}
+                    addProduct={this.addItemVenda.bind(this)}
                     hideModalToSale={this.props.hideModalToSale}
                     produtosList={this.props.saleState.produtosList}
                     consumidores={this.props.saleState.consumidores}
@@ -126,8 +178,8 @@ const mapDispatchToProps = dispatch => {
                 dispatch(ClienteConsumidorService.getConsumers(value, updateConsumerList));
             });
         },
-        setConsumer: (clienteConsumidor) => {
-            dispatch(updateConsumerAutoComplete(clienteConsumidor));
+        setConsumer: (folhaCadernetaVenda) => {
+            dispatch(updateConsumerAutoComplete(folhaCadernetaVenda));
         },
         changeRadio: (e) => {
             dispatch(changeRadio(e.target.value));
@@ -135,8 +187,8 @@ const mapDispatchToProps = dispatch => {
         loadEnum: (name, functionUpdate) => {
             dispatch(EnumService.load(name, functionUpdate));
         },
-        addProduct: () => {
-            dispatch(addProduct());
+        addProduct: (itemVenda) => {
+            dispatch(addProduct(itemVenda));
         },
         getAppointmentBooks: () => {
             dispatch(AppointmentBookService.getAppointmentBooks(updateAppointmentBooks));

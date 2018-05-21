@@ -32,16 +32,16 @@ export function updateConsumerList(list) {
     return { type: UPDATE_CONSUMER_LIST_SALE, list }
 }
 
-export function updateConsumerAutoComplete(clienteConsumidor) {
-    return { type: UPDATE_CONSUMER_AUTO_COMPLETE_SALE, clienteConsumidor }
+export function updateConsumerAutoComplete(folhaCadernetaVenda) {
+    return { type: UPDATE_CONSUMER_AUTO_COMPLETE_SALE, folhaCadernetaVenda }
 } 
 
 export function changeRadio(value) {
-    return { type: CHANGE_RADIO_SALE , value}
+    return { type: CHANGE_RADIO_SALE , value }
 }
 
-export function addProduct() {
-    return { type: ADD_PRODUCT }
+export function addProduct(itemVenda) {
+    return { type: ADD_PRODUCT, itemVenda }
 }
 
 export function updateTypeSale(list) {

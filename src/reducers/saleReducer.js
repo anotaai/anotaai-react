@@ -3,14 +3,12 @@ UPDATE_CONSUMER_AUTO_COMPLETE_SALE, UPDATE_CONSUMER_LIST_SALE, CHANGE_RADIO_SALE
 SHOW_MODAL_TO_SALE, HIDE_MODAL_TO_SALE,  UPDATE_TYPE_SALE, UPDATE_APPOINTMENT_BOOKS,
 REDIRECT_SALE_PRODUCT } from '../actions/saleActionCreator'
 import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
-import { Icon } from '../domain/Icon'
-import Toast from '../helpers/Toast'
 import { concatDot } from '../helpers/stringHelper'
-import { TYPE_SALE } from '../helpers/constants'
+import { TYPE_SALE, ITEM_MOVIMENTACAO } from '../helpers/constants'
 
 const INITIAL_STATE = {
     venda : { },
-    folhaCaderneta: { id: null , caderneta: { id: null } , clienteConsumidor: { id: null ,  nomeConsumidor: ''  } } ,
+    folhaCadernetaVenda: { folhaCaderneta: {  id: null , caderneta: { id: null } , clienteConsumidor: { id: null ,  nomeConsumidor: ''  } } } ,
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
     produtosList: [],
@@ -74,20 +72,16 @@ export default function (state = INITIAL_STATE, action) {
         }
 
         case UPDATE_CONSUMER_LIST_SALE: {
-            
             const newState = createInstance(state);
-            
             action.list.forEach(clienteConsumidor => {
                 newState.consumidores.push({id: clienteConsumidor.id, nomeConsumidor: clienteConsumidor.nomeConsumidor});
             });
-
             return newState;
         }
 
         case UPDATE_CONSUMER_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
-            newState.folhaCaderneta.clienteConsumidor.id  = action.clienteConsumidor.id;
-            newState.folhaCaderneta.clienteConsumidor.nomeConsumidor =  action.clienteConsumidor.nomeConsumidor;
+            newState.folhaCadernetaVenda = action.folhaCadernetaVenda;
             return newState;
         }
 
@@ -99,23 +93,10 @@ export default function (state = INITIAL_STATE, action) {
 
         case ADD_PRODUCT: {
             const newState = createInstance(state);
-            
-            if(newState.quantidade === '' || newState.quantidade === 0) {
-                Toast.show('quantidade.required', Icon.WARNING);
-                return state;
-            }
-
-            if (newState.produtoSelecionado.id === null) {
-                Toast.show('produto.required', Icon.WARNING);
-                return state;
-            }
-
-            const total = newState.quantidade * newState.produtoSelecionado.precoVenda;
-
-            newState.produtosSelecionados.push( { type: 'ITEM_VENDA',  movimentacaoProduto: { produto: { id: newState.produtoSelecionado.id,  descricao: newState.produtoSelecionado.descricao, 
-                 codigo: newState.produtoSelecionado.codigo, precoVenda : (newState.produtoSelecionado.precoVenda).toFixed(2), precoTotal: (total).toFixed(2), descricaoResumida: newState.produtoSelecionado.descricaoResumida  } , quantidade: newState.quantidade}});
-            
-            newState.valorTotal += (newState.produtoSelecionado.precoVenda * newState.quantidade );
+            action.itemVenda.venda = null;
+            action.itemVenda.type = ITEM_MOVIMENTACAO.ITEM_VENDA;
+            newState.produtosSelecionados.push(action.itemVenda);
+            newState.valorTotal += (newState.produtoSelecionado.precoVenda * newState.quantidade);
             newState.quantidadeTotal += Number(newState.quantidade);
             newState.produtoSelecionado.id = '';
             newState.produtoSelecionado.descricao = '';
@@ -139,7 +120,7 @@ export default function (state = INITIAL_STATE, action) {
 
         case REDIRECT_SALE_PRODUCT: {
             const newState = createInstance(state);
-            newState.folhaCaderneta.caderneta = action.cadernetaVenda.caderneta;
+            newState.folhaCadernetaVenda.folhaCaderneta.caderneta = action.cadernetaVenda.caderneta;
             newState.venda = action.cadernetaVenda.venda;
             newState.currentPage = 2;
             return newState;

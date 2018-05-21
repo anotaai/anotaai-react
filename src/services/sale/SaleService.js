@@ -15,9 +15,33 @@ export default class SaleService extends CrudService {
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(caderneta)
             }).then(venda => {
-                dispatch(redirectSaleProduct(venda.entity))
+                dispatch(redirectSaleProduct(venda.entity));
             });
         }
+    }
+
+    static addItemVenda(itemVenda, components) {
+        return new Promise((resolve, reject) => {
+            AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/addproduct`, components, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(itemVenda)
+            }).then(response => {
+                resolve(response);
+            });
+        });
+    }
+
+    static addConsumer(folhaCadernetaVenda, components) {
+        return new Promise((resolve, reject) => {
+            AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/addconsumer`, components, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(folhaCadernetaVenda)
+            }).then(response => {
+                resolve(response);
+            });
+        });
     }
 
     static save(entity, component) {
@@ -25,15 +49,15 @@ export default class SaleService extends CrudService {
         let tipoVenda = { type: entity.type };
         switch (entity.type) {
             case TYPE_SALE.A_VISTA_ANONIMA:
-                
+
                 break;
             case TYPE_SALE.A_VISTA_CONSUMIDOR:
 
                 break;
             case TYPE_SALE.ANOTADA_CONSUMIDOR:
                 tipoVenda.folhaCadernetaVenda = {}
+                tipoVenda.folhaCadernetaVenda = entity.folhaCadernetaVenda;
                 tipoVenda.folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
-                tipoVenda.folhaCadernetaVenda.folhaCaderneta = entity.folhaCaderneta;
                 tipoVenda.folhaCadernetaVenda.venda = entity.venda;
                 tipoVenda.folhaCadernetaVenda.venda.produtos = entity.produtosSelecionados;
                 break;
@@ -48,6 +72,4 @@ export default class SaleService extends CrudService {
             body: JSON.stringify(tipoVenda)
         });
     }
-
-    
 }
