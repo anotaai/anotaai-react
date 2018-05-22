@@ -8,7 +8,18 @@ import { TYPE_SALE, ITEM_MOVIMENTACAO } from '../helpers/constants'
 
 const INITIAL_STATE = {
     venda : { },
-    folhaCadernetaVenda: { folhaCaderneta: {  id: null , caderneta: { id: null } , clienteConsumidor: { id: null ,  nomeConsumidor: ''  } } } ,
+    folhaCadernetaVenda: {
+        folhaCaderneta: {  
+            id: null , 
+            caderneta: { 
+                id: null 
+            } , 
+            clienteConsumidor: { 
+                id: null,  
+                nomeConsumidor: ''
+            }
+        }
+    } ,
     produtoSelecionado: { id: null,  descricao: '' ,  quantidade: '' , codigo: '' , precoVenda : 0 },
     quantidade: '',
     produtosList: [],
@@ -33,7 +44,7 @@ export default function (state = INITIAL_STATE, action) {
         case HANDLE_INPUT_CHANGE_SALE: {
             const newState = getObjectNewState(action.name, action.value, state);
             
-            if(action.name === 'valorPagamento') {
+            if (action.name === 'valorPagamento') {
               updatePayment(newState,action.value);
             }
            
@@ -101,14 +112,13 @@ export default function (state = INITIAL_STATE, action) {
             newState.produtoSelecionado.id = '';
             newState.produtoSelecionado.descricao = '';
             newState.quantidade = '';
-            
             return newState;
         }
 
         case UPDATE_TYPE_SALE: {
             const newState = createInstance(state); 
             newState.typeSaleList = action.list;
-            setSaleRadio(newState,'A_VISTA_ANONIMA');
+            setSaleRadio(newState, TYPE_SALE.A_VISTA_ANONIMA);
             return newState;
         }
 

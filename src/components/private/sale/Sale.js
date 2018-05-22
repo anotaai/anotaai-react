@@ -100,13 +100,10 @@ class Sale extends Component {
     }
 
     addConsumer(clienteConsumidor) {
-        let folhaCadernetaVenda = {
-            type: LOCAL_SALE.FOLHA_CADERNETA,
-            venda: this.props.saleState.venda,
-            folhaCaderneta: {
-                clienteConsumidor: clienteConsumidor
-            }
-        };
+        let folhaCadernetaVenda = this.props.saleState.folhaCadernetaVenda;
+        folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = clienteConsumidor;
+        folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
+        folhaCadernetaVenda.venda = this.props.saleState.venda;
         SaleService.addConsumer(folhaCadernetaVenda).then(response => {
             this.props.setConsumer(response.entity);
         });
