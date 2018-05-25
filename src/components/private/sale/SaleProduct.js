@@ -66,11 +66,11 @@ export default class SaleProduct extends Component {
                                                 <thead>
                                                     <tr>
                                                         <th className="row-th">Item</th>
-                                                        <th className="row-th">Código</th>
+                                                        <th className="row-th">Cód</th>
                                                         <th className="row-th">Produto</th>
-                                                        <th className="row-th">Quantidade</th>
-                                                        <th className="row-th">Valor R$</th>
-                                                        <th className="row-th">Total R$</th>
+                                                        <th className="row-th">Qtd</th>
+                                                        <th className="row-th">Preço</th>
+                                                        <th className="row-th">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -90,8 +90,11 @@ export default class SaleProduct extends Component {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col s12 offset-m7 offset-l7 m5 l5">
-                                            <h5 className="sales-total"> Total: {this.props.valorTotal} R$ </h5>
+                                        <div className="col s12 offset-m7 offset-l5 m5 l3">
+                                            <h5> Total: </h5>
+                                        </div>
+                                        <div className="col s12 offset-m7 offset-8 m5 l4">
+                                            <h5 className="sales-total"> {this.props.valorTotal} </h5>
                                         </div>
                                     </div>
                                 </div>
@@ -105,12 +108,13 @@ export default class SaleProduct extends Component {
                                 normalAlign="row"
                                 hideModal={this.props.hideModalToSale}
                                 showModalState={this.props.showModalState}
-                                content={
+                                content = {
                                   <FormPayment
                                     quantidadeTotal={this.props.quantidadeTotal}
                                     valorPagamento={this.props.valorPagamento}
                                     valorTotal={this.props.valorTotal}
-                                    handleNumericChange={this.props.handleNumericChange} />} 
+                                    handleNumericChange={this.props.handleNumericChange} />
+                                } 
                             />
                         </form>
                     </div>
@@ -124,22 +128,19 @@ export default class SaleProduct extends Component {
 
 export function FormPayment(props) {
     return (
-         
-            <span>
-                <div className="col s12 m12 l12">
-                  <label className="label-detail"> Valor Total </label>
-                  <label>{props.valorTotal} </label>   
-                </div>
-                <div className="col s12 m12 l12">
-                   <label className="label-detail"> Qtd Itens </label>
-                   <label>{props.quantidadeTotal} </label> 
-                </div>
-                <div className="input-field col s12 m12 l12" style={{marginTop:'30px'}}>
-                    <label htmlFor="valorPagamento" className="active">Valor Pago</label>
-                    <SimpleCurrencyInput id="valorPagamento" value={props.valorPagamento} unit="R$" name="valorPagamento" onInputChange={props.handleNumericChange.bind(this, 'valorPagamento')} />
-                </div>
-
-            </span>
-        
+        <span>
+            <div className="col s12 m12 l12">
+                <label className="label-detail"> Valor Total </label>
+                <label>{props.valorTotal} </label>   
+            </div>
+            <div className="col s12 m12 l12">
+                <label className="label-detail"> Qtd Itens </label>
+                <label>{props.quantidadeTotal} </label> 
+            </div>
+            <div className="input-field col s12 m12 l12" style={{marginTop:'30px'}}>
+                <label htmlFor="valorPagamento" className="active">Valor Pago</label>
+                <SimpleCurrencyInput id="valorPagamento" value={props.valorPagamento} unit="R$" name="valorPagamento" onInputChange={props.handleNumericChange.bind(this, 'valorPagamento')} />
+            </div>
+        </span>
     )
 }

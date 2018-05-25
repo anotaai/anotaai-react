@@ -36,7 +36,6 @@ const INITIAL_STATE = {
     showModalState: false
 }
 
-
 export default function (state = INITIAL_STATE, action) {
 
     switch (action.type) {
@@ -47,7 +46,7 @@ export default function (state = INITIAL_STATE, action) {
             if (action.name === 'valorPagamento') {
               updatePayment(newState,action.value);
             }
-           
+            
             return newState;
         }
 
@@ -89,7 +88,7 @@ export default function (state = INITIAL_STATE, action) {
             });
             return newState;
         }
-
+        
         case UPDATE_CONSUMER_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
             newState.folhaCadernetaVenda = action.folhaCadernetaVenda;

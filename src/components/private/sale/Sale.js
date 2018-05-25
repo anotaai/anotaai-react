@@ -14,8 +14,6 @@ import SaleProductContainer from  './SaleProduct'
 import AppointmentBook from  './AppointmentBook'
 import { TYPE_SALE, ITEM_MOVIMENTACAO, LOCAL_SALE } from '../../../helpers/constants'
 
-
-
 class Sale extends Component {
 
     constructor() {
@@ -92,6 +90,7 @@ class Sale extends Component {
         }
         SaleService.addItemVenda(itemVenda).then(response => {
             if (response.isValid) {
+                response.entity.movimentacaoProduto.produto.precoTotal = (total).toFixed(2);
                 this.props.addProduct(response.entity);
             } else {
                 Toast.show(response.messages);
