@@ -10,9 +10,9 @@ CHANGE_RADIO_SALE = 'change_radio_sale',
 UPDATE_APPOINTMENT_BOOKS = 'update_appointment_books',
 REDIRECT_SALE_PRODUCT = 'redirect_sale_product',
 SHOW_MODAL_TO_SALE = 'show_modal_to_sale',
-HIDE_MODAL_TO_SALE = 'hide_modal_to_sale'
+HIDE_MODAL_TO_SALE = 'hide_modal_to_sale';
 
-export function handleInputChange(name,value) {
+export function handleInputChange(name, value) {
     return { type: HANDLE_INPUT_CHANGE_SALE , name , value }
 }
 
@@ -52,8 +52,8 @@ export function updateAppointmentBooks(list) {
     return { type: UPDATE_APPOINTMENT_BOOKS, list }
 }
 
-export function redirectSaleProduct(cadernetaVenda) {
-    return { type: REDIRECT_SALE_PRODUCT, cadernetaVenda }
+export function redirectSaleProduct(venda) {
+    return { type: REDIRECT_SALE_PRODUCT, venda }
 }
 
 export function showModalToSale() {

@@ -49,23 +49,18 @@ export default class SaleService extends CrudService {
         let tipoVenda = { type: entity.type };
         switch (entity.type) {
             case TYPE_SALE.A_VISTA_ANONIMA:
-
+                tipoVenda.cadernetaVenda = entity.cadernetaVenda;
+                tipoVenda.cadernetaVenda.venda = entity.venda;
                 break;
             case TYPE_SALE.A_VISTA_CONSUMIDOR:
-
-                break;
             case TYPE_SALE.ANOTADA_CONSUMIDOR:
-                tipoVenda.folhaCadernetaVenda = {}
                 tipoVenda.folhaCadernetaVenda = entity.folhaCadernetaVenda;
-                tipoVenda.folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
                 tipoVenda.folhaCadernetaVenda.venda = entity.venda;
-                tipoVenda.folhaCadernetaVenda.venda.produtos = entity.produtosSelecionados;
                 break;
                 
             default:
                 break;
         }
-
         return AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}${saleUrl}`, [component], {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },

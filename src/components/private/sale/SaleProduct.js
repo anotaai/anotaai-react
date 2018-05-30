@@ -37,7 +37,7 @@ export default class SaleProduct extends Component {
                                         </div>
                                     </div>
                                     <AutoCompleteConsumer
-                                        nomeConsumidor={this.props.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor.nomeConsumidor}
+                                        nomeConsumidor={this.props.consumidor.nomeConsumidor}
                                         consumidores={this.props.consumidores}
                                         getConsumer={this.props.getConsumer}
                                         setConsumer={this.props.setConsumer}

@@ -41,8 +41,7 @@ export default class Toast {
         //var messageStr = message.isKey ? translateMessage(message.key, message.params) : message.text;
         const messageStr = this.translateMessage(message.key, message.params);
 
-        
-       switch(message.type.type) {
+        switch(message.type.type) {
             case 'ERROR': {
                 toast.error(this.showTag(messageStr));
                 break;
@@ -60,7 +59,7 @@ export default class Toast {
                 break;
             }
             default:  
-                toast.error(this.showTag(messageStr));;
+                toast.error(this.showTag(messageStr));
         }
     }
 

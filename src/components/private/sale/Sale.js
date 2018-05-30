@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleInputChange, clearForm, updateProductAutoComplete, updateProductList,
-updateConsumerAutoComplete, updateConsumerList, changeRadio, updateTypeSale, 
+updateConsumerAutoComplete, updateConsumerList, changeRadio, updateTypeSale,
 addProduct, updateAppointmentBooks, redirectSaleProduct, showModalToSale, hideModalToSale } from '../../../actions/saleActionCreator'
 import ProductService from '../../../services/product/ProductService'
 import ClienteConsumidorService from '../../../services/consumer/ClienteConsumidorService'
@@ -50,7 +50,7 @@ class Sale extends Component {
 
     validateSale() {
         let erros = [];
-        if (this.props.saleState.produtosSelecionados.length === 0) {
+        if (this.props.saleState.venda.produtos.length === 0) {
             erros.push(Toast.build('venda.obrigatorio.venda', Icon.WARNING));
         }
         if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && !this.props.saleState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor.id) {
@@ -65,47 +65,53 @@ class Sale extends Component {
     }
 
     addItemVenda() {
+        var erros = [];
         if (this.props.saleState.quantidade === '' || this.props.saleState.quantidade === 0) {
-            Toast.show('quantidade.required', Icon.WARNING);
-            return;
+            erros.push(Toast.build('quantidade.required', Icon.ERROR));
         }
         if (this.props.saleState.produtoSelecionado.id === null) {
-            Toast.show('produto.required', Icon.WARNING);
-            return;
+            erros.push(Toast.build('produto.required', Icon.ERROR));
         }
-        const total = this.props.saleState.quantidade * this.props.saleState.produtoSelecionado.precoVenda;
-        let itemVenda = {
-            type: ITEM_MOVIMENTACAO.ITEM_VENDA,
-            venda: this.props.saleState.venda,
-            movimentacaoProduto: { 
-                produto: { 
-                    id: this.props.saleState.produtoSelecionado.id,
-                    descricao: this.props.saleState.produtoSelecionado.descricao, 
-                    codigo: this.props.saleState.produtoSelecionado.codigo,
-                    precoVenda : (this.props.saleState.produtoSelecionado.precoVenda).toFixed(2),
-                    precoTotal: (total).toFixed(2),
-                    descricaoResumida: this.props.saleState.produtoSelecionado.descricaoResumida
-                } , quantidade: this.props.saleState.quantidade
+        if (erros.length === 0) {
+            const total = this.props.saleState.quantidade * this.props.saleState.produtoSelecionado.precoVenda;
+            let itemVenda = {
+                type: ITEM_MOVIMENTACAO.ITEM_VENDA,
+                venda: this.props.saleState.venda,
+                movimentacaoProduto: { 
+                    produto: { 
+                        id: this.props.saleState.produtoSelecionado.id,
+                        descricao: this.props.saleState.produtoSelecionado.descricao, 
+                        codigo: this.props.saleState.produtoSelecionado.codigo,
+                        precoVenda : (this.props.saleState.produtoSelecionado.precoVenda).toFixed(2),
+                        precoTotal: (total).toFixed(2),
+                        descricaoResumida: this.props.saleState.produtoSelecionado.descricaoResumida
+                    } , quantidade: this.props.saleState.quantidade
+                }
             }
+            SaleService.addItemVenda(itemVenda).then(response => {
+                if (response.isValid) {
+                    response.entity.movimentacaoProduto.produto.precoTotal = (total).toFixed(2);
+                    this.props.addProduct(response.entity);
+                } else {
+                    Toast.show(response.messages);
+                }
+            });
+        } else {
+            Toast.show(erros);
         }
-        SaleService.addItemVenda(itemVenda).then(response => {
-            if (response.isValid) {
-                response.entity.movimentacaoProduto.produto.precoTotal = (total).toFixed(2);
-                this.props.addProduct(response.entity);
-            } else {
-                Toast.show(response.messages);
-            }
-        });
     }
 
     addConsumer(clienteConsumidor) {
         let folhaCadernetaVenda = this.props.saleState.folhaCadernetaVenda;
         folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = clienteConsumidor;
-        folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
         folhaCadernetaVenda.venda = this.props.saleState.venda;
         SaleService.addConsumer(folhaCadernetaVenda).then(response => {
             this.props.setConsumer(response.entity);
         });
+    }
+
+    removeConsumer() {
+        
     }
 
     render() {
@@ -118,7 +124,6 @@ class Sale extends Component {
                     redirectSaleProduct={this.props.redirectSaleProduct} /> 
                 )
             }
-
             case 2: {
                 return (
                   <SaleProductContainer
@@ -136,7 +141,7 @@ class Sale extends Component {
                     produtosList={this.props.saleState.produtosList}
                     consumidores={this.props.saleState.consumidores}
                     typeSaleList={this.props.saleState.typeSaleList}
-                    produtos={this.props.saleState.produtosSelecionados}
+                    produtos={this.props.saleState.venda.produtos}
                     submitRef={el => this.sendButton = el} />
                 )
             }

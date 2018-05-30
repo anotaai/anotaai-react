@@ -23,7 +23,7 @@ class NewDetail extends Component {
     save(e) {
 
         e.preventDefault();
-
+        this.props.detailState.dataEntrada = new Date(this.props.detailState.dataEntrada);
         CommodityService.save(this.props.detailState, this.sendButton).then(response => {
             Toast.show(response.messages);
             if (response.isValid) {
