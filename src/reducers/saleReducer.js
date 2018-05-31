@@ -1,15 +1,32 @@
-import { HANDLE_INPUT_CHANGE_SALE, CLEAR_FORM_SALE, UPDATE_PRODUCT_LIST_SALE, UPDATE_PRODUCT_AUTO_COMPLETE_SALE,
-UPDATE_CONSUMER_AUTO_COMPLETE_SALE, UPDATE_CONSUMER_LIST_SALE, CHANGE_RADIO_SALE, ADD_PRODUCT,
-SHOW_MODAL_TO_SALE, HIDE_MODAL_TO_SALE,  UPDATE_TYPE_SALE, UPDATE_APPOINTMENT_BOOKS,
-REDIRECT_SALE_PRODUCT } from '../actions/saleActionCreator'
-import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper'
-import { concatDot } from '../helpers/stringHelper'
-import { TYPE_SALE, ITEM_MOVIMENTACAO, LOCAL_SALE } from '../helpers/constants'
+import { getObjectNewState, createInstance, clearAllPropertiesObject } from '../helpers/jsonHelper';
+import { concatDot } from '../helpers/stringHelper';
+import { TYPE_SALE, ITEM_MOVIMENTACAO, LOCAL_SALE } from '../helpers/constants';
+import {
+    HANDLE_INPUT_CHANGE_SALE, 
+    CLEAR_FORM_SALE, 
+    UPDATE_PRODUCT_LIST_SALE, 
+    UPDATE_PRODUCT_AUTO_COMPLETE_SALE,
+    UPDATE_CONSUMER_AUTO_COMPLETE_SALE, 
+    UPDATE_CONSUMER_LIST_SALE, 
+    CHANGE_RADIO_SALE, 
+    ADD_PRODUCT,
+    SHOW_MODAL_TO_SALE, 
+    HIDE_MODAL_TO_SALE, 
+    UPDATE_TYPE_SALE, 
+    UPDATE_APPOINTMENT_BOOKS,
+    REDIRECT_SALE_PRODUCT,
+    UPDATE_FOLHA_CADERNETA_VENDA
+} from '../actions/saleActionCreator';
 
 const INITIAL_STATE = {
     venda : {  produtos: [] },
     folhaCadernetaVenda: {
-        type: LOCAL_SALE.FOLHA_CADERNETA
+        type: LOCAL_SALE.FOLHA_CADERNETA,
+        folhaCaderneta: {
+            caderneta: null,
+            clienteConsumidor: null
+        },
+        venda: null
     },
     cadernetaVenda: {
         type: LOCAL_SALE.CADERNETA
@@ -19,7 +36,7 @@ const INITIAL_STATE = {
     produtosList: [],
     consumidores: [],
     typeSaleList: [],
-    caderneta: {},
+    caderneta: null,
     consumidor: { nomeConsumidor: '' },
     cadernetas: [],
     pagamentos: [],
@@ -29,7 +46,7 @@ const INITIAL_STATE = {
     valorPagamento: 0,
     type: TYPE_SALE.A_VISTA_ANONIMA,
     showModalState: false
-}
+};
 
 export default function (state = INITIAL_STATE, action) {
 
@@ -63,26 +80,23 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_PRODUCT_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
-            newState.produtoSelecionado.id = action.product.id;
-            newState.produtoSelecionado.descricao = action.product.descricao;
-            newState.produtoSelecionado.codigo = action.product.codigo;
-            newState.produtoSelecionado.precoVenda = action.product.precoVenda;
-            newState.produtoSelecionado.descricaoResumida = action.product.descricaoResumida; 
+            newState.produtoSelecionado = action.product;
             return newState;
         }
 
         case UPDATE_CONSUMER_LIST_SALE: {
             const newState = createInstance(state);
             action.list.forEach(clienteConsumidor => {
-                newState.consumidores.push({id: clienteConsumidor.id, nomeConsumidor: clienteConsumidor.nomeConsumidor});
+                newState.consumidores.push(clienteConsumidor);
             });
             return newState;
         }
 
         case UPDATE_CONSUMER_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
-            newState.folhaCadernetaVenda = action.folhaCadernetaVenda;
-            newState.folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
+            newState.folhaCadernetaVenda.venda = newState.venda;
+            newState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = action.clienteConsumidor;
+            newState.folhaCadernetaVenda.folhaCaderneta.caderneta = newState.caderneta;
             return newState;
         }
 
@@ -135,6 +149,11 @@ export default function (state = INITIAL_STATE, action) {
         case HIDE_MODAL_TO_SALE: {
             const newState = createInstance(state);
             newState.showModalState = false;
+            return newState;
+        }
+
+        case UPDATE_FOLHA_CADERNETA_VENDA: {
+            const newState = createInstance(state);
             return newState;
         }
 

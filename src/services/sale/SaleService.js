@@ -1,5 +1,5 @@
 import CrudService from '../CrudService'
-import { MAP_SALE_URLS, TYPE_SALE, LOCAL_SALE } from '../../helpers/constants'
+import { MAP_SALE_URLS, TYPE_SALE } from '../../helpers/constants'
 import AsyncService from '../AsyncService'
 
 export default class SaleService extends CrudService {
@@ -8,16 +8,8 @@ export default class SaleService extends CrudService {
         return '/venda'
     }
 
-    static initSale(caderneta, redirectSaleProduct, components) {
-        return dispatch => {
-            AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/initsale`, components, {
-                method: 'POST',
-                headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(caderneta)
-            }).then(venda => {
-                dispatch(redirectSaleProduct(venda.entity));
-            });
-        }
+    static initSale(caderneta, ...components) {
+        return AsyncService.post(`${this.getEndpoint()}/initsale`, caderneta, components); 
     }
 
     static addItemVenda(itemVenda, components) {

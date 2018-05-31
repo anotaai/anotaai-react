@@ -8,7 +8,7 @@ export default class AppointmentBook extends Component {
             <div className="space-container">
                 <div className="container">
                     <PanelHeader icon="mode_edit" label="Seleção Caderneta para Venda" />
-                    <div className="panel">
+                    <div className="panel" key="books">
                         <div className="row center-align">
                         {this.props.cadernetas.map(caderneta =>
                             (<span key={caderneta.id}>

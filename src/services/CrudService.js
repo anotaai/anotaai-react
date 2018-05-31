@@ -4,7 +4,6 @@ import AsyncService from './AsyncService'
 export default class CrudService {
 
     static findById(id, updateState) {
-
         return dispatch => {
             fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/${id}`).then(json => {
                 dispatch(updateState(json.entity));

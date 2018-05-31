@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handleInputChange, clearForm, updateProductAutoComplete, updateProductList,
-updateConsumerAutoComplete, updateConsumerList, changeRadio, updateTypeSale,
-addProduct, updateAppointmentBooks, redirectSaleProduct, showModalToSale, hideModalToSale } from '../../../actions/saleActionCreator'
 import ProductService from '../../../services/product/ProductService'
 import ClienteConsumidorService from '../../../services/consumer/ClienteConsumidorService'
 import EnumService from '../../../services/util/EnumService'
@@ -12,7 +9,22 @@ import Toast from '../../../helpers/Toast'
 import SaleService from '../../../services/sale/SaleService'
 import SaleProductContainer from  './SaleProduct'
 import AppointmentBook from  './AppointmentBook'
-import { TYPE_SALE, ITEM_MOVIMENTACAO, LOCAL_SALE } from '../../../helpers/constants'
+import { TYPE_SALE, ITEM_MOVIMENTACAO } from '../../../helpers/constants'
+import { 
+    handleInputChange, 
+    clearForm, 
+    updateProductAutoComplete, 
+    updateProductList,
+    updateConsumerAutoComplete, 
+    updateConsumerList, 
+    changeRadio, 
+    updateTypeSale,
+    addProduct, 
+    updateAppointmentBooks, 
+    redirectSaleProduct, 
+    showModalToSale, 
+    hideModalToSale 
+} from '../../../actions/saleActionCreator'
 
 class Sale extends Component {
 
@@ -28,6 +40,13 @@ class Sale extends Component {
     componentDidMount() {
         this.props.loadEnum('tipovenda', updateTypeSale);
         this.props.getAppointmentBooks();
+    }
+
+    selectCommodity(caderneta) {
+        SaleService.initSale(caderneta, this.props.books).then(response => {
+            console.log(response);
+            this.props.redirectSaleProduct(response.entity);
+        });
     }
 
     save(e) {
@@ -53,7 +72,7 @@ class Sale extends Component {
         if (this.props.saleState.venda.produtos.length === 0) {
             erros.push(Toast.build('venda.obrigatorio.venda', Icon.WARNING));
         }
-        if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && !this.props.saleState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor.id) {
+        if (this.props.saleState.type === TYPE_SALE.ANOTADA_CONSUMIDOR && !this.props.saleState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor) {
             erros.push(Toast.build('venda.obrigatorio.consumidor', Icon.WARNING));
         }
         if (this.props.saleState.showModalState === true && this.props.saleState.valorPagamento === 0) {
@@ -101,17 +120,15 @@ class Sale extends Component {
         }
     }
 
-    addConsumer(clienteConsumidor) {
-        let folhaCadernetaVenda = this.props.saleState.folhaCadernetaVenda;
-        folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = clienteConsumidor;
-        folhaCadernetaVenda.venda = this.props.saleState.venda;
-        SaleService.addConsumer(folhaCadernetaVenda).then(response => {
-            this.props.setConsumer(response.entity);
-        });
-    }
-
     removeConsumer() {
         
+    }
+
+    addConsumer(clienteConsumidor) {
+        this.props.setConsumer(clienteConsumidor);
+        SaleService.addConsumer(this.props.saleState.folhaCadernetaVenda).then(response => {
+            this.props.updateFolhaCadernetaVenda(response.entity);
+        });
     }
 
     render() {
@@ -121,7 +138,7 @@ class Sale extends Component {
                   <AppointmentBook 
                     {... this.props.saleState}
                     cadernetas={this.props.saleState.cadernetas}
-                    redirectSaleProduct={this.props.redirectSaleProduct} /> 
+                    redirectSaleProduct={this.selectCommodity.bind(this)} /> 
                 )
             }
             case 2: {
@@ -179,8 +196,8 @@ const mapDispatchToProps = dispatch => {
                 dispatch(ClienteConsumidorService.getConsumers(value, updateConsumerList));
             });
         },
-        setConsumer: (folhaCadernetaVenda) => {
-            dispatch(updateConsumerAutoComplete(folhaCadernetaVenda));
+        setConsumer: (clienteConsumidor) => {
+            dispatch(updateConsumerAutoComplete(clienteConsumidor));
         },
         changeRadio: (e) => {
             dispatch(changeRadio(e.target.value));
@@ -194,8 +211,8 @@ const mapDispatchToProps = dispatch => {
         getAppointmentBooks: () => {
             dispatch(AppointmentBookService.getAppointmentBooks(updateAppointmentBooks));
         },
-        redirectSaleProduct: (caderneta, e) => {
-            dispatch(SaleService.initSale(caderneta, redirectSaleProduct));
+        redirectSaleProduct: (venda) => {
+            dispatch(redirectSaleProduct(venda));
         },
         hideModalToSale: () => {
             dispatch(hideModalToSale());

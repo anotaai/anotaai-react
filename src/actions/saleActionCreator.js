@@ -1,16 +1,18 @@
-export const HANDLE_INPUT_CHANGE_SALE = 'handle_input_change_sale', 
-CLEAR_FORM_SALE = 'clear_form_sale',
-UPDATE_PRODUCT_LIST_SALE = 'update_product_list_sale',
-UPDATE_PRODUCT_AUTO_COMPLETE_SALE = 'update_product_auto_complete_sale',
-UPDATE_CONSUMER_AUTO_COMPLETE_SALE = 'update_consumer_auto_complete_sale',
-UPDATE_CONSUMER_LIST_SALE = 'update_consumer_list_sale',
-ADD_PRODUCT = 'add_product',
-UPDATE_TYPE_SALE = 'update_type_sale',
-CHANGE_RADIO_SALE = 'change_radio_sale',
-UPDATE_APPOINTMENT_BOOKS = 'update_appointment_books',
-REDIRECT_SALE_PRODUCT = 'redirect_sale_product',
-SHOW_MODAL_TO_SALE = 'show_modal_to_sale',
-HIDE_MODAL_TO_SALE = 'hide_modal_to_sale';
+export const 
+    HANDLE_INPUT_CHANGE_SALE = 'handle_input_change_sale', 
+    CLEAR_FORM_SALE = 'clear_form_sale',
+    UPDATE_PRODUCT_LIST_SALE = 'update_product_list_sale',
+    UPDATE_PRODUCT_AUTO_COMPLETE_SALE = 'update_product_auto_complete_sale',
+    UPDATE_CONSUMER_AUTO_COMPLETE_SALE = 'update_consumer_auto_complete_sale',
+    UPDATE_CONSUMER_LIST_SALE = 'update_consumer_list_sale',
+    ADD_PRODUCT = 'add_product',
+    UPDATE_TYPE_SALE = 'update_type_sale',
+    CHANGE_RADIO_SALE = 'change_radio_sale',
+    UPDATE_APPOINTMENT_BOOKS = 'update_appointment_books',
+    REDIRECT_SALE_PRODUCT = 'redirect_sale_product',
+    SHOW_MODAL_TO_SALE = 'show_modal_to_sale',
+    HIDE_MODAL_TO_SALE = 'hide_modal_to_sale',
+    UPDATE_FOLHA_CADERNETA_VENDA = 'update_folha_caderneta_venda';
 
 export function handleInputChange(name, value) {
     return { type: HANDLE_INPUT_CHANGE_SALE , name , value }
@@ -32,8 +34,8 @@ export function updateConsumerList(list) {
     return { type: UPDATE_CONSUMER_LIST_SALE, list }
 }
 
-export function updateConsumerAutoComplete(folhaCadernetaVenda) {
-    return { type: UPDATE_CONSUMER_AUTO_COMPLETE_SALE, folhaCadernetaVenda }
+export function updateConsumerAutoComplete(clienteConsumidor) {
+    return { type: UPDATE_CONSUMER_AUTO_COMPLETE_SALE, clienteConsumidor }
 } 
 
 export function changeRadio(value) {
@@ -61,5 +63,9 @@ export function showModalToSale() {
 }
 
 export function hideModalToSale() {
-    return { type: HIDE_MODAL_TO_SALE  }
+    return { type: HIDE_MODAL_TO_SALE }
+}
+
+export function updateFolhaCadernetaVenda(folhaCadernetaVenda) {
+    return { type: UPDATE_FOLHA_CADERNETA_VENDA, folhaCadernetaVenda }
 }

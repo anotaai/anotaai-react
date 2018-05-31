@@ -79,7 +79,7 @@ class DeleteCommodity extends Component {
                                     </table>
                                 </div>
                             </div>
-                            <PanelFooterDetail newDetailUrl={URL.NEW_COMMODITY}   submitRef={el => this.sendButton = el}  />
+                            <PanelFooterDetail newDetailUrl={URL.NEW_COMMODITY} submitRef={el => this.sendButton = el}  />
                         </div>
                     </div>
                 </div>
