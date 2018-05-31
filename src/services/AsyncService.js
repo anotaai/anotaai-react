@@ -1,5 +1,3 @@
-import CommodityService from "./commodity/CommodityService";
-
 export default class AsyncService {
 
     static fetch(url, components, config) {

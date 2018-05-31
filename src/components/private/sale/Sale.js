@@ -21,9 +21,10 @@ import {
     updateTypeSale,
     addProduct, 
     updateAppointmentBooks, 
-    redirectSaleProduct, 
+    startSale, 
     showModalToSale, 
-    hideModalToSale 
+    hideModalToSale,
+    updateFolhaCadernetaVenda 
 } from '../../../actions/saleActionCreator'
 
 class Sale extends Component {
@@ -44,8 +45,11 @@ class Sale extends Component {
 
     selectCommodity(caderneta) {
         SaleService.initSale(caderneta, this.props.books).then(response => {
-            console.log(response);
-            this.props.redirectSaleProduct(response.entity);
+            if (response.isValid) {
+                this.props.updateSale(response.entity, caderneta);
+            } else {
+                Toast.show(response.messages);
+            }
         });
     }
 
@@ -211,8 +215,11 @@ const mapDispatchToProps = dispatch => {
         getAppointmentBooks: () => {
             dispatch(AppointmentBookService.getAppointmentBooks(updateAppointmentBooks));
         },
-        redirectSaleProduct: (venda) => {
-            dispatch(redirectSaleProduct(venda));
+        updateSale: (venda, caderneta) => {
+            dispatch(startSale(venda, caderneta));
+        },
+        updateFolhaCadernetaVenda: (folhaCadernetaVenda) => {
+            dispatch(updateFolhaCadernetaVenda(folhaCadernetaVenda));
         },
         hideModalToSale: () => {
             dispatch(hideModalToSale());

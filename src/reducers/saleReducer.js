@@ -14,7 +14,7 @@ import {
     HIDE_MODAL_TO_SALE, 
     UPDATE_TYPE_SALE, 
     UPDATE_APPOINTMENT_BOOKS,
-    REDIRECT_SALE_PRODUCT,
+    START_SALE,
     UPDATE_FOLHA_CADERNETA_VENDA
 } from '../actions/saleActionCreator';
 
@@ -24,7 +24,9 @@ const INITIAL_STATE = {
         type: LOCAL_SALE.FOLHA_CADERNETA,
         folhaCaderneta: {
             caderneta: null,
-            clienteConsumidor: null
+            clienteConsumidor: {
+                nomeConsumidor: ''
+            }
         },
         venda: null
     },
@@ -37,7 +39,6 @@ const INITIAL_STATE = {
     consumidores: [],
     typeSaleList: [],
     caderneta: null,
-    consumidor: { nomeConsumidor: '' },
     cadernetas: [],
     pagamentos: [],
     valorTotal: 0,
@@ -132,10 +133,11 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
-        case REDIRECT_SALE_PRODUCT: {
+        case START_SALE: {
             const newState = createInstance(state);
             newState.venda = action.venda;
             newState.venda.produtos = [];
+            newState.caderneta = action.caderneta;
             newState.currentPage = 2;
             return newState;
         }
@@ -154,6 +156,8 @@ export default function (state = INITIAL_STATE, action) {
 
         case UPDATE_FOLHA_CADERNETA_VENDA: {
             const newState = createInstance(state);
+            newState.folhaCadernetaVenda = action.folhaCadernetaVenda;
+            newState.folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
             return newState;
         }
 
