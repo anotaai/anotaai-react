@@ -6,7 +6,8 @@ import {
     CLEAR_FORM_SALE, 
     UPDATE_PRODUCT_LIST_SALE, 
     UPDATE_PRODUCT_AUTO_COMPLETE_SALE,
-    UPDATE_CONSUMER_AUTO_COMPLETE_SALE, 
+    UPDATE_CONSUMER_AUTO_COMPLETE_SALE,
+    REMOVE_CONSUMER,
     UPDATE_CONSUMER_LIST_SALE, 
     CHANGE_RADIO_SALE, 
     ADD_PRODUCT,
@@ -93,11 +94,20 @@ export default function (state = INITIAL_STATE, action) {
             return newState;
         }
 
-        case UPDATE_CONSUMER_AUTO_COMPLETE_SALE : {
+        case UPDATE_CONSUMER_AUTO_COMPLETE_SALE: {
             const newState = createInstance(state);
             newState.folhaCadernetaVenda.venda = newState.venda;
             newState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = action.clienteConsumidor;
             newState.folhaCadernetaVenda.folhaCaderneta.caderneta = newState.caderneta;
+            return newState;
+        }
+
+        case REMOVE_CONSUMER: {
+            const newState = createInstance(state);
+            let clienteConsumidor = clienteConsumidor = {
+                nomeConsumidor: ''
+            };
+            newState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = clienteConsumidor;
             return newState;
         }
 

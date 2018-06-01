@@ -40,8 +40,8 @@ export default class SaleProduct extends Component {
                                         nomeConsumidor={this.props.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor.nomeConsumidor}
                                         consumidores={this.props.consumidores}
                                         getConsumer={this.props.getConsumer}
-                                        setConsumer={this.props.setConsumer}
-                                        autoCompleteSize="input-field col s12 m12 l12" />
+                                        setConsumer={this.props.setConsumer} 
+                                        removeConsumer={this.props.removeConsumer} />
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
 

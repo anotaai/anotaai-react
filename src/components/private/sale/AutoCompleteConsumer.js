@@ -7,10 +7,8 @@ export default class AutoCompleteConsumer extends Component {
     render() {
         return (
             <div className="row">
-                <div className={this.props.autoCompleteSize}>
-
+                <div className="input-field col s10 m10 l10">
                     <label htmlFor="consumer-autocomplete" className="active">Consumidor</label>
-
                     <Autocomplete
                         inputProps={{ id: 'consumer-autocomplete', placeholder: 'Nome' }}
                         value={this.props.nomeConsumidor}
@@ -21,7 +19,6 @@ export default class AutoCompleteConsumer extends Component {
                                 {item.nomeConsumidor}
                             </div>
                         }
-
                         renderMenu={(items, value, style) => (
                             <div key={value} >
                                 {items.length === 0 && value !== '' ? (<div style={{ padding: 6 }}><i className="material-icons icon-autocomplete">clear</i>Nenhum registro encontrado para {value}</div>) : <div style={{ ...style, ...this.menuStyle }} children={items} />}
@@ -32,14 +29,14 @@ export default class AutoCompleteConsumer extends Component {
                         onSelect={(value, item) => {
                             this.props.setConsumer(item);
                         }}
-
                         onChange={(event, value) => {
                             this.props.getConsumer('consumidorSelecionado.nomeConsumidor', value);
                         }} />
                 </div>
-                
-                    {this.props.values}
-            
+                <div className="input-field col s2 m2 l2">
+                    <button className="btn-floating" type="button" onClick={this.props.removeConsumer}><i className="material-icons">delete</i></button>
+                </div>
+                {this.props.values}
             </div>
         )
     }

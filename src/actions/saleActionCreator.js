@@ -4,6 +4,7 @@ export const
     UPDATE_PRODUCT_LIST_SALE = 'update_product_list_sale',
     UPDATE_PRODUCT_AUTO_COMPLETE_SALE = 'update_product_auto_complete_sale',
     UPDATE_CONSUMER_AUTO_COMPLETE_SALE = 'update_consumer_auto_complete_sale',
+    REMOVE_CONSUMER = 'remove_consumer',
     UPDATE_CONSUMER_LIST_SALE = 'update_consumer_list_sale',
     ADD_PRODUCT = 'add_product',
     UPDATE_TYPE_SALE = 'update_type_sale',
@@ -36,6 +37,10 @@ export function updateConsumerList(list) {
 
 export function updateConsumerAutoComplete(clienteConsumidor) {
     return { type: UPDATE_CONSUMER_AUTO_COMPLETE_SALE, clienteConsumidor }
+} 
+
+export function removeConsumer() {
+    return { type: REMOVE_CONSUMER }
 } 
 
 export function changeRadio(value) {

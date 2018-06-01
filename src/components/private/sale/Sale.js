@@ -24,7 +24,8 @@ import {
     startSale, 
     showModalToSale, 
     hideModalToSale,
-    updateFolhaCadernetaVenda 
+    updateFolhaCadernetaVenda,
+    removeConsumer
 } from '../../../actions/saleActionCreator'
 
 class Sale extends Component {
@@ -124,10 +125,6 @@ class Sale extends Component {
         }
     }
 
-    removeConsumer() {
-        
-    }
-
     addConsumer(clienteConsumidor) {
         this.props.setConsumer(clienteConsumidor);
         SaleService.addConsumer(this.props.saleState.folhaCadernetaVenda).then(response => {
@@ -156,6 +153,7 @@ class Sale extends Component {
                     setProduct={this.props.setProduct}
                     getConsumer={this.props.getConsumer}
                     setConsumer={this.addConsumer.bind(this)}
+                    removeConsumer={this.props.removeConsumer}
                     changeRadio={this.props.changeRadio}
                     addProduct={this.addItemVenda.bind(this)}
                     hideModalToSale={this.props.hideModalToSale}
@@ -202,6 +200,13 @@ const mapDispatchToProps = dispatch => {
         },
         setConsumer: (clienteConsumidor) => {
             dispatch(updateConsumerAutoComplete(clienteConsumidor));
+        },
+        removeConsumer: () => {
+            new Promise((resolve) => {
+                resolve(dispatch(removeConsumer()));
+            }).then(() => {
+                dispatch(SaleService.removeConsumers());
+            });
         },
         changeRadio: (e) => {
             dispatch(changeRadio(e.target.value));

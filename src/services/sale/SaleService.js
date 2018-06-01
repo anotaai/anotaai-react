@@ -24,6 +24,10 @@ export default class SaleService extends CrudService {
         });
     }
 
+    static removeConsumer(folhaCadernetaVenda, components) {
+        return AsyncService.post(`${this.getEndpoint()}/removeconsumer`, folhaCadernetaVenda);
+    }
+
     static addConsumer(folhaCadernetaVenda, components) {
         return new Promise((resolve, reject) => {
             AsyncService.fetch(`${process.env.REACT_APP_URL_BACKEND}${this.getEndpoint()}/addconsumer`, components, {
