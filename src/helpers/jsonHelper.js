@@ -32,7 +32,17 @@ export var clearAllPropertiesObject = (objToClear) => {
     return objToClear;
 }
 
-function setData(key, val, obj) {
+export function getData(obj, path) {
+    var spath = path.split('.');
+    for (var i = 0, len = spath.length; i < len; i++) {
+        if (!obj || typeof obj !== 'object')
+            return undefined;
+        obj = obj[spath[i]];
+    }
+    return obj;
+}
+
+export function setData(key, val, obj) {
 
     let checkArray = key.split('_');
     let pos = 0;
@@ -58,7 +68,6 @@ function setData(key, val, obj) {
         } 
        
     });
-
     obj[last] = val;
 }
 

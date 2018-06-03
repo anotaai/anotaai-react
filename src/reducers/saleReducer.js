@@ -16,7 +16,8 @@ import {
     UPDATE_TYPE_SALE, 
     UPDATE_APPOINTMENT_BOOKS,
     START_SALE,
-    UPDATE_FOLHA_CADERNETA_VENDA
+    UPDATE_FOLHA_CADERNETA_VENDA,
+    UPDATE_NOME_CONSUMIDOR
 } from '../actions/saleActionCreator';
 
 const INITIAL_STATE = {
@@ -63,17 +64,20 @@ export default function (state = INITIAL_STATE, action) {
         }
 
         case CLEAR_FORM_SALE: {
+            let cadernetas = state.cadernetas;
             const newState = createInstance(state);
             clearAllPropertiesObject(newState);
             newState.quantidade = '';
             newState.currentPage = 1;
             newState.valorPagamento = 0;
+            newState.cadernetas = cadernetas;
             newState.type = TYPE_SALE.A_VISTA_ANONIMA;
             return newState;
         }
 
         case UPDATE_PRODUCT_LIST_SALE: {
             const newState = createInstance(state);
+            newState.produtosList = [];
             action.list.forEach(product => {
                 newState.produtosList.push({id: product.id, descricao: product.descricao, descricaoResumida: product.descricaoResumida , codigo: product.codigo, precoVenda: product.precoVenda, quantidade: ''});
             });
@@ -83,11 +87,13 @@ export default function (state = INITIAL_STATE, action) {
         case UPDATE_PRODUCT_AUTO_COMPLETE_SALE : {
             const newState = createInstance(state);
             newState.produtoSelecionado = action.product;
+            newState.produtosList = [];
             return newState;
         }
 
         case UPDATE_CONSUMER_LIST_SALE: {
             const newState = createInstance(state);
+            newState.consumidores = [];
             action.list.forEach(clienteConsumidor => {
                 newState.consumidores.push(clienteConsumidor);
             });
@@ -99,12 +105,13 @@ export default function (state = INITIAL_STATE, action) {
             newState.folhaCadernetaVenda.venda = newState.venda;
             newState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = action.clienteConsumidor;
             newState.folhaCadernetaVenda.folhaCaderneta.caderneta = newState.caderneta;
+            newState.consumidores = [];
             return newState;
         }
 
         case REMOVE_CONSUMER: {
             const newState = createInstance(state);
-            let clienteConsumidor = clienteConsumidor = {
+            let clienteConsumidor = {
                 nomeConsumidor: ''
             };
             newState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = clienteConsumidor;
@@ -168,6 +175,12 @@ export default function (state = INITIAL_STATE, action) {
             const newState = createInstance(state);
             newState.folhaCadernetaVenda = action.folhaCadernetaVenda;
             newState.folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
+            return newState;
+        }
+
+        case UPDATE_NOME_CONSUMIDOR: {
+            const newState = createInstance(state);
+            newState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor.nomeConsumidor = action.nomeConsumidor;
             return newState;
         }
 

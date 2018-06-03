@@ -25,7 +25,8 @@ import {
     showModalToSale, 
     hideModalToSale,
     updateFolhaCadernetaVenda,
-    removeConsumer
+    removeConsumer,
+    setNomeConsumidor
 } from '../../../actions/saleActionCreator'
 
 class Sale extends Component {
@@ -161,7 +162,8 @@ class Sale extends Component {
                     consumidores={this.props.saleState.consumidores}
                     typeSaleList={this.props.saleState.typeSaleList}
                     produtos={this.props.saleState.venda.produtos}
-                    submitRef={el => this.sendButton = el} />
+                    submitRef={el => this.sendButton = el} 
+                    searchConsumers={this.props.searchConsumers} />
                 )
             }
             default: return null;
@@ -191,9 +193,9 @@ const mapDispatchToProps = dispatch => {
         setProduct: (product) => {
             dispatch(updateProductAutoComplete(product));
         },
-        getConsumer: (name, value) => {
+        searchConsumers: (value) => {
             new Promise((resolve) => {
-                resolve(dispatch(handleInputChange(name, value)));
+                resolve(dispatch(setNomeConsumidor(value)));
             }).then(() => {
                 dispatch(ClienteConsumidorService.getConsumers(value, updateConsumerList));
             });
@@ -201,11 +203,9 @@ const mapDispatchToProps = dispatch => {
         setConsumer: (clienteConsumidor) => {
             dispatch(updateConsumerAutoComplete(clienteConsumidor));
         },
-        removeConsumer: () => {
-            new Promise((resolve) => {
-                resolve(dispatch(removeConsumer()));
-            }).then(() => {
-                dispatch(SaleService.removeConsumers());
+        removeConsumer: (folhaCadernetaVenda) => {
+            SaleService.removeConsumer(folhaCadernetaVenda).then((response) => {
+                dispatch(removeConsumer());
             });
         },
         changeRadio: (e) => {

@@ -2,13 +2,17 @@ import React, { Component } from 'react'
 import { PanelHeader, PanelSale } from '../../panels'
 import { TABLE_DEFAULT_CSS, TYPE_SALE } from '../../../helpers/constants'
 import AutoCompleteProduct from '../product/detail/AutoCompleteProduct'
-import AutoCompleteConsumer from './AutoCompleteConsumer'
+import AutoCompleteDefault from '../../AutoCompleteDefault'
 import SimpleCurrencyInput from 'react-simple-currency'
 import T from 'i18n-react'
 import ModalConfirm from '../../ModalConfirm'
 
 
 export default class SaleProduct extends Component {
+
+    getNomeConsumidor(clienteConsumidor) {
+        return clienteConsumidor.nomeConsumidor;
+    }
 
     render() {
         return (
@@ -23,8 +27,7 @@ export default class SaleProduct extends Component {
                                         descricao={this.props.produtoSelecionado.descricao}
                                         produtos={this.props.produtosList}
                                         getProduct={this.props.getProduct}
-                                        setProduct={this.props.setProduct}
-                                        autoCompleteSize="input-field col s12 m12 l12" />
+                                        setProduct={this.props.setProduct} />
                                     <div className="row">
                                         <div className="input-field col s6 m6 l6">
                                             <input id="quantidade" value={this.props.quantidade} name="quantidade" onChange={this.props.handleInputChange} type="number" />
@@ -36,12 +39,15 @@ export default class SaleProduct extends Component {
                                         </button>
                                         </div>
                                     </div>
-                                    <AutoCompleteConsumer
-                                        nomeConsumidor={this.props.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor.nomeConsumidor}
-                                        consumidores={this.props.consumidores}
-                                        getConsumer={this.props.getConsumer}
-                                        setConsumer={this.props.setConsumer} 
-                                        removeConsumer={this.props.removeConsumer} />
+                                    <AutoCompleteDefault
+                                        inputId="consumidor" textLabel="Consumidor" placeholder="Nome"
+                                        target={this.props.folhaCadernetaVenda}
+                                        inputValue={this.props.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor.nomeConsumidor}
+                                        getLabel={this.getNomeConsumidor}
+                                        itens={this.props.consumidores}
+                                        selectItem={this.props.setConsumer} 
+                                        search={this.props.searchConsumers}
+                                        remove={this.props.removeConsumer} />
                                     <div className="row">
                                         <div className="input-field col s12 m12 l12">
 
@@ -122,7 +128,6 @@ export default class SaleProduct extends Component {
             </div>
         )
     }
-
 
 }
 

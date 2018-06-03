@@ -13,7 +13,8 @@ export const
     START_SALE = 'start_sale',
     SHOW_MODAL_TO_SALE = 'show_modal_to_sale',
     HIDE_MODAL_TO_SALE = 'hide_modal_to_sale',
-    UPDATE_FOLHA_CADERNETA_VENDA = 'update_folha_caderneta_venda';
+    UPDATE_FOLHA_CADERNETA_VENDA = 'update_folha_caderneta_venda',
+    UPDATE_NOME_CONSUMIDOR = "update_nome_consumidor";
 
 export function handleInputChange(name, value) {
     return { type: HANDLE_INPUT_CHANGE_SALE , name , value }
@@ -73,4 +74,8 @@ export function hideModalToSale() {
 
 export function updateFolhaCadernetaVenda(folhaCadernetaVenda) {
     return { type: UPDATE_FOLHA_CADERNETA_VENDA, folhaCadernetaVenda }
+}
+
+export function setNomeConsumidor(nomeConsumidor) {
+    return { type: UPDATE_NOME_CONSUMIDOR, nomeConsumidor }
 }
