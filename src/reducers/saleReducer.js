@@ -105,6 +105,7 @@ export default function (state = INITIAL_STATE, action) {
             newState.folhaCadernetaVenda.venda = newState.venda;
             newState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = action.clienteConsumidor;
             newState.folhaCadernetaVenda.folhaCaderneta.caderneta = newState.caderneta;
+            newState.folhaCadernetaVenda.type = LOCAL_SALE.FOLHA_CADERNETA;
             newState.consumidores = [];
             return newState;
         }
@@ -114,7 +115,16 @@ export default function (state = INITIAL_STATE, action) {
             let clienteConsumidor = {
                 nomeConsumidor: ''
             };
-            newState.folhaCadernetaVenda.folhaCaderneta.clienteConsumidor = clienteConsumidor;
+            newState.folhaCadernetaVenda = {
+                type: LOCAL_SALE.FOLHA_CADERNETA,
+                folhaCaderneta: {
+                    caderneta: null,
+                    clienteConsumidor: {
+                        nomeConsumidor: ''
+                    }
+                },
+                venda: null
+            };
             return newState;
         }
 
