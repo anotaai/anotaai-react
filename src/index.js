@@ -24,7 +24,7 @@ registerFetchInterceptor(store);
 i18nReactLoader.default.init({
     useExternalAPI: true,
     apiURL: `${process.env.REACT_APP_URL_BACKEND}/i18n/locales`,
-    defaultLocale: 'pt',
+    defaultLocale: 'en',
   }).then(() => {
     ReactDOM.render(
       <Provider store={store}>
