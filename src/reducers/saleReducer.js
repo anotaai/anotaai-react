@@ -112,9 +112,6 @@ export default function (state = INITIAL_STATE, action) {
 
         case REMOVE_CONSUMER: {
             const newState = createInstance(state);
-            let clienteConsumidor = {
-                nomeConsumidor: ''
-            };
             newState.folhaCadernetaVenda = {
                 type: LOCAL_SALE.FOLHA_CADERNETA,
                 folhaCaderneta: {
